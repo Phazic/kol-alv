@@ -168,6 +168,10 @@ public final class QuestTurnsBarChart extends HorizontalBarChartBuilder {
                         getLogData().getLogSummary().getQuestTurncounts().dailyDungeonTurns,
                         dataset);
 
+        addDatasetValue(NS,
+                getLogData().getLogSummary().getQuestTurncounts().nsTurns,
+                dataset);
+
         return dataset;
     }
 
@@ -215,7 +219,8 @@ public final class QuestTurnsBarChart extends HorizontalBarChartBuilder {
         STARTING_WAR("Starting the War"),
         WAR("War Island quest"),
         DOD("DoD quest"),
-        DAILY_DUNGEON("Daily Dungeon");
+        DAILY_DUNGEON("Daily Dungeon"),
+        NS("Naughty Sorceress");
 
         private final String description;
 
