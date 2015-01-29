@@ -26,28 +26,56 @@ package com.googlecode.logVisualizer.util.textualLogs;
 
 import static com.googlecode.logVisualizer.parser.UsefulPatterns.NON_ASCII;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.java.dev.spellcast.utilities.DataUtilities;
 import net.java.dev.spellcast.utilities.UtilityConstants;
 
 import com.googlecode.logVisualizer.Settings;
-import com.googlecode.logVisualizer.logData.*;
+import com.googlecode.logVisualizer.logData.Item;
+import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.LogDataHolder.StatClass;
+import com.googlecode.logVisualizer.logData.MPGain;
+import com.googlecode.logVisualizer.logData.MeatGain;
+import com.googlecode.logVisualizer.logData.Skill;
+import com.googlecode.logVisualizer.logData.Statgain;
 import com.googlecode.logVisualizer.logData.consumables.Consumable;
 import com.googlecode.logVisualizer.logData.consumables.Consumable.ConsumableVersion;
 import com.googlecode.logVisualizer.logData.logSummary.AreaStatgains;
 import com.googlecode.logVisualizer.logData.logSummary.LevelData;
-import com.googlecode.logVisualizer.logData.turn.*;
+import com.googlecode.logVisualizer.logData.turn.DetailedTurnInterval;
+import com.googlecode.logVisualizer.logData.turn.Encounter;
+import com.googlecode.logVisualizer.logData.turn.FreeRunaways;
+import com.googlecode.logVisualizer.logData.turn.SingleTurn;
+import com.googlecode.logVisualizer.logData.turn.TurnInterval;
+import com.googlecode.logVisualizer.logData.turn.TurnVersion;
 import com.googlecode.logVisualizer.logData.turn.turnAction.DayChange;
 import com.googlecode.logVisualizer.logData.turn.turnAction.FamiliarChange;
 import com.googlecode.logVisualizer.logData.turn.turnAction.PlayerSnapshot;
 import com.googlecode.logVisualizer.logData.turn.turnAction.Pull;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
-import com.googlecode.logVisualizer.util.*;
+import com.googlecode.logVisualizer.util.DataCounter;
+import com.googlecode.logVisualizer.util.DataNumberPair;
+import com.googlecode.logVisualizer.util.Lists;
+import com.googlecode.logVisualizer.util.LogOutputFormat;
+import com.googlecode.logVisualizer.util.Maps;
+import com.googlecode.logVisualizer.util.Pair;
+import com.googlecode.logVisualizer.util.Sets;
 import com.googlecode.logVisualizer.util.dataTables.DataTablesHandler;
 import com.googlecode.logVisualizer.util.dataTables.ExtraStats;
 
@@ -106,17 +134,25 @@ public final class TextLogCreator {
 
     private static final String CURRENT_MEAT_STRING = "Current meat: ";
 
+    private static final String CHATEAU_REST_AREA = "Rest in your bed in the Chateau";
+
+    private static final String SMITH_STRING = "smith ";
+
+    private static final String MIX_STRING = "mix ";
+
+    private static final String COOK_STRING = "cook ";
+
     private static final DayChange NO_DAY_CHANGE = new DayChange(Integer.MAX_VALUE,
-                                                                 Integer.MAX_VALUE);
+            Integer.MAX_VALUE);
 
     private static final Map<String, String> TEXT_LOG_ADDITIONS_MAP = readAugmentationsList(DataUtilities.getReader(UtilityConstants.KOL_DATA_DIRECTORY,
-                                                                                                                    "textAugmentations.txt"));
+            "textAugmentations.txt"));
 
     private static final Map<String, String> HTML_LOG_ADDITIONS_MAP = readAugmentationsList(DataUtilities.getReader(UtilityConstants.KOL_DATA_DIRECTORY,
-                                                                                                                    "htmlAugmentations.txt"));
+            "htmlAugmentations.txt"));
 
     private static final Map<String, String> BBCODE_LOG_ADDITIONS_MAP = readAugmentationsList(DataUtilities.getReader(UtilityConstants.KOL_DATA_DIRECTORY,
-                                                                                                                      "bbcodeAugmentations.txt"));
+            "bbcodeAugmentations.txt"));
 
     private final Map<String, String> logAdditionsMap;
 
@@ -139,7 +175,7 @@ public final class TextLogCreator {
     private final Iterator<DataNumberPair<String>> huntedCombatIter;
 
     private DataNumberPair<String> currentHuntedCombat;
-    
+
     private DataNumberPair<String> freeRunsByZone;
 
     private final Iterator<DataNumberPair<String>> disintegratedCombatIter;
@@ -153,7 +189,7 @@ public final class TextLogCreator {
      * outputs and return them in a map.
      * <p>
      * Currently used key names are:
-     * 
+     *
      * <pre>
      * logHeaderStart
      * logHeaderEnd
@@ -186,7 +222,7 @@ public final class TextLogCreator {
      * </pre>
      */
     private static Map<String, String> readAugmentationsList(
-                                                             final BufferedReader br) {
+            final BufferedReader br) {
         final Map<String, String> map = Maps.newHashMap();
         String tmpLine;
 
@@ -209,7 +245,7 @@ public final class TextLogCreator {
     /**
      * Creates a list of all turn interval print-outs as they are composed in a
      * turn rundown inside a textual ascension log.
-     * 
+     *
      * @param logData
      *            The ascension log data from which the parsed ascension log
      *            should be created.
@@ -219,7 +255,7 @@ public final class TextLogCreator {
      *             {@link LogDataHolder#isDetailedLog()}
      */
     public static List<String> getTurnRundownList(
-                                                  final LogDataHolder logData) {
+            final LogDataHolder logData) {
         if (!logData.isDetailedLog())
             throw new IllegalArgumentException("Only detailed logs can be used by the TextualLogCreator.");
 
@@ -231,7 +267,7 @@ public final class TextLogCreator {
     /**
      * Creates a parsed ascension log from the given {@link LogDataHolder} and
      * returns it as a String.
-     * 
+     *
      * @param logData
      *            The ascension log data from which the parsed ascension log
      *            should be created.
@@ -243,7 +279,7 @@ public final class TextLogCreator {
      *             {@link LogDataHolder#isDetailedLog()}
      */
     public static String getTextualLog(
-                                       final LogDataHolder logData, final LogOutputFormat logVersion) {
+            final LogDataHolder logData, final LogOutputFormat logVersion) {
         // Sometimes, geek jokes are fun! ;)
         int logDate = 404;
         if (UsefulPatterns.USUAL_FORMAT_LOG_NAME.matcher(logData.getLogName()).matches())
@@ -255,7 +291,7 @@ public final class TextLogCreator {
     /**
      * Creates a parsed ascension log from the given {@link LogDataHolder} and
      * returns it as a String.
-     * 
+     *
      * @param logData
      *            The ascension log data from which the parsed ascension log
      *            should be created.
@@ -270,8 +306,8 @@ public final class TextLogCreator {
      *             {@link LogDataHolder#isDetailedLog()}
      */
     public static String getTextualLog(
-                                       final LogDataHolder logData, final int ascensionStartDate,
-                                       final LogOutputFormat logVersion) {
+            final LogDataHolder logData, final int ascensionStartDate,
+            final LogOutputFormat logVersion) {
         if (!logData.isDetailedLog())
             throw new IllegalArgumentException("Only detailed logs can be used by the TextualLogCreator.");
 
@@ -282,11 +318,11 @@ public final class TextLogCreator {
             logOutput = logCreator.createTextLog(logData, ascensionStartDate);
         else
             logOutput = NON_ASCII.matcher(logCreator.createTextLog(logData, ascensionStartDate))
-                                 .replaceAll(UsefulPatterns.EMPTY_STRING);
+            .replaceAll(UsefulPatterns.EMPTY_STRING);
 
         if (logVersion == LogOutputFormat.HTML_LOG)
             return "<html><body>" + logOutput.replace(NEW_LINE, "<br>" + NEW_LINE)
-                   + "</body></html>";
+                    + "</body></html>";
         else
             return logOutput;
     }
@@ -294,7 +330,7 @@ public final class TextLogCreator {
     /**
      * Creates a parsed ascension log from the given {@link LogDataHolder} and
      * saves it to the given file.
-     * 
+     *
      * @param logData
      *            The ascension log data from which the parsed ascension log
      *            should be created.
@@ -308,16 +344,16 @@ public final class TextLogCreator {
      *             {@link LogDataHolder#isDetailedLog()}
      */
     public static void saveTextualLogToFile(
-                                            final LogDataHolder logData, final File saveDest,
-                                            final LogOutputFormat logVersion)
-                                                                             throws IOException {
+            final LogDataHolder logData, final File saveDest,
+            final LogOutputFormat logVersion)
+                    throws IOException {
         if (!saveDest.exists())
             throw new IllegalArgumentException("The file doesn't exist.");
         if (saveDest.isDirectory())
             throw new IllegalArgumentException("The file is a directory.");
 
         final PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(saveDest),
-                                                                      50000));
+                50000));
         writer.print(getTextualLog(logData, logVersion));
         writer.close();
     }
@@ -325,7 +361,7 @@ public final class TextLogCreator {
     /**
      * Creates a parsed ascension log from the given {@link LogDataHolder} and
      * saves it to the given file.
-     * 
+     *
      * @param logData
      *            The ascension log data from which the parsed ascension log
      *            should be created.
@@ -342,24 +378,24 @@ public final class TextLogCreator {
      *             {@link LogDataHolder#isDetailedLog()}
      */
     public static void saveTextualLogToFile(
-                                            final LogDataHolder logData,
-                                            final int ascensionStartDate, final File saveDest,
-                                            final LogOutputFormat logVersion)
-                                                                             throws IOException {
+            final LogDataHolder logData,
+            final int ascensionStartDate, final File saveDest,
+            final LogOutputFormat logVersion)
+                    throws IOException {
         if (!saveDest.exists())
             throw new IllegalArgumentException("The file doesn't exist.");
         if (saveDest.isDirectory())
             throw new IllegalArgumentException("The file is a directory.");
 
         final PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(saveDest),
-                                                                      50000));
+                50000));
         writer.print(getTextualLog(logData, ascensionStartDate, logVersion));
         writer.close();
     }
 
     /**
      * Sets up a TextLogCreator instance for further use.
-     * 
+     *
      * @param logData
      *            The ascension log data from which the parsed ascension log
      *            should be created.
@@ -367,24 +403,24 @@ public final class TextLogCreator {
      *            The wanted version of the textual log output.
      */
     private TextLogCreator(
-                           final LogDataHolder logData, final LogOutputFormat logVersion) {
+            final LogDataHolder logData, final LogOutputFormat logVersion) {
         if (logData == null)
             throw new NullPointerException("The LogDataHolder must not be null.");
 
         switch (logVersion) {
-            case HTML_LOG:
-                logAdditionsMap = Collections.unmodifiableMap(HTML_LOG_ADDITIONS_MAP);
-                break;
-            case BBCODE_LOG:
-                logAdditionsMap = Collections.unmodifiableMap(BBCODE_LOG_ADDITIONS_MAP);
-                break;
-            default:
-                logAdditionsMap = Collections.unmodifiableMap(TEXT_LOG_ADDITIONS_MAP);
+        case HTML_LOG:
+            logAdditionsMap = Collections.unmodifiableMap(HTML_LOG_ADDITIONS_MAP);
+            break;
+        case BBCODE_LOG:
+            logAdditionsMap = Collections.unmodifiableMap(BBCODE_LOG_ADDITIONS_MAP);
+            break;
+        default:
+            logAdditionsMap = Collections.unmodifiableMap(TEXT_LOG_ADDITIONS_MAP);
         }
 
         // Populate local one-time item set with all one-time items.
         for (final Entry<String, Boolean> item : DataTablesHandler.HANDLER.getItemdropsMap()
-                                                                          .entrySet())
+                .entrySet())
             if (item.getValue())
                 localeOnetimeItemsSet.add(item.getKey());
 
@@ -401,7 +437,7 @@ public final class TextLogCreator {
     /**
      * Creates a parsed ascension log in a style similar to the format used by
      * the AFH parser.
-     * 
+     *
      * @param logData
      *            The LogDataHolder from which the ascension log should be
      *            created.
@@ -410,14 +446,14 @@ public final class TextLogCreator {
      *            KolMafia.
      */
     private List<String> createTurnRundownList(
-                                               final LogDataHolder logData) {
+            final LogDataHolder logData) {
         final List<String> turnRundown = Lists.newArrayList(logData.getTurnsSpent().size());
 
         currentFamChange = familiarChangeIter.hasNext() ? familiarChangeIter.next() : null;
         currentPull = pullIter.hasNext() ? pullIter.next() : null;
         currentHuntedCombat = huntedCombatIter.hasNext() ? huntedCombatIter.next() : null;
         currentDisintegratedCombat = disintegratedCombatIter.hasNext() ? disintegratedCombatIter.next()
-                                                                      : null;
+                : null;
 
         // Level 1 can be skipped.
         levelIter.next();
@@ -434,10 +470,10 @@ public final class TextLogCreator {
 
                     final int currentStringLenght = log.length();
                     final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                                                                                        ti.getEndTurn(),
-                                                                                        currentDay,
-                                                                                        nextDay,
-                                                                                        dayChangeIter);
+                            ti.getEndTurn(),
+                            currentDay,
+                            nextDay,
+                            dayChangeIter);
                     currentDay = newDayChangeData.getVar1();
                     nextDay = newDayChangeData.getVar2();
                     log.delete(currentStringLenght, log.length());
@@ -456,20 +492,20 @@ public final class TextLogCreator {
                         }
 
                     final TurnInterval turnsBeforeDayChange = new DetailedTurnInterval(ti.getTurns()
-                                                                                         .headSet(dayChangeTurn),
-                                                                                       dayChangeTurn.getAreaName());
+                            .headSet(dayChangeTurn),
+                            dayChangeTurn.getAreaName());
                     final TurnInterval turnsAfterDayChange = new DetailedTurnInterval(ti.getTurns()
-                                                                                        .tailSet(dayChangeTurn),
-                                                                                      dayChangeTurn.getAreaName());
+                            .tailSet(dayChangeTurn),
+                            dayChangeTurn.getAreaName());
 
                     printTurnIntervalContents(turnsBeforeDayChange, currentDay.getDayNumber());
 
                     final int currentStringLenght = log.length();
                     final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                                                                                        ti.getEndTurn(),
-                                                                                        currentDay,
-                                                                                        nextDay,
-                                                                                        dayChangeIter);
+                            ti.getEndTurn(),
+                            currentDay,
+                            nextDay,
+                            dayChangeIter);
                     currentDay = newDayChangeData.getVar1();
                     nextDay = newDayChangeData.getVar2();
                     log.delete(currentStringLenght, log.length());
@@ -478,17 +514,17 @@ public final class TextLogCreator {
                     // last turn before the day change, but were actually done
                     // on the next day.
                     printCurrentConsumables(turnsBeforeDayChange.getConsumablesUsed(),
-                                            currentDay.getDayNumber());
+                            currentDay.getDayNumber());
                     printCurrentPulls(currentDay.getDayNumber(), turnsBeforeDayChange.getEndTurn());
                     log.append(NEW_LINE);
                     printTurnIntervalContents(turnsAfterDayChange, currentDay.getDayNumber());
                 } else {
                     final int currentStringLenght = log.length();
                     final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                                                                                        ti.getEndTurn(),
-                                                                                        currentDay,
-                                                                                        nextDay,
-                                                                                        dayChangeIter);
+                            ti.getEndTurn(),
+                            currentDay,
+                            nextDay,
+                            dayChangeIter);
                     currentDay = newDayChangeData.getVar1();
                     nextDay = newDayChangeData.getVar2();
                     log.delete(currentStringLenght, log.length());
@@ -508,7 +544,7 @@ public final class TextLogCreator {
     /**
      * Creates a parsed ascension log in a style similar to the format used by
      * the AFH parser.
-     * 
+     *
      * @param logData
      *            The LogDataHolder from which the ascension log should be
      *            created.
@@ -517,12 +553,12 @@ public final class TextLogCreator {
      *            KolMafia.
      */
     private String createTextLog(
-                                 final LogDataHolder logData, final int ascensionStartDate) {
+            final LogDataHolder logData, final int ascensionStartDate) {
         currentFamChange = familiarChangeIter.hasNext() ? familiarChangeIter.next() : null;
         currentPull = pullIter.hasNext() ? pullIter.next() : null;
         currentHuntedCombat = huntedCombatIter.hasNext() ? huntedCombatIter.next() : null;
         currentDisintegratedCombat = disintegratedCombatIter.hasNext() ? disintegratedCombatIter.next()
-                                                                      : null;
+                : null;
 
         // Level 1 can be skipped.
         levelIter.next();
@@ -534,13 +570,13 @@ public final class TextLogCreator {
 
         // Add the log file header.
         write("NEW " + logData.getCharacterClass() + " " + logData.getGameMode() + " "
-              + logData.getAscensionPath() + " ASCENSION STARTED " + ascensionStartDate + NEW_LINE);
+                + logData.getAscensionPath() + " ASCENSION STARTED " + ascensionStartDate + NEW_LINE);
         write("------------------------------" + NEW_LINE + NEW_LINE);
         write(logAdditionsMap.get("logHeaderStart"));
         write("This log was created by the Ascension Log Visualizer "
-              + Settings.getSettingString("Version") + "." + NEW_LINE);
+                + Settings.getSettingString("Version") + "." + NEW_LINE);
         write("The basic idea and the format of this parser have been borrowed from the AFH MafiaLog Parser by VladimirPootin and QuantumNightmare."
-              + NEW_LINE + NEW_LINE);
+                + NEW_LINE + NEW_LINE);
         write(logAdditionsMap.get("logHeaderEnd"));
         write(logAdditionsMap.get("dayChangeLineStart"));
         write(currentDay.toString());
@@ -555,10 +591,10 @@ public final class TextLogCreator {
                     printTurnIntervalContents(ti, currentDay.getDayNumber());
 
                     final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                                                                                        ti.getEndTurn(),
-                                                                                        currentDay,
-                                                                                        nextDay,
-                                                                                        dayChangeIter);
+                            ti.getEndTurn(),
+                            currentDay,
+                            nextDay,
+                            dayChangeIter);
                     currentDay = newDayChangeData.getVar1();
                     nextDay = newDayChangeData.getVar2();
 
@@ -576,19 +612,19 @@ public final class TextLogCreator {
                         }
 
                     final TurnInterval turnsBeforeDayChange = new DetailedTurnInterval(ti.getTurns()
-                                                                                         .headSet(dayChangeTurn),
-                                                                                       dayChangeTurn.getAreaName());
+                            .headSet(dayChangeTurn),
+                            dayChangeTurn.getAreaName());
                     final TurnInterval turnsAfterDayChange = new DetailedTurnInterval(ti.getTurns()
-                                                                                        .tailSet(dayChangeTurn),
-                                                                                      dayChangeTurn.getAreaName());
+                            .tailSet(dayChangeTurn),
+                            dayChangeTurn.getAreaName());
 
                     printTurnIntervalContents(turnsBeforeDayChange, currentDay.getDayNumber());
 
                     final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                                                                                        ti.getEndTurn(),
-                                                                                        currentDay,
-                                                                                        nextDay,
-                                                                                        dayChangeIter);
+                            ti.getEndTurn(),
+                            currentDay,
+                            nextDay,
+                            dayChangeIter);
                     currentDay = newDayChangeData.getVar1();
                     nextDay = newDayChangeData.getVar2();
 
@@ -596,16 +632,16 @@ public final class TextLogCreator {
                     // last turn before the day change, but were actually done
                     // on the next day.
                     printCurrentConsumables(turnsBeforeDayChange.getConsumablesUsed(),
-                                            currentDay.getDayNumber());
+                            currentDay.getDayNumber());
                     printCurrentPulls(currentDay.getDayNumber(), turnsBeforeDayChange.getEndTurn());
 
                     printTurnIntervalContents(turnsAfterDayChange, currentDay.getDayNumber());
                 } else {
                     final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                                                                                        ti.getEndTurn(),
-                                                                                        currentDay,
-                                                                                        nextDay,
-                                                                                        dayChangeIter);
+                            ti.getEndTurn(),
+                            currentDay,
+                            nextDay,
+                            dayChangeIter);
                     currentDay = newDayChangeData.getVar1();
                     nextDay = newDayChangeData.getVar2();
 
@@ -630,10 +666,10 @@ public final class TextLogCreator {
      * will be returned.
      */
     private Pair<DayChange, DayChange> printDayChanges(
-                                                       final LogDataHolder logData,
-                                                       final int currentTurnNumber,
-                                                       DayChange currentDay, DayChange nextDay,
-                                                       final Iterator<DayChange> dayChangeIter) {
+            final LogDataHolder logData,
+            final int currentTurnNumber,
+            DayChange currentDay, DayChange nextDay,
+            final Iterator<DayChange> dayChangeIter) {
         while (!nextDay.equals(NO_DAY_CHANGE) && currentTurnNumber >= nextDay.getTurnNumber()) {
             final PlayerSnapshot currentSnapshot = logData.getFirstPlayerSnapshotAfterTurn(nextDay.getTurnNumber());
 
@@ -669,7 +705,7 @@ public final class TextLogCreator {
      * Prints all pulls from the given day up to the given turn number.
      */
     private void printCurrentPulls(
-                                   final int currentDayNumber, final int currentTurnNumber) {
+            final int currentDayNumber, final int currentTurnNumber) {
         while (currentPull != null && currentTurnNumber >= currentPull.getTurnNumber()) {
             // Only pulls of the current day should be added here.
             if (currentPull.getDayNumber() > currentDayNumber)
@@ -696,12 +732,12 @@ public final class TextLogCreator {
      * Prints all consumables from the given day.
      */
     private void printCurrentConsumables(
-                                         final Collection<Consumable> consumables,
-                                         final int currentDayNumber) {
+            final Collection<Consumable> consumables,
+            final int currentDayNumber) {
         for (final Consumable c : consumables)
             if (c.getDayNumberOfUsage() == currentDayNumber)
                 if (c.getAdventureGain() > 0 || !c.getStatGain().isAllStatsZero()
-                    || UsefulPatterns.SPECIAL_CONSUMABLES.contains(c.getName())) {
+                        || UsefulPatterns.SPECIAL_CONSUMABLES.contains(c.getName())) {
                     write(CONSUMABLE_PREFIX);
 
                     if (c.getConsumableVersion() == ConsumableVersion.FOOD)
@@ -718,8 +754,8 @@ public final class TextLogCreator {
                     write(logAdditionsMap.get("consumableEnd"));
 
                     if (c.getAdventureGain() > 0
-                        || c.getConsumableVersion() == ConsumableVersion.FOOD
-                        || c.getConsumableVersion() == ConsumableVersion.BOOZE) {
+                            || c.getConsumableVersion() == ConsumableVersion.FOOD
+                            || c.getConsumableVersion() == ConsumableVersion.BOOZE) {
                         write(UsefulPatterns.WHITE_SPACE);
                         write(UsefulPatterns.ROUND_BRACKET_OPEN);
                         write(c.getAdventureGain());
@@ -741,7 +777,7 @@ public final class TextLogCreator {
      * not supposed to be printed, this method won't print anything.
      */
     private void printNotes(
-                            final String notes) {
+            final String notes) {
         if (isShowNotes && notes.length() > 0) {
             write(logAdditionsMap.get("notesStart"));
             write(notes.replaceAll("\r\n", NEW_LINE).replaceAll("[\r\n]", NEW_LINE));
@@ -751,7 +787,7 @@ public final class TextLogCreator {
     }
 
     private void printItemAcquisitionStartString(
-                                                 final int turnNumber) {
+            final int turnNumber) {
         write(ITEM_PREFIX);
         write(OPENING_TURN_BRACKET);
         write(turnNumber);
@@ -764,7 +800,7 @@ public final class TextLogCreator {
      *            The turn interval whose contents should be printed.
      */
     private void printTurnIntervalContents(
-                                           final TurnInterval ti, final int currentDayNumber) {
+            final TurnInterval ti, final int currentDayNumber) {
         printNotes(ti.getPreIntervalComment().getComments());
 
         write(logAdditionsMap.get("turnStart"));
@@ -813,7 +849,7 @@ public final class TextLogCreator {
             final List<Item> importantItems = Lists.newArrayList();
             for (final Item i : st.getDroppedItems()) {
                 final String itemName = NON_ASCII.matcher(i.getName().toLowerCase(Locale.ENGLISH))
-                                                 .replaceAll(UsefulPatterns.EMPTY_STRING);
+                        .replaceAll(UsefulPatterns.EMPTY_STRING);
                 if (DataTablesHandler.HANDLER.isImportantItem(itemName))
                     importantItems.add(i);
                 else if (localeOnetimeItemsSet.contains(itemName)) {
@@ -849,6 +885,47 @@ public final class TextLogCreator {
 
                 write(NEW_LINE);
             }
+
+            // Iterate all encounters on this turn
+            // This helps with tracking interesting free turn things
+            for (Encounter e : st.getEncounters())
+            {
+                // Don't log the encounter if it matches the parent turn interval
+                if (st.getAreaName().contains(e.getAreaName()) == false)
+                {
+                    if (e.getAreaName().contains(CHATEAU_REST_AREA))
+                    {
+                        // Log it using the free runaway prefix
+                        write(FREE_RUNAWAYS_PREFIX);
+                        write(UsefulPatterns.SQUARE_BRACKET_OPEN);
+                        write(st.getTurnNumber());
+                        write(UsefulPatterns.SQUARE_BRACKET_CLOSE);
+                        write(UsefulPatterns.WHITE_SPACE);
+                        write(e.getAreaName());
+                        write(UsefulPatterns.WHITE_SPACE);
+                        write(logAdditionsMap.get("statgainStart"));
+                        write(e.getStatGain().toString());
+                        write(logAdditionsMap.get("statgainEnd"));
+                        write(NEW_LINE);
+                    }
+                    // Log turn-free crafting as well
+
+                    if (e.getAreaName().toLowerCase().startsWith(MIX_STRING) ||
+                            e.getAreaName().toLowerCase().startsWith(SMITH_STRING) ||
+                            e.getAreaName().toLowerCase().startsWith(COOK_STRING))
+                    {
+                        // Log it using the free runaway prefix
+                        write(FREE_RUNAWAYS_PREFIX);
+                        write(UsefulPatterns.SQUARE_BRACKET_OPEN);
+                        write(st.getTurnNumber());
+                        write(UsefulPatterns.SQUARE_BRACKET_CLOSE);
+                        write(UsefulPatterns.WHITE_SPACE);
+                        write(e.getAreaName());
+                        write(NEW_LINE);
+
+                    }
+                }
+            }
         }
 
         printCurrentConsumables(ti.getConsumablesUsed(), currentDayNumber);
@@ -870,7 +947,7 @@ public final class TextLogCreator {
         }
 
         while (currentDisintegratedCombat != null
-               && ti.getEndTurn() >= currentDisintegratedCombat.getNumber()) {
+                && ti.getEndTurn() >= currentDisintegratedCombat.getNumber()) {
             write(DISINTEGRATED_COMBAT_PREFIX);
             write(OPENING_TURN_BRACKET);
             write(currentDisintegratedCombat.getNumber());
@@ -882,7 +959,7 @@ public final class TextLogCreator {
             write(NEW_LINE);
 
             currentDisintegratedCombat = disintegratedCombatIter.hasNext() ? disintegratedCombatIter.next()
-                                                                          : null;
+                    : null;
         }
 
         while (currentFamChange != null && ti.getEndTurn() >= currentFamChange.getTurnNumber()) {
@@ -938,10 +1015,10 @@ public final class TextLogCreator {
     }
 
     private void printLogSummaries(
-                                   final LogDataHolder logData) {
+            final LogDataHolder logData) {
         // Turns spent per area summary
         write("ADVENTURES" + NEW_LINE + "----------" + NEW_LINE);
-        
+
         for (final DataNumberPair<String> dn : logData.getLogSummary().getTurnsPerArea()) {
             write(dn.getData());
             write(": ");
@@ -953,57 +1030,57 @@ public final class TextLogCreator {
         // Quest Turns summary
         write("QUEST TURNS" + NEW_LINE + "----------" + NEW_LINE);
         write("Spooky Forest: "
-              + logData.getLogSummary().getQuestTurncounts().templeOpeningTurns + NEW_LINE);
+                + logData.getLogSummary().getQuestTurncounts().templeOpeningTurns + NEW_LINE);
         write("Tavern quest: " + logData.getLogSummary().getQuestTurncounts().tavernQuestTurns
-              + NEW_LINE);
+                + NEW_LINE);
         write("Bat quest: " + logData.getLogSummary().getQuestTurncounts().batQuestTurns + NEW_LINE);
         write("Cobb's Knob quest: " + logData.getLogSummary().getQuestTurncounts().knobQuestTurns
-              + NEW_LINE);
+                + NEW_LINE);
         write("Friars' quest: " + logData.getLogSummary().getQuestTurncounts().friarsQuestTurns
-              + NEW_LINE);
+                + NEW_LINE);
         write("Pandamonium quest: "
-              + logData.getLogSummary().getQuestTurncounts().pandamoniumQuestTurns + NEW_LINE);
+                + logData.getLogSummary().getQuestTurncounts().pandamoniumQuestTurns + NEW_LINE);
         write("Defiled Cyrpt quest: "
-              + logData.getLogSummary().getQuestTurncounts().cyrptQuestTurns + NEW_LINE);
+                + logData.getLogSummary().getQuestTurncounts().cyrptQuestTurns + NEW_LINE);
         write("Trapzor quest: " + logData.getLogSummary().getQuestTurncounts().trapzorQuestTurns
-              + NEW_LINE);
+                + NEW_LINE);
         write("Orc Chasm quest: " + logData.getLogSummary().getQuestTurncounts().chasmQuestTurns
-              + NEW_LINE);
+                + NEW_LINE);
         write("Airship: " + logData.getLogSummary().getQuestTurncounts().airshipQuestTurns
-              + NEW_LINE);
+                + NEW_LINE);
         write("Giant's Castle: " + logData.getLogSummary().getQuestTurncounts().castleQuestTurns
-              + NEW_LINE);
+                + NEW_LINE);
         write("Pirate quest: " + logData.getLogSummary().getQuestTurncounts().pirateQuestTurns
-              + NEW_LINE);
+                + NEW_LINE);
         write("Black Forest quest: "
-              + logData.getLogSummary().getQuestTurncounts().blackForrestQuestTurns + NEW_LINE);
+                + logData.getLogSummary().getQuestTurncounts().blackForrestQuestTurns + NEW_LINE);
         write("Desert Oasis quest: "
-              + logData.getLogSummary().getQuestTurncounts().desertOasisQuestTurns + NEW_LINE);
+                + logData.getLogSummary().getQuestTurncounts().desertOasisQuestTurns + NEW_LINE);
         write("Spookyraven First Floor: "
                 + logData.getLogSummary().getQuestTurncounts().spookyravenFirstFloor + NEW_LINE);
-          write("Spookyraven Second Floor: "
-                  + logData.getLogSummary().getQuestTurncounts().spookyravenSecondFloor + NEW_LINE);
+        write("Spookyraven Second Floor: "
+                + logData.getLogSummary().getQuestTurncounts().spookyravenSecondFloor + NEW_LINE);
         write("Spookyraven Cellar: "
-              + logData.getLogSummary().getQuestTurncounts().spookyravenQuestTurns + NEW_LINE);
+                + logData.getLogSummary().getQuestTurncounts().spookyravenQuestTurns + NEW_LINE);
         write("Hidden City quest: "
-              + logData.getLogSummary().getQuestTurncounts().templeCityQuestTurns + NEW_LINE);
+                + logData.getLogSummary().getQuestTurncounts().templeCityQuestTurns + NEW_LINE);
         write("Palindome quest: "
-              + logData.getLogSummary().getQuestTurncounts().palindomeQuestTurns + NEW_LINE);
+                + logData.getLogSummary().getQuestTurncounts().palindomeQuestTurns + NEW_LINE);
         write("Pyramid quest: " + logData.getLogSummary().getQuestTurncounts().pyramidQuestTurns
-              + NEW_LINE);
+                + NEW_LINE);
         write("Starting the War: "
-              + logData.getLogSummary().getQuestTurncounts().warIslandOpeningTurns + NEW_LINE);
+                + logData.getLogSummary().getQuestTurncounts().warIslandOpeningTurns + NEW_LINE);
         write("War Island quest: "
-              + logData.getLogSummary().getQuestTurncounts().warIslandQuestTurns + NEW_LINE);
+                + logData.getLogSummary().getQuestTurncounts().warIslandQuestTurns + NEW_LINE);
         write("DoD quest: " + logData.getLogSummary().getQuestTurncounts().dodQuestTurns + NEW_LINE);
         write("Daily Dungeon: " + logData.getLogSummary().getQuestTurncounts().dailyDungeonTurns
-              + NEW_LINE);
+                + NEW_LINE);
         write(NEW_LINE + NEW_LINE + NEW_LINE);
 
         // Pulls summary
         write("PULLS" + NEW_LINE + "----------" + NEW_LINE);
         final DataCounter<String> pullsCounter = new DataCounter<String>((int) (logData.getPulls()
-                                                                                       .size() * 1.4) + 1);
+                .size() * 1.4) + 1);
         for (final Pull p : logData.getPulls())
             pullsCounter.addDataElement(p.getItemName(), p.getAmount());
         final List<DataNumberPair<String>> pulls = pullsCounter.getCountedData();
@@ -1011,7 +1088,7 @@ public final class TextLogCreator {
         Collections.sort(pulls, new Comparator<DataNumberPair<String>>() {
 
             public int compare(
-                               final DataNumberPair<String> o1, final DataNumberPair<String> o2) {
+                    final DataNumberPair<String> o1, final DataNumberPair<String> o2) {
                 return o2.compareTo(o1);
             }
         });
@@ -1032,43 +1109,43 @@ public final class TextLogCreator {
         LevelData lastLevel = null;
         for (final LevelData ld : logData.getLevels()) {
             final int turnDifference = lastLevel != null ? ld.getLevelReachedOnTurn()
-                                                           - lastLevel.getLevelReachedOnTurn() : 0;
-            final double statsPerTurn = lastLevel != null ? lastLevel.getStatGainPerTurn() : 0;
-            final int combatTurns = lastLevel != null ? lastLevel.getCombatTurns() : 0;
-            final int noncombatTurns = lastLevel != null ? lastLevel.getNoncombatTurns() : 0;
-            final int otherTurns = lastLevel != null ? lastLevel.getOtherTurns() : 0;
+                    - lastLevel.getLevelReachedOnTurn() : 0;
+                    final double statsPerTurn = lastLevel != null ? lastLevel.getStatGainPerTurn() : 0;
+                    final int combatTurns = lastLevel != null ? lastLevel.getCombatTurns() : 0;
+                    final int noncombatTurns = lastLevel != null ? lastLevel.getNoncombatTurns() : 0;
+                    final int otherTurns = lastLevel != null ? lastLevel.getOtherTurns() : 0;
 
-            write(ld.toString());
-            write(COMMA);
-            write(turnDifference);
-            write(" from last level. (");
-            write(formatter.format(statsPerTurn));
-            write(" substats / turn)");
-            write(NEW_LINE);
+                    write(ld.toString());
+                    write(COMMA);
+                    write(turnDifference);
+                    write(" from last level. (");
+                    write(formatter.format(statsPerTurn));
+                    write(" substats / turn)");
+                    write(NEW_LINE);
 
-            write("   Combats: ");
-            write(combatTurns);
-            write(NEW_LINE);
-            write("   Noncombats: ");
-            write(noncombatTurns);
-            write(NEW_LINE);
-            write("   Other: ");
-            write(otherTurns);
-            write(NEW_LINE);
+                    write("   Combats: ");
+                    write(combatTurns);
+                    write(NEW_LINE);
+                    write("   Noncombats: ");
+                    write(noncombatTurns);
+                    write(NEW_LINE);
+                    write("   Other: ");
+                    write(otherTurns);
+                    write(NEW_LINE);
 
-            lastLevel = ld;
+                    lastLevel = ld;
         }
         write(NEW_LINE + NEW_LINE);
         final int totalTurns = logData.getLastTurnSpent().getTurnNumber();
         write("Total COMBATS: " + logData.getLogSummary().getTotalTurnsCombat() + " ("
-              + Math.round(logData.getLogSummary().getTotalTurnsCombat() * 1000.0 / totalTurns)
-              / 10.0 + "%)" + NEW_LINE);
+                + Math.round(logData.getLogSummary().getTotalTurnsCombat() * 1000.0 / totalTurns)
+                / 10.0 + "%)" + NEW_LINE);
         write("Total NONCOMBATS: " + logData.getLogSummary().getTotalTurnsNoncombat() + " ("
-              + Math.round(logData.getLogSummary().getTotalTurnsNoncombat() * 1000.0 / totalTurns)
-              / 10.0 + "%)" + NEW_LINE);
+                + Math.round(logData.getLogSummary().getTotalTurnsNoncombat() * 1000.0 / totalTurns)
+                / 10.0 + "%)" + NEW_LINE);
         write("Total OTHER: " + logData.getLogSummary().getTotalTurnsOther() + " ("
-              + Math.round(logData.getLogSummary().getTotalTurnsOther() * 1000.0 / totalTurns)
-              / 10.0 + "%)" + NEW_LINE);
+                + Math.round(logData.getLogSummary().getTotalTurnsOther() * 1000.0 / totalTurns)
+                / 10.0 + "%)" + NEW_LINE);
         write(NEW_LINE + NEW_LINE + NEW_LINE);
 
         // Stats summary
@@ -1082,25 +1159,25 @@ public final class TextLogCreator {
         final Statgain usingStats = logData.getLogSummary().getUsedConsumablesStatgains();
         write("           \tMuscle\tMyst\tMoxie" + NEW_LINE);
         write("Totals:   \t" + totalStats.mus + "\t" + totalStats.myst + "\t" + totalStats.mox
-              + NEW_LINE);
+                + NEW_LINE);
         write("Combats:\t" + combatStats.mus + "\t" + combatStats.myst + "\t" + combatStats.mox
-              + NEW_LINE);
+                + NEW_LINE);
         write("Noncombats:\t" + noncombatStats.mus + "\t" + noncombatStats.myst + "\t"
-              + noncombatStats.mox + NEW_LINE);
+                + noncombatStats.mox + NEW_LINE);
         write("Others:   \t" + otherStats.mus + "\t" + otherStats.myst + "\t" + otherStats.mox
-              + NEW_LINE);
+                + NEW_LINE);
         write("Eating:   \t" + foodStats.mus + "\t" + foodStats.myst + "\t" + foodStats.mox
-              + NEW_LINE);
+                + NEW_LINE);
         write("Drinking:\t" + boozeStats.mus + "\t" + boozeStats.myst + "\t" + boozeStats.mox
-              + NEW_LINE);
+                + NEW_LINE);
         write("Using:   \t" + usingStats.mus + "\t" + usingStats.myst + "\t" + usingStats.mox
-              + NEW_LINE);
+                + NEW_LINE);
         write(NEW_LINE + NEW_LINE);
         final List<AreaStatgains> areas = Lists.newArrayList(logData.getLogSummary()
-                                                                    .getAreasStatgains());
+                .getAreasStatgains());
         Collections.sort(areas, new Comparator<AreaStatgains>() {
             public int compare(
-                               final AreaStatgains o1, final AreaStatgains o2) {
+                    final AreaStatgains o1, final AreaStatgains o2) {
                 if (logData.getCharacterClass().getStatClass() == StatClass.MUSCLE)
                     return o2.getStatgain().mus - o1.getStatgain().mus;
                 else if (logData.getCharacterClass().getStatClass() == StatClass.MYSTICALITY)
@@ -1120,15 +1197,15 @@ public final class TextLogCreator {
         final List<StatgiverItem> statGivers = Lists.newArrayList(20);
         for (final Pair<String, ExtraStats> p : DataTablesHandler.HANDLER.getStatsItems())
             statGivers.add(new StatgiverItem(p.getVar1(), p.getVar2(), logData.getCharacterClass()
-                                                                              .getStatClass()));
+                    .getStatClass()));
         final StatgiverItem serpentineSword = new StatgiverItem("serpentine sword",
-                                                                new ExtraStats(1.25),
-                                                                logData.getCharacterClass()
-                                                                       .getStatClass());
+                new ExtraStats(1.25),
+                logData.getCharacterClass()
+                .getStatClass());
         final StatgiverItem snakeShield = new StatgiverItem("snake shield",
-                                                            new ExtraStats(1.25),
-                                                            logData.getCharacterClass()
-                                                                   .getStatClass());
+                new ExtraStats(1.25),
+                logData.getCharacterClass()
+                .getStatClass());
 
         final Iterator<LevelData> lvlIndex = logData.getLevels().iterator();
         LevelData nextLvl = lvlIndex.hasNext() ? lvlIndex.next() : null;
@@ -1146,17 +1223,17 @@ public final class TextLogCreator {
                 if (st.getTurnVersion() == TurnVersion.COMBAT) {
                     for (final StatgiverItem sgi : statGivers)
                         sgi.incrementLvlStatgain(currentLvlNumber,
-                                                 st.getUsedEquipment()
-                                                   .getNumberOfEquips(sgi.getItemName()));
+                                st.getUsedEquipment()
+                                .getNumberOfEquips(sgi.getItemName()));
 
                     // Special cases
                     final int serpentineSwordEquips = st.getUsedEquipment()
-                                                        .getNumberOfEquips(serpentineSword.getItemName());
+                            .getNumberOfEquips(serpentineSword.getItemName());
                     serpentineSword.incrementLvlStatgain(currentLvlNumber, serpentineSwordEquips);
                     if (serpentineSwordEquips == 1)
                         snakeShield.incrementLvlStatgain(currentLvlNumber,
-                                                         st.getUsedEquipment()
-                                                           .getNumberOfEquips(snakeShield.getItemName()));
+                                st.getUsedEquipment()
+                                .getNumberOfEquips(snakeShield.getItemName()));
                 }
             }
         // Add special cases to list for text print out.
@@ -1166,14 +1243,14 @@ public final class TextLogCreator {
         // Sort item list from highest total stat gain to lowest.
         Collections.sort(statGivers, new Comparator<StatgiverItem>() {
             public int compare(
-                               final StatgiverItem o1, final StatgiverItem o2) {
+                    final StatgiverItem o1, final StatgiverItem o2) {
                 return o2.getTotalStats() - o1.getTotalStats();
             }
         });
 
         write("+STAT BREAKDOWN" + NEW_LINE + "----------" + NEW_LINE);
         write("Need to gain level (last is total):                          \t10\t39\t105\t231\t441\t759\t1209\t1815\t2601\t3591\t4809\t6279\t21904"
-              + NEW_LINE);
+                + NEW_LINE);
         for (final StatgiverItem sgi : statGivers)
             if (sgi.getTotalStats() > 0) {
                 write(sgi.toString());
@@ -1189,7 +1266,7 @@ public final class TextLogCreator {
             write(dn.getNumber());
             write(" combat turns (");
             write(String.valueOf(Math.round(dn.getNumber() * 1000.0
-                                            / logData.getLogSummary().getTotalTurnsCombat()) / 10.0));
+                    / logData.getLogSummary().getTotalTurnsCombat()) / 10.0));
             write("%)");
             write(NEW_LINE);
         }
@@ -1279,11 +1356,11 @@ public final class TextLogCreator {
             write(NEW_LINE);
         }
         write(NEW_LINE + "------------------" + NEW_LINE + "| Total Casts    |  "
-              + logData.getLogSummary().getTotalAmountSkillCasts() + NEW_LINE
-              + "------------------" + NEW_LINE);
+                + logData.getLogSummary().getTotalAmountSkillCasts() + NEW_LINE
+                + "------------------" + NEW_LINE);
         write(NEW_LINE + "------------------" + NEW_LINE + "| Total MP Spent    |  "
-              + logData.getLogSummary().getTotalMPUsed() + NEW_LINE + "------------------"
-              + NEW_LINE);
+                + logData.getLogSummary().getTotalMPUsed() + NEW_LINE + "------------------"
+                + NEW_LINE);
         write(NEW_LINE + NEW_LINE + NEW_LINE);
 
         // MP summary
@@ -1296,8 +1373,8 @@ public final class TextLogCreator {
         write("Outside Encounters: " + mpGains.outOfEncounterMPGain + NEW_LINE);
         write("Consumables: " + mpGains.consumableMPGain + NEW_LINE + NEW_LINE);
         for (final DataNumberPair<MPGain> dnp : logData.getLogSummary()
-                                                       .getMPGainSummary()
-                                                       .getAllLevelsData()) {
+                .getMPGainSummary()
+                .getAllLevelsData()) {
             write("Level " + dnp.getNumber() + UsefulPatterns.COLON + NEW_LINE);
             write("   Inside Encounters: " + dnp.getData().encounterMPGain + NEW_LINE);
             write("   Starfish Familiars: " + dnp.getData().starfishMPGain + NEW_LINE);
@@ -1310,13 +1387,13 @@ public final class TextLogCreator {
         // Consumables summary
         write("EATING AND DRINKING AND USING" + NEW_LINE + "----------" + NEW_LINE);
         write("Adventures gained eating: " + logData.getLogSummary().getTotalTurnsFromFood()
-              + NEW_LINE);
+                + NEW_LINE);
         write("Adventures gained drinking: " + logData.getLogSummary().getTotalTurnsFromBooze()
-              + NEW_LINE);
+                + NEW_LINE);
         write("Adventures gained using: " + logData.getLogSummary().getTotalTurnsFromOther()
-              + NEW_LINE);
+                + NEW_LINE);
         write("Adventures gained rollover: " + logData.getLogSummary().getTotalTurnsFromRollover()
-              + NEW_LINE);
+                + NEW_LINE);
         write(NEW_LINE);
         for (final Consumable c : logData.getLogSummary().getFoodConsumablesUsed()) {
             write(c.toString());
@@ -1335,7 +1412,7 @@ public final class TextLogCreator {
         write(NEW_LINE);
         for (final Consumable c : logData.getLogSummary().getOtherConsumablesUsed())
             if (c.getAdventureGain() > 0 || !c.getStatGain().isAllStatsZero()
-                || UsefulPatterns.SPECIAL_CONSUMABLES.contains(c.getName())) {
+                    || UsefulPatterns.SPECIAL_CONSUMABLES.contains(c.getName())) {
                 write(c.toString());
                 write(NEW_LINE);
             }
@@ -1345,10 +1422,10 @@ public final class TextLogCreator {
         write("MEAT" + NEW_LINE + "----------" + NEW_LINE);
         write("Total meat gained: " + logData.getLogSummary().getTotalMeatGain() + NEW_LINE);
         write("Total meat spent: " + logData.getLogSummary().getTotalMeatSpent() + NEW_LINE
-              + NEW_LINE);
+                + NEW_LINE);
         for (final DataNumberPair<MeatGain> dnp : logData.getLogSummary()
-                                                         .getMeatSummary()
-                                                         .getAllLevelsData()) {
+                .getMeatSummary()
+                .getAllLevelsData()) {
             write("Level " + dnp.getNumber() + UsefulPatterns.COLON + NEW_LINE);
             write("   Meat gain inside Encounters: " + dnp.getData().encounterMeatGain + NEW_LINE);
             write("   Meat gain outside Encounters: " + dnp.getData().otherMeatGain + NEW_LINE);
@@ -1360,30 +1437,30 @@ public final class TextLogCreator {
         final List<DataNumberPair<String>> lostCombats = logData.getLostCombats();
         write("BOTTLENECKS" + NEW_LINE + "----------" + NEW_LINE);
         write("Spent " + logData.getLogSummary().get8BitRealm().getTurnsSpent()
-              + " turns in the 8-Bit Realm" + NEW_LINE);
+                + " turns in the 8-Bit Realm" + NEW_LINE);
         write("Fought " + logData.getLogSummary().get8BitRealm().getBloopersFound() + " bloopers"
-              + NEW_LINE);
+                + NEW_LINE);
         write("Fought " + logData.getLogSummary().get8BitRealm().getBulletsFound()
-              + " bullet bills" + NEW_LINE);
+                + " bullet bills" + NEW_LINE);
         write("Spent " + logData.getLogSummary().getGoatlet().getTurnsSpent()
-              + " turns in the Goatlet" + NEW_LINE);
+                + " turns in the Goatlet" + NEW_LINE);
         write("Fought " + logData.getLogSummary().getGoatlet().getDairyGoatsFound()
-              + " dairy goats for " + logData.getLogSummary().getGoatlet().getCheeseFound()
-              + " cheeses and " + logData.getLogSummary().getGoatlet().getMilkFound()
-              + " glasses of milk" + NEW_LINE);
+                + " dairy goats for " + logData.getLogSummary().getGoatlet().getCheeseFound()
+                + " cheeses and " + logData.getLogSummary().getGoatlet().getMilkFound()
+                + " glasses of milk" + NEW_LINE);
 
         final SpookyravenPowerleveling powerleveling = new SpookyravenPowerleveling(logData.getTurnIntervalsSpent());
         write("Spent " + powerleveling.getBallroomTurns()
-              + " turns in the Haunted Ballroom and found "
-              + powerleveling.getBallroomStatNoncombats() + " Curtains" + NEW_LINE);
+                + " turns in the Haunted Ballroom and found "
+                + powerleveling.getBallroomStatNoncombats() + " Curtains" + NEW_LINE);
         write("Fought " + powerleveling.getZombieWaltzers() + " Zombie Waltzers and found "
-              + powerleveling.getDanceCards() + " Dance Cards" + NEW_LINE);
+                + powerleveling.getDanceCards() + " Dance Cards" + NEW_LINE);
         write("Spent " + powerleveling.getGalleryTurns()
-              + " turns in the Haunted Gallery and found " + powerleveling.getLouvres()
-              + " Louvres" + NEW_LINE);
+                + " turns in the Haunted Gallery and found " + powerleveling.getLouvres()
+                + " Louvres" + NEW_LINE);
         write("Spent " + powerleveling.getBathroomTurns()
-              + " turns in the Haunted Bathroom and found " + powerleveling.getBathroomNoncombats()
-              + " noncombats" + NEW_LINE);
+                + " turns in the Haunted Bathroom and found " + powerleveling.getBathroomNoncombats()
+                + " noncombats" + NEW_LINE);
 
         int coconut = 0;
         int umbrella = 0;
@@ -1407,7 +1484,7 @@ public final class TextLogCreator {
     }
 
     private void write(
-                       final String s) {
+            final String s) {
         if (s != null)
             log.append(s);
         else
@@ -1415,7 +1492,7 @@ public final class TextLogCreator {
     }
 
     private void write(
-                       final int i) {
+            final int i) {
         log.append(i);
     }
 }

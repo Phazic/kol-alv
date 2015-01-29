@@ -108,193 +108,192 @@ public final class MafiaLogParser implements LogParser {
      * @throws NullPointerException
      *             if log is {@code null}
      */
-     public MafiaLogParser(
-             final File log, final boolean isIncludeMafiaLogNotes) {
-         this.log = log;
+    public MafiaLogParser(
+            final File log, final boolean isIncludeMafiaLogNotes) {
+        this.log = log;
 
-         // Set the log name
-         getLogData().setLogName(log.getName().replace(".txt", UsefulPatterns.EMPTY_STRING));
+        // Set the log name
+        getLogData().setLogName(log.getName().replace(".txt", UsefulPatterns.EMPTY_STRING));
 
-         lineParsers.add(new ItemAcquisitionLineParser());
-         lineParsers.add(new SkillCastLineParser());
-         lineParsers.add(new MafiaFamiliarChangeLineParser(equipmentStack, familiarEquipmentMap));
-         lineParsers.add(new MeatLineParser(MeatGainType.OTHER));
-         lineParsers.add(new MeatSpentLineParser());
-         lineParsers.add(new StatLineParser());
-         lineParsers.add(new MPGainLineParser(MPGainType.NOT_ENCOUNTER));
-         lineParsers.add(new EquipmentLineParser(equipmentStack, familiarEquipmentMap));
-         lineParsers.add(new MafiaPullLineParser());
-         lineParsers.add(new PoolMPBuffLineParser());
-         lineParsers.add(new DayChangeLineParser());
-         if (isIncludeMafiaLogNotes)
-             lineParsers.add(new NotesLineParser());
-     }
+        lineParsers.add(new ItemAcquisitionLineParser());
+        lineParsers.add(new SkillCastLineParser());
+        lineParsers.add(new MafiaFamiliarChangeLineParser(equipmentStack, familiarEquipmentMap));
+        lineParsers.add(new MeatLineParser(MeatGainType.OTHER));
+        lineParsers.add(new MeatSpentLineParser());
+        lineParsers.add(new StatLineParser());
+        lineParsers.add(new MPGainLineParser(MPGainType.NOT_ENCOUNTER));
+        lineParsers.add(new EquipmentLineParser(equipmentStack, familiarEquipmentMap));
+        lineParsers.add(new MafiaPullLineParser());
+        lineParsers.add(new PoolMPBuffLineParser());
+        lineParsers.add(new DayChangeLineParser());
+        if (isIncludeMafiaLogNotes)
+            lineParsers.add(new NotesLineParser());
+    }
 
-     /**
-      * {@inheritDoc}
-      */
-     public void parse()
-             throws IOException {
-         final MafiaSessionLogReader reader = new MafiaSessionLogReader(log);
-         final boolean isOldAscensionCounting = Settings.getSettingBoolean("Using old ascension counting");
-         boolean nsFightWon = false;
+    /**
+     * {@inheritDoc}
+     */
+    public void parse()
+            throws IOException {
+        final MafiaSessionLogReader reader = new MafiaSessionLogReader(log);
+        final boolean isOldAscensionCounting = Settings.getSettingBoolean("Using old ascension counting");
+        boolean nsFightWon = false;
 
-         while (reader.hasNext() && !nsFightWon) {
-             final LogBlock block = reader.next();
+        while (reader.hasNext() && !nsFightWon) {
+            final LogBlock block = reader.next();
 
-             // In case old ascension turn counting is turned off and the current
-             // block is an encounter block, we need to check whether the Naughty
-             // Sorceress was beaten in it.
-             if (!isOldAscensionCounting
-                     && block.getBlockType() == LogBlockType.ENCOUNTER_BLOCK) {
-                 // Get the encounter name instead of the location
+            // In case old ascension turn counting is turned off and the current
+            // block is an encounter block, we need to check whether the Naughty
+            // Sorceress was beaten in it.
+            if (!isOldAscensionCounting
+                    && block.getBlockType() == LogBlockType.ENCOUNTER_BLOCK) {
+                // Get the encounter name instead of the location
 
-                 String tmp;
-                 if (block.getBlockLines().size() > 1)
-                     tmp = block.getBlockLines().get(1);
-                 else
-                     tmp = "";
+                String tmp;
+                if (block.getBlockLines().size() > 1)
+                    tmp = block.getBlockLines().get(1);
+                else
+                    tmp = "";
 
-                 // First check the encounter type to see if the location
-                 // is the Naughty Sorceress or one of the end bosses
-                 if (tmp.endsWith(NAUGHTY_SORCERESS_3RD_FORM))
-                     nsFightWon = isFightWon(block);
-                 if (tmp.endsWith(RAIN_KING))
-                     nsFightWon = isFightWon(block);
-                 if (tmp.endsWith(AVATAR_OF_JARLSBERG))
-                     nsFightWon = isFightWon(block);
-             }
+                // First check the encounter type to see if the location
+                // is the Naughty Sorceress or one of the end bosses
+                if (tmp.endsWith(NAUGHTY_SORCERESS_3RD_FORM))
+                    nsFightWon = isFightWon(block);
+                if (tmp.endsWith(RAIN_KING))
+                    nsFightWon = isFightWon(block);
+                if (tmp.endsWith(AVATAR_OF_JARLSBERG))
+                    nsFightWon = isFightWon(block);
+            }
 
-             // Now, we do the actual parsing.
-             System.out.println("Block: " + block.getBlockType() + " Line: " + block.getBlockLines().get(0));
-             switch (block.getBlockType()) {
-             case ENCOUNTER_BLOCK:
-                 encounterParser.parseBlock(block.getBlockLines(), logData);
-                 break;
-             case CONSUMABLE_BLOCK:
-                 consumableParser.parseBlock(block.getBlockLines(), logData);
-                 break;
-             case PLAYER_SNAPSHOT_BLOCK:
-                 playerSnapshotParser.parseBlock(block.getBlockLines(), logData);
-                 break;
-             case ASCENSION_DATA_BLOCK:
-                 ascensionDataParser.parseBlock(block.getBlockLines(), logData);
-                 break;
-             case OTHER_BLOCK:
-                 for (final String line : block.getBlockLines())
-                     for (final LineParser lp : lineParsers)
-                         // If the line parser can parse the line, this
-                         // method also returns true. This is used to cut
-                         // back on the amount of loops.
-                         if (lp.parseLine(line, logData))
-                             break;
-             }
-         }
+            // Now, we do the actual parsing.
+            switch (block.getBlockType()) {
+            case ENCOUNTER_BLOCK:
+                encounterParser.parseBlock(block.getBlockLines(), logData);
+                break;
+            case CONSUMABLE_BLOCK:
+                consumableParser.parseBlock(block.getBlockLines(), logData);
+                break;
+            case PLAYER_SNAPSHOT_BLOCK:
+                playerSnapshotParser.parseBlock(block.getBlockLines(), logData);
+                break;
+            case ASCENSION_DATA_BLOCK:
+                ascensionDataParser.parseBlock(block.getBlockLines(), logData);
+                break;
+            case OTHER_BLOCK:
+                for (final String line : block.getBlockLines())
+                    for (final LineParser lp : lineParsers)
+                        // If the line parser can parse the line, this
+                        // method also returns true. This is used to cut
+                        // back on the amount of loops.
+                        if (lp.parseLine(line, logData))
+                            break;
+            }
+        }
 
-         reader.close();
+        reader.close();
 
-         // Before creating the summary data, we first need to add MP
-         // regeneration from equipment where applicable.
-         for (final SingleTurn st : getLogData().getTurnsSpent())
-             st.addMPRegen();
+        // Before creating the summary data, we first need to add MP
+        // regeneration from equipment where applicable.
+        for (final SingleTurn st : getLogData().getTurnsSpent())
+            st.addMPRegen();
 
-         // Recreate day changes from the data in the single turns, since there
-         // are situations where the turn numbers from preliminary day change
-         // parsing may not be entirely correct. (this most often occurs when
-         // there were free runaways or non-turns present at the end of a day)
-         int currentDay = 1;
-         final Map<Integer, HeaderFooterComment> dayComments = Maps.newHashMap();
-         for (final Pair<DayChange, HeaderFooterComment> dayComment : getLogData().getHeaderFooterComments())
-             dayComments.put(dayComment.getVar1().getDayNumber(), dayComment.getVar2());
-         for (final SingleTurn st : getLogData().getTurnsSpent())
-             while (currentDay < st.getDayNumber()) {
-                 currentDay++;
+        // Recreate day changes from the data in the single turns, since there
+        // are situations where the turn numbers from preliminary day change
+        // parsing may not be entirely correct. (this most often occurs when
+        // there were free runaways or non-turns present at the end of a day)
+        int currentDay = 1;
+        final Map<Integer, HeaderFooterComment> dayComments = Maps.newHashMap();
+        for (final Pair<DayChange, HeaderFooterComment> dayComment : getLogData().getHeaderFooterComments())
+            dayComments.put(dayComment.getVar1().getDayNumber(), dayComment.getVar2());
+        for (final SingleTurn st : getLogData().getTurnsSpent())
+            while (currentDay < st.getDayNumber()) {
+                currentDay++;
 
-                 final DayChange newDay = new DayChange(currentDay, st.getTurnNumber() - 1);
-                 getLogData().addDayChange(newDay);
+                final DayChange newDay = new DayChange(currentDay, st.getTurnNumber() - 1);
+                getLogData().addDayChange(newDay);
 
-                 final HeaderFooterComment newDayComment = getLogData().getHeaderFooterComment(newDay);
-                 final HeaderFooterComment oldDayComment = dayComments.get(newDay.getDayNumber());
-                 newDayComment.setHeaderComments(oldDayComment.getHeaderComments());
-                 newDayComment.setFooterComments(oldDayComment.getFooterComments());
-             }
+                final HeaderFooterComment newDayComment = getLogData().getHeaderFooterComment(newDay);
+                final HeaderFooterComment oldDayComment = dayComments.get(newDay.getDayNumber());
+                newDayComment.setHeaderComments(oldDayComment.getHeaderComments());
+                newDayComment.setFooterComments(oldDayComment.getFooterComments());
+            }
 
-         // Do the same thing for familiar and equipment changes, as there can
-         // also be problems in the face of free runaways and non-turns.
-         final List<FamiliarChange> famChanges = Lists.newArrayList(getLogData().getLastTurnSpent()
-                 .getTurnNumber());
-         final List<EquipmentChange> equipChanges = Lists.newArrayList(getLogData().getLastTurnSpent()
-                 .getTurnNumber());
-         for (final SingleTurn st : getLogData().getTurnsSpent()) {
-             famChanges.add(st.getUsedFamiliar());
-             equipChanges.add(st.getUsedEquipment());
-         }
-         getLogData().setFamiliarChanges(famChanges);
-         getLogData().setEquipmentChanges(equipChanges);
+        // Do the same thing for familiar and equipment changes, as there can
+        // also be problems in the face of free runaways and non-turns.
+        final List<FamiliarChange> famChanges = Lists.newArrayList(getLogData().getLastTurnSpent()
+                .getTurnNumber());
+        final List<EquipmentChange> equipChanges = Lists.newArrayList(getLogData().getLastTurnSpent()
+                .getTurnNumber());
+        for (final SingleTurn st : getLogData().getTurnsSpent()) {
+            famChanges.add(st.getUsedFamiliar());
+            equipChanges.add(st.getUsedEquipment());
+        }
+        getLogData().setFamiliarChanges(famChanges);
+        getLogData().setEquipmentChanges(equipChanges);
 
-         getLogData().createLogSummary();
-     }
+        getLogData().createLogSummary();
+    }
 
-     /**
-      * This method checks whether the Naughty Sorceress has been beaten.
-      *
-      * @param block
-      *            The Naughty Sorceress encounter block.
-      * @return True if the Naughty Sorceress was beaten, otherwise false.
-      */
-     private boolean isNaughtySorceressBeaten(
-             final LogBlock block) {
-         for (final String line : block.getBlockLines())
-             // Three figure stat gains aren't possible through combat items
-             // while winning against the NS will give these amounts, so if there
-             // is such a line, it means the fight has been won.
-             if (THREE_FIGURE_STATGAIN.matcher(line).matches()) {
-                 final Scanner scanner = new Scanner(line);
-                 scanner.findInLine(UsefulPatterns.GAIN_LOSE_CAPTURE_PATTERN);
-                 final String substatName = scanner.match().group(2);
-                 scanner.close();
+    /**
+     * This method checks whether the Naughty Sorceress has been beaten.
+     *
+     * @param block
+     *            The Naughty Sorceress encounter block.
+     * @return True if the Naughty Sorceress was beaten, otherwise false.
+     */
+    private boolean isNaughtySorceressBeaten(
+            final LogBlock block) {
+        for (final String line : block.getBlockLines())
+            // Three figure stat gains aren't possible through combat items
+            // while winning against the NS will give these amounts, so if there
+            // is such a line, it means the fight has been won.
+            if (THREE_FIGURE_STATGAIN.matcher(line).matches()) {
+                final Scanner scanner = new Scanner(line);
+                scanner.findInLine(UsefulPatterns.GAIN_LOSE_CAPTURE_PATTERN);
+                final String substatName = scanner.match().group(2);
+                scanner.close();
 
-                 if (UsefulPatterns.MUSCLE_SUBSTAT_NAMES.contains(substatName)
-                         || UsefulPatterns.MYST_SUBSTAT_NAMES.contains(substatName)
-                         || UsefulPatterns.MOXIE_SUBSTAT_NAMES.contains(substatName))
-                     return true;
-             }
+                if (UsefulPatterns.MUSCLE_SUBSTAT_NAMES.contains(substatName)
+                        || UsefulPatterns.MYST_SUBSTAT_NAMES.contains(substatName)
+                        || UsefulPatterns.MOXIE_SUBSTAT_NAMES.contains(substatName))
+                    return true;
+            }
 
-         return false;
-     }
+        return false;
+    }
 
-     /**
-      * This method checks whether the fight was won
-      *
-      * @param block
-      *            The encounter block.
-      * @return True if fight was won.
-      */
-     private boolean isFightWon(final LogBlock block)
-     {
-         for (final String line : block.getBlockLines())
-         {
-             if (line.endsWith(WINS_THE_FIGHT))
-             {
-                 return true;
-             }
-         }
-         return false;
-     }
-
+    /**
+     * This method checks whether the fight was won
+     *
+     * @param block
+     *            The encounter block.
+     * @return True if fight was won.
+     */
+    private boolean isFightWon(final LogBlock block)
+    {
+        for (final String line : block.getBlockLines())
+        {
+            if (line.endsWith(WINS_THE_FIGHT))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
-     /**
-      * {@inheritDoc}
-      */
-     public LogDataHolder getLogData() {
-         return logData;
-     }
 
-     /**
-      * {@inheritDoc}
-      */
-     public boolean isDetailedLogData() {
-         return true;
-     }
+    /**
+     * {@inheritDoc}
+     */
+    public LogDataHolder getLogData() {
+        return logData;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isDetailedLogData() {
+        return true;
+    }
 }
