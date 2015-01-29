@@ -126,7 +126,7 @@ public final class UsefulPatterns {
 
     public static final Pattern FREE_RUNAWAYS_USAGE = Pattern.compile("^\\s*\\&> \\d+ \\\\ \\d+ free retreats.*");
 
-    public static final Pattern CONSUMABLE_USED = Pattern.compile("(?:(?:use|eat|drink)|Buy and (?:eat|drink)) \\d+ .+");
+    public static final Pattern CONSUMABLE_USED = Pattern.compile("(?:(?:use|eat|drink)|Buy and (?:eat|drink))(?: \\d+)? .+");
 
     public static final Pattern GAIN = Pattern.compile("^You gain \\d*,?\\d+ [\\w\\s]+");
 

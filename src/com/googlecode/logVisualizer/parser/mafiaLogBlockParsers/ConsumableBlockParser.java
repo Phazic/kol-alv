@@ -39,11 +39,15 @@ import com.googlecode.logVisualizer.logData.turn.TurnVersion;
 import com.googlecode.logVisualizer.logData.turn.turnAction.EquipmentChange;
 import com.googlecode.logVisualizer.logData.turn.turnAction.FamiliarChange;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
-import com.googlecode.logVisualizer.parser.lineParsers.*;
+import com.googlecode.logVisualizer.parser.lineParsers.EquipmentLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser.MPGainType;
+import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser.MeatGainType;
-import com.googlecode.logVisualizer.util.dataTables.DataTablesHandler;
+import com.googlecode.logVisualizer.parser.lineParsers.MeatSpentLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.StatLineParser;
 import com.googlecode.logVisualizer.util.Stack;
+import com.googlecode.logVisualizer.util.dataTables.DataTablesHandler;
 
 /**
  * A parser for the consumable used notation in mafia logs.
@@ -78,6 +82,8 @@ public final class ConsumableBlockParser implements LogBlockParser {
 
     private static final Pattern CONSUMABLE_USED_CAPTURE_PATTERN = Pattern.compile("([\\w\\s]+) (\\d+) (.+)");
 
+    private static final Pattern CONSUMABLE_USED_SINGLE_CAPTURE_PATTERN = Pattern.compile("([\\w]+) (.+)");
+
     private static final String FOOD_STRING = "eat";
 
     private static final String BOOZE_STRING = "drink";
@@ -106,11 +112,13 @@ public final class ConsumableBlockParser implements LogBlockParser {
 
     private final Matcher consumableBoughtMatcher = CONSUMABLE_BOUGHT_USED_CAPTURE_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
 
+    private final Matcher consumableUsedMatcher = CONSUMABLE_USED_CAPTURE_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
+
     private final Matcher gainLoseMatcher = UsefulPatterns.GAIN_LOSE.matcher(UsefulPatterns.EMPTY_STRING);
 
     public ConsumableBlockParser(
-                                 final Stack<EquipmentChange> equipmentStack,
-                                 final Map<String, String> familiarEquipmentMap) {
+            final Stack<EquipmentChange> equipmentStack,
+            final Map<String, String> familiarEquipmentMap) {
         outfitChangeParser = new EquipmentLineParser(equipmentStack, familiarEquipmentMap);
     }
 
@@ -118,20 +126,34 @@ public final class ConsumableBlockParser implements LogBlockParser {
      * {@inheritDoc}
      */
     public void parseBlock(
-                           final List<String> block, final LogDataHolder logData) {
+            final List<String> block, final LogDataHolder logData) {
         // First, parse item name and amount used.
         final String consumptionLine = block.get(0);
         final Matcher result;
         final Scanner scanner = new Scanner(consumptionLine);
+
         if (consumableBoughtMatcher.reset(consumptionLine).matches())
             result = CONSUMABLE_BOUGHT_USED_CAPTURE_PATTERN.matcher(consumptionLine);
-        else
+        else if (consumableUsedMatcher.reset(consumptionLine).matches())
             result = CONSUMABLE_USED_CAPTURE_PATTERN.matcher(consumptionLine);
+        else
+            result = CONSUMABLE_USED_SINGLE_CAPTURE_PATTERN.matcher(consumptionLine);
+
         result.find();
 
         final String usageIdentifier = result.group(1);
-        final int amount = Integer.parseInt(result.group(2));
-        final String itemName = result.group(3);
+        int amount = 0;
+        String itemName;
+
+        if (result.groupCount() == 3) {
+            amount = Integer.parseInt(result.group(2));
+            itemName = result.group(3);
+        } else {
+            // Offset usage to 1 if it matches eat/drink for handling things
+            // like Speakeasy and Hot Dog stand
+            amount = 1;
+            itemName = result.group(2);
+        }
         int adventureGain = 0;
         Statgain consumableStatgain = Statgain.NO_STATS;
 
@@ -153,8 +175,8 @@ public final class ConsumableBlockParser implements LogBlockParser {
             }
 
             if (mpParser.parseLine(line, logData) || meatGainParser.parseLine(line, logData)
-                || meatSpentParser.parseLine(line, logData)
-                || outfitChangeParser.parseLine(line, logData)) {
+                    || meatSpentParser.parseLine(line, logData)
+                    || outfitChangeParser.parseLine(line, logData)) {
                 // Empty block, because the parsing has already happened if we
                 // get in here.
             } else if (gainLoseMatcher.reset(line).matches()) {
@@ -164,7 +186,7 @@ public final class ConsumableBlockParser implements LogBlockParser {
                 int gainAmount;
                 if (m.group(1).contains(UsefulPatterns.COMMA))
                     gainAmount = Integer.parseInt(m.group(1).replace(UsefulPatterns.COMMA,
-                                                                     UsefulPatterns.EMPTY_STRING));
+                            UsefulPatterns.EMPTY_STRING));
                 else
                     gainAmount = Integer.parseInt(m.group(1));
                 final String gainIdentifier = m.group(2);
@@ -194,7 +216,7 @@ public final class ConsumableBlockParser implements LogBlockParser {
         // Only add consumable if there was some specific data to it or it was
         // a special consumable.
         if (adventureGain != 0 || !consumableStatgain.isAllStatsZero()
-            || UsefulPatterns.SPECIAL_CONSUMABLES.contains(itemName)) {
+                || UsefulPatterns.SPECIAL_CONSUMABLES.contains(itemName)) {
             // Add consumable to the turn interval. While the Consumable class
             // is mutable, no special actions need to be made because of it,
             // because the AbstractTurn class does this already internally.
@@ -207,9 +229,9 @@ public final class ConsumableBlockParser implements LogBlockParser {
                 tmpCon = Consumable.newBoozeConsumable(itemName, adventureGain, amount, currentTurn);
             else if (DataTablesHandler.HANDLER.getSpleenHit(itemName) > 0)
                 tmpCon = Consumable.newSpleenConsumable(itemName,
-                                                        adventureGain,
-                                                        amount,
-                                                        currentTurn);
+                        adventureGain,
+                        amount,
+                        currentTurn);
             else
                 tmpCon = Consumable.newOtherConsumable(itemName, adventureGain, amount, currentTurn);
             tmpCon.setDayNumberOfUsage(logData.getLastDayChange().getDayNumber());
@@ -220,7 +242,7 @@ public final class ConsumableBlockParser implements LogBlockParser {
     }
 
     private void parseLlamaCockraochUsage(
-                                          final List<String> block, final LogDataHolder logData) {
+            final List<String> block, final LogDataHolder logData) {
         // The way this is implemented means that the cockroach stat gains
         // will be added to the third turn. Fixing this would however mean
         // even more hardcoding for it than is already done here and it
@@ -232,23 +254,23 @@ public final class ConsumableBlockParser implements LogBlockParser {
         final EquipmentChange lastEquipment = logData.getLastEquipmentChange();
         final FamiliarChange lastFamiliar = logData.getLastFamiliarChange();
         final SingleTurn tmpTurn1 = new SingleTurn(COCKROACH_AREA_ENCOUNTER_NAME,
-                                                   COCKROACH_AREA_ENCOUNTER_NAME,
-                                                   lastTurnNumber + 1,
-                                                   lastDayNumber,
-                                                   lastEquipment,
-                                                   lastFamiliar);
+                COCKROACH_AREA_ENCOUNTER_NAME,
+                lastTurnNumber + 1,
+                lastDayNumber,
+                lastEquipment,
+                lastFamiliar);
         final SingleTurn tmpTurn2 = new SingleTurn(COCKROACH_AREA_ENCOUNTER_NAME,
-                                                   COCKROACH_AREA_ENCOUNTER_NAME,
-                                                   lastTurnNumber + 2,
-                                                   lastDayNumber,
-                                                   lastEquipment,
-                                                   lastFamiliar);
+                COCKROACH_AREA_ENCOUNTER_NAME,
+                lastTurnNumber + 2,
+                lastDayNumber,
+                lastEquipment,
+                lastFamiliar);
         final SingleTurn tmpTurn3 = new SingleTurn(COCKROACH_AREA_ENCOUNTER_NAME,
-                                                   COCKROACH_AREA_ENCOUNTER_NAME,
-                                                   lastTurnNumber + 3,
-                                                   lastDayNumber,
-                                                   lastEquipment,
-                                                   lastFamiliar);
+                COCKROACH_AREA_ENCOUNTER_NAME,
+                lastTurnNumber + 3,
+                lastDayNumber,
+                lastEquipment,
+                lastFamiliar);
 
         tmpTurn1.setTurnVersion(TurnVersion.OTHER);
         tmpTurn2.setTurnVersion(TurnVersion.OTHER);
