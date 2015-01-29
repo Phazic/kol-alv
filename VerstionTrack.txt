@@ -1,0 +1,14 @@
+To Do:
+-Update free run mechanics (partial, still need gap/naval/parasol, tatter)
+-Update challenge path list (needs debugging)
+-Update yellow destruction list
+-add free run info to quest length tracking
+-on the trail
+
+2014-05-26 - Alan
+-Updated semi-rare list (unverified)
+-Updated zone names for quest turn calculation
+-Modified quest turn calculation to be more zone based than quest based (such as spookyraven floors)
+-Added new quest relevant drops to list that will be shown when they drop
+-Added rain-doh, ice sculpture and reanimator tracking to the copied combats section of the summary
+-Added black crayon monsters to list of hipster fights to avoid incorrect "free run" assessment
