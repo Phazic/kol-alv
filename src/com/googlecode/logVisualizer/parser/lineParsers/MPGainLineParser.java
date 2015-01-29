@@ -83,6 +83,9 @@ public final class MPGainLineParser extends AbstractLineParser {
             case ENCOUNTER:
                 if (lastInterval.getAreaName().equals("Rest in your dwelling"))
                     lastInterval.addMPGain(new MPGain(0, 0, amount, 0, 0));
+                else if (lastInterval.getAreaName().equals(
+                        "Rest in your bed in the Chateau"))
+                    lastInterval.addMPGain(new MPGain(0, 0, amount, 0, 0));
                 else
                     lastInterval.addMPGain(new MPGain(amount, 0, 0, 0, 0));
                 break;
