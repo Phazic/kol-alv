@@ -1249,7 +1249,9 @@ public final class LogDataHolder {
             if (areaName.equals("spooky putty monster") || areaName.equals("shaking 4-d camera")
                 || areaName.equals("photocopied monster")
                 || areaName.equals("rain-doh box full of monster")
-                || areaName.equals("ice sculpture"))
+                || areaName.equals("ice sculpture")
+                || areaName.equals("rain man")
+                || areaName.equals("chateau painting"))
                 results.add(ti);
         }
 
@@ -1401,6 +1403,9 @@ public final class LogDataHolder {
         SAUCEROR("Sauceror", StatClass.MYSTICALITY),
         DISCO_BANDIT("Disco Bandit", StatClass.MOXIE),
         ACCORDION_THIEF("Accordion Thief", StatClass.MOXIE),
+        AVATAR_OF_BORIS("Avatar of Boris", StatClass.MUSCLE),
+        AVATAR_OF_JARLSBERG("Avatar of Jarlsberg", StatClass.MYSTICALITY),
+        AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE),
         NOT_DEFINED("not defined", StatClass.MUSCLE);
 
         private static final Map<String, CharacterClass> stringToEnum = Maps.newHashMap();
@@ -1510,13 +1515,15 @@ public final class LogDataHolder {
         AVATAR_OF_BORIS("Avatar of Boris"),
         BUGBEAR_INVASION("Bugbear Invasion"),
         ZOMBIE_SLAYER("Zombie Slayer"),
-        CLASS_ACT("Class Act"),
         AVATAR_OF_JARLSBERG("Avatar of Jarlsberg"),
         BIG("BIG!"),
         KOLHS("KOLHS"),
         CLASS_ACT_II("Class Act II: A Class For Pigs"),
+        CLASS_ACT("Class Act"), // This needs to come after Class Act II as it's a substring
         AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete"),
         SLOW_AND_STEADY("Slow and Steady"),
+        HEAVY_RAINS("Heavy Rains"),
+        PICKY("Picky"),
         NOT_DEFINED("not defined");
 
         private static final Map<String, AscensionPath> stringToEnum = Maps.newHashMap();
