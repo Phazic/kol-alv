@@ -36,8 +36,8 @@ import net.java.dev.spellcast.utilities.DataUtilities;
 import net.java.dev.spellcast.utilities.UtilityConstants;
 
 import com.googlecode.logVisualizer.logData.LogDataHolder;
-import com.googlecode.logVisualizer.logData.MeatGain;
 import com.googlecode.logVisualizer.logData.LogDataHolder.AscensionPath;
+import com.googlecode.logVisualizer.logData.MeatGain;
 import com.googlecode.logVisualizer.logData.turn.SingleTurn;
 import com.googlecode.logVisualizer.logData.turn.TurnVersion;
 import com.googlecode.logVisualizer.logData.turn.turnAction.EquipmentChange;
@@ -45,10 +45,26 @@ import com.googlecode.logVisualizer.logData.turn.turnAction.FamiliarChange;
 import com.googlecode.logVisualizer.parser.LineParser;
 import com.googlecode.logVisualizer.parser.MafiaSessionLogReader;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
-import com.googlecode.logVisualizer.parser.lineParsers.*;
+import com.googlecode.logVisualizer.parser.lineParsers.CombatRecognizerLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.EquipmentLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.ItemAcquisitionLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser.MPGainType;
+import com.googlecode.logVisualizer.parser.lineParsers.MafiaDisintegrateLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.MafiaFreeRunawaysLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.MafiaRedRayStatsLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser.MeatGainType;
-import com.googlecode.logVisualizer.util.*;
+import com.googlecode.logVisualizer.parser.lineParsers.MeatSpentLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.OnTheTrailLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.SkillCastLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.StarfishMPGainLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.StatLineParser;
+import com.googlecode.logVisualizer.util.DataNumberPair;
+import com.googlecode.logVisualizer.util.Lists;
+import com.googlecode.logVisualizer.util.Maps;
+import com.googlecode.logVisualizer.util.Sets;
+import com.googlecode.logVisualizer.util.Stack;
 
 /**
  * A parser for the turn spent notation in mafia logs.
@@ -69,12 +85,12 @@ public final class EncounterBlockParser implements LogBlockParser {
         final String commentStart = "//";
         String tmpLine;
         final BufferedReader br = DataUtilities.getReader(UtilityConstants.KOL_DATA_DIRECTORY,
-                                                          "areaNameMappings.txt");
+                "areaNameMappings.txt");
 
         try {
             while ((tmpLine = br.readLine()) != null)
                 if (!tmpLine.startsWith(commentStart)
-                    && areaNameMappingPattern.matcher(tmpLine).matches()) {
+                        && areaNameMappingPattern.matcher(tmpLine).matches()) {
                     final Scanner s = new Scanner(tmpLine);
                     s.useDelimiter(splitPattern);
 
@@ -92,18 +108,18 @@ public final class EncounterBlockParser implements LogBlockParser {
     }
 
     private static final Set<String> OTHER_ENCOUNTER_AREAS_SET = Sets.immutableSetOf("Unlucky Sewer",
-                                                                                     "Sewer With Clovers",
-                                                                                     "Lemon Party",
-                                                                                     "Guild Challenge",
-                                                                                     "Mining (In Disguise)",
-                                                                                     "Itznotyerzitz Mine (in Disguise)");
+            "Sewer With Clovers",
+            "Lemon Party",
+            "Guild Challenge",
+            "Mining (In Disguise)",
+            "Itznotyerzitz Mine (in Disguise)");
 
     private static final Set<String> GAME_GRID_AREAS_SET = Sets.immutableSetOf("DemonStar",
-                                                                               "Meteoid",
-                                                                               "The Fighters of Fighting",
-                                                                               "Dungeon Fist!",
-                                                                               "Space Trip",
-                                                                               "Jackass Plumber");
+            "Meteoid",
+            "The Fighters of Fighting",
+            "Dungeon Fist!",
+            "Space Trip",
+            "Jackass Plumber");
 
     private static final String ENCOUNTER_START_STRING = "Encounter: ";
 
@@ -130,8 +146,8 @@ public final class EncounterBlockParser implements LogBlockParser {
     private final List<LineParser> lineParsers = Lists.newArrayList();
 
     public EncounterBlockParser(
-                                final Stack<EquipmentChange> equipmentStack,
-                                final Map<String, String> familiarEquipmentMap) {
+            final Stack<EquipmentChange> equipmentStack,
+            final Map<String, String> familiarEquipmentMap) {
         lineParsers.add(new ItemAcquisitionLineParser());
         lineParsers.add(new SkillCastLineParser());
         lineParsers.add(new MeatLineParser(MeatGainType.ENCOUNTER));
@@ -151,9 +167,9 @@ public final class EncounterBlockParser implements LogBlockParser {
      * {@inheritDoc}
      */
     public void parseBlock(
-                           final List<String> block, final LogDataHolder logData) {
+            final List<String> block, final LogDataHolder logData) {
         final String turnSpentLine = block.get(0).startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) ? block.get(0)
-                                                                                                : block.get(1);
+                : block.get(1);
         final SingleTurn turn;
         final int dayNumber = logData.getLastDayChange().getDayNumber();
 
@@ -166,15 +182,16 @@ public final class EncounterBlockParser implements LogBlockParser {
             final int turnNumber = logData.getLastTurnSpent().getTurnNumber() + 1;
 
             turn = new SingleTurn(encounterName,
-                                  encounterName,
-                                  turnNumber,
-                                  dayNumber,
-                                  logData.getLastEquipmentChange(),
-                                  logData.getLastFamiliarChange());
+                    encounterName,
+                    turnNumber,
+                    dayNumber,
+                    logData.getLastEquipmentChange(),
+                    logData.getLastFamiliarChange());
             turn.setTurnVersion(TurnVersion.OTHER);
         } else {
             // Area name
             final int positionTurnEndBrace = turnSpentLine.indexOf(UsefulPatterns.SQUARE_BRACKET_CLOSE);
+
             String areaName = turnSpentLine.substring(positionTurnEndBrace + 2);
 
             // Check whether there is a mapping for the given area name
@@ -185,8 +202,8 @@ public final class EncounterBlockParser implements LogBlockParser {
             // screws up the turn number, plus the turn version of these should
             // be marked as OTHER, so this check has to be done anyway later on.
             final boolean isCraftingTurn = areaName.startsWith(COOKING_START_STRING)
-                                           || areaName.startsWith(MIXING_START_STRING)
-                                           || areaName.startsWith(SMITHING_START_STRING);
+                    || areaName.startsWith(MIXING_START_STRING)
+                    || areaName.startsWith(SMITHING_START_STRING);
 
             // Turn number
             // Special handling for crafting turns, because mafia screws up the
@@ -195,15 +212,16 @@ public final class EncounterBlockParser implements LogBlockParser {
             final int positionTurnStartBrace = turnSpentLine.indexOf(UsefulPatterns.SQUARE_BRACKET_OPEN);
             if (isCraftingTurn)
                 turnNumber = Integer.parseInt(turnSpentLine.substring(positionTurnStartBrace + 1,
-                                                                      positionTurnEndBrace)) - 1;
+                        positionTurnEndBrace)) - 1;
             else
                 turnNumber = Integer.parseInt(turnSpentLine.substring(positionTurnStartBrace + 1,
-                                                                      positionTurnEndBrace));
+                        positionTurnEndBrace));
 
             // Now parse the encounter name.
             String encounterName = UsefulPatterns.EMPTY_STRING;
             boolean isMultipleCombatsHandling = false;
             for (final String line : block)
+            {
                 if (line.startsWith(ENCOUNTER_START_STRING)) {
                     if (line.length() == ENCOUNTER_START_STRING.length()) {
                         // Something strange happened here. Do not count this
@@ -217,8 +235,15 @@ public final class EncounterBlockParser implements LogBlockParser {
 
                     encounterName = line.substring(ENCOUNTER_START_STRING.length());
                     isMultipleCombatsHandling = MafiaSessionLogReader.BROKEN_AREAS_ENCOUNTER_SET.contains(line);
-                    break;
+
+                    if (encounterName.contains("Rainy Fax Dreams on your Wedding Day") == false) {
+                        break;
+                    } else {
+                        // Rain man has dual Encounter
+                        continue;
+                    }
                 }
+            }
 
             // If a combat may span over multiple turns, it will be handled in
             // here.
@@ -236,11 +261,11 @@ public final class EncounterBlockParser implements LogBlockParser {
                 // into this category here)
                 for (int i = 0; i < combatCounter; i++) {
                     final SingleTurn tmp = new SingleTurn(areaName,
-                                                          encounterName,
-                                                          turnNumber,
-                                                          dayNumber,
-                                                          logData.getLastEquipmentChange(),
-                                                          logData.getLastFamiliarChange());
+                            encounterName,
+                            turnNumber,
+                            dayNumber,
+                            logData.getLastEquipmentChange(),
+                            logData.getLastFamiliarChange());
                     tmp.setTurnVersion(TurnVersion.COMBAT);
                     logData.addTurnSpent(tmp);
                     turnNumber++;
@@ -248,11 +273,11 @@ public final class EncounterBlockParser implements LogBlockParser {
             }
 
             turn = new SingleTurn(areaName,
-                                  encounterName,
-                                  turnNumber,
-                                  dayNumber,
-                                  logData.getLastEquipmentChange(),
-                                  logData.getLastFamiliarChange());
+                    encounterName,
+                    turnNumber,
+                    dayNumber,
+                    logData.getLastEquipmentChange(),
+                    logData.getLastFamiliarChange());
 
             // Set turn version. If the turn is a crafting turn, or the area
             // name is inside the other-encounters set, set the turn version to
@@ -281,7 +306,7 @@ public final class EncounterBlockParser implements LogBlockParser {
      * the lineParsers list.
      */
     private void parseAllLines(
-                               final List<String> block, final LogDataHolder logData) {
+            final List<String> block, final LogDataHolder logData) {
         for (final String line : block)
             for (final LineParser lp : lineParsers)
                 // If the line parser can parse the line, this method also
@@ -301,7 +326,7 @@ public final class EncounterBlockParser implements LogBlockParser {
      * <p>
      * Additionally, this method has to and will handle adding the given turn to
      * the LogDataHolder if the encounter is special.
-     * 
+     *
      * @param turn
      *            The encounter which is tested on whether it is special.
      * @param block
@@ -313,8 +338,8 @@ public final class EncounterBlockParser implements LogBlockParser {
      *         given encounter is special, otherwise {@code false}.
      */
     private boolean specialEncounterHandling(
-                                             final SingleTurn turn, final List<String> block,
-                                             final LogDataHolder logData) {
+            final SingleTurn turn, final List<String> block,
+            final LogDataHolder logData) {
         if (turn.getAreaName().endsWith(SHORE_AREAS_END_STRING)) {
             final EquipmentChange lastEquipment = logData.getLastEquipmentChange();
             final FamiliarChange lastFamiliar = logData.getLastFamiliarChange();
@@ -326,43 +351,43 @@ public final class EncounterBlockParser implements LogBlockParser {
             if (logData.getAscensionPath() == AscensionPath.WAY_OF_THE_SURPRISING_FIST) {
                 shoreTrips.add(turn);
                 shoreTrips.add(new SingleTurn(turn.getAreaName(),
-                                              turn.getEncounterName(),
-                                              turn.getTurnNumber() + 1,
-                                              turn.getDayNumber(),
-                                              lastEquipment,
-                                              lastFamiliar));
+                        turn.getEncounterName(),
+                        turn.getTurnNumber() + 1,
+                        turn.getDayNumber(),
+                        lastEquipment,
+                        lastFamiliar));
                 shoreTrips.add(new SingleTurn(turn.getAreaName(),
-                                              turn.getEncounterName(),
-                                              turn.getTurnNumber() + 2,
-                                              turn.getDayNumber(),
-                                              lastEquipment,
-                                              lastFamiliar));
+                        turn.getEncounterName(),
+                        turn.getTurnNumber() + 2,
+                        turn.getDayNumber(),
+                        lastEquipment,
+                        lastFamiliar));
                 shoreTrips.add(new SingleTurn(turn.getAreaName(),
-                                              turn.getEncounterName(),
-                                              turn.getTurnNumber() + 3,
-                                              turn.getDayNumber(),
-                                              lastEquipment,
-                                              lastFamiliar));
+                        turn.getEncounterName(),
+                        turn.getTurnNumber() + 3,
+                        turn.getDayNumber(),
+                        lastEquipment,
+                        lastFamiliar));
                 shoreTrips.add(new SingleTurn(turn.getAreaName(),
-                                              turn.getEncounterName(),
-                                              turn.getTurnNumber() + 4,
-                                              turn.getDayNumber(),
-                                              lastEquipment,
-                                              lastFamiliar));
+                        turn.getEncounterName(),
+                        turn.getTurnNumber() + 4,
+                        turn.getDayNumber(),
+                        lastEquipment,
+                        lastFamiliar));
             } else {
                 shoreTrips.add(turn);
                 shoreTrips.add(new SingleTurn(turn.getAreaName(),
-                                              turn.getEncounterName(),
-                                              turn.getTurnNumber() + 1,
-                                              turn.getDayNumber(),
-                                              lastEquipment,
-                                              lastFamiliar));
+                        turn.getEncounterName(),
+                        turn.getTurnNumber() + 1,
+                        turn.getDayNumber(),
+                        lastEquipment,
+                        lastFamiliar));
                 shoreTrips.add(new SingleTurn(turn.getAreaName(),
-                                              turn.getEncounterName(),
-                                              turn.getTurnNumber() + 2,
-                                              turn.getDayNumber(),
-                                              lastEquipment,
-                                              lastFamiliar));
+                        turn.getEncounterName(),
+                        turn.getTurnNumber() + 2,
+                        turn.getDayNumber(),
+                        lastEquipment,
+                        lastFamiliar));
 
                 // Shore trip costs 500 meat.
                 logData.getLastTurnSpent().addMeat(new MeatGain(0, 0, 500));
@@ -388,13 +413,13 @@ public final class EncounterBlockParser implements LogBlockParser {
 
             // Check if the correct choices were taken.
             if (firstChoice.equals("choice.php?whichchoice=151option=1")
-                && secondChoice.equals("choice.php?whichchoice=152option=1")) {
+                    && secondChoice.equals("choice.php?whichchoice=152option=1")) {
                 final SingleTurn clownlord = new SingleTurn(turn.getAreaName(),
-                                                            "Clownlord Beelzebozo",
-                                                            turn.getTurnNumber() + 1,
-                                                            turn.getDayNumber(),
-                                                            logData.getLastEquipmentChange(),
-                                                            logData.getLastFamiliarChange());
+                        "Clownlord Beelzebozo",
+                        turn.getTurnNumber() + 1,
+                        turn.getDayNumber(),
+                        logData.getLastEquipmentChange(),
+                        logData.getLastFamiliarChange());
 
                 logData.addTurnSpent(turn);
                 logData.addTurnSpent(clownlord);
@@ -409,11 +434,11 @@ public final class EncounterBlockParser implements LogBlockParser {
             logData.addTurnSpent(turn);
             for (int i = 1; i < 5; i++) {
                 final SingleTurn tmpTurn = new SingleTurn(turn.getAreaName(),
-                                                          turn.getEncounterName(),
-                                                          turn.getTurnNumber() + i,
-                                                          turn.getDayNumber(),
-                                                          lastEquipment,
-                                                          lastFamiliar);
+                        turn.getEncounterName(),
+                        turn.getTurnNumber() + i,
+                        turn.getDayNumber(),
+                        lastEquipment,
+                        lastFamiliar);
                 tmpTurn.setTurnVersion(TurnVersion.OTHER);
                 logData.addTurnSpent(tmpTurn);
             }
@@ -429,8 +454,8 @@ public final class EncounterBlockParser implements LogBlockParser {
      * such.
      */
     private void lostCombatHandling(
-                                    final List<String> block, final SingleTurn turn,
-                                    final LogDataHolder logData) {
+            final List<String> block, final SingleTurn turn,
+            final LogDataHolder logData) {
         if (turn.getTurnVersion() != TurnVersion.COMBAT)
             return;
 
@@ -442,7 +467,7 @@ public final class EncounterBlockParser implements LogBlockParser {
         if (lastLine.contains(OUTFIT_STRING) || lastLine.startsWith(MCD_STRING))
             lastLine = block.get(block.size() - 2);
         if (lastLine.startsWith(HP_LOSE_STRING_BEGINNING)
-            && HP_LOSE_PATTERN.matcher(lastLine).matches())
+                && HP_LOSE_PATTERN.matcher(lastLine).matches())
             isPotentiallyLost = true;
 
         if (isPotentiallyLost) {

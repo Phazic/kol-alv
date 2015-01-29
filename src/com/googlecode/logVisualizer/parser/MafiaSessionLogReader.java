@@ -24,7 +24,11 @@
 
 package com.googlecode.logVisualizer.parser;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -38,13 +42,13 @@ import com.googlecode.logVisualizer.util.Sets;
  */
 public final class MafiaSessionLogReader {
     public static final Set<String> BROKEN_AREAS_ENCOUNTER_SET = Sets.immutableSetOf("Encounter: Big Wisniewski",
-                                                                                     "Encounter: The Big Wisniewski",
-                                                                                     "Encounter: The Man",
-                                                                                     "Encounter: Lord Spookyraven",
-                                                                                     "Encounter: Ed the Undying",
-                                                                                     "Encounter: The Infiltrationist",
-                                                                                     "Encounter: giant sandworm",
-                                                                                     "Encounter: Wu Tang the Betrayer");
+            "Encounter: The Big Wisniewski",
+            "Encounter: The Man",
+            "Encounter: Lord Spookyraven",
+            "Encounter: Ed the Undying",
+            "Encounter: The Infiltrationist",
+            "Encounter: giant sandworm",
+            "Encounter: Wu Tang the Betrayer");
 
     private static final String ENCOUNTER_START_STRING = "Encounter: ";
 
@@ -83,8 +87,8 @@ public final class MafiaSessionLogReader {
      *             if there were issues with accessing the log
      */
     MafiaSessionLogReader(
-                          final File log)
-                                         throws IOException {
+            final File log)
+                    throws IOException {
         if (!log.exists())
             throw new IllegalArgumentException("Log file must exist.");
         if (log.isDirectory())
@@ -103,7 +107,7 @@ public final class MafiaSessionLogReader {
      * <li>Player snapshot blocks</li>
      * <li>Other blocks (for everything else that wouldn't fit in the above
      * categories)</li>
-     * 
+     *
      * @return The parsed out text block from the session log.
      * @throws IOException
      *             if there were issues with reading the log; in certain
@@ -113,7 +117,7 @@ public final class MafiaSessionLogReader {
      *             if there is no more block to parse in the session log
      */
     LogBlock next()
-                   throws IOException {
+            throws IOException {
         final LogBlock block;
 
         log.mark(500);
@@ -142,7 +146,7 @@ public final class MafiaSessionLogReader {
         do
             log.mark(500);
         while ((line = log.readLine()) != null
-               && (line.length() <= 0 || line.length() >= 450 || isLineOnBlackList(line)));
+                && (line.length() <= 0 || line.length() >= 450 || isLineOnBlackList(line)));
         if (line == null)
             hasNext = false;
         else
@@ -152,42 +156,45 @@ public final class MafiaSessionLogReader {
     }
 
     private boolean isLineOnBlackList(
-                                      final String line) {
+            final String line) {
         return line.startsWith("mall.php") || line.startsWith("manageprices.php")
-               || line.startsWith("familiarnames.php");
+                || line.startsWith("familiarnames.php");
     }
 
     private boolean isEncounterBlockStart(
-                                          String line, String line2) {
-        return line.startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN)
-               && UsefulPatterns.TURNS_USED.matcher(line).matches()
-               || line2.startsWith(ENCOUNTER_START_STRING)
-               && BROKEN_AREAS_ENCOUNTER_SET.contains(line2);
+            String line, String line2) {
+        // Add support for Rain Man detection
+        return (line.startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) &&
+                UsefulPatterns.TURNS_USED.matcher(line).matches()) ||
+                (line2.startsWith(ENCOUNTER_START_STRING) &&
+                        BROKEN_AREAS_ENCOUNTER_SET.contains(line2)) ||
+                        line.contains("cast 1 Rain Man");
+
     }
 
     private boolean isConsumableBlockStart(
-                                           String line) {
+            String line) {
         return (line.startsWith(USE_STRING) || line.startsWith(EAT_STRING)
                 || line.startsWith(DRINK_STRING) || line.startsWith(BUY_STRING))
-               && UsefulPatterns.CONSUMABLE_USED.matcher(line).matches();
+                && UsefulPatterns.CONSUMABLE_USED.matcher(line).matches();
     }
 
     private List<String> parseEncounterBlock()
-                                              throws IOException {
+            throws IOException {
         final List<String> result = Lists.newArrayList();
         String line;
 
         while ((line = log.readLine()) != null) {
             /**
              * Mafia saves a familiar pound gain this way in older versions:
-             * 
+             *
              * <pre>
              * Round _NUMBER_: _FAMNAME_ gains a pound!
-             * 
+             *
              * familiar _FAMTYPE_ (_POUNDS_ lbs)
-             * 
+             *
              * </pre>
-             * 
+             *
              * This is problematic because empty lines will end the while loop
              * even though the combat rundown isn't over. Thus we attempt to
              * skip the above mentioned lines.
@@ -227,7 +234,7 @@ public final class MafiaSessionLogReader {
                     // A square bracket means that a new turn was started. Extra
                     // check for the level 12 quest bossfight.
                     if (tmpLine == null || tmpLine.startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN)
-                        || tmpLine.startsWith(LEVEL_12_QUEST_BOSSFIGHT_BEGINNING_STRING))
+                            || tmpLine.startsWith(LEVEL_12_QUEST_BOSSFIGHT_BEGINNING_STRING))
                         break;
                     else if (tmpLine.startsWith(UsefulPatterns.COMBAT_ROUND_LINE_BEGINNING_STRING)) {
                         isFightContinued = true;
@@ -254,7 +261,7 @@ public final class MafiaSessionLogReader {
     }
 
     private List<String> parsePlayerSnapshotBlock()
-                                                   throws IOException {
+            throws IOException {
         final List<String> result = Lists.newArrayList();
         String line;
 
@@ -273,7 +280,7 @@ public final class MafiaSessionLogReader {
     }
 
     private List<String> parseNormalBlock()
-                                           throws IOException {
+            throws IOException {
         final List<String> result = Lists.newArrayList();
         String line;
 
@@ -289,7 +296,7 @@ public final class MafiaSessionLogReader {
     /**
      * Use this method to check whether {@link #next()} is still able to return
      * another {@link LogBlock}.
-     * 
+     *
      * @return True if there are still blocks left to parse in the session log.
      */
     boolean hasNext() {
@@ -334,7 +341,7 @@ public final class MafiaSessionLogReader {
         private final LogBlockType blockType;
 
         LogBlockImpl(
-                     final List<String> blockLines, final LogBlockType blockType) {
+                final List<String> blockLines, final LogBlockType blockType) {
             if (blockLines == null)
                 throw new NullPointerException("The list of lines must not be null.");
             if (blockType == null)
