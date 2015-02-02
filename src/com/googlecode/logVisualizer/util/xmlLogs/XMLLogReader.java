@@ -24,7 +24,11 @@
 
 package com.googlecode.logVisualizer.util.xmlLogs;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -34,9 +38,16 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import com.googlecode.logVisualizer.logData.*;
+import com.googlecode.logVisualizer.logData.HeaderFooterComment;
+import com.googlecode.logVisualizer.logData.Item;
+import com.googlecode.logVisualizer.logData.LogComment;
+import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.LogDataHolder.AscensionPath;
 import com.googlecode.logVisualizer.logData.LogDataHolder.GameMode;
+import com.googlecode.logVisualizer.logData.MPGain;
+import com.googlecode.logVisualizer.logData.MeatGain;
+import com.googlecode.logVisualizer.logData.Skill;
+import com.googlecode.logVisualizer.logData.Statgain;
 import com.googlecode.logVisualizer.logData.consumables.Consumable;
 import com.googlecode.logVisualizer.logData.consumables.Consumable.ConsumableVersion;
 import com.googlecode.logVisualizer.logData.logSummary.LevelData;
@@ -44,8 +55,16 @@ import com.googlecode.logVisualizer.logData.turn.DetailedTurnInterval;
 import com.googlecode.logVisualizer.logData.turn.SingleTurn;
 import com.googlecode.logVisualizer.logData.turn.TurnInterval;
 import com.googlecode.logVisualizer.logData.turn.TurnVersion;
-import com.googlecode.logVisualizer.logData.turn.turnAction.*;
-import com.googlecode.logVisualizer.util.*;
+import com.googlecode.logVisualizer.logData.turn.turnAction.DayChange;
+import com.googlecode.logVisualizer.logData.turn.turnAction.EquipmentChange;
+import com.googlecode.logVisualizer.logData.turn.turnAction.FamiliarChange;
+import com.googlecode.logVisualizer.logData.turn.turnAction.PlayerSnapshot;
+import com.googlecode.logVisualizer.logData.turn.turnAction.Pull;
+import com.googlecode.logVisualizer.util.DataNumberPair;
+import com.googlecode.logVisualizer.util.Lists;
+import com.googlecode.logVisualizer.util.Maps;
+import com.googlecode.logVisualizer.util.Pair;
+import com.googlecode.logVisualizer.util.Stack;
 
 /**
  * This class gives access to methods to parse XML data files containing
@@ -63,7 +82,7 @@ public final class XMLLogReader {
     /**
      * Returns a {@link LogDataHolder} object containing the data of the given
      * ascension log XML file.
-     * 
+     *
      * @param xmlLog
      *            The ascension log XML file which is supposed to be parsed.
      * @return The resulting log data from the given ascension log XML file.
@@ -71,9 +90,9 @@ public final class XMLLogReader {
      *             if the given file isn't an existing file
      */
     public static LogDataHolder parseXMLLog(
-                                            final File xmlLog)
-                                                              throws FileAccessException,
-                                                              XMLAccessException {
+            final File xmlLog)
+                    throws FileAccessException,
+                    XMLAccessException {
         if (xmlLog == null)
             throw new NullPointerException("The XML log file reference must not be null.");
         if (!xmlLog.isFile())
@@ -123,7 +142,7 @@ public final class XMLLogReader {
     private final Stack<EquipmentChange> equipmentStack = Stack.newStack();
 
     private XMLLogReader(
-                         final XMLStreamReader parser) {
+            final XMLStreamReader parser) {
         if (parser == null)
             throw new NullPointerException("The XML parser must not be null.");
 
@@ -135,32 +154,32 @@ public final class XMLLogReader {
     }
 
     private LogDataHolder parseLog()
-                                    throws XMLStreamException {
+            throws XMLStreamException {
         String ascensionLogXMLVersion = "";
         String fileCreatorName = "";
         String fileCreatorVersion = "";
 
         while (parser.hasNext()) {
             switch (parser.getEventType()) {
-                case XMLStreamConstants.START_ELEMENT:
-                    final String nodeName = parser.getLocalName();
+            case XMLStreamConstants.START_ELEMENT:
+                final String nodeName = parser.getLocalName();
 
-                    if (nodeName.equals("ascensionlogxml")) {
-                        for (int i = 0; i < parser.getAttributeCount(); i++)
-                            if (parser.getAttributeLocalName(i).equals("version"))
-                                ascensionLogXMLVersion = parser.getAttributeValue(i);
-                    } else if (nodeName.equals("filecreator")) {
-                        for (int i = 0; i < parser.getAttributeCount(); i++)
-                            if (parser.getAttributeLocalName(i).equals("programname"))
-                                fileCreatorName = parser.getAttributeValue(i);
-                            else if (parser.getAttributeLocalName(i).equals("programversion"))
-                                fileCreatorVersion = parser.getAttributeValue(i);
-                    } else if (nodeName.equals("ascension"))
-                        parseAscension();
+                if (nodeName.equals("ascensionlogxml")) {
+                    for (int i = 0; i < parser.getAttributeCount(); i++)
+                        if (parser.getAttributeLocalName(i).equals("version"))
+                            ascensionLogXMLVersion = parser.getAttributeValue(i);
+                } else if (nodeName.equals("filecreator")) {
+                    for (int i = 0; i < parser.getAttributeCount(); i++)
+                        if (parser.getAttributeLocalName(i).equals("programname"))
+                            fileCreatorName = parser.getAttributeValue(i);
+                        else if (parser.getAttributeLocalName(i).equals("programversion"))
+                            fileCreatorVersion = parser.getAttributeValue(i);
+                } else if (nodeName.equals("ascension"))
+                    parseAscension();
 
-                    break;
-                default:
-                    break;
+                break;
+            default:
+                break;
             }
             parser.next();
         }
@@ -169,7 +188,7 @@ public final class XMLLogReader {
     }
 
     private void parseAscension()
-                                 throws XMLStreamException {
+            throws XMLStreamException {
         Map<Integer, TurnInterval> intervals = null;
         String characterName = "";
         String startData = "";
@@ -190,39 +209,39 @@ public final class XMLLogReader {
             while (parser.hasNext()) {
                 parser.next();
                 switch (parser.getEventType()) {
-                    case XMLStreamConstants.START_ELEMENT:
-                        final String nodeName = parser.getLocalName();
+                case XMLStreamConstants.START_ELEMENT:
+                    final String nodeName = parser.getLocalName();
 
-                        if (nodeName.equals("turnrundown"))
-                            intervals = parseTurnRundown();
-                        else if (nodeName.equals("daychanges"))
-                            parseDayChanges();
-                        else if (nodeName.equals("levels"))
-                            parseLevels();
-                        else if (nodeName.equals("playersnapshots"))
-                            parsePlayerSnapshots();
-                        else if (nodeName.equals("pulls"))
-                            parsePulls();
-                        else if (nodeName.equals("huntedcombats"))
-                            parseHuntedCombats();
-                        else if (nodeName.equals("lostcombats"))
-                            parseLostCombats();
+                    if (nodeName.equals("turnrundown"))
+                        intervals = parseTurnRundown();
+                    else if (nodeName.equals("daychanges"))
+                        parseDayChanges();
+                    else if (nodeName.equals("levels"))
+                        parseLevels();
+                    else if (nodeName.equals("playersnapshots"))
+                        parsePlayerSnapshots();
+                    else if (nodeName.equals("pulls"))
+                        parsePulls();
+                    else if (nodeName.equals("huntedcombats"))
+                        parseHuntedCombats();
+                    else if (nodeName.equals("lostcombats"))
+                        parseLostCombats();
 
-                        break;
-                    case XMLStreamConstants.END_ELEMENT:
-                        if (parser.getLocalName().equals("ascension"))
-                            break ascensionParsing;
-                    default:
-                        break;
+                    break;
+                case XMLStreamConstants.END_ELEMENT:
+                    if (parser.getLocalName().equals("ascension"))
+                        break ascensionParsing;
+                default:
+                    break;
                 }
             }
         }
 
         // Create the familiar and equipment change lists from the logged turns.
         final List<FamiliarChange> famChanges = Lists.newArrayList(logData.getLastTurnSpent()
-                                                                          .getTurnNumber());
+                .getTurnNumber());
         final List<EquipmentChange> equipChanges = Lists.newArrayList(logData.getLastTurnSpent()
-                                                                             .getTurnNumber());
+                .getTurnNumber());
         for (final SingleTurn st : logData.getTurnsSpent()) {
             famChanges.add(st.getUsedFamiliar());
             equipChanges.add(st.getUsedEquipment());
@@ -245,25 +264,25 @@ public final class XMLLogReader {
     }
 
     private Map<Integer, TurnInterval> parseTurnRundown()
-                                                         throws XMLStreamException {
+            throws XMLStreamException {
         final Map<Integer, TurnInterval> intervals = Maps.newHashMap();
 
         turnRundownParsing: {
             while (parser.hasNext()) {
                 parser.next();
                 switch (parser.getEventType()) {
-                    case XMLStreamConstants.START_ELEMENT:
-                        if (parser.getLocalName().equals("turninterval")) {
-                            final TurnInterval currentInterval = parseTurnInterval();
-                            intervals.put(currentInterval.getEndTurn(), currentInterval);
-                        }
+                case XMLStreamConstants.START_ELEMENT:
+                    if (parser.getLocalName().equals("turninterval")) {
+                        final TurnInterval currentInterval = parseTurnInterval();
+                        intervals.put(currentInterval.getEndTurn(), currentInterval);
+                    }
 
-                        break;
-                    case XMLStreamConstants.END_ELEMENT:
-                        if (parser.getLocalName().equals("turnrundown"))
-                            break turnRundownParsing;
-                    default:
-                        break;
+                    break;
+                case XMLStreamConstants.END_ELEMENT:
+                    if (parser.getLocalName().equals("turnrundown"))
+                        break turnRundownParsing;
+                default:
+                    break;
                 }
             }
         }
@@ -272,7 +291,7 @@ public final class XMLLogReader {
     }
 
     private TurnInterval parseTurnInterval()
-                                            throws XMLStreamException {
+            throws XMLStreamException {
         final List<SingleTurn> turns = Lists.newArrayList();
         String areaName = "";
         Pair<LogComment, LogComment> comments = null;
@@ -281,9 +300,9 @@ public final class XMLLogReader {
                 areaName = parser.getAttributeValue(i);
 
         turnIntervalParsing: {
-            while (parser.hasNext()) {
-                parser.next();
-                switch (parser.getEventType()) {
+                while (parser.hasNext()) {
+                    parser.next();
+                    switch (parser.getEventType()) {
                     case XMLStreamConstants.START_ELEMENT:
                         if (parser.getLocalName().equals("turn"))
                             turns.add(parseTurn(areaName));
@@ -296,28 +315,31 @@ public final class XMLLogReader {
                             break turnIntervalParsing;
                     default:
                         break;
+                    }
                 }
             }
-        }
 
         final List<SingleTurn> actualTurns = Lists.newArrayList(turns.size());
         for (final SingleTurn st : turns)
             if (!actualTurns.isEmpty()
-                && actualTurns.get(actualTurns.size() - 1).getTurnNumber() != st.getTurnNumber())
+                    && actualTurns.get(actualTurns.size() - 1).getTurnNumber() != st.getTurnNumber())
                 actualTurns.add(st);
 
         final TurnInterval interval = new DetailedTurnInterval(actualTurns, areaName);
         if (comments != null) {
             interval.setPreIntervalComment(comments.getVar1());
             interval.setPostIntervalComment(comments.getVar2());
+
+            // Add the notes to the actual log data
+            logData.getLastTurnSpent().setNotes(comments.getVar2().toString());
         }
 
         return interval;
     }
 
     private SingleTurn parseTurn(
-                                 final String area)
-                                                   throws XMLStreamException {
+            final String area)
+                    throws XMLStreamException {
         final List<Item> itemDrops = Lists.newArrayList();
         final List<Skill> skills = Lists.newArrayList();
         final List<Consumable> consumables = Lists.newArrayList();
@@ -341,21 +363,21 @@ public final class XMLLogReader {
                 turnVersion = TurnVersion.fromString(parser.getAttributeValue(i));
 
         turnParsing: {
-            while (parser.hasNext()) {
-                parser.next();
-                switch (parser.getEventType()) {
+                while (parser.hasNext()) {
+                    parser.next();
+                    switch (parser.getEventType()) {
                     case XMLStreamConstants.START_ELEMENT:
                         final String nodeName = parser.getLocalName();
 
                         if (nodeName.equals("areaname")) {
                             parser.next();
                             if (parser.getEventType() == XMLStreamConstants.CHARACTERS
-                                && !parser.isWhiteSpace())
+                                    && !parser.isWhiteSpace())
                                 areaName = parser.getText();
                         } else if (nodeName.equals("encountername")) {
                             parser.next();
                             if (parser.getEventType() == XMLStreamConstants.CHARACTERS
-                                && !parser.isWhiteSpace())
+                                    && !parser.isWhiteSpace())
                                 encounterName = parser.getText();
                         } else if (nodeName.equals("day")) {
                             parser.next();
@@ -365,7 +387,7 @@ public final class XMLLogReader {
                             final FamiliarChange oldFamiliar = familiarStack.peek().get();
                             if (!parser.getText().equals(oldFamiliar.getFamiliarName())) {
                                 familiar = new FamiliarChange(parser.getText(),
-                                                              turnNumber > 0 ? turnNumber - 1 : 0);
+                                        turnNumber > 0 ? turnNumber - 1 : 0);
                                 if (oldFamiliar.getTurnNumber() != familiar.getTurnNumber())
                                     familiarStack.push(familiar);
                             } else
@@ -396,9 +418,9 @@ public final class XMLLogReader {
                         } else if (nodeName.equals("notes")) {
                             parser.next();
                             if (parser.getEventType() == XMLStreamConstants.CHARACTERS
-                                && !parser.isWhiteSpace())
+                                    && !parser.isWhiteSpace())
                                 comment.setComments(LINEBREAK_FINDER.matcher(parser.getText())
-                                                                    .replaceAll("\n"));
+                                        .replaceAll("\n"));
                         } else if (nodeName.equals("itemdrop"))
                             itemDrops.add(parseItemdrop(turnNumber));
                         else if (nodeName.equals("skillcast"))
@@ -412,16 +434,16 @@ public final class XMLLogReader {
                             break turnParsing;
                     default:
                         break;
+                    }
                 }
             }
-        }
 
         final SingleTurn turn = new SingleTurn(areaName,
-                                               encounterName,
-                                               turnNumber,
-                                               dayNumber,
-                                               equipment,
-                                               familiar);
+                encounterName,
+                turnNumber,
+                dayNumber,
+                equipment,
+                familiar);
         turn.setDroppedItems(itemDrops);
         turn.setSkillsCast(skills);
         turn.setConsumablesUsed(consumables);
@@ -439,8 +461,8 @@ public final class XMLLogReader {
     }
 
     private EquipmentChange parseEquipment(
-                                           final int turnNumber)
-                                                                throws XMLStreamException {
+            final int turnNumber)
+                    throws XMLStreamException {
         String hat = EquipmentChange.NO_EQUIPMENT_STRING;
         String weapon = EquipmentChange.NO_EQUIPMENT_STRING;
         String offhand = EquipmentChange.NO_EQUIPMENT_STRING;
@@ -455,62 +477,62 @@ public final class XMLLogReader {
             while (parser.hasNext()) {
                 parser.next();
                 switch (parser.getEventType()) {
-                    case XMLStreamConstants.START_ELEMENT:
-                        final String nodeName = parser.getLocalName();
+                case XMLStreamConstants.START_ELEMENT:
+                    final String nodeName = parser.getLocalName();
 
-                        if (nodeName.equals("hat")) {
-                            parser.next();
-                            hat = parser.getText();
-                        } else if (nodeName.equals("weapon")) {
-                            parser.next();
-                            weapon = parser.getText();
-                        } else if (nodeName.equals("offhand")) {
-                            parser.next();
-                            offhand = parser.getText();
-                        } else if (nodeName.equals("shirt")) {
-                            parser.next();
-                            shirt = parser.getText();
-                        } else if (nodeName.equals("pants")) {
-                            parser.next();
-                            pants = parser.getText();
-                        } else if (nodeName.equals("acc1")) {
-                            parser.next();
-                            acc1 = parser.getText();
-                        } else if (nodeName.equals("acc2")) {
-                            parser.next();
-                            acc2 = parser.getText();
-                        } else if (nodeName.equals("acc3")) {
-                            parser.next();
-                            acc3 = parser.getText();
-                        } else if (nodeName.equals("famequip")) {
-                            parser.next();
-                            famEquip = parser.getText();
-                        }
+                    if (nodeName.equals("hat")) {
+                        parser.next();
+                        hat = parser.getText();
+                    } else if (nodeName.equals("weapon")) {
+                        parser.next();
+                        weapon = parser.getText();
+                    } else if (nodeName.equals("offhand")) {
+                        parser.next();
+                        offhand = parser.getText();
+                    } else if (nodeName.equals("shirt")) {
+                        parser.next();
+                        shirt = parser.getText();
+                    } else if (nodeName.equals("pants")) {
+                        parser.next();
+                        pants = parser.getText();
+                    } else if (nodeName.equals("acc1")) {
+                        parser.next();
+                        acc1 = parser.getText();
+                    } else if (nodeName.equals("acc2")) {
+                        parser.next();
+                        acc2 = parser.getText();
+                    } else if (nodeName.equals("acc3")) {
+                        parser.next();
+                        acc3 = parser.getText();
+                    } else if (nodeName.equals("famequip")) {
+                        parser.next();
+                        famEquip = parser.getText();
+                    }
 
-                        break;
-                    case XMLStreamConstants.END_ELEMENT:
-                        if (parser.getLocalName().equals("equipment"))
-                            break equipmentParsing;
-                    default:
-                        break;
+                    break;
+                case XMLStreamConstants.END_ELEMENT:
+                    if (parser.getLocalName().equals("equipment"))
+                        break equipmentParsing;
+                default:
+                    break;
                 }
             }
         }
 
         return new EquipmentChange(turnNumber,
-                                   hat,
-                                   weapon,
-                                   offhand,
-                                   shirt,
-                                   pants,
-                                   acc1,
-                                   acc2,
-                                   acc3,
-                                   famEquip);
+                hat,
+                weapon,
+                offhand,
+                shirt,
+                pants,
+                acc1,
+                acc2,
+                acc3,
+                famEquip);
     }
 
     private MeatGain parseMeatgain()
-                                    throws XMLStreamException {
+            throws XMLStreamException {
         int insideEncounter = 0;
         int other = 0;
         int meatSpent = 0;
@@ -519,24 +541,24 @@ public final class XMLLogReader {
             while (parser.hasNext()) {
                 parser.next();
                 switch (parser.getEventType()) {
-                    case XMLStreamConstants.START_ELEMENT:
-                        if (parser.getLocalName().equals("insideencounter")) {
-                            parser.next();
-                            insideEncounter = Integer.parseInt(parser.getText());
-                        } else if (parser.getLocalName().equals("other")) {
-                            parser.next();
-                            other = Integer.parseInt(parser.getText());
-                        } else if (parser.getLocalName().equals("meatspent")) {
-                            parser.next();
-                            meatSpent = Integer.parseInt(parser.getText());
-                        }
+                case XMLStreamConstants.START_ELEMENT:
+                    if (parser.getLocalName().equals("insideencounter")) {
+                        parser.next();
+                        insideEncounter = Integer.parseInt(parser.getText());
+                    } else if (parser.getLocalName().equals("other")) {
+                        parser.next();
+                        other = Integer.parseInt(parser.getText());
+                    } else if (parser.getLocalName().equals("meatspent")) {
+                        parser.next();
+                        meatSpent = Integer.parseInt(parser.getText());
+                    }
 
-                        break;
-                    case XMLStreamConstants.END_ELEMENT:
-                        if (parser.getLocalName().equals("meatgain"))
-                            break meatParsing;
-                    default:
-                        break;
+                    break;
+                case XMLStreamConstants.END_ELEMENT:
+                    if (parser.getLocalName().equals("meatgain"))
+                        break meatParsing;
+                default:
+                    break;
                 }
             }
         }
@@ -547,7 +569,7 @@ public final class XMLLogReader {
     }
 
     private MPGain parseMPGain()
-                                throws XMLStreamException {
+            throws XMLStreamException {
         int insideEncounter = 0;
         int starfish = 0;
         int resting = 0;
@@ -558,44 +580,44 @@ public final class XMLLogReader {
             while (parser.hasNext()) {
                 parser.next();
                 switch (parser.getEventType()) {
-                    case XMLStreamConstants.START_ELEMENT:
-                        if (parser.getLocalName().equals("insideencounter")) {
-                            parser.next();
-                            insideEncounter = Integer.parseInt(parser.getText());
-                        } else if (parser.getLocalName().equals("starfish")) {
-                            parser.next();
-                            starfish = Integer.parseInt(parser.getText());
-                        } else if (parser.getLocalName().equals("resting")) {
-                            parser.next();
-                            resting = Integer.parseInt(parser.getText());
-                        } else if (parser.getLocalName().equals("outofencounter")) {
-                            parser.next();
-                            other = Integer.parseInt(parser.getText());
-                        } else if (parser.getLocalName().equals("consumable")) {
-                            parser.next();
-                            consumable = Integer.parseInt(parser.getText());
-                        }
+                case XMLStreamConstants.START_ELEMENT:
+                    if (parser.getLocalName().equals("insideencounter")) {
+                        parser.next();
+                        insideEncounter = Integer.parseInt(parser.getText());
+                    } else if (parser.getLocalName().equals("starfish")) {
+                        parser.next();
+                        starfish = Integer.parseInt(parser.getText());
+                    } else if (parser.getLocalName().equals("resting")) {
+                        parser.next();
+                        resting = Integer.parseInt(parser.getText());
+                    } else if (parser.getLocalName().equals("outofencounter")) {
+                        parser.next();
+                        other = Integer.parseInt(parser.getText());
+                    } else if (parser.getLocalName().equals("consumable")) {
+                        parser.next();
+                        consumable = Integer.parseInt(parser.getText());
+                    }
 
-                        break;
-                    case XMLStreamConstants.END_ELEMENT:
-                        if (parser.getLocalName().equals("mpgain"))
-                            break mpParsing;
-                    default:
-                        break;
+                    break;
+                case XMLStreamConstants.END_ELEMENT:
+                    if (parser.getLocalName().equals("mpgain"))
+                        break mpParsing;
+                default:
+                    break;
                 }
             }
         }
 
         final boolean isNonZero = insideEncounter != 0 || starfish != 0 || resting != 0
-                                  || other != 0 || consumable != 0;
+                || other != 0 || consumable != 0;
 
         return isNonZero ? new MPGain(insideEncounter, starfish, resting, other, consumable)
-                        : MPGain.NO_MP;
+        : MPGain.NO_MP;
     }
 
     private Item parseItemdrop(
-                               final int turnNumber)
-                                                    throws XMLStreamException {
+            final int turnNumber)
+                    throws XMLStreamException {
         String name = "";
         int amount = 1;
         for (int i = 0; i < parser.getAttributeCount(); i++)
@@ -603,9 +625,9 @@ public final class XMLLogReader {
                 amount = Integer.parseInt(parser.getAttributeValue(i));
 
         itemParsing: {
-            while (parser.hasNext()) {
-                parser.next();
-                switch (parser.getEventType()) {
+                while (parser.hasNext()) {
+                    parser.next();
+                    switch (parser.getEventType()) {
                     case XMLStreamConstants.START_ELEMENT:
                         if (parser.getLocalName().equals("name")) {
                             parser.next();
@@ -618,16 +640,16 @@ public final class XMLLogReader {
                             break itemParsing;
                     default:
                         break;
+                    }
                 }
             }
-        }
 
         return new Item(name, amount, turnNumber);
     }
 
     private Skill parseSkillCast(
-                                 final int turnNumber)
-                                                      throws XMLStreamException {
+            final int turnNumber)
+                    throws XMLStreamException {
         String name = "";
         int amount = 1;
         int mpCost = 1;
@@ -638,9 +660,9 @@ public final class XMLLogReader {
                 mpCost = Integer.parseInt(parser.getAttributeValue(i));
 
         skillParsing: {
-            while (parser.hasNext()) {
-                parser.next();
-                switch (parser.getEventType()) {
+                while (parser.hasNext()) {
+                    parser.next();
+                    switch (parser.getEventType()) {
                     case XMLStreamConstants.START_ELEMENT:
                         if (parser.getLocalName().equals("name")) {
                             parser.next();
@@ -653,9 +675,9 @@ public final class XMLLogReader {
                             break skillParsing;
                     default:
                         break;
+                    }
                 }
             }
-        }
 
         final Skill skill = new Skill(name, turnNumber);
         skill.setCasts(amount, 0);
@@ -665,8 +687,8 @@ public final class XMLLogReader {
     }
 
     private Consumable parseConsumable(
-                                       final int turnNumber)
-                                                            throws XMLStreamException {
+            final int turnNumber)
+                    throws XMLStreamException {
         String name = "";
         int amount = 1;
         int adventureGain = 0;
@@ -680,9 +702,9 @@ public final class XMLLogReader {
                 consumableVersion = ConsumableVersion.fromString(parser.getAttributeValue(i));
 
         consumableParsing: {
-            while (parser.hasNext()) {
-                parser.next();
-                switch (parser.getEventType()) {
+                while (parser.hasNext()) {
+                    parser.next();
+                    switch (parser.getEventType()) {
                     case XMLStreamConstants.START_ELEMENT:
                         if (parser.getLocalName().equals("name")) {
                             parser.next();
@@ -702,24 +724,24 @@ public final class XMLLogReader {
                             break consumableParsing;
                     default:
                         break;
+                    }
                 }
             }
-        }
 
         final Consumable consumable;
         switch (consumableVersion) {
-            case FOOD:
-                consumable = Consumable.newFoodConsumable(name, adventureGain, amount, turnNumber);
-                break;
-            case BOOZE:
-                consumable = Consumable.newBoozeConsumable(name, adventureGain, amount, turnNumber);
-                break;
-            case SPLEEN:
-                consumable = Consumable.newSpleenConsumable(name, adventureGain, amount, turnNumber);
-                break;
-            default:
-                consumable = Consumable.newOtherConsumable(name, adventureGain, amount, turnNumber);
-                break;
+        case FOOD:
+            consumable = Consumable.newFoodConsumable(name, adventureGain, amount, turnNumber);
+            break;
+        case BOOZE:
+            consumable = Consumable.newBoozeConsumable(name, adventureGain, amount, turnNumber);
+            break;
+        case SPLEEN:
+            consumable = Consumable.newSpleenConsumable(name, adventureGain, amount, turnNumber);
+            break;
+        default:
+            consumable = Consumable.newOtherConsumable(name, adventureGain, amount, turnNumber);
+            break;
         }
         consumable.setDayNumberOfUsage(consumedOnDay);
         consumable.setStatGain(stats);
@@ -728,7 +750,7 @@ public final class XMLLogReader {
     }
 
     private Pair<LogComment, LogComment> parseIntervalNotes()
-                                                             throws XMLStreamException {
+            throws XMLStreamException {
         final LogComment preComment = new LogComment();
         final LogComment postComment = new LogComment();
 
@@ -736,27 +758,27 @@ public final class XMLLogReader {
             while (parser.hasNext()) {
                 parser.next();
                 switch (parser.getEventType()) {
-                    case XMLStreamConstants.START_ELEMENT:
-                        if (parser.getLocalName().equals("preintervalnotes")) {
-                            parser.next();
-                            if (parser.getEventType() == XMLStreamConstants.CHARACTERS
+                case XMLStreamConstants.START_ELEMENT:
+                    if (parser.getLocalName().equals("preintervalnotes")) {
+                        parser.next();
+                        if (parser.getEventType() == XMLStreamConstants.CHARACTERS
                                 && !parser.isWhiteSpace())
-                                preComment.setComments(LINEBREAK_FINDER.matcher(parser.getText())
-                                                                       .replaceAll("\n"));
-                        } else if (parser.getLocalName().equals("postintervalnotes")) {
-                            parser.next();
-                            if (parser.getEventType() == XMLStreamConstants.CHARACTERS
+                            preComment.setComments(LINEBREAK_FINDER.matcher(parser.getText())
+                                    .replaceAll("\n"));
+                    } else if (parser.getLocalName().equals("postintervalnotes")) {
+                        parser.next();
+                        if (parser.getEventType() == XMLStreamConstants.CHARACTERS
                                 && !parser.isWhiteSpace())
-                                postComment.setComments(LINEBREAK_FINDER.matcher(parser.getText())
-                                                                        .replaceAll("\n"));
-                        }
+                            postComment.setComments(LINEBREAK_FINDER.matcher(parser.getText())
+                                    .replaceAll("\n"));
+                    }
 
-                        break;
-                    case XMLStreamConstants.END_ELEMENT:
-                        if (parser.getLocalName().equals("notes"))
-                            break notesParsing;
-                    default:
-                        break;
+                    break;
+                case XMLStreamConstants.END_ELEMENT:
+                    if (parser.getLocalName().equals("notes"))
+                        break notesParsing;
+                default:
+                    break;
                 }
             }
         }
@@ -765,32 +787,32 @@ public final class XMLLogReader {
     }
 
     private void parseDayChanges()
-                                  throws XMLStreamException {
+            throws XMLStreamException {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
-                case XMLStreamConstants.START_ELEMENT:
-                    if (parser.getLocalName().equals("day")) {
-                        final Pair<DayChange, HeaderFooterComment> currentDay = parseDayChange();
-                        logData.addDayChange(currentDay.getVar1());
+            case XMLStreamConstants.START_ELEMENT:
+                if (parser.getLocalName().equals("day")) {
+                    final Pair<DayChange, HeaderFooterComment> currentDay = parseDayChange();
+                    logData.addDayChange(currentDay.getVar1());
 
-                        final HeaderFooterComment dayComments = logData.getHeaderFooterComment(currentDay.getVar1());
-                        dayComments.setHeaderComments(currentDay.getVar2().getHeaderComments());
-                        dayComments.setFooterComments(currentDay.getVar2().getFooterComments());
-                    }
+                    final HeaderFooterComment dayComments = logData.getHeaderFooterComment(currentDay.getVar1());
+                    dayComments.setHeaderComments(currentDay.getVar2().getHeaderComments());
+                    dayComments.setFooterComments(currentDay.getVar2().getFooterComments());
+                }
 
-                    break;
-                case XMLStreamConstants.END_ELEMENT:
-                    if (parser.getLocalName().equals("daychanges"))
-                        return;
-                default:
-                    break;
+                break;
+            case XMLStreamConstants.END_ELEMENT:
+                if (parser.getLocalName().equals("daychanges"))
+                    return;
+            default:
+                break;
             }
         }
     }
 
     private Pair<DayChange, HeaderFooterComment> parseDayChange()
-                                                                 throws XMLStreamException {
+            throws XMLStreamException {
         int dayNumber = 1;
         int turnNumber = 0;
         final HeaderFooterComment comment = new HeaderFooterComment();
@@ -800,9 +822,9 @@ public final class XMLLogReader {
                 dayNumber = Integer.parseInt(parser.getAttributeValue(i));
 
         dayNodeParsing: {
-            while (parser.hasNext()) {
-                parser.next();
-                switch (parser.getEventType()) {
+                while (parser.hasNext()) {
+                    parser.next();
+                    switch (parser.getEventType()) {
                     case XMLStreamConstants.START_ELEMENT:
                         final String nodeName = parser.getLocalName();
 
@@ -812,15 +834,15 @@ public final class XMLLogReader {
                         } else if (nodeName.equals("headernotes")) {
                             parser.next();
                             if (parser.getEventType() == XMLStreamConstants.CHARACTERS
-                                && !parser.isWhiteSpace())
+                                    && !parser.isWhiteSpace())
                                 comment.setHeaderComments(LINEBREAK_FINDER.matcher(parser.getText())
-                                                                          .replaceAll("\n"));
+                                        .replaceAll("\n"));
                         } else if (nodeName.equals("footernotes")) {
                             parser.next();
                             if (parser.getEventType() == XMLStreamConstants.CHARACTERS
-                                && !parser.isWhiteSpace())
+                                    && !parser.isWhiteSpace())
                                 comment.setFooterComments(LINEBREAK_FINDER.matcher(parser.getText())
-                                                                          .replaceAll("\n"));
+                                        .replaceAll("\n"));
                         }
 
                         break;
@@ -829,34 +851,34 @@ public final class XMLLogReader {
                             break dayNodeParsing;
                     default:
                         break;
+                    }
                 }
             }
-        }
 
         return Pair.of(new DayChange(dayNumber, turnNumber), comment);
     }
 
     private void parseLevels()
-                              throws XMLStreamException {
+            throws XMLStreamException {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
-                case XMLStreamConstants.START_ELEMENT:
-                    if (parser.getLocalName().equals("level"))
-                        logData.addLevel(parseLevel());
+            case XMLStreamConstants.START_ELEMENT:
+                if (parser.getLocalName().equals("level"))
+                    logData.addLevel(parseLevel());
 
-                    break;
-                case XMLStreamConstants.END_ELEMENT:
-                    if (parser.getLocalName().equals("levels"))
-                        return;
-                default:
-                    break;
+                break;
+            case XMLStreamConstants.END_ELEMENT:
+                if (parser.getLocalName().equals("levels"))
+                    return;
+            default:
+                break;
             }
         }
     }
 
     private LevelData parseLevel()
-                                  throws XMLStreamException {
+            throws XMLStreamException {
         int levelNumber = 1;
         int turnNumber = 0;
         for (int i = 0; i < parser.getAttributeCount(); i++)
@@ -871,30 +893,30 @@ public final class XMLLogReader {
             while (parser.hasNext()) {
                 parser.next();
                 switch (parser.getEventType()) {
-                    case XMLStreamConstants.START_ELEMENT:
-                        final String nodeName = parser.getLocalName();
+                case XMLStreamConstants.START_ELEMENT:
+                    final String nodeName = parser.getLocalName();
 
-                        if (nodeName.equals("combatturns")) {
-                            parser.next();
-                            level.setCombatTurns(Integer.parseInt(parser.getText()));
-                        } else if (nodeName.equals("noncombatturns")) {
-                            parser.next();
-                            level.setNoncombatTurns(Integer.parseInt(parser.getText()));
-                        } else if (nodeName.equals("otherturns")) {
-                            parser.next();
-                            level.setOtherTurns(Integer.parseInt(parser.getText()));
-                        } else if (nodeName.equals("mainstatgainperturn")) {
-                            parser.next();
-                            level.setStatGainPerTurn(Double.parseDouble(parser.getText()));
-                        } else if (nodeName.equals("statswhenreached"))
-                            level.setStatsAtLevelReached(parseStatgain());
+                    if (nodeName.equals("combatturns")) {
+                        parser.next();
+                        level.setCombatTurns(Integer.parseInt(parser.getText()));
+                    } else if (nodeName.equals("noncombatturns")) {
+                        parser.next();
+                        level.setNoncombatTurns(Integer.parseInt(parser.getText()));
+                    } else if (nodeName.equals("otherturns")) {
+                        parser.next();
+                        level.setOtherTurns(Integer.parseInt(parser.getText()));
+                    } else if (nodeName.equals("mainstatgainperturn")) {
+                        parser.next();
+                        level.setStatGainPerTurn(Double.parseDouble(parser.getText()));
+                    } else if (nodeName.equals("statswhenreached"))
+                        level.setStatsAtLevelReached(parseStatgain());
 
-                        break;
-                    case XMLStreamConstants.END_ELEMENT:
-                        if (parser.getLocalName().equals("level"))
-                            break levelNodeParsing;
-                    default:
-                        break;
+                    break;
+                case XMLStreamConstants.END_ELEMENT:
+                    if (parser.getLocalName().equals("level"))
+                        break levelNodeParsing;
+                default:
+                    break;
                 }
             }
         }
@@ -903,26 +925,26 @@ public final class XMLLogReader {
     }
 
     private void parsePlayerSnapshots()
-                                       throws XMLStreamException {
+            throws XMLStreamException {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
-                case XMLStreamConstants.START_ELEMENT:
-                    if (parser.getLocalName().equals("playersnapshot"))
-                        logData.addPlayerSnapshot(parsePlayerSnapshot());
+            case XMLStreamConstants.START_ELEMENT:
+                if (parser.getLocalName().equals("playersnapshot"))
+                    logData.addPlayerSnapshot(parsePlayerSnapshot());
 
-                    break;
-                case XMLStreamConstants.END_ELEMENT:
-                    if (parser.getLocalName().equals("playersnapshots"))
-                        return;
-                default:
-                    break;
+                break;
+            case XMLStreamConstants.END_ELEMENT:
+                if (parser.getLocalName().equals("playersnapshots"))
+                    return;
+            default:
+                break;
             }
         }
     }
 
     private PlayerSnapshot parsePlayerSnapshot()
-                                                throws XMLStreamException {
+            throws XMLStreamException {
         int turnNumber = 0;
         int adventuresLeft = 0;
         int currentMeat = 0;
@@ -932,9 +954,9 @@ public final class XMLLogReader {
                 turnNumber = Integer.parseInt(parser.getAttributeValue(i));
 
         snapshotNodeParsing: {
-            while (parser.hasNext()) {
-                parser.next();
-                switch (parser.getEventType()) {
+                while (parser.hasNext()) {
+                    parser.next();
+                    switch (parser.getEventType()) {
                     case XMLStreamConstants.START_ELEMENT:
                         final String nodeName = parser.getLocalName();
 
@@ -953,34 +975,34 @@ public final class XMLLogReader {
                             break snapshotNodeParsing;
                     default:
                         break;
+                    }
                 }
             }
-        }
 
         return new PlayerSnapshot(stats, adventuresLeft, currentMeat, turnNumber);
     }
 
     private void parsePulls()
-                             throws XMLStreamException {
+            throws XMLStreamException {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
-                case XMLStreamConstants.START_ELEMENT:
-                    if (parser.getLocalName().equals("pull"))
-                        logData.addPull(parsePull());
+            case XMLStreamConstants.START_ELEMENT:
+                if (parser.getLocalName().equals("pull"))
+                    logData.addPull(parsePull());
 
-                    break;
-                case XMLStreamConstants.END_ELEMENT:
-                    if (parser.getLocalName().equals("pulls"))
-                        return;
-                default:
-                    break;
+                break;
+            case XMLStreamConstants.END_ELEMENT:
+                if (parser.getLocalName().equals("pulls"))
+                    return;
+            default:
+                break;
             }
         }
     }
 
     private Pull parsePull()
-                            throws XMLStreamException {
+            throws XMLStreamException {
         int dayNumber = 0;
         int turnNumber = 0;
         int amount = 1;
@@ -992,9 +1014,9 @@ public final class XMLLogReader {
                 turnNumber = Integer.parseInt(parser.getAttributeValue(i));
 
         pullNodeParsing: {
-            while (parser.hasNext()) {
-                parser.next();
-                switch (parser.getEventType()) {
+                while (parser.hasNext()) {
+                    parser.next();
+                    switch (parser.getEventType()) {
                     case XMLStreamConstants.START_ELEMENT:
                         final String nodeName = parser.getLocalName();
 
@@ -1012,47 +1034,47 @@ public final class XMLLogReader {
                             break pullNodeParsing;
                     default:
                         break;
+                    }
                 }
             }
-        }
 
         return new Pull(itemName, amount, turnNumber, dayNumber);
     }
 
     private void parseHuntedCombats()
-                                     throws XMLStreamException {
+            throws XMLStreamException {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
-                case XMLStreamConstants.START_ELEMENT:
-                    if (parser.getLocalName().equals("combat"))
-                        logData.addHuntedCombat(parseCombat());
+            case XMLStreamConstants.START_ELEMENT:
+                if (parser.getLocalName().equals("combat"))
+                    logData.addHuntedCombat(parseCombat());
 
-                    break;
-                case XMLStreamConstants.END_ELEMENT:
-                    if (parser.getLocalName().equals("huntedcombats"))
-                        return;
-                default:
-                    break;
+                break;
+            case XMLStreamConstants.END_ELEMENT:
+                if (parser.getLocalName().equals("huntedcombats"))
+                    return;
+            default:
+                break;
             }
         }
     }
 
     private void parseLostCombats()
-                                   throws XMLStreamException {
+            throws XMLStreamException {
         while (parser.hasNext()) {
             parser.next();
             switch (parser.getEventType()) {
-                case XMLStreamConstants.START_ELEMENT:
-                    if (parser.getLocalName().equals("combat"))
-                        logData.addLostCombat(parseCombat());
+            case XMLStreamConstants.START_ELEMENT:
+                if (parser.getLocalName().equals("combat"))
+                    logData.addLostCombat(parseCombat());
 
-                    break;
-                case XMLStreamConstants.END_ELEMENT:
-                    if (parser.getLocalName().equals("lostcombats"))
-                        return;
-                default:
-                    break;
+                break;
+            case XMLStreamConstants.END_ELEMENT:
+                if (parser.getLocalName().equals("lostcombats"))
+                    return;
+            default:
+                break;
             }
         }
     }

@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 import net.java.dev.spellcast.utilities.DataUtilities;
 import net.java.dev.spellcast.utilities.UtilityConstants;
 
+import com.googlecode.logVisualizer.Settings;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.LogDataHolder.AscensionPath;
 import com.googlecode.logVisualizer.logData.MeatGain;
@@ -56,6 +57,7 @@ import com.googlecode.logVisualizer.parser.lineParsers.MafiaRedRayStatsLineParse
 import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser.MeatGainType;
 import com.googlecode.logVisualizer.parser.lineParsers.MeatSpentLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.NotesLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.OnTheTrailLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.SkillCastLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.StarfishMPGainLineParser;
@@ -161,6 +163,9 @@ public final class EncounterBlockParser implements LogBlockParser {
         lineParsers.add(new MafiaDisintegrateLineParser());
         lineParsers.add(new StarfishMPGainLineParser());
         lineParsers.add(new MafiaRedRayStatsLineParser());
+        // Add a note parser to encounter blocks
+        if (Settings.getSettingBoolean("Include mafia log notes"))
+            lineParsers.add(new NotesLineParser());
     }
 
     /**
