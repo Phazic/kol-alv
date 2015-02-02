@@ -82,7 +82,7 @@ public final class Settings {
 
     static {
         SETTINGS_FILE = new File(UtilityConstants.ROOT_DIRECTORY + File.separator
-                                 + UtilityConstants.DATA_DIRECTORY + "ALV settings.txt");
+                + UtilityConstants.DATA_DIRECTORY + "ALV settings.txt");
 
         boolean isNimbusLafPresent = false;
         for (final LookAndFeelInfo lafi : UIManager.getInstalledLookAndFeels())
@@ -94,7 +94,7 @@ public final class Settings {
         if (!isNimbusLafPresent)
             DEFAULT_SETTINGS.setProperty("LookAndFeel", "Metal");
 
-        DEFAULT_SETTINGS.setProperty("Version", "3.7.1");
+        DEFAULT_SETTINGS.setProperty("Version", "3.7.2");
         DEFAULT_SETTINGS.setProperty("Check Updates", TRUE_STRING);
 
         DEFAULT_SETTINGS.setProperty("XML format version", "1.4");
@@ -126,7 +126,7 @@ public final class Settings {
                 // anyway, so that they hold the correct version string.
                 p.setProperty("Version", DEFAULT_SETTINGS.getProperty("Version"));
                 p.setProperty("XML format version",
-                              DEFAULT_SETTINGS.getProperty("XML format version"));
+                        DEFAULT_SETTINGS.getProperty("XML format version"));
 
                 saveSettingsToFile(p);
             } catch (final IOException e) {
@@ -142,7 +142,7 @@ public final class Settings {
      * Writes the given Properties object to the file system.
      */
     private static void saveSettingsToFile(
-                                           final Properties p) {
+            final Properties p) {
         synchronized (DEFAULT_SETTINGS) {
             try {
                 SETTINGS_FILE.delete();
@@ -150,8 +150,8 @@ public final class Settings {
 
                 final FileOutputStream fos = new FileOutputStream(SETTINGS_FILE);
                 p.store(fos, "This file stores the settings of the Ascension Log Visualizer."
-                             + System.getProperty("line.separator")
-                             + "#It is not advisable to edit this file by hand.");
+                        + System.getProperty("line.separator")
+                        + "#It is not advisable to edit this file by hand.");
                 fos.close();
             } catch (final IOException e) {
                 e.printStackTrace();
@@ -163,7 +163,7 @@ public final class Settings {
      * Loads the current Properties from the file system.
      */
     private static Properties loadSettingsFromFile()
-                                                    throws IOException {
+            throws IOException {
         final Properties p = new Properties(DEFAULT_SETTINGS);
 
         synchronized (DEFAULT_SETTINGS) {
@@ -177,14 +177,14 @@ public final class Settings {
 
     /**
      * Will set the specified setting to the new value.
-     * 
+     *
      * @param key
      *            The name of the setting.
      * @param value
      *            The value of the setting.
      */
     public static void setSettingString(
-                                        final String key, final String value) {
+            final String key, final String value) {
         try {
             final Properties p = loadSettingsFromFile();
             p.setProperty(key, value);
@@ -202,7 +202,7 @@ public final class Settings {
      *         file.
      */
     public static String getSettingString(
-                                          final String key) {
+            final String key) {
         String value = null;
 
         try {
@@ -219,14 +219,14 @@ public final class Settings {
      * <p>
      * Note that settings which aren't already present inside the settings file
      * will be ignored.
-     * 
+     *
      * @param key
      *            The name of the setting.
      * @param value
      *            The value of the setting.
      */
     public static void setSettingBoolean(
-                                         final String key, final Boolean value) {
+            final String key, final Boolean value) {
         if (value)
             setSettingString(key, TRUE_STRING);
         else
@@ -241,7 +241,7 @@ public final class Settings {
      *         exist or there was a problem with reading the settings file.
      */
     public static Boolean getSettingBoolean(
-                                            final String key) {
+            final String key) {
         final String value = getSettingString(key);
 
         if (value == null)

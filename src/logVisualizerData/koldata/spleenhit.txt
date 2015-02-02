@@ -1,4 +1,4 @@
-// Data tables used as they can be found in KolMafia.
+// Data tables used as they can be found in KolMafia v15330.
 3
 # Spleen hit values taken from the KoL Wiki
 # http://kol.coldfront.net/thekolwiki/index.php/Spleen

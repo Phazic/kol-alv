@@ -1,4 +1,4 @@
-// Data tables used as they can be found in KolMafia.
+// Data tables used as they can be found in KolMafia. v15330
 2
 # Data provided courtesy of the Garden of Earthly Delights
 # The Well-Tempered Mixologist: http://mixology.bewarethefgc.com/export_data.php
