@@ -62,6 +62,8 @@ public final class MafiaSessionLogReader {
 
     private static final String BUY_STRING = "Buy";
 
+    private static final String HYBRIDIZE_STRING = "Hybridizing yourself";
+
     private static final String SNAPSHOT_START_END = "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=";
 
     private static final String PLAYER_SNAPSHOT_STRING = "Player Snapshot";
@@ -164,19 +166,28 @@ public final class MafiaSessionLogReader {
     private boolean isEncounterBlockStart(
             String line, String line2) {
         // Add support for Rain Man detection
-        return (line.startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) &&
+
+        boolean isAdventure = (line.startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) &&
                 UsefulPatterns.TURNS_USED.matcher(line).matches()) ||
                 (line2.startsWith(ENCOUNTER_START_STRING) &&
-                        BROKEN_AREAS_ENCOUNTER_SET.contains(line2)) ||
-                        line.contains("cast 1 Rain Man");
+                        BROKEN_AREAS_ENCOUNTER_SET.contains(line2));
+
+        boolean isRainman = line.contains("cast 1 Rain Man");
+
+        boolean isDna = (line.startsWith(HYBRIDIZE_STRING));
+
+        return isAdventure || isRainman || isDna;
 
     }
 
     private boolean isConsumableBlockStart(
             String line) {
-        return (line.startsWith(USE_STRING) || line.startsWith(EAT_STRING)
+        boolean isConsumable = (line.startsWith(USE_STRING) || line.startsWith(EAT_STRING)
                 || line.startsWith(DRINK_STRING) || line.startsWith(BUY_STRING))
                 && UsefulPatterns.CONSUMABLE_USED.matcher(line).matches();
+
+        return isConsumable;
+
     }
 
     private List<String> parseEncounterBlock()

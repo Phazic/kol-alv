@@ -130,11 +130,15 @@ public final class TextLogCreator {
 
     private static final String FREE_RUNAWAYS_PREFIX = "     &> ";
 
+    private static final String HYBRIDIZE_PREFIX = "     @> ";
+
     private static final String ADVENTURES_LEFT_STRING = "Adventure count at day start: ";
 
     private static final String CURRENT_MEAT_STRING = "Current meat: ";
 
     private static final String CHATEAU_REST_AREA = "Rest in your bed in the Chateau";
+
+    private static final String HYBRIDIZING_AREA = "Hybridizing yourself";
 
     private static final String SMITH_STRING = "smith ";
 
@@ -866,6 +870,18 @@ public final class TextLogCreator {
                         write(logAdditionsMap.get("statgainStart"));
                         write(e.getStatGain().toString());
                         write(logAdditionsMap.get("statgainEnd"));
+                        write(NEW_LINE);
+                    }
+
+                    if (e.getAreaName().contains(HYBRIDIZING_AREA))
+                    {
+                        // Log it using the free runaway prefix
+                        write(HYBRIDIZE_PREFIX);
+                        write(UsefulPatterns.SQUARE_BRACKET_OPEN);
+                        write(st.getTurnNumber());
+                        write(UsefulPatterns.SQUARE_BRACKET_CLOSE);
+                        write(UsefulPatterns.WHITE_SPACE);
+                        write(e.getAreaName() + ": " + e.getEncounterName());
                         write(NEW_LINE);
                     }
                     // Log turn-free crafting as well

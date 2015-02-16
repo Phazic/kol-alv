@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.java.dev.spellcast.utilities.DataUtilities;
@@ -133,6 +134,10 @@ public final class EncounterBlockParser implements LogBlockParser {
 
     private static final String SHORE_AREAS_END_STRING = " Vacation";
 
+    private static final String HYBRIDIZING_AREANAME= "Hybridizing yourself";
+
+    private static final Pattern HYBRIDIZE_PATTERN = Pattern.compile("You acquire an intrinsic: (.+) Hybrid$");
+
     private static final String CLOWNLORD_CHOICE_ENCOUNTER_STRING = "Adventurer, $1.99";
 
     private static final String OUTFIT_STRING = "outfit";
@@ -173,10 +178,38 @@ public final class EncounterBlockParser implements LogBlockParser {
      */
     public void parseBlock(
             final List<String> block, final LogDataHolder logData) {
-        final String turnSpentLine = block.get(0).startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) ? block.get(0)
+        String turnSpentLine = block.get(0).startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) ? block.get(0)
                 : block.get(1);
         final SingleTurn turn;
         final int dayNumber = logData.getLastDayChange().getDayNumber();
+
+        // Parse hybridizing of DNA
+        if (HYBRIDIZE_PATTERN.matcher(turnSpentLine).matches())
+        {
+
+            final Matcher result = HYBRIDIZE_PATTERN.matcher(turnSpentLine);
+
+            if (result.find())
+            {
+
+                // Create an encounter with the name of the intrinsic
+                // Log it on the following turn so it gets combined
+                final SingleTurn tmp = new SingleTurn(HYBRIDIZING_AREANAME,
+                        result.group(1),
+                        logData.getLastTurnSpent().getTurnNumber() + 1,
+                        dayNumber,
+                        logData.getLastEquipmentChange(),
+                        logData.getLastFamiliarChange());
+                tmp.setTurnVersion(TurnVersion.OTHER);
+                logData.addTurnSpent(tmp);
+            }
+
+            // Reset turnSpentLine to be line 3 or 4
+            turnSpentLine = block.get(3).startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) ? block.get(3)
+                    : block.get(4);
+        }
+
+
 
         // Some areas have broken turn spent strings. If a turn is recognised as
         // being spent in such an area, the block will start with the encounter
