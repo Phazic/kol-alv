@@ -846,46 +846,6 @@ public final class TextLogCreator {
                 write(NEW_LINE);
             }
 
-            final List<Item> importantItems = Lists.newArrayList();
-            for (final Item i : st.getDroppedItems()) {
-                final String itemName = NON_ASCII.matcher(i.getName().toLowerCase(Locale.ENGLISH))
-                        .replaceAll(UsefulPatterns.EMPTY_STRING);
-                if (DataTablesHandler.HANDLER.isImportantItem(itemName))
-                    importantItems.add(i);
-                else if (localeOnetimeItemsSet.contains(itemName)) {
-                    importantItems.add(i);
-                    localeOnetimeItemsSet.remove(itemName);
-                }
-            }
-
-            final Iterator<Item> aquiredItemsIter = importantItems.iterator();
-            if (aquiredItemsIter.hasNext()) {
-                printItemAcquisitionStartString(st.getTurnNumber());
-
-                int itemCounter = 0;
-                while (aquiredItemsIter.hasNext()) {
-                    final Item currentItem = aquiredItemsIter.next();
-                    for (int i = currentItem.getAmount(); i > 0; i--) {
-                        write(logAdditionsMap.get("itemStart"));
-                        write(currentItem.getName());
-                        write(logAdditionsMap.get("itemEnd"));
-                        itemCounter++;
-
-                        if ((aquiredItemsIter.hasNext() || i > 1) && itemCounter >= 4) {
-                            write(NEW_LINE);
-                            printItemAcquisitionStartString(st.getTurnNumber());
-                            itemCounter = 0;
-                        } else if (i > 1)
-                            write(COMMA);
-                    }
-
-                    if (aquiredItemsIter.hasNext() && itemCounter != 0)
-                        write(COMMA);
-                }
-
-                write(NEW_LINE);
-            }
-
             // Iterate all encounters on this turn
             // This helps with tracking interesting free turn things
             for (Encounter e : st.getEncounters())
@@ -926,6 +886,72 @@ public final class TextLogCreator {
                     }
                 }
             }
+
+            final List<Item> importantItems = Lists.newArrayList();
+            for (final Item i : st.getDroppedItems()) {
+                final String itemName = NON_ASCII.matcher(i.getName().toLowerCase(Locale.ENGLISH))
+                        .replaceAll(UsefulPatterns.EMPTY_STRING);
+                if (DataTablesHandler.HANDLER.isImportantItem(itemName))
+                    importantItems.add(i);
+                else if (localeOnetimeItemsSet.contains(itemName)) {
+                    importantItems.add(i);
+                    localeOnetimeItemsSet.remove(itemName);
+                }
+            }
+
+            final Iterator<Item> aquiredItemsIter = importantItems.iterator();
+            if (aquiredItemsIter.hasNext()) {
+                printItemAcquisitionStartString(st.getTurnNumber());
+
+                int itemCounter = 0;
+                while (aquiredItemsIter.hasNext()) {
+                    final Item currentItem = aquiredItemsIter.next();
+
+                    // If the number of items would be excessive, format it with a quantity number
+
+                    // More than three is defined as excessive
+
+                    if (currentItem.getAmount() >= 3)
+                    {
+                        write(logAdditionsMap.get("itemStart"));
+                        write(currentItem.getName());
+                        write(" x ");
+                        write(currentItem.getAmount());
+                        write(logAdditionsMap.get("itemEnd"));
+                        itemCounter++;
+
+                        if (aquiredItemsIter.hasNext() && itemCounter >= 4) {
+                            write(NEW_LINE);
+                            printItemAcquisitionStartString(st.getTurnNumber());
+                            itemCounter = 0;
+                        }
+
+                    }
+                    else
+                    {
+                        for (int i = currentItem.getAmount(); i > 0; i--) {
+                            write(logAdditionsMap.get("itemStart"));
+                            write(currentItem.getName());
+                            write(logAdditionsMap.get("itemEnd"));
+                            itemCounter++;
+
+                            if ((aquiredItemsIter.hasNext() || i > 1) && itemCounter >= 4) {
+                                write(NEW_LINE);
+                                printItemAcquisitionStartString(st.getTurnNumber());
+                                itemCounter = 0;
+                            } else if (i > 1)
+                                write(COMMA);
+                        }
+                    }
+
+                    if (aquiredItemsIter.hasNext() && itemCounter != 0)
+                        write(COMMA);
+
+                }
+
+                write(NEW_LINE);
+            }
+
         }
 
         printCurrentConsumables(ti.getConsumablesUsed(), currentDayNumber);
