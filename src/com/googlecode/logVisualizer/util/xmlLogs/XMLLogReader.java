@@ -453,7 +453,7 @@ public final class XMLLogReader {
         turn.setMPGain(mpgains);
         turn.setDisintegrated(isDisintegrated);
         turn.setFreeRunaways(freeRunaways);
-        turn.setNotes(comment.getComments());
+        // turn.setNotes(comment.getComments());
 
         logData.addTurnSpent(turn);
 

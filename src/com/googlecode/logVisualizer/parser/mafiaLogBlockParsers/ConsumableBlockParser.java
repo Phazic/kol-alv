@@ -45,6 +45,7 @@ import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser.MPGainTy
 import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser.MeatGainType;
 import com.googlecode.logVisualizer.parser.lineParsers.MeatSpentLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.NotesLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.StatLineParser;
 import com.googlecode.logVisualizer.util.Stack;
 import com.googlecode.logVisualizer.util.dataTables.DataTablesHandler;
@@ -109,6 +110,8 @@ public final class ConsumableBlockParser implements LogBlockParser {
 
     // Only use for Llama cockroach mp gains parsing.
     private final MPGainLineParser mpParserLlama = new MPGainLineParser(MPGainType.ENCOUNTER);
+
+    private final NotesLineParser notesParser = new NotesLineParser();
 
     private final Matcher consumableBoughtMatcher = CONSUMABLE_BOUGHT_USED_CAPTURE_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
 
@@ -176,7 +179,8 @@ public final class ConsumableBlockParser implements LogBlockParser {
 
             if (mpParser.parseLine(line, logData) || meatGainParser.parseLine(line, logData)
                     || meatSpentParser.parseLine(line, logData)
-                    || outfitChangeParser.parseLine(line, logData)) {
+                    || outfitChangeParser.parseLine(line, logData)
+                    || notesParser.parseLine(line, logData)) {
                 // Empty block, because the parsing has already happened if we
                 // get in here.
             } else if (gainLoseMatcher.reset(line).matches()) {
@@ -285,6 +289,7 @@ public final class ConsumableBlockParser implements LogBlockParser {
             statsParser.parseLine(line, logData);
             mpParserLlama.parseLine(line, logData);
             outfitChangeParser.parseLine(line, logData);
+            notesParser.parseLine(line, logData);
         }
     }
 }
