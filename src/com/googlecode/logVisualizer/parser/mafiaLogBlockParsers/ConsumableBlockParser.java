@@ -30,6 +30,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.kolmafia.utilities.CharacterEntities;
+
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.Statgain;
 import com.googlecode.logVisualizer.logData.consumables.Consumable;
@@ -157,6 +159,12 @@ public final class ConsumableBlockParser implements LogBlockParser {
             amount = 1;
             itemName = result.group(2);
         }
+
+        // Perform HTML decoding on the entity to get the proper name
+        String decodedName = CharacterEntities.unescape(itemName);
+
+        itemName = decodedName;
+
         int adventureGain = 0;
         Statgain consumableStatgain = Statgain.NO_STATS;
 
