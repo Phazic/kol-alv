@@ -567,5 +567,17 @@
 <item name="worthless gewgaw" onetimeOnly="false"></item>
 <item name="worthless knick-knack" onetimeOnly="false"></item>
 <item name="worthless trinket" onetimeOnly="false"></item>
+<item name="xiblaxian 5d printer" onetimeOnly="true"></item>
+<item name="xiblaxian alloy" onetimeOnly="false"></item>
+<item name="xiblaxian circuitry" onetimeOnly="false"></item>
+<item name="xiblaxian crystal" onetimeOnly="false"></item>
+<item name="xiblaxian holo-wrist-puter" onetimeOnly="true"></item>
+<item name="xiblaxian polymer" onetimeOnly="false"></item>
+<item name="xiblaxian stealth cowl" onetimeOnly="true"></item>
+<item name="xiblaxian stealth vest" onetimeOnly="true"></item>
+<item name="xiblaxian stealth trousers" onetimeOnly="true"></item>
+<item name="xiblaxian space-whiskey" onetimeOnly="false"></item>
+<item name="xiblaxian ultraburrito" onetimeOnly="false"></item>
+<item name="xiblaxian xeno-detection goggles" onetimeOnly="true"></item>
 <item name="yellow candy heart" onetimeOnly="false"></item>
 </itemdropsData>
