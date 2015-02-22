@@ -27,11 +27,13 @@ package com.googlecode.logVisualizer.parser.lineParsers;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.turn.turnAction.EquipmentChange;
 import com.googlecode.logVisualizer.logData.turn.turnAction.FamiliarChange;
+import com.googlecode.logVisualizer.parser.UsefulPatterns;
 import com.googlecode.logVisualizer.util.Stack;
 
 /**
@@ -44,6 +46,10 @@ import com.googlecode.logVisualizer.util.Stack;
 public final class MafiaFamiliarChangeLineParser extends AbstractLineParser {
     private static final Pattern FAMILIAR_CHANGE_CAPTURE_PATTERN = Pattern.compile("familiar ([\\w\\p{Punct}\\s]+) \\((\\d+) lbs\\)");
 
+    private static final Pattern  ED_CHANGE_SERVANT_PATTERN = Pattern.compile("choice\\.php\\?whichchoice=1053&option=[0-9].*&sid=([0-9])");
+
+    private final Matcher edChangedServant = ED_CHANGE_SERVANT_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
+
     private static final String FAMILIAR_CHANGE_START_STRING = "familiar ";
 
     private static final String NO_FAMILIAR_STRING = "none";
@@ -55,8 +61,8 @@ public final class MafiaFamiliarChangeLineParser extends AbstractLineParser {
     private final Map<String, String> familiarEquipmentMap;
 
     public MafiaFamiliarChangeLineParser(
-                                         final Stack<EquipmentChange> equipmentStack,
-                                         final Map<String, String> familiarEquipmentMap) {
+            final Stack<EquipmentChange> equipmentStack,
+            final Map<String, String> familiarEquipmentMap) {
         usedEquipment = equipmentStack;
         this.familiarEquipmentMap = familiarEquipmentMap;
     }
@@ -66,50 +72,90 @@ public final class MafiaFamiliarChangeLineParser extends AbstractLineParser {
      */
     @Override
     protected void doParsing(
-                             final String line, final LogDataHolder logData) {
+            final String line, final LogDataHolder logData) {
         if (!line.endsWith(LOCK_STRING)) {
+
+            boolean edChanged = edChangedServant.reset(line).find();
+
             final String familiarName;
-            if (!line.endsWith(NO_FAMILIAR_STRING)) {
-                final Scanner scanner = new Scanner(line);
-                scanner.findInLine(FAMILIAR_CHANGE_CAPTURE_PATTERN);
-                final MatchResult result = scanner.match();
 
-                familiarName = result.group(1);
-            } else
-                familiarName = NO_FAMILIAR_STRING;
+            if (edChanged)
+            {
+                int sid = Integer.parseInt(edChangedServant.group(1));
 
-            final EquipmentChange lastChange = usedEquipment.peek().get();
-            final EquipmentChange equipmentChange;
-            if (familiarName == NO_FAMILIAR_STRING)
-                equipmentChange = new EquipmentChange(logData.getLastTurnSpent().getTurnNumber(),
-                                                      lastChange.getHat(),
-                                                      lastChange.getWeapon(),
-                                                      lastChange.getOffhand(),
-                                                      lastChange.getShirt(),
-                                                      lastChange.getPants(),
-                                                      lastChange.getAcc1(),
-                                                      lastChange.getAcc2(),
-                                                      lastChange.getAcc3(),
-                                                      EquipmentChange.NO_EQUIPMENT_STRING);
-            else {
-                final String famEquip = familiarEquipmentMap.get(familiarName);
-                equipmentChange = new EquipmentChange(logData.getLastTurnSpent().getTurnNumber(),
-                                                      lastChange.getHat(),
-                                                      lastChange.getWeapon(),
-                                                      lastChange.getOffhand(),
-                                                      lastChange.getShirt(),
-                                                      lastChange.getPants(),
-                                                      lastChange.getAcc1(),
-                                                      lastChange.getAcc2(),
-                                                      lastChange.getAcc3(),
-                                                      famEquip != null ? famEquip
-                                                                      : EquipmentChange.NO_EQUIPMENT_STRING);
+                switch (sid)
+                {
+                case 1:
+                    familiarName = "Cat";
+                    break;
+                case 2:
+                    familiarName = "Belly-Dancer";
+                    break;
+                case 3:
+                    familiarName = "Maid";
+                    break;
+                case 4:
+                    familiarName = "Bodyguard";
+                    break;
+                case 5:
+                    familiarName = "Scribe";
+                    break;
+                case 6:
+                    familiarName = "Priest";
+                    break;
+                case 7:
+                    familiarName = "Assassin";
+                    break;
+                default:
+                    familiarName = "Unknown";
+                }
+
             }
-            usedEquipment.push(equipmentChange);
-            logData.addEquipmentChange(equipmentChange);
+            else
+            {
+                if (!line.endsWith(NO_FAMILIAR_STRING)) {
+                    final Scanner scanner = new Scanner(line);
+                    scanner.findInLine(FAMILIAR_CHANGE_CAPTURE_PATTERN);
+                    final MatchResult result = scanner.match();
+
+                    familiarName = result.group(1);
+                } else
+                    familiarName = NO_FAMILIAR_STRING;
+
+                final EquipmentChange lastChange = usedEquipment.peek().get();
+                final EquipmentChange equipmentChange;
+                if (familiarName == NO_FAMILIAR_STRING)
+                    equipmentChange = new EquipmentChange(logData.getLastTurnSpent().getTurnNumber(),
+                            lastChange.getHat(),
+                            lastChange.getWeapon(),
+                            lastChange.getOffhand(),
+                            lastChange.getShirt(),
+                            lastChange.getPants(),
+                            lastChange.getAcc1(),
+                            lastChange.getAcc2(),
+                            lastChange.getAcc3(),
+                            EquipmentChange.NO_EQUIPMENT_STRING);
+                else {
+                    final String famEquip = familiarEquipmentMap.get(familiarName);
+                    equipmentChange = new EquipmentChange(logData.getLastTurnSpent().getTurnNumber(),
+                            lastChange.getHat(),
+                            lastChange.getWeapon(),
+                            lastChange.getOffhand(),
+                            lastChange.getShirt(),
+                            lastChange.getPants(),
+                            lastChange.getAcc1(),
+                            lastChange.getAcc2(),
+                            lastChange.getAcc3(),
+                            famEquip != null ? famEquip
+                                    : EquipmentChange.NO_EQUIPMENT_STRING);
+                }
+                usedEquipment.push(equipmentChange);
+                logData.addEquipmentChange(equipmentChange);
+            }
 
             logData.addFamiliarChange(new FamiliarChange(familiarName, logData.getLastTurnSpent()
-                                                                              .getTurnNumber()));
+                    .getTurnNumber()));
+
         }
     }
 
@@ -118,7 +164,12 @@ public final class MafiaFamiliarChangeLineParser extends AbstractLineParser {
      */
     @Override
     protected boolean isCompatibleLine(
-                                       final String line) {
-        return line.startsWith(FAMILIAR_CHANGE_START_STRING);
+            final String line) {
+
+        boolean famChanged = line.startsWith(FAMILIAR_CHANGE_START_STRING);
+
+        boolean edChanged = edChangedServant.reset(line).matches();
+
+        return famChanged || edChanged;
     }
 }
