@@ -43,6 +43,7 @@ import com.googlecode.logVisualizer.logData.turn.SimpleTurnInterval;
 import com.googlecode.logVisualizer.logData.turn.SingleTurn;
 import com.googlecode.logVisualizer.logData.turn.Turn;
 import com.googlecode.logVisualizer.logData.turn.TurnInterval;
+import com.googlecode.logVisualizer.logData.turn.TurnVersion;
 import com.googlecode.logVisualizer.logData.turn.turnAction.DayChange;
 import com.googlecode.logVisualizer.logData.turn.turnAction.EquipmentChange;
 import com.googlecode.logVisualizer.logData.turn.turnAction.FamiliarChange;
@@ -381,19 +382,21 @@ public final class LogDataHolder {
 
     private void addTurnMafia(
             final SingleTurn turn) {
-        // If the last turn has the same turn number as the to be added turn,
-        // add the data of the last turn to the penultimate turn. Also, in that
-        // case, check if that turn was a navel ring free runaway.
         if (lastTurn.getTurnNumber() == turn.getTurnNumber()) {
-            final SingleTurn tmp = (SingleTurn) lastTurn;
+        	//Bombar Change: Needed for Florist, if we detect a free action, log zone you were in
+        	if (lastTurn.getAreaName().equals( penultimateTurn.getAreaName() )) {
+        		// If the last turn has the same turn number as the to be added turn,
+        		// add the data of the last turn to the penultimate turn. Also, in that
+        		// case, check if that turn was a navel ring free runaway.
+        		final SingleTurn tmp = (SingleTurn) lastTurn;
 
-            // Note that the turn number of the previous turn needs to be used.
-            ((SingleTurn) penultimateTurn).addEncounter(tmp.toEncounter(((SingleTurn) penultimateTurn).getTurnNumber()));
-            ((SingleTurn) penultimateTurn).addSingleTurnData(tmp);
-            if (tmp.isRanAwayOnThisTurn() && tmp.isRunawaysEquipmentEquipped())
-                penultimateTurn.addFreeRunaways(1);
-
-            turnsSpent.remove(turnsSpent.size() - 1);
+            	// Note that the turn number of the previous turn needs to be used.
+            	((SingleTurn) penultimateTurn).addEncounter(tmp.toEncounter(((SingleTurn) penultimateTurn).getTurnNumber()));
+            	((SingleTurn) penultimateTurn).addSingleTurnData(tmp);
+            	if (tmp.isRanAwayOnThisTurn() && tmp.isRunawaysEquipmentEquipped())
+                	penultimateTurn.addFreeRunaways(1);
+                turnsSpent.remove(turnsSpent.size() - 1);        		
+        	}        	
         } else
             penultimateTurn = lastTurn;
 

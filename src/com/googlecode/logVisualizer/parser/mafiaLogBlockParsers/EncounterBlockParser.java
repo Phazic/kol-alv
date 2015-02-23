@@ -52,6 +52,7 @@ import com.googlecode.logVisualizer.parser.lineParsers.EquipmentLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.ItemAcquisitionLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser.MPGainType;
+import com.googlecode.logVisualizer.parser.lineParsers.MafiaBanishLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MafiaDisintegrateLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MafiaFreeRunawaysLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MafiaRedRayStatsLineParser;
@@ -168,6 +169,7 @@ public final class EncounterBlockParser implements LogBlockParser {
         lineParsers.add(new MafiaDisintegrateLineParser());
         lineParsers.add(new StarfishMPGainLineParser());
         lineParsers.add(new MafiaRedRayStatsLineParser());
+        lineParsers.add(new MafiaBanishLineParser());
         // Add a note parser to encounter blocks
         if (Settings.getSettingBoolean("Include mafia log notes"))
             lineParsers.add(new NotesLineParser());
@@ -205,11 +207,12 @@ public final class EncounterBlockParser implements LogBlockParser {
             }
 
             // Reset turnSpentLine to be line 3 or 4
-            turnSpentLine = block.get(3).startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) ? block.get(3)
-                    : block.get(4);
+            if (block.size() >= 3)
+            	turnSpentLine = block.get(3).startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) ? block.get(3)
+                  		: block.get(4);
+            else 
+            	return;
         }
-
-
 
         // Some areas have broken turn spent strings. If a turn is recognised as
         // being spent in such an area, the block will start with the encounter
@@ -327,6 +330,9 @@ public final class EncounterBlockParser implements LogBlockParser {
                 turn.setTurnVersion(TurnVersion.NONCOMBAT);
         }
 
+        int turnNum = turn.getTurnNumber();
+        
+        
         // Check handling for special encounters. If the encounter is indeed
         // a special encounter, the specialEncounterHandling() method will
         // handle adding the turn to the LogDataHolder.

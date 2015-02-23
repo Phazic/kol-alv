@@ -65,6 +65,8 @@ public class LogSummaryData {
     private List<DataNumberPair<String>> familiarUsage;
 
     private List<DataNumberPair<String>> disintegratedCombats;
+    
+    private List<DataNumberPair<String>> banishedCombats;
 
     private List<DataNumberPair<String>> semirares;
 
@@ -204,6 +206,7 @@ public class LogSummaryData {
 
         levels = data.getLevelData();
         disintegratedCombats = data.getDisintegratedCombats();
+        banishedCombats = data.getBanishedCombats();//Bombar: Add support for banished combats
         semirares = data.getSemirares();
         badmoonAdventures = data.getBadmoonAdventures();
         romanticArrowUsages = data.getRomanticArrowUsages();
@@ -357,6 +360,26 @@ public class LogSummaryData {
         return familiarUsage;
     }
 
+    /**
+     * @param disintegratedCombats
+     *            All banished combats to set.
+     */
+    public void setBanishedCombats(
+                                        final List<DataNumberPair<String>> banishedCombats) {
+        if (banishedCombats == null)
+            throw new NullPointerException("banishedCombats combats list must not be null.");
+
+        this.banishedCombats = banishedCombats;
+    }
+
+    /**
+     * @return A sorted list of all disintegrated combats. This list starts with
+     *         the earliest disintegrated combat.
+     */
+    public List<DataNumberPair<String>> getBanishedCombats() {
+        return banishedCombats;
+    }
+    
     /**
      * @param disintegratedCombats
      *            All disintegrated combats to set.

@@ -68,6 +68,11 @@ public final class UsefulPatterns {
                                                                                      "salsaball",
                                                                                      "suckerpunch",
                                                                                      "sing");
+    
+    public static final Set<String> BANISH_SKILLS = Sets.immutableSetOf( "curse of vacation", //Ed 
+    																	 "batter up", //Seal Clubber
+    																	 "talk about politics" //skill
+    																   );
 
     @SuppressWarnings("unchecked")
     public static final Map<String, CharacterClass> TRIVAL_COMBAT_SKILL_CHARACTER_CLASS_MAP = Maps.immutableMapOf(Pair.of("clobber",

@@ -107,6 +107,8 @@ final class SummaryDataCalculator {
 
     private final List<LevelData> levels = Lists.newArrayList(15);
 
+    private final List<DataNumberPair<String>> banishedCombats = Lists.newArrayList();//Bombar: Adding banished combats functionality
+    
     private final List<DataNumberPair<String>> disintegratedCombats = Lists.newArrayList();
 
     private final List<DataNumberPair<String>> semirares = Lists.newArrayList();
@@ -225,6 +227,10 @@ final class SummaryDataCalculator {
                 if (st.getTurnVersion() == TurnVersion.COMBAT)
                     familiarUsage.addDataElement(st.getUsedFamiliar().getFamiliarName());
 
+                // Banished Combats Summary //Bombar: Add Banished Combat Support
+                if (st.isBanished())
+                	banishedCombats.add( DataNumberPair.of(st.getBanishedInfo(), st.getTurnNumber()) );
+                
                 // Disintegrated combats summary
                 if (st.isDisintegrated())
                     disintegratedCombats.add(DataNumberPair.of(st.getEncounterName(),
@@ -575,6 +581,14 @@ final class SummaryDataCalculator {
         return familiarUsage.getCountedData();
     }
 
+    /**
+     * //Bombar: All Banished Combats Functionality
+     * @return A list of all banished combats.
+     */
+    List<DataNumberPair<String>> getBanishedCombats() {
+        return banishedCombats;
+    }
+    
     /**
      * @return A list of all disintegrated combats.
      */
