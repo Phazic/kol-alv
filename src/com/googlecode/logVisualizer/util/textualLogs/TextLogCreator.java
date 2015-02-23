@@ -36,6 +36,7 @@ import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -49,6 +50,7 @@ import net.java.dev.spellcast.utilities.UtilityConstants;
 import com.googlecode.logVisualizer.Settings;
 import com.googlecode.logVisualizer.logData.Item;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
+import com.googlecode.logVisualizer.logData.LogDataHolder.AscensionPath;
 import com.googlecode.logVisualizer.logData.LogDataHolder.StatClass;
 import com.googlecode.logVisualizer.logData.CombatItem;
 import com.googlecode.logVisualizer.logData.MPGain;
@@ -202,7 +204,12 @@ public final class TextLogCreator {
     private DataNumberPair<String> currentDisintegratedCombat;
 
     private DataNumberPair<String> currentHybridData;
+
     private boolean isShowNotes = true;
+
+    private Map<Integer,Integer> dailyKaEarned;
+
+    private static final String KA_EARNED_DAILY = "Ka earned today: ";
 
     /**
      * Helper method to parse out the augmentation values for the textual log
@@ -455,6 +462,8 @@ public final class TextLogCreator {
         banishedCombatIter = logData.getLogSummary().getBanishedCombats().iterator(); //Bombar: Add banished combat support
         hybridDataIter = logData.getHybridContent().iterator();
         learnedSkillIter = logData.getLearnedSkills().iterator();
+
+        dailyKaEarned = new HashMap<Integer, Integer>();
     }
 
     /**
@@ -487,7 +496,10 @@ public final class TextLogCreator {
         DayChange nextDay = dayChangeIter.hasNext() ? dayChangeIter.next() : NO_DAY_CHANGE;
 
         for (final TurnInterval ti : logData.getTurnIntervalsSpent()) {
+            // If the current turn interval's end turn spans a day boundary
             if (!nextDay.equals(NO_DAY_CHANGE) && ti.getEndTurn() >= nextDay.getTurnNumber())
+
+                //If the current turn interval ends on a day boundary
                 if (ti.getEndTurn() == nextDay.getTurnNumber()) {
                     printTurnIntervalContents(ti, currentDay.getDayNumber());
 
@@ -507,6 +519,10 @@ public final class TextLogCreator {
                     printCurrentConsumables(ti.getConsumablesUsed(), currentDay.getDayNumber());
                     printCurrentPulls(currentDay.getDayNumber(), ti.getEndTurn());
                 } else if (ti.getStartTurn() < nextDay.getTurnNumber()) {
+                    // Validate that start of the interval is in the previous day
+                    // Split the interval into two pieces one for each day.
+                    // This handles adventuring in the same area at the end of one day
+                    // and the start of the next.
                     SingleTurn dayChangeTurn = null;
                     for (final SingleTurn st : ti.getTurns())
                         if (st.getTurnNumber() > nextDay.getTurnNumber()) {
@@ -542,6 +558,7 @@ public final class TextLogCreator {
                     log.append(NEW_LINE);
                     printTurnIntervalContents(turnsAfterDayChange, currentDay.getDayNumber());
                 } else {
+                    // New turn interval area at the start of the next day
                     final int currentStringLenght = log.length();
                     final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
                             ti.getEndTurn(),
@@ -760,7 +777,13 @@ public final class TextLogCreator {
                 }
             } else
                 printTurnIntervalContents(ti, currentDay.getDayNumber());
+
         }
+
+
+        // Log daily ka at end of run
+        printDailyKa(logData, currentDay.getDayNumber());
+
         printNotes(logData.getHeaderFooterComment(currentDay).getFooterComments());
         write(NEW_LINE + "Turn rundown finished!");
         write(logAdditionsMap.get("turnRundownEnd"));
@@ -769,6 +792,21 @@ public final class TextLogCreator {
         printLogSummaries(logData);
 
         return log.toString();
+    }
+
+    private void printDailyKa(final LogDataHolder logData, int day)
+    {
+        // Print out Ka acquisition for the day
+        if (logData.getAscensionPath() == AscensionPath.ACTUALLY_ED)
+        {
+            int kaAcquired = dailyKaEarned.get(day);
+
+            write(NEW_LINE);
+            write(KA_EARNED_DAILY);
+            write(kaAcquired);
+            write(NEW_LINE);
+        }
+        return;
     }
 
     /**
@@ -783,6 +821,8 @@ public final class TextLogCreator {
             final Iterator<DayChange> dayChangeIter) {
         while (!nextDay.equals(NO_DAY_CHANGE) && currentTurnNumber >= nextDay.getTurnNumber()) {
             final PlayerSnapshot currentSnapshot = logData.getFirstPlayerSnapshotAfterTurn(nextDay.getTurnNumber());
+
+            printDailyKa(logData, currentDay.getDayNumber());
 
             if (logData.getHeaderFooterComment(currentDay) != null)
                 printNotes(logData.getHeaderFooterComment(currentDay).getFooterComments());
@@ -931,6 +971,52 @@ public final class TextLogCreator {
         write(logAdditionsMap.get("statgainStart"));
         write(ti.getStatGain().toString());
         write(logAdditionsMap.get("statgainEnd"));
+
+        // Report Ka acquisition
+        // TODO: Store this in the turn interval itself
+        int kaAcquired = 0;
+        for (final SingleTurn st : ti.getTurns())
+        {
+            for (final Item i : st.getDroppedItems())
+            {
+                if (i.getName().equals("Ka coin"))
+                {
+                    kaAcquired += i.getAmount();
+                }
+                if (i.getName().equals("Ka coin (2)"))
+                {
+                    kaAcquired += 2 * i.getAmount();
+                }
+
+                if (i.getName().equals("Ka coin (3)"))
+                {
+                    kaAcquired += 3 * i.getAmount();
+                }
+            }
+        }
+
+        if (kaAcquired > 0)
+        {
+            write(UsefulPatterns.WHITE_SPACE);
+            write(UsefulPatterns.ROUND_BRACKET_OPEN);
+            write("Ka: ");
+            write(kaAcquired);
+            write(UsefulPatterns.ROUND_BRACKET_CLOSE);
+
+            // Store ka for daily total
+            int currentDailyKa = 0;
+
+            if (dailyKaEarned.containsKey(currentDayNumber))
+            {
+                currentDailyKa = dailyKaEarned.get(currentDayNumber);
+            }
+
+            currentDailyKa += kaAcquired;
+
+            dailyKaEarned.put(currentDayNumber, currentDailyKa);
+        }
+
+
         write(NEW_LINE);
 
         for (final SingleTurn st : ti.getTurns()) {
