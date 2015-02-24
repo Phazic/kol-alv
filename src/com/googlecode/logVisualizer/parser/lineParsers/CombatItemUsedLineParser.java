@@ -70,9 +70,7 @@ public final class CombatItemUsedLineParser extends AbstractLineParser {
         final CombatItem combatItem = new CombatItem(combatItemName, 1, currentTurn.getTurnNumber());
         
         currentTurn.addCombatItemUsed( combatItem );
-        
-        System.out.println("Found Combat Item: " + combatItem + " turn: " + currentTurn.getTurnNumber());
-        
+                
         //Check for Banishing combat items
         if (UsefulPatterns.BANISH_ITEMS.contains( combatItemName )) {
         	((SingleTurn) logData.getLastTurnSpent()).setBanished(true, combatItemName, null);        
