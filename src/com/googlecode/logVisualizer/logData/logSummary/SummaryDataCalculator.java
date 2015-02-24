@@ -237,15 +237,10 @@ final class SummaryDataCalculator {
                 	if (st.getCombatItemsUsed().size() > 0) {
                 		for ( CombatItem ci : st.getCombatItemsUsed() )
 						{
-							System.out.println(ci);
 							if (UsefulPatterns.TRACKED_COMBAT_ITEMS.contains( ci.getName() ))
-	                			trackedCombatItemUsage.add( DataNumberPair.of( "talisman of renenutet (" + st.getEncounterName() + ")" , st.getTurnNumber() ));
-								
+	                			trackedCombatItemUsage.add( DataNumberPair.of( ci.getName() + " (" + st.getEncounterName() + ")" , st.getTurnNumber() ));
 						}
-/*                		if (st.getCombatItemsUsed().contains( new CombatItem( "the talisman of renenutet", 0))) {
-                			trackedCombatItemUsage.add( DataNumberPair.of( "talisman of renenutet (" + st.getEncounterName() + ")" , st.getTurnNumber() ));
-                		}
-*/                	}
+                	}
                 }
                 
                 // Familiar usage summary
