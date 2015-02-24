@@ -1224,7 +1224,7 @@ public final class LogDataHolder {
     	boolean skillAdded = false;
     	
     	for (DataNumberPair<String> skillInMap : this.learnedSkills) {
-    		if (skillInMap.getNumber() == learnedSkillData.getNumber()) {
+    		if (skillInMap.getNumber().intValue() == learnedSkillData.getNumber().intValue()) {
     			int numCommas = 0;
     			int startNdx = 0;
     			String skills = skillInMap.getData();
