@@ -58,6 +58,8 @@ import com.googlecode.logVisualizer.util.LookAheadIterator;
 import com.googlecode.logVisualizer.util.Maps;
 import com.googlecode.logVisualizer.util.Pair;
 import com.googlecode.logVisualizer.util.Sets;
+import com.sun.jndi.ldap.ext.StartTlsResponseImpl;
+import com.sun.xml.internal.ws.wsdl.writer.document.StartWithExtensionsType;
 
 /**
  * This class is basically the representation of an ascension log. It can hold
@@ -105,6 +107,8 @@ public final class LogDataHolder {
 
     private final List<Pull> pulls = Lists.newArrayList(100);
 
+    private final List<DataNumberPair<String>> learnedSkills = Lists.newArrayList();
+    
     private final List<DataNumberPair<String>> hybridization = Lists.newArrayList();
 
     private final List<DataNumberPair<String>> huntedCombats = Lists.newArrayList();
@@ -1209,6 +1213,48 @@ public final class LogDataHolder {
         return Collections.unmodifiableList(pulls);
     }
 
+    /**
+     * Adds a learned skill entry to the list of entries if multiple entries learned on same turn
+     * will combine up to three of them in one line separated by commas
+     * @param learnedSkillData the skill being learned on a given turn
+     */
+    public void addLearnedSkill(final DataNumberPair<String> learnedSkillData) {
+    	if (learnedSkillData == null || learnedSkillData.getData() == null || learnedSkillData.getNumber() == null)
+    		throw new IllegalArgumentException("Learned Skill data must not be null, and contain a turn number and description");
+    	boolean skillAdded = false;
+    	
+    	for (DataNumberPair<String> skillInMap : this.learnedSkills) {
+    		if (skillInMap.getNumber() == learnedSkillData.getNumber()) {
+    			int numCommas = 0;
+    			int startNdx = 0;
+    			String skills = skillInMap.getData();
+    			while (numCommas < 4 ) {
+    				if (startNdx == -1 || skills.indexOf( ';', startNdx ) < 0 )
+    					break; //No more commas left
+    				numCommas++;
+    				startNdx = skills.indexOf( ';', skills.indexOf( ';', startNdx) + 1 );
+    			}
+    			
+    			if (numCommas < 4) {
+    				skills = skills + "; " + learnedSkillData.getData();
+    				this.learnedSkills.remove( this.learnedSkills.indexOf( skillInMap ) );
+
+    				DataNumberPair<String> combinedEntry = DataNumberPair.of(skills, learnedSkillData.getNumber());
+    				this.learnedSkills.add( combinedEntry );
+    				skillAdded = true;
+    				break;
+    			} 
+    		}
+    	}
+    	if (!skillAdded) {
+    		this.learnedSkills.add( learnedSkillData );
+    	}
+    }
+    
+    public List<DataNumberPair<String>> getLearnedSkills() {
+    	return Collections.unmodifiableList( this.learnedSkills );
+    }
+    
     /**
      * Adds a hybridation element to the current log, it should either be a 
      * make - Makes a Gene tonic

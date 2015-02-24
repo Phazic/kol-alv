@@ -109,6 +109,8 @@ public final class TextLogCreator {
 
     private static final String PULL_PREFIX = "     #> Turn";
 
+    private static final String LEARN_SKILL_PREFIX = "     @>";
+    
     private static final String LEVEL_CHANGE_PREFIX = "     => Level ";
 
     private static final String BANISHED_COMBAT_PREFIX = "     b>";
@@ -190,6 +192,10 @@ public final class TextLogCreator {
     private final Iterator<DataNumberPair<String>> disintegratedCombatIter;
 
     private final Iterator<DataNumberPair<String>> hybridDataIter;
+    
+    private final Iterator<DataNumberPair<String>> learnedSkillIter;
+    
+    private DataNumberPair<String> currentLearnedSkill;
     
     private DataNumberPair<String> currentBanishedCombat;
     
@@ -448,6 +454,7 @@ public final class TextLogCreator {
         disintegratedCombatIter = logData.getLogSummary().getDisintegratedCombats().iterator();
         banishedCombatIter = logData.getLogSummary().getBanishedCombats().iterator(); //Bombar: Add banished combat support
         hybridDataIter = logData.getHybridContent().iterator();
+        learnedSkillIter = logData.getLearnedSkills().iterator();
     }
 
     /**
@@ -578,6 +585,7 @@ public final class TextLogCreator {
                 : null;
         currentBanishedCombat = banishedCombatIter.hasNext() ? banishedCombatIter.next() : null;
         currentHybridData = hybridDataIter.hasNext() ? hybridDataIter.next() : null;
+        currentLearnedSkill = learnedSkillIter.hasNext() ? learnedSkillIter.next() : null;
         
         // Level 1 can be skipped.
         levelIter.next();
@@ -1138,6 +1146,14 @@ public final class TextLogCreator {
             write(NEW_LINE);
         }
 
+        while (currentLearnedSkill != null && ti.getEndTurn() >= currentLearnedSkill.getNumber()) {
+        	write(LEARN_SKILL_PREFIX);
+        	write("Learned: " + currentLearnedSkill.getData() + " (Turn " + currentLearnedSkill.getNumber() + ")");
+        	write(NEW_LINE);
+        	
+        	currentLearnedSkill = learnedSkillIter.hasNext() ? learnedSkillIter.next() : null;
+        }
+        
         while (nextLevel != null && ti.getEndTurn() >= nextLevel.getLevelReachedOnTurn()) {
             // Only print the level if it actually *is* part of this turn
             // interval.
@@ -1412,6 +1428,17 @@ public final class TextLogCreator {
             }
         write(NEW_LINE + NEW_LINE + NEW_LINE);
 
+        if (logData.getLearnedSkills().size() > 0) {
+            write("SKILLS LEARNED" + NEW_LINE + "----------" + NEW_LINE);
+            for (final DataNumberPair<String> dn : logData.getLearnedSkills()) {
+                write(dn.getNumber());
+                write(" : ");
+                write(dn.getData());
+                write(NEW_LINE);
+            }
+            write(NEW_LINE + NEW_LINE + NEW_LINE);        	
+        }
+        
         // Familiars summary
         write("FAMILIARS" + NEW_LINE + "----------" + NEW_LINE);
         for (final DataNumberPair<String> dn : logData.getLogSummary().getFamiliarUsage()) {

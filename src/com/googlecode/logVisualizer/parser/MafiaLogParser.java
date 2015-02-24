@@ -46,6 +46,7 @@ import com.googlecode.logVisualizer.parser.lineParsers.ItemAcquisitionLineParser
 import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser.MPGainType;
 import com.googlecode.logVisualizer.parser.lineParsers.MafiaFamiliarChangeLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.MafiaLearnedSkillLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MafiaPullLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser.MeatGainType;
@@ -129,6 +130,7 @@ public final class MafiaLogParser implements LogParser {
         lineParsers.add(new MafiaPullLineParser());
         lineParsers.add(new PoolMPBuffLineParser());
         lineParsers.add(new DayChangeLineParser());
+        lineParsers.add(new MafiaLearnedSkillLineParser() );
         if (isIncludeMafiaLogNotes)
             lineParsers.add(new NotesLineParser());
     }
