@@ -141,7 +141,7 @@ public final class CombatItem extends AbstractCountable<CombatItem> {
      */
     @Override
     public int compareTo(final CombatItem i) {
-        return getName().compareToIgnoreCase(i.getName());
+        return getAmount() - i.getAmount();
     }
 
     @Override

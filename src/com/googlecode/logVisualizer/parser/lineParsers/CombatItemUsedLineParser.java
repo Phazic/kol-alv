@@ -39,16 +39,12 @@ import com.googlecode.logVisualizer.parser.UsefulPatterns;
  * <p>
  * The format looks like this:
  * <p>
- * {@code Round _roundNumber_: _accountName_ uses _skillName_!}
- * <p>
- * OR
- * <p>
- * {@code Round _roundNumber_: _accountName_ casts _skillName_! (auto-attack)}
+ * {@code Round _roundNumber_: _accountName_ uses the _skillName_!}
  */
 public final class CombatItemUsedLineParser extends AbstractLineParser {
-    private static final Pattern COMBAT_ITEM_USED_CAPTURE_PATTERN = Pattern.compile(".*uses ([\\p{L}\\d\\p{Punct}\\s]+)!(?: \\(auto-attack\\))?");
+    private static final Pattern COMBAT_ITEM_USED_CAPTURE_PATTERN = Pattern.compile(".*uses the ([\\p{L}\\d\\p{Punct}\\s]+)!(?: \\(auto-attack\\))?");
 
-    private static final String COMBAT_ITEM_USED_STRING = "uses";
+    private static final String COMBAT_ITEM_USED_STRING = "uses the";
 
     private final Matcher combatItemUsedMatcher = COMBAT_ITEM_USED_CAPTURE_PATTERN.matcher(UsefulPatterns.EMPTY_STRING);
 

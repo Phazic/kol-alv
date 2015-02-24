@@ -1468,7 +1468,7 @@ public final class TextLogCreator {
             for (final DataNumberPair<String> dn : logData.getLogSummary().getTrackedCombatItemUses()) {
                 write(dn.getNumber());
                 write(" : ");
-                write(dn.getData());
+            	write(dn.getData());
                 write(NEW_LINE);
             }
             write(NEW_LINE + NEW_LINE + NEW_LINE);        	
@@ -1566,7 +1566,10 @@ public final class TextLogCreator {
         //Combat Items Used
         write("COMBAT ITEMS" + NEW_LINE + "----------" + NEW_LINE);
         for (final CombatItem ci : logData.getLogSummary().getCombatItemsUsed()) {
-        	write(ci.toString());
+        	write("Used ");
+        	write(ci.getAmount());
+        	write(UsefulPatterns.WHITE_SPACE);
+        	write(ci.getName());
         	write(NEW_LINE);
         }
         write(NEW_LINE + NEW_LINE + NEW_LINE);
