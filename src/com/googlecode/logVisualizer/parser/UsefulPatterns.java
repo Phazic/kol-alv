@@ -96,7 +96,8 @@ public final class UsefulPatterns {
 		"classy monkey", //Class Act
 		"dirty stinkbomb", //KOLHS
 		"deathchucks", //KOLHS
-		"smoke grenade" //AoSP
+		"smoke grenade", //AoSP
+		"cocktail napkin" //Only against clingy pirate
 		);
     
     @SuppressWarnings("unchecked")
