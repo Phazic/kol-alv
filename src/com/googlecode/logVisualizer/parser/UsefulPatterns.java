@@ -139,7 +139,7 @@ public final class UsefulPatterns {
 
     public static final Pattern ITEM_FOUND = Pattern.compile("^\\s*\\+>.+");
 
-    public static final Pattern CONSUMED = Pattern.compile("^\\s*o>\\s(?:Ate|Drank|Used).+");
+    public static final Pattern CONSUMED = Pattern.compile("^\\s*o>\\s(?:Ate|Drank|Used|Chew).+");
 
     public static final Pattern FAMILIAR_CHANGED = Pattern.compile("^\\s*->\\sTurn.+");
 
@@ -157,7 +157,7 @@ public final class UsefulPatterns {
 
     public static final Pattern FREE_RUNAWAYS_USAGE = Pattern.compile("^\\s*\\&> \\d+ \\\\ \\d+ free retreats.*");
 
-    public static final Pattern CONSUMABLE_USED = Pattern.compile("(?:(?:use|eat|drink)|Buy and (?:eat|drink))(?: \\d+)? .+");
+    public static final Pattern CONSUMABLE_USED = Pattern.compile("(?:(?:use|eat|drink|chew)|Buy and (?:eat|drink))(?: \\d+)? .+");
 
     public static final Pattern GAIN = Pattern.compile("^You gain \\d*,?\\d+ [\\w\\s]+");
 

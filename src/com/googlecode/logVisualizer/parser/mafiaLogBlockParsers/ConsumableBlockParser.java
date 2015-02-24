@@ -90,6 +90,8 @@ public final class ConsumableBlockParser implements LogBlockParser {
     private static final String FOOD_STRING = "eat";
 
     private static final String BOOZE_STRING = "drink";
+    
+    private static final String SPLEEN_STRING = "chew";
 
     private static final String ADVENTURE_STRING = "Adventure";
 
@@ -239,12 +241,13 @@ public final class ConsumableBlockParser implements LogBlockParser {
                 tmpCon = Consumable.newFoodConsumable(itemName, adventureGain, amount, currentTurn);
             else if (usageIdentifier.contains(BOOZE_STRING))
                 tmpCon = Consumable.newBoozeConsumable(itemName, adventureGain, amount, currentTurn);
-            else if (DataTablesHandler.HANDLER.getSpleenHit(itemName) > 0)
-                tmpCon = Consumable.newSpleenConsumable(itemName,
-                        adventureGain,
-                        amount,
-                        currentTurn);
-            else
+            else if (usageIdentifier.contains(SPLEEN_STRING)) 
+                tmpCon = Consumable.newSpleenConsumable(itemName, adventureGain, amount, currentTurn);
+            else if (DataTablesHandler.HANDLER.getSpleenHit(itemName) > 0) {
+            	//TODO: This is using the old parsing where it was use _#_ _spleenItem_ it has since been changed to chew
+            	//		should eventually remove this.
+                tmpCon = Consumable.newSpleenConsumable(itemName, adventureGain, amount, currentTurn);
+            }else
                 tmpCon = Consumable.newOtherConsumable(itemName, adventureGain, amount, currentTurn);
             tmpCon.setDayNumberOfUsage(logData.getLastDayChange().getDayNumber());
             tmpCon.setStatGain(consumableStatgain);

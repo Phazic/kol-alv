@@ -59,6 +59,8 @@ public final class MafiaSessionLogReader {
     private static final String EAT_STRING = "eat";
 
     private static final String DRINK_STRING = "drink";
+    
+    private static final String SPLEEN_STRING = "chew";
 
     private static final String BUY_STRING = "Buy";
 
@@ -183,7 +185,8 @@ public final class MafiaSessionLogReader {
     private boolean isConsumableBlockStart(
             String line) {
         boolean isConsumable = (line.startsWith(USE_STRING) || line.startsWith(EAT_STRING)
-                || line.startsWith(DRINK_STRING) || line.startsWith(BUY_STRING))
+                || line.startsWith(DRINK_STRING) || line.startsWith(BUY_STRING) 
+                || line.startsWith( SPLEEN_STRING ))   
                 && UsefulPatterns.CONSUMABLE_USED.matcher(line).matches();
 
         return isConsumable;
