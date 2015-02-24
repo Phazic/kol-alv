@@ -150,24 +150,32 @@ public final class MafiaLogParser implements LogParser {
             // In case old ascension turn counting is turned off and the current
             // block is an encounter block, we need to check whether the Naughty
             // Sorceress was beaten in it.
-            if (!isOldAscensionCounting
-                    && block.getBlockType() == LogBlockType.ENCOUNTER_BLOCK) {
-                // Get the encounter name instead of the location
+            if (!isOldAscensionCounting) {
+                if (block.getBlockType() == LogBlockType.ENCOUNTER_BLOCK) {
+                	// Get the encounter name instead of the location
+                	String tmp;
+                	if (block.getBlockLines().size() > 1)
+                		tmp = block.getBlockLines().get(1);
+                	else
+                		tmp = "";
 
-                String tmp;
-                if (block.getBlockLines().size() > 1)
-                    tmp = block.getBlockLines().get(1);
-                else
-                    tmp = "";
-
-                // First check the encounter type to see if the location
-                // is the Naughty Sorceress or one of the end bosses
-                if (tmp.endsWith(NAUGHTY_SORCERESS_3RD_FORM))
-                    nsFightWon = isFightWon(block);
-                if (tmp.endsWith(RAIN_KING))
-                    nsFightWon = isFightWon(block);
-                if (tmp.endsWith(AVATAR_OF_JARLSBERG))
-                    nsFightWon = isFightWon(block);
+                	// First check the encounter type to see if the location
+                	// is the Naughty Sorceress or one of the end bosses
+                	if (tmp.endsWith(NAUGHTY_SORCERESS_3RD_FORM))
+                		nsFightWon = isFightWon(block);
+                	if (tmp.endsWith(RAIN_KING))
+                		nsFightWon = isFightWon(block);
+                	if (tmp.endsWith(AVATAR_OF_JARLSBERG))
+                		nsFightWon = isFightWon(block);
+                } else if (block.getBlockType() == LogBlockType.OTHER_BLOCK) {
+                	if (block.getBlockLines().size() > 2 && block.getBlockLines().get( 1 ).contains( "Encounter: Returning the MacGuffin" )) {
+                		for (String line : block.getBlockLines()) {
+                			if (line.equals( "choice.php?pwd&whichchoice=1055&option=1" ))
+                				nsFightWon = true;
+                		}
+                	}
+                }
+                
             }
             
             // Now, we do the actual parsing.
