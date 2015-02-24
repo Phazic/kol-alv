@@ -47,6 +47,7 @@ import com.googlecode.logVisualizer.logData.turn.turnAction.FamiliarChange;
 import com.googlecode.logVisualizer.parser.LineParser;
 import com.googlecode.logVisualizer.parser.MafiaSessionLogReader;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
+import com.googlecode.logVisualizer.parser.lineParsers.CombatItemUsedLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.CombatRecognizerLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.EquipmentLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.ItemAcquisitionLineParser;
@@ -170,6 +171,8 @@ public final class EncounterBlockParser implements LogBlockParser {
         lineParsers.add(new StarfishMPGainLineParser());
         lineParsers.add(new MafiaRedRayStatsLineParser());
         lineParsers.add(new MafiaBanishLineParser());
+        lineParsers.add(new CombatItemUsedLineParser());
+        
         // Add a note parser to encounter blocks
         if (Settings.getSettingBoolean("Include mafia log notes"))
             lineParsers.add(new NotesLineParser());

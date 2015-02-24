@@ -24,17 +24,17 @@
 
 package com.googlecode.logVisualizer.parser.lineParsers;
 
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.turn.SingleTurn;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
+import com.googlecode.logVisualizer.util.Sets;
 
 public final class MafiaBanishLineParser extends AbstractLineParser {
-	
-    private static final String LOUDER_THAN_BOMB_USAGE_STRING = " uses the Louder Than Bomb";
-
+	    
     /**
      * {@inheritDoc}
      */
@@ -49,6 +49,6 @@ public final class MafiaBanishLineParser extends AbstractLineParser {
      */
     @Override
     protected boolean isCompatibleLine(final String line) {
-    	return line.contains( LOUDER_THAN_BOMB_USAGE_STRING );
+    	return false;//currently nothing uses this.
     }
 }

@@ -92,6 +92,17 @@ public interface Turn extends TurnEntity {
     public void setDroppedItems(
                                 final Collection<Item> droppedItems);
 
+    /***
+     * 
+     * @param combatItem the combat item to add
+     */
+    public void addCombatItemUsed(final CombatItem combatItem);
+    
+    /**
+     * @parmam collection of combat items to set
+     */
+    public void setCombatItemsUsed(final Collection<CombatItem> combatItems);
+    
     /**
      * @param skill
      *            The skill to add.

@@ -59,6 +59,8 @@ public abstract class AbstractTurn implements Turn {
 
     private final CountableSet<Skill> skillsCast = new CountableSet<Skill>();
 
+    private final CountableSet<CombatItem> combatItemsUsed = new CountableSet<CombatItem>();
+    
     private final CountableSet<Consumable> consumablesUsed = new CountableSet<Consumable>();
 
     private int successfulFreeRunaways = 0;
@@ -206,6 +208,41 @@ public abstract class AbstractTurn implements Turn {
     /**
      * @see Turn
      */
+    public void addCombatItemUsed(CombatItem ci) {
+    	this.combatItemsUsed.addElement( ci );
+    }
+    
+    /**
+     * @see Turn
+     */
+    public void setCombatItemsUsed(final Collection<CombatItem> combatItemsUsed) {
+    	this.combatItemsUsed.setElements( combatItemsUsed );
+    }
+    
+    /**
+     * @see TurnEntity
+     */
+    public Collection<CombatItem> getCombatItemsUsed() {
+    	return this.combatItemsUsed.getElements();
+    }
+    
+    /**
+     * @see TurnEntity
+     */
+    public boolean isCombatItemUsed(final CombatItem ci) {
+    	return this.combatItemsUsed.contains( ci );
+    }
+    
+    /**
+     * @see TurnEntity
+     */
+    public boolean isCombatItemUsed(String combatItemName) {
+    	return this.combatItemsUsed.containsByName( combatItemName );
+    }
+    
+    /**
+     * @see Turn
+     */
     public void addSkillCast(
                              final Skill skill) {
         skillsCast.addElement(skill);
@@ -347,6 +384,8 @@ public abstract class AbstractTurn implements Turn {
             addSkillCast(s);
         for (final Consumable c : turn.getConsumablesUsed())
             addConsumableUsed(c);
+        for (final CombatItem ci : turn.getCombatItemsUsed())
+        	addCombatItemUsed( ci );
     }
 
     /**

@@ -69,11 +69,36 @@ public final class UsefulPatterns {
                                                                                      "suckerpunch",
                                                                                      "sing");
     
-    public static final Set<String> BANISH_SKILLS = Sets.immutableSetOf( "curse of vacation", //Ed 
-    																	 "batter up", //Seal Clubber
-    																	 "talk about politics" //skill
-    																   );
+    public static final Set<String> TRACKED_COMBAT_ITEMS = Sets.immutableSetOf(
+    	"the alpine watercolor set",
+    	"the talisman of renenutet"
+    	);
+    
+    public static final Set<String> BANISH_SKILLS = Sets.immutableSetOf( 
+    	"curse of vacation", //Ed 
+    	"batter up", //Seal Clubber
+    	"talk about politics", //Pantsgiving skill
+    	"creepy grin", //V for Viola mask skill
+		"banishing shot", //AoB
+		"howl of the alpha", //Zombie Slayer
+		"peel out", //AoSP
+		"walk away from explosion", //AoSP
+		"thunder clap"//Heavy Rains
+		);
 
+    public static final Set<String> BANISH_ITEMS = Sets.immutableSetOf( 
+    	"louder than bomb", //Smiths tome 
+		"crystal skull", //Clip-art
+		"ice house",//winter garden
+		"divine champagne popper", //Summon Party Favor
+		"Harold's bell", 
+		"pulled indigo taffy", //Summon Taffy
+		"classy monkey", //Class Act
+		"dirty stinkbomb", //KOLHS
+		"deathchucks", //KOLHS
+		"smoke grenade" //AoSP
+		);
+    
     @SuppressWarnings("unchecked")
     public static final Map<String, CharacterClass> TRIVAL_COMBAT_SKILL_CHARACTER_CLASS_MAP = Maps.immutableMapOf(Pair.of("clobber",
                                                                                                                           CharacterClass.SEAL_CLUBBER),

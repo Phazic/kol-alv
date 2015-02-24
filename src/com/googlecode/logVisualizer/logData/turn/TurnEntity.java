@@ -92,7 +92,7 @@ public interface TurnEntity {
      * @return The skills cast this turn.
      */
     public Collection<Skill> getSkillsCast();
-
+    
     /**
      * @return {@code true} if the given skill has been cast on this turn,
      *         otherwise {@code false}. This check is solely based on
@@ -108,7 +108,26 @@ public interface TurnEntity {
      */
     public boolean isSkillCast(
                                final String s);
+    
+    /**
+     * @return {@code true} if the given combat item has been used on this turn,
+     *         otherwise {@code false}. This check is solely based on
+     *         {@link CombatItem#getComparator()} and nothing else.
+     */
+    public boolean isCombatItemUsed(final CombatItem i);
 
+    /**
+     * @return {@code true} if a combat item with the given name has been used on this
+     *         turn, otherwise {@code false}. This check is solely based on
+     *         {@link Skill#getName()} and nothing else.
+     */
+    public boolean isCombatItemUsed(final String s);
+
+    /**
+     * @return The combat items used this turn.
+     */
+    public Collection<CombatItem> getCombatItemsUsed();
+    
     /**
      * @return The consumables used this turn.
      */

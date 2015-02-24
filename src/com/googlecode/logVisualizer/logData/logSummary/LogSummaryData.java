@@ -56,6 +56,8 @@ public class LogSummaryData {
 
     private final List<Skill> skillsCast;
 
+    private final List<CombatItem> combatItemsUsed;
+    
     private final List<AreaStatgains> areasStatgains;
 
     private final List<DataNumberPair<String>> turnsPerArea;
@@ -64,6 +66,8 @@ public class LogSummaryData {
 
     private List<DataNumberPair<String>> familiarUsage;
 
+    private List<DataNumberPair<String>> trackedCombatItemUses;
+    
     private List<DataNumberPair<String>> disintegratedCombats;
     
     private List<DataNumberPair<String>> banishedCombats;
@@ -182,6 +186,15 @@ public class LogSummaryData {
             }
         });
 
+        combatItemsUsed = Lists.newArrayList(data.getCombatItemsUsed());
+        Collections.sort( combatItemsUsed, new Comparator<CombatItem>() {
+        	public int compare(final CombatItem o1, final CombatItem o2) {
+                // Reverse order, so that the list starts with the highest
+                // element.
+        		return o2.compareTo( o1 );
+        	}
+        });
+        
         skillsCast = Lists.newArrayList(data.getSkillsCast());
         Collections.sort(skillsCast, new Comparator<Skill>() {
 
@@ -207,6 +220,7 @@ public class LogSummaryData {
         levels = data.getLevelData();
         disintegratedCombats = data.getDisintegratedCombats();
         banishedCombats = data.getBanishedCombats();//Bombar: Add support for banished combats
+        trackedCombatItemUses = data.getTrackedCombatItemUses();//Bombar: Add support for combat Item usage
         semirares = data.getSemirares();
         badmoonAdventures = data.getBadmoonAdventures();
         romanticArrowUsages = data.getRomanticArrowUsages();
@@ -316,6 +330,14 @@ public class LogSummaryData {
     }
 
     /**
+     * 
+     * @return A sorted list of all combat items used during this ascension, the list starts with skill that was used most.
+     */
+    public List<CombatItem> getCombatItemsUsed() {
+    	return combatItemsUsed;
+    }
+    
+    /**
      * @return A sorted list of all skills cast during this ascension. This list
      *         starts with the skill that was cast the most.
      */
@@ -360,8 +382,15 @@ public class LogSummaryData {
         return familiarUsage;
     }
 
+    public void setTrackedCombatItemUses(final List<DataNumberPair<String>> trackedCombatItemUses) {
+    	this.trackedCombatItemUses = trackedCombatItemUses;
+    }
+    public List<DataNumberPair<String>> getTrackedCombatItemUses() {
+    	return this.trackedCombatItemUses;
+    }
+    
     /**
-     * @param disintegratedCombats
+     * @param banishedCombats
      *            All banished combats to set.
      */
     public void setBanishedCombats(

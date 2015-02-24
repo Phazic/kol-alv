@@ -1295,6 +1295,10 @@ public final class LogDataHolder {
         return logSummary.getDroppedItems();
     }
 
+    public List<CombatItem> getAllCombatItemsUsed() {
+    	return logSummary.getCombatItemsUsed();
+    }
+    
     /**
      * Returns a list of all skills cast during this ascension.
      * <p>

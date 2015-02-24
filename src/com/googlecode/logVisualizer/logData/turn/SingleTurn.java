@@ -77,8 +77,6 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
     private TurnVersion turnVersion = TurnVersion.NOT_DEFINED;
 
     private List<Encounter> encounters;
-
-    private boolean freeTurn = false;
     
     /**
      * @param areaName
@@ -336,7 +334,8 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
                                                      e.getNotes(),
                                                      e.getDroppedItems(),
                                                      e.getSkillsCast(),
-                                                     e.getConsumablesUsed()));
+                                                     e.getConsumablesUsed(),
+                                                     e.getCombatItemsUsed()));
         }
     }
 
@@ -413,7 +412,8 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
                                       getNotes(),
                                       getDroppedItems(),
                                       getSkillsCast(),
-                                      getConsumablesUsed());
+                                      getConsumablesUsed(),
+                                      getCombatItemsUsed());
     }
 
     /**
@@ -459,14 +459,6 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
         }
 
         return false;
-    }
-
-    public boolean isFreeTurn() {
-    	return this.freeTurn;
-    }
-    
-    public void setFreeTurn(boolean isFreeTurn) {
-    	this.freeTurn = isFreeTurn;
     }
     
     @Override

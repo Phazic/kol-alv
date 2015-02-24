@@ -50,6 +50,7 @@ import com.googlecode.logVisualizer.Settings;
 import com.googlecode.logVisualizer.logData.Item;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.LogDataHolder.StatClass;
+import com.googlecode.logVisualizer.logData.CombatItem;
 import com.googlecode.logVisualizer.logData.MPGain;
 import com.googlecode.logVisualizer.logData.MeatGain;
 import com.googlecode.logVisualizer.logData.Skill;
@@ -1009,7 +1010,7 @@ public final class TextLogCreator {
                     localeOnetimeItemsSet.remove(itemName);
                 }
             }
-
+            
             final Iterator<Item> aquiredItemsIter = importantItems.iterator();
             if (aquiredItemsIter.hasNext()) {
                 printItemAcquisitionStartString(st.getTurnNumber());
@@ -1431,6 +1432,17 @@ public final class TextLogCreator {
         }
         write(NEW_LINE + NEW_LINE + NEW_LINE);
 
+        if (logData.getLogSummary().getTrackedCombatItemUses().size() > 0) {
+            write("TRACKED COMBAT ITEMS" + NEW_LINE + "----------" + NEW_LINE);
+            for (final DataNumberPair<String> dn : logData.getLogSummary().getTrackedCombatItemUses()) {
+                write(dn.getNumber());
+                write(" : ");
+                write(dn.getData());
+                write(NEW_LINE);
+            }
+            write(NEW_LINE + NEW_LINE + NEW_LINE);        	
+        }
+        
         // Hunted combats summary
         write("HUNTED COMBATS" + NEW_LINE + "----------" + NEW_LINE);
         for (final DataNumberPair<String> dn : logData.getHuntedCombats()) {
@@ -1508,6 +1520,14 @@ public final class TextLogCreator {
         }
         write(NEW_LINE + NEW_LINE + NEW_LINE);
 
+        //Combat Items Used
+        write("COMBAT ITEMS" + NEW_LINE + "----------" + NEW_LINE);
+        for (final CombatItem ci : logData.getLogSummary().getCombatItemsUsed()) {
+        	write(ci.toString());
+        	write(NEW_LINE);
+        }
+        write(NEW_LINE + NEW_LINE + NEW_LINE);
+        
         // Skills cast summary
         write("CASTS" + NEW_LINE + "----------" + NEW_LINE);
         for (final Skill s : logData.getLogSummary().getSkillsCast()) {
