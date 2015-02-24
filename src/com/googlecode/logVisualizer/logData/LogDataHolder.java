@@ -1434,6 +1434,7 @@ public final class LogDataHolder {
         AVATAR_OF_BORIS("Avatar of Boris", StatClass.MUSCLE),
         AVATAR_OF_JARLSBERG("Avatar of Jarlsberg", StatClass.MYSTICALITY),
         AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE),
+        ED("Ed", StatClass.MYSTICALITY),
         NOT_DEFINED("not defined", StatClass.MUSCLE);
 
         private static final Map<String, CharacterClass> stringToEnum = Maps.newHashMap();
@@ -1553,6 +1554,7 @@ public final class LogDataHolder {
         HEAVY_RAINS("Heavy Rains"),
         PICKY("Picky"),
         STANDARD("Standard"),
+        ED("Actually Ed the Undying"),
         NOT_DEFINED("not defined");
 
         private static final Map<String, AscensionPath> stringToEnum = Maps.newHashMap();
