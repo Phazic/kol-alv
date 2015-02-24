@@ -81,7 +81,7 @@ public class LogSummaryData {
     private final List<DataNumberPair<String>> wanderingAdventures;
 
     private final List<DataNumberPair<String>> hipsterCombats;
-
+    
     private final List<Encounter> freeRunawayCombats;
 
     private final FreeRunaways freeRunaways;

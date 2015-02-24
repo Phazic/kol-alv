@@ -136,10 +136,6 @@ public final class EncounterBlockParser implements LogBlockParser {
 
     private static final String SHORE_AREAS_END_STRING = " Vacation";
 
-    private static final String HYBRIDIZING_AREANAME= "Hybridizing yourself";
-
-    private static final Pattern HYBRIDIZE_PATTERN = Pattern.compile("You acquire an intrinsic: (.+) Hybrid$");
-
     private static final String CLOWNLORD_CHOICE_ENCOUNTER_STRING = "Adventurer, $1.99";
 
     private static final String OUTFIT_STRING = "outfit";
@@ -187,35 +183,6 @@ public final class EncounterBlockParser implements LogBlockParser {
                 : block.get(1);
         final SingleTurn turn;
         final int dayNumber = logData.getLastDayChange().getDayNumber();
-
-        // Parse hybridizing of DNA
-        if (HYBRIDIZE_PATTERN.matcher(turnSpentLine).matches())
-        {
-
-            final Matcher result = HYBRIDIZE_PATTERN.matcher(turnSpentLine);
-
-            if (result.find())
-            {
-
-                // Create an encounter with the name of the intrinsic
-                // Log it on the following turn so it gets combined
-                final SingleTurn tmp = new SingleTurn(HYBRIDIZING_AREANAME,
-                        result.group(1),
-                        logData.getLastTurnSpent().getTurnNumber() + 1,
-                        dayNumber,
-                        logData.getLastEquipmentChange(),
-                        logData.getLastFamiliarChange());
-                tmp.setTurnVersion(TurnVersion.OTHER);
-                logData.addTurnSpent(tmp);
-            }
-
-            // Reset turnSpentLine to be line 3 or 4
-            if (block.size() >= 3)
-            	turnSpentLine = block.get(3).startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) ? block.get(3)
-                  		: block.get(4);
-            else 
-            	return;
-        }
 
         // Some areas have broken turn spent strings. If a turn is recognised as
         // being spent in such an area, the block will start with the encounter

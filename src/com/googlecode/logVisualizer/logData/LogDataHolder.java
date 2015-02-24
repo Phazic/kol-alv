@@ -30,10 +30,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.regex.MatchResult;
+import java.util.regex.Pattern;
 
 import com.googlecode.logVisualizer.logData.consumables.Consumable;
 import com.googlecode.logVisualizer.logData.logSummary.LevelData;
@@ -101,6 +104,8 @@ public final class LogDataHolder {
     private final SortedMap<Integer, EquipmentChange> equipmentChanges = new TreeMap<Integer, EquipmentChange>();
 
     private final List<Pull> pulls = Lists.newArrayList(100);
+
+    private final List<DataNumberPair<String>> hybridization = Lists.newArrayList();
 
     private final List<DataNumberPair<String>> huntedCombats = Lists.newArrayList();
 
@@ -1204,6 +1209,63 @@ public final class LogDataHolder {
         return Collections.unmodifiableList(pulls);
     }
 
+    /**
+     * Adds a hybridation element to the current log, it should either be a 
+     * make - Makes a Gene tonic
+     * hybridizing - Gives intrinsic 1/day
+     * @param hybridData should be in the form <turnNumber>, <stringDescription>
+     */
+    public void addHybridContent( final DataNumberPair<String> hybridData) {
+    	if (hybridData == null || hybridData.getData() == null || hybridData.getNumber() == null)
+    		throw new IllegalArgumentException("Hybrid data must not be null and have a turn number and description");
+    	boolean dataAdded = false;
+    	
+    	
+    	for (DataNumberPair<String> pairInMap : this.hybridization) {
+    		if (pairInMap.getNumber() == hybridData.getNumber()) {
+    			if (pairInMap.getData().startsWith( hybridData.getData() )) {
+    				int ndxExisting = this.hybridization.indexOf( pairInMap );
+
+    				String newDataString = null;
+    	    		if (pairInMap.getData().contains( "(" ) && pairInMap.getData().contains( ")" )) {
+    	    			int startNdx = pairInMap.getData().indexOf( '(' );
+    	    			int endNdx = pairInMap.getData().indexOf( ')', startNdx);
+    	    			
+    	    			if (startNdx < endNdx)  {
+    	    				
+    	    				String numberString = pairInMap.getData().substring( startNdx + 1, endNdx );
+    	    				try {
+    	    					int count = Integer.parseInt( numberString ) + 1;
+    	    					newDataString = pairInMap.getData().substring( 0, startNdx - 1 ) + " (" + count + ")"; 
+    	    				} catch (NumberFormatException ex) {
+    	    					System.out.println( ex );
+        	    				newDataString = pairInMap.getData() + " +1";
+    	    				}    	    				
+    	    			} else {
+    	    				newDataString = pairInMap.getData() + " (2)";    	    					
+    	    			}
+    	    		} else {
+    	    			newDataString = hybridData.getData() + " (2)";
+    	    		}
+    				
+    				this.hybridization.remove( ndxExisting );
+    	    		this.hybridization.add( DataNumberPair.of(newDataString, hybridData.getNumber()) );
+    	    		dataAdded = true;
+    	    		break; //Since we have modified the structure and would get a concurrent issue if we continued
+    			}
+    		}
+    	}
+    	
+    	if (!dataAdded)
+    		this.hybridization.add( hybridData );
+    		
+    }
+    
+    public List<DataNumberPair<String>> getHybridContent() {
+    	return Collections.unmodifiableList( this.hybridization );
+    }
+
+    
     /**
      * @param huntedCombat
      *            The hunted combat to add.

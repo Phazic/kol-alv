@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.HybridDataBlockParser;
 import com.googlecode.logVisualizer.util.Lists;
 import com.googlecode.logVisualizer.util.Sets;
 
@@ -63,8 +64,6 @@ public final class MafiaSessionLogReader {
     private static final String SPLEEN_STRING = "chew";
 
     private static final String BUY_STRING = "Buy";
-
-    private static final String HYBRIDIZE_STRING = "Hybridizing yourself";
 
     private static final String SNAPSHOT_START_END = "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=";
 
@@ -142,6 +141,8 @@ public final class MafiaSessionLogReader {
             block = new LogBlockImpl(parsePlayerSnapshotBlock(), LogBlockType.PLAYER_SNAPSHOT_BLOCK);
         else if (line.startsWith(ASCENSION_DATA_START_STRING))
             block = new LogBlockImpl(parseNormalBlock(), LogBlockType.ASCENSION_DATA_BLOCK);
+        else if (HybridDataBlockParser.isHybridBlock(line))
+        	block = new LogBlockImpl(parseNormalBlock(), LogBlockType.HYBRID_DATA_BLOCK);
         else
             block = new LogBlockImpl(parseNormalBlock(), LogBlockType.OTHER_BLOCK);
 
@@ -176,9 +177,7 @@ public final class MafiaSessionLogReader {
 
         boolean isRainman = line.contains("cast 1 Rain Man");
 
-        boolean isDna = (line.startsWith(HYBRIDIZE_STRING));
-
-        return isAdventure || isRainman || isDna;
+        return isAdventure || isRainman;
 
     }
 
@@ -335,7 +334,7 @@ public final class MafiaSessionLogReader {
      * have.
      */
     static enum LogBlockType {
-        ENCOUNTER_BLOCK, CONSUMABLE_BLOCK, PLAYER_SNAPSHOT_BLOCK, ASCENSION_DATA_BLOCK, OTHER_BLOCK;
+        ENCOUNTER_BLOCK, CONSUMABLE_BLOCK, PLAYER_SNAPSHOT_BLOCK, ASCENSION_DATA_BLOCK, HYBRID_DATA_BLOCK, OTHER_BLOCK;
     }
 
     /**

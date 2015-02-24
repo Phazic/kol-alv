@@ -135,15 +135,13 @@ public final class TextLogCreator {
 
     private static final String FREE_RUNAWAYS_PREFIX = "     &> ";
 
-    private static final String HYBRIDIZE_PREFIX = "     @> ";
-
+    private static final String HYBRIDIZE_PREFIX = "     h> ";
+    
     private static final String ADVENTURES_LEFT_STRING = "Adventure count at day start: ";
 
     private static final String CURRENT_MEAT_STRING = "Current meat: ";
 
     private static final String CHATEAU_REST_AREA = "Rest in your bed in the Chateau";
-
-    private static final String HYBRIDIZING_AREA = "Hybridizing yourself";
 
     private static final String SMITH_STRING = "smith ";
 
@@ -191,10 +189,13 @@ public final class TextLogCreator {
     
     private final Iterator<DataNumberPair<String>> disintegratedCombatIter;
 
+    private final Iterator<DataNumberPair<String>> hybridDataIter;
+    
     private DataNumberPair<String> currentBanishedCombat;
     
     private DataNumberPair<String> currentDisintegratedCombat;
 
+    private DataNumberPair<String> currentHybridData;
     private boolean isShowNotes = true;
 
     /**
@@ -446,6 +447,7 @@ public final class TextLogCreator {
         huntedCombatIter = logData.getHuntedCombats().iterator();
         disintegratedCombatIter = logData.getLogSummary().getDisintegratedCombats().iterator();
         banishedCombatIter = logData.getLogSummary().getBanishedCombats().iterator(); //Bombar: Add banished combat support
+        hybridDataIter = logData.getHybridContent().iterator();
     }
 
     /**
@@ -575,7 +577,8 @@ public final class TextLogCreator {
         currentDisintegratedCombat = disintegratedCombatIter.hasNext() ? disintegratedCombatIter.next()
                 : null;
         currentBanishedCombat = banishedCombatIter.hasNext() ? banishedCombatIter.next() : null;
-
+        currentHybridData = hybridDataIter.hasNext() ? hybridDataIter.next() : null;
+        
         // Level 1 can be skipped.
         levelIter.next();
         nextLevel = levelIter.hasNext() ? levelIter.next() : null;
@@ -969,17 +972,6 @@ public final class TextLogCreator {
                         write(NEW_LINE);
                     }
 
-                    if (e.getAreaName().contains(HYBRIDIZING_AREA))
-                    {
-                        // Log it using the free runaway prefix
-                        write(HYBRIDIZE_PREFIX);
-                        write(UsefulPatterns.SQUARE_BRACKET_OPEN);
-                        write(st.getTurnNumber());
-                        write(UsefulPatterns.SQUARE_BRACKET_CLOSE);
-                        write(UsefulPatterns.WHITE_SPACE);
-                        write(e.getAreaName() + ": " + e.getEncounterName());
-                        write(NEW_LINE);
-                    }
                     // Log turn-free crafting as well
 
                     if (e.getAreaName().toLowerCase().startsWith(MIX_STRING) ||
@@ -1068,7 +1060,19 @@ public final class TextLogCreator {
         printCurrentConsumables(ti.getConsumablesUsed(), currentDayNumber);
 
         printCurrentPulls(currentDayNumber, ti.getEndTurn());
-
+        
+        while (currentHybridData != null && ti.getEndTurn() >= currentHybridData.getNumber()) {
+            write(HYBRIDIZE_PREFIX);
+            write(UsefulPatterns.SQUARE_BRACKET_OPEN);
+            write(currentHybridData.getNumber());
+            write(UsefulPatterns.SQUARE_BRACKET_CLOSE);
+            write(UsefulPatterns.WHITE_SPACE);
+            write(currentHybridData.getData());
+            write(NEW_LINE);
+            
+            currentHybridData = hybridDataIter.hasNext() ? hybridDataIter.next() : null;
+        }
+        
         while (currentHuntedCombat != null && ti.getEndTurn() >= currentHuntedCombat.getNumber()) {
             write(HUNTED_COMBAT_PREFIX);
             write(OPENING_TURN_BRACKET);
@@ -1441,6 +1445,18 @@ public final class TextLogCreator {
                 write(NEW_LINE);
             }
             write(NEW_LINE + NEW_LINE + NEW_LINE);        	
+        }
+
+        //Hybrid
+        if (logData.getHybridContent().size() > 0) {
+            write("DNA Lab" + NEW_LINE + "----------" + NEW_LINE);
+            for (final DataNumberPair<String> dn : logData.getHybridContent()) {
+                write(dn.getNumber());
+                write(" : ");
+                write(dn.getData());
+                write(NEW_LINE);
+            }
+            write(NEW_LINE + NEW_LINE + NEW_LINE);
         }
         
         // Hunted combats summary

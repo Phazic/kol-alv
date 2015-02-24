@@ -57,6 +57,7 @@ import com.googlecode.logVisualizer.parser.lineParsers.StatLineParser;
 import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.AscensionDataBlockParser;
 import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.ConsumableBlockParser;
 import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.EncounterBlockParser;
+import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.HybridDataBlockParser;
 import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.PlayerSnapshotBlockParser;
 import com.googlecode.logVisualizer.util.Lists;
 import com.googlecode.logVisualizer.util.Maps;
@@ -100,6 +101,8 @@ public final class MafiaLogParser implements LogParser {
 
     private final AscensionDataBlockParser ascensionDataParser = new AscensionDataBlockParser();
 
+    private final HybridDataBlockParser hybridDataParser = new HybridDataBlockParser();
+    
     private final List<LineParser> lineParsers = Lists.newArrayList();
 
     /**
@@ -164,7 +167,7 @@ public final class MafiaLogParser implements LogParser {
                 if (tmp.endsWith(AVATAR_OF_JARLSBERG))
                     nsFightWon = isFightWon(block);
             }
-
+            
             // Now, we do the actual parsing.
             switch (block.getBlockType()) {
             case ENCOUNTER_BLOCK:
@@ -179,6 +182,9 @@ public final class MafiaLogParser implements LogParser {
             case ASCENSION_DATA_BLOCK:
                 ascensionDataParser.parseBlock(block.getBlockLines(), logData);
                 break;
+            case HYBRID_DATA_BLOCK:
+            	hybridDataParser.parseBlock( block.getBlockLines(), logData );
+            	break;
             case OTHER_BLOCK:
                 for (final String line : block.getBlockLines())
                     for (final LineParser lp : lineParsers)
