@@ -512,6 +512,8 @@
 <item name="surgical apron" onetimeOnly="true"></item>
 <item name="surgical mask" onetimeOnly="false"></item>
 <item name="swashbuckling pants" onetimeOnly="true"></item>
+<item name="talisman of horus" onetimeOnly="false"></item>
+<item name="talisman of renenutet" onetimeOnly="false"></item>
 <item name="tangle of rat tails" onetimeOnly="false"></item>
 <item name="tattered scrap of paper" onetimeOnly="false"></item>
 <item name="teachings of the fist" onetimeOnly="false"></item>
