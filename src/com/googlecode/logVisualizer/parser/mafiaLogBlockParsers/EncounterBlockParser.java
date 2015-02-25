@@ -47,11 +47,13 @@ import com.googlecode.logVisualizer.logData.turn.turnAction.FamiliarChange;
 import com.googlecode.logVisualizer.parser.LineParser;
 import com.googlecode.logVisualizer.parser.MafiaSessionLogReader;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
+import com.googlecode.logVisualizer.parser.lineParsers.CombatItemUsedLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.CombatRecognizerLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.EquipmentLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.ItemAcquisitionLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser.MPGainType;
+import com.googlecode.logVisualizer.parser.lineParsers.MafiaBanishLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MafiaDisintegrateLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MafiaFreeRunawaysLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MafiaRedRayStatsLineParser;
@@ -134,10 +136,6 @@ public final class EncounterBlockParser implements LogBlockParser {
 
     private static final String SHORE_AREAS_END_STRING = " Vacation";
 
-    private static final String HYBRIDIZING_AREANAME= "Hybridizing yourself";
-
-    private static final Pattern HYBRIDIZE_PATTERN = Pattern.compile("You acquire an intrinsic: (.+) Hybrid$");
-
     private static final String CLOWNLORD_CHOICE_ENCOUNTER_STRING = "Adventurer, $1.99";
 
     private static final String OUTFIT_STRING = "outfit";
@@ -168,6 +166,9 @@ public final class EncounterBlockParser implements LogBlockParser {
         lineParsers.add(new MafiaDisintegrateLineParser());
         lineParsers.add(new StarfishMPGainLineParser());
         lineParsers.add(new MafiaRedRayStatsLineParser());
+        lineParsers.add(new MafiaBanishLineParser());
+        lineParsers.add(new CombatItemUsedLineParser());
+        
         // Add a note parser to encounter blocks
         if (Settings.getSettingBoolean("Include mafia log notes"))
             lineParsers.add(new NotesLineParser());
@@ -182,34 +183,6 @@ public final class EncounterBlockParser implements LogBlockParser {
                 : block.get(1);
         final SingleTurn turn;
         final int dayNumber = logData.getLastDayChange().getDayNumber();
-
-        // Parse hybridizing of DNA
-        if (HYBRIDIZE_PATTERN.matcher(turnSpentLine).matches())
-        {
-
-            final Matcher result = HYBRIDIZE_PATTERN.matcher(turnSpentLine);
-
-            if (result.find())
-            {
-
-                // Create an encounter with the name of the intrinsic
-                // Log it on the following turn so it gets combined
-                final SingleTurn tmp = new SingleTurn(HYBRIDIZING_AREANAME,
-                        result.group(1),
-                        logData.getLastTurnSpent().getTurnNumber() + 1,
-                        dayNumber,
-                        logData.getLastEquipmentChange(),
-                        logData.getLastFamiliarChange());
-                tmp.setTurnVersion(TurnVersion.OTHER);
-                logData.addTurnSpent(tmp);
-            }
-
-            // Reset turnSpentLine to be line 3 or 4
-            turnSpentLine = block.get(3).startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) ? block.get(3)
-                    : block.get(4);
-        }
-
-
 
         // Some areas have broken turn spent strings. If a turn is recognised as
         // being spent in such an area, the block will start with the encounter
@@ -327,6 +300,9 @@ public final class EncounterBlockParser implements LogBlockParser {
                 turn.setTurnVersion(TurnVersion.NONCOMBAT);
         }
 
+        int turnNum = turn.getTurnNumber();
+        
+        
         // Check handling for special encounters. If the encounter is indeed
         // a special encounter, the specialEncounterHandling() method will
         // handle adding the turn to the LogDataHolder.

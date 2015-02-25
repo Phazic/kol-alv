@@ -81,6 +81,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
 
     private final Map<String, Skill> skillCasts;
 
+    private final Map<String, CombatItem> combatItemsUsed;
+    
     private final CountableSet<Consumable> consumables;
 
     public ImmutableEncounter(
@@ -92,7 +94,7 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
                               final MeatGain meatgain, final int freeRunaways,
                               final TurnVersion turnVersion, final String notes,
                               final Collection<Item> itemdrops, final Collection<Skill> skillCasts,
-                              final Collection<Consumable> consumables) {
+                              final Collection<Consumable> consumables, final Collection<CombatItem> combatItemsUsed) {
         if (areaName == null)
             throw new NullPointerException("Area name must not be null.");
         if (encounterName == null)
@@ -115,6 +117,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
             throw new NullPointerException("The itemdrops must not be null.");
         if (skillCasts == null)
             throw new NullPointerException("The skill casts must not be null.");
+        if (combatItemsUsed == null)
+        	throw new NullPointerException("The combat items used must not be null.");
         if (consumables == null)
             throw new NullPointerException("The consumables must not be null.");
         if (turnNumber < 0)
@@ -146,6 +150,10 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
         for (final Skill s : skillCasts)
             this.skillCasts.put(s.getName(), s.newInstance());
 
+        this.combatItemsUsed = Maps.newHashMap((int) (combatItemsUsed.size() * 1.4));
+        for (final CombatItem ci : combatItemsUsed)
+        	this.combatItemsUsed.put( ci.getName(), ci.newInstance() );
+        
         this.consumables = new CountableSet<Consumable>();
         for (final Consumable c : consumables)
             this.consumables.addElement(c);
@@ -283,6 +291,21 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     }
 
     /**
+     * @return The combat items used in this turn.
+     */
+    public Collection<CombatItem> getCombatItemsUsed() {
+    	return getCollectionFromMap( combatItemsUsed );
+    }
+    
+    public boolean isCombatItemUsed(String name) {
+    	return this.combatItemsUsed.containsKey( name );
+    }
+    
+    public boolean isCombatItemUsed(CombatItem ci) {
+    	return isCombatItemUsed(ci.getName());
+    }
+    
+    /**
      * @return The skills cast this turn.
      */
     public Collection<Skill> getSkillsCast() {
@@ -395,7 +418,7 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
                    && areaName.equals(that.getAreaName())
                    && encounterName.equals(that.getEncounterName())
                    && notes.equals(that.getNotes()) && itemdrops.equals(that.itemdrops)
-                   && skillCasts.equals(that.skillCasts) && consumables.equals(that.consumables);
+                   && skillCasts.equals(that.skillCasts) && consumables.equals(that.consumables) && combatItemsUsed.equals( that.combatItemsUsed );
         }
 
         return false;
@@ -420,7 +443,7 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
         result = 31 * result + turnVersion.hashCode();
         result = 31 * result + usedEquipment.hashCode();
         result = 31 * result + usedFamiliar.hashCode();
-
+        result = 31 * result + combatItemsUsed.hashCode();
         return result;
     }
 }

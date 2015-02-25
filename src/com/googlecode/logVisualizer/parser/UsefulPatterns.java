@@ -68,7 +68,38 @@ public final class UsefulPatterns {
                                                                                      "salsaball",
                                                                                      "suckerpunch",
                                                                                      "sing");
+    
+    public static final Set<String> TRACKED_COMBAT_ITEMS = Sets.immutableSetOf(
+    	"the alpine watercolor set",
+    	"the talisman of renenutet"
+    	);
+    
+    public static final Set<String> BANISH_SKILLS = Sets.immutableSetOf( 
+    	"curse of vacation", //Ed 
+    	"batter up", //Seal Clubber
+    	"talk about politics", //Pantsgiving skill
+    	"creepy grin", //V for Viola mask skill
+		"banishing shot", //AoB
+		"howl of the alpha", //Zombie Slayer
+		"peel out", //AoSP
+		"walk away from explosion", //AoSP
+		"thunder clap"//Heavy Rains
+		);
 
+    public static final Set<String> BANISH_ITEMS = Sets.immutableSetOf( 
+    	"louder than bomb", //Smiths tome 
+		"crystal skull", //Clip-art
+		"ice house",//winter garden
+		"divine champagne popper", //Summon Party Favor
+		"Harold's bell", 
+		"pulled indigo taffy", //Summon Taffy
+		"classy monkey", //Class Act
+		"dirty stinkbomb", //KOLHS
+		"deathchucks", //KOLHS
+		"smoke grenade", //AoSP
+		"cocktail napkin" //Only against clingy pirate
+		);
+    
     @SuppressWarnings("unchecked")
     public static final Map<String, CharacterClass> TRIVAL_COMBAT_SKILL_CHARACTER_CLASS_MAP = Maps.immutableMapOf(Pair.of("clobber",
                                                                                                                           CharacterClass.SEAL_CLUBBER),
@@ -108,7 +139,7 @@ public final class UsefulPatterns {
 
     public static final Pattern ITEM_FOUND = Pattern.compile("^\\s*\\+>.+");
 
-    public static final Pattern CONSUMED = Pattern.compile("^\\s*o>\\s(?:Ate|Drank|Used).+");
+    public static final Pattern CONSUMED = Pattern.compile("^\\s*o>\\s(?:Ate|Drank|Used|Chew).+");
 
     public static final Pattern FAMILIAR_CHANGED = Pattern.compile("^\\s*->\\sTurn.+");
 
@@ -126,7 +157,7 @@ public final class UsefulPatterns {
 
     public static final Pattern FREE_RUNAWAYS_USAGE = Pattern.compile("^\\s*\\&> \\d+ \\\\ \\d+ free retreats.*");
 
-    public static final Pattern CONSUMABLE_USED = Pattern.compile("(?:(?:use|eat|drink)|Buy and (?:eat|drink))(?: \\d+)? .+");
+    public static final Pattern CONSUMABLE_USED = Pattern.compile("(?:(?:use|eat|drink|chew)|Buy and (?:eat|drink))(?: \\d+)? .+");
 
     public static final Pattern GAIN = Pattern.compile("^You gain \\d*,?\\d+ [\\w\\s]+");
 

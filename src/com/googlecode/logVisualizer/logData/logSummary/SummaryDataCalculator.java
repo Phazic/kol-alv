@@ -31,6 +31,7 @@ import com.googlecode.logVisualizer.logData.LogDataHolder.CharacterClass;
 import com.googlecode.logVisualizer.logData.consumables.Consumable;
 import com.googlecode.logVisualizer.logData.turn.*;
 import com.googlecode.logVisualizer.logData.turn.turnAction.PlayerSnapshot;
+import com.googlecode.logVisualizer.parser.UsefulPatterns;
 import com.googlecode.logVisualizer.util.*;
 import com.googlecode.logVisualizer.util.dataTables.DataTablesHandler;
 
@@ -99,6 +100,8 @@ final class SummaryDataCalculator {
 
     private final CountableSet<Item> droppedItems = new CountableSet<Item>();
 
+    private final CountableSet<CombatItem> combatItemsUsed = new CountableSet<CombatItem>();
+    
     private final CountableSet<Skill> skillsCast = new CountableSet<Skill>();
 
     private final DataCounter<String> turnsPerArea = new DataCounter<String>(200);
@@ -107,6 +110,10 @@ final class SummaryDataCalculator {
 
     private final List<LevelData> levels = Lists.newArrayList(15);
 
+    private final List<DataNumberPair<String>> trackedCombatItemUsage = Lists.newArrayList();
+    
+    private final List<DataNumberPair<String>> banishedCombats = Lists.newArrayList();//Bombar: Adding banished combats functionality
+    
     private final List<DataNumberPair<String>> disintegratedCombats = Lists.newArrayList();
 
     private final List<DataNumberPair<String>> semirares = Lists.newArrayList();
@@ -193,6 +200,9 @@ final class SummaryDataCalculator {
             // Skill summary
             for (final Skill s : ti.getSkillsCast())
                 skillsCast.addElement(s);
+            
+            for (final CombatItem ci : ti.getCombatItemsUsed())
+            	combatItemsUsed.addElement( ci );
 
             // MP summary
             totalMPGains = totalMPGains.addMPGains(ti.getMPGain());
@@ -206,25 +216,44 @@ final class SummaryDataCalculator {
                 totalStatgains = totalStatgains.addStats(st.getStatGain());
                 switch (st.getTurnVersion()) {
                     case COMBAT:
-                        totalTurnsCombat++;
+                    	if (!st.isFreeTurn())
+                    		totalTurnsCombat++;
                         combatsStatgains = combatsStatgains.addStats(st.getStatGain());
                         break;
                     case NONCOMBAT:
-                        totalTurnsNoncombat++;
+                    	if (!st.isFreeTurn())
+                    		totalTurnsNoncombat++;
                         noncombatsStatgains = noncombatsStatgains.addStats(st.getStatGain());
                         break;
                     case OTHER:
-                        totalTurnsOther++;
+                    	if (!st.isFreeTurn())
+                    		totalTurnsCombat++;
                         othersStatgains = othersStatgains.addStats(st.getStatGain());
                         break;
                     default:
                         break;
                 }
 
+                if (st.getTurnVersion() == TurnVersion.COMBAT) {
+                	
+                	//Search for important combat item usage
+                	if (st.getCombatItemsUsed().size() > 0) {
+                		for ( CombatItem ci : st.getCombatItemsUsed() )
+						{
+							if (UsefulPatterns.TRACKED_COMBAT_ITEMS.contains( ci.getName() ))
+	                			trackedCombatItemUsage.add( DataNumberPair.of( ci.getName() + " (" + st.getEncounterName() + ")" , st.getTurnNumber() ));
+						}
+                	}
+                }
+                
                 // Familiar usage summary
                 if (st.getTurnVersion() == TurnVersion.COMBAT)
                     familiarUsage.addDataElement(st.getUsedFamiliar().getFamiliarName());
 
+                // Banished Combats Summary //Bombar: Add Banished Combat Support
+                if (st.isBanished())
+                	banishedCombats.add( DataNumberPair.of(st.getBanishedInfo(), st.getTurnNumber()) );
+                
                 // Disintegrated combats summary
                 if (st.isDisintegrated())
                     disintegratedCombats.add(DataNumberPair.of(st.getEncounterName(),
@@ -554,6 +583,10 @@ final class SummaryDataCalculator {
         return droppedItems.getElements();
     }
 
+    Collection<CombatItem> getCombatItemsUsed() {
+    	return this.combatItemsUsed.getElements();
+    }
+    
     /**
      * @return A list of all skills cast.
      */
@@ -575,6 +608,21 @@ final class SummaryDataCalculator {
         return familiarUsage.getCountedData();
     }
 
+    /**
+     * @return a list of combat items that we want to track their usage, turn number and encounter name
+     */
+    List<DataNumberPair<String>> getTrackedCombatItemUses() {
+    	return trackedCombatItemUsage;
+    }
+    
+    /**
+     * //Bombar: All Banished Combats Functionality
+     * @return A list of all banished combats.
+     */
+    List<DataNumberPair<String>> getBanishedCombats() {
+        return banishedCombats;
+    }
+    
     /**
      * @return A list of all disintegrated combats.
      */

@@ -43,6 +43,7 @@ import com.googlecode.logVisualizer.logData.turn.TurnInterval;
 import com.googlecode.logVisualizer.logData.turn.turnAction.*;
 import com.googlecode.logVisualizer.util.DataNumberPair;
 import com.googlecode.logVisualizer.util.dataTables.DataTablesHandler;
+import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
 
 /**
  * This class gives access to methods to create XML data files from detailed log
@@ -93,7 +94,7 @@ public final class XMLLogCreator {
 
         try {
             final XMLOutputFactory factory = XMLOutputFactoryBase.newInstance();
-            final XMLStreamWriter writer = factory.createXMLStreamWriter(out);
+            final XMLStreamWriter writer = new IndentingXMLStreamWriter( factory.createXMLStreamWriter(out));
 
             final XMLLogCreator logCreator = new XMLLogCreator(writer, logData);
             logCreator.createLog();

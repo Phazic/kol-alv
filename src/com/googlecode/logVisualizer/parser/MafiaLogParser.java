@@ -46,6 +46,7 @@ import com.googlecode.logVisualizer.parser.lineParsers.ItemAcquisitionLineParser
 import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MPGainLineParser.MPGainType;
 import com.googlecode.logVisualizer.parser.lineParsers.MafiaFamiliarChangeLineParser;
+import com.googlecode.logVisualizer.parser.lineParsers.MafiaLearnedSkillLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MafiaPullLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser;
 import com.googlecode.logVisualizer.parser.lineParsers.MeatLineParser.MeatGainType;
@@ -57,6 +58,7 @@ import com.googlecode.logVisualizer.parser.lineParsers.StatLineParser;
 import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.AscensionDataBlockParser;
 import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.ConsumableBlockParser;
 import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.EncounterBlockParser;
+import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.HybridDataBlockParser;
 import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.PlayerSnapshotBlockParser;
 import com.googlecode.logVisualizer.util.Lists;
 import com.googlecode.logVisualizer.util.Maps;
@@ -100,6 +102,8 @@ public final class MafiaLogParser implements LogParser {
 
     private final AscensionDataBlockParser ascensionDataParser = new AscensionDataBlockParser();
 
+    private final HybridDataBlockParser hybridDataParser = new HybridDataBlockParser();
+    
     private final List<LineParser> lineParsers = Lists.newArrayList();
 
     /**
@@ -126,6 +130,7 @@ public final class MafiaLogParser implements LogParser {
         lineParsers.add(new MafiaPullLineParser());
         lineParsers.add(new PoolMPBuffLineParser());
         lineParsers.add(new DayChangeLineParser());
+        lineParsers.add(new MafiaLearnedSkillLineParser() );
         if (isIncludeMafiaLogNotes)
             lineParsers.add(new NotesLineParser());
     }
@@ -145,26 +150,34 @@ public final class MafiaLogParser implements LogParser {
             // In case old ascension turn counting is turned off and the current
             // block is an encounter block, we need to check whether the Naughty
             // Sorceress was beaten in it.
-            if (!isOldAscensionCounting
-                    && block.getBlockType() == LogBlockType.ENCOUNTER_BLOCK) {
-                // Get the encounter name instead of the location
+            if (!isOldAscensionCounting) {
+                if (block.getBlockType() == LogBlockType.ENCOUNTER_BLOCK) {
+                	// Get the encounter name instead of the location
+                	String tmp;
+                	if (block.getBlockLines().size() > 1)
+                		tmp = block.getBlockLines().get(1);
+                	else
+                		tmp = "";
 
-                String tmp;
-                if (block.getBlockLines().size() > 1)
-                    tmp = block.getBlockLines().get(1);
-                else
-                    tmp = "";
-
-                // First check the encounter type to see if the location
-                // is the Naughty Sorceress or one of the end bosses
-                if (tmp.endsWith(NAUGHTY_SORCERESS_3RD_FORM))
-                    nsFightWon = isFightWon(block);
-                if (tmp.endsWith(RAIN_KING))
-                    nsFightWon = isFightWon(block);
-                if (tmp.endsWith(AVATAR_OF_JARLSBERG))
-                    nsFightWon = isFightWon(block);
+                	// First check the encounter type to see if the location
+                	// is the Naughty Sorceress or one of the end bosses
+                	if (tmp.endsWith(NAUGHTY_SORCERESS_3RD_FORM))
+                		nsFightWon = isFightWon(block);
+                	if (tmp.endsWith(RAIN_KING))
+                		nsFightWon = isFightWon(block);
+                	if (tmp.endsWith(AVATAR_OF_JARLSBERG))
+                		nsFightWon = isFightWon(block);
+                } else if (block.getBlockType() == LogBlockType.OTHER_BLOCK) {
+                	if (block.getBlockLines().size() > 2 && block.getBlockLines().get( 1 ).contains( "Encounter: Returning the MacGuffin" )) {
+                		for (String line : block.getBlockLines()) {
+                			if (line.equals( "choice.php?pwd&whichchoice=1054&option=1" ))
+                				nsFightWon = true;
+                		}
+                	}
+                }
+                
             }
-
+            
             // Now, we do the actual parsing.
             switch (block.getBlockType()) {
             case ENCOUNTER_BLOCK:
@@ -179,6 +192,9 @@ public final class MafiaLogParser implements LogParser {
             case ASCENSION_DATA_BLOCK:
                 ascensionDataParser.parseBlock(block.getBlockLines(), logData);
                 break;
+            case HYBRID_DATA_BLOCK:
+            	hybridDataParser.parseBlock( block.getBlockLines(), logData );
+            	break;
             case OTHER_BLOCK:
                 for (final String line : block.getBlockLines())
                     for (final LineParser lp : lineParsers)
@@ -191,7 +207,9 @@ public final class MafiaLogParser implements LogParser {
         }
 
         reader.close();
-
+        
+        logData.handleParseFinished();
+        
         // Before creating the summary data, we first need to add MP
         // regeneration from equipment where applicable.
         for (final SingleTurn st : getLogData().getTurnsSpent())

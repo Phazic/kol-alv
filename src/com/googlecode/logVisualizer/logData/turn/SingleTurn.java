@@ -70,10 +70,14 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
 
     private boolean isDisintegrated = false;
 
+    private boolean isBanished = false;
+
+    private String banishedInfo = null;
+    
     private TurnVersion turnVersion = TurnVersion.NOT_DEFINED;
 
     private List<Encounter> encounters;
-
+    
     /**
      * @param areaName
      *            The name of the area of this turn to set.
@@ -236,6 +240,36 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
     }
 
     /**
+     * This flag can only be changed to {@code true} if this turn is a combat.
+     * 
+     * @param isBanished
+     *            Sets the flag on whether this combat was banished or not.
+     */
+    public void setBanished(final boolean isBanished) {
+    	setBanished(isBanished, null, null);
+    }
+    
+    public void setBanished(final boolean isBanished, String banishName, String turns) {
+    	this.isBanished = turnVersion == TurnVersion.COMBAT ? isBanished : false;
+    	if (isBanished) {
+    		this.banishedInfo = getEncounterName() + " {" + (banishName != null ? banishName : "unknown") + " (" + (turns != null ? turns : "???") + " turns )}";  
+    	}
+    }
+    
+    public String getBanishedInfo() {
+    	return this.banishedInfo;
+    }
+    
+
+    /**
+     * @return {@code true} if this combat was banished. Will always return
+     *         {@code false} if this turn is not a combat.
+     */
+    public boolean isBanished() {
+        return turnVersion == TurnVersion.COMBAT ? isBanished : false;
+    }
+
+    /**
      * @see TurnEntity
      */
     public int getTurnNumber() {
@@ -300,7 +334,8 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
                                                      e.getNotes(),
                                                      e.getDroppedItems(),
                                                      e.getSkillsCast(),
-                                                     e.getConsumablesUsed()));
+                                                     e.getConsumablesUsed(),
+                                                     e.getCombatItemsUsed()));
         }
     }
 
@@ -377,7 +412,8 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
                                       getNotes(),
                                       getDroppedItems(),
                                       getSkillsCast(),
-                                      getConsumablesUsed());
+                                      getConsumablesUsed(),
+                                      getCombatItemsUsed());
     }
 
     /**
@@ -424,7 +460,7 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
 
         return false;
     }
-
+    
     @Override
     public int hashCode() {
         int result = 23;

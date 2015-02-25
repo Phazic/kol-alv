@@ -31,7 +31,9 @@ import java.util.regex.Pattern;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.Skill;
 import com.googlecode.logVisualizer.logData.turn.Turn;
+import com.googlecode.logVisualizer.logData.turn.SingleTurn;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
+import com.googlecode.logVisualizer.util.DataNumberPair;
 import com.googlecode.logVisualizer.util.dataTables.DataTablesHandler;
 
 /**
@@ -94,6 +96,16 @@ public final class SkillCastLineParser extends AbstractLineParser {
             skill.setMpCost(0);
 
         currentTurn.addSkillCast(skill);
+        
+        //Check for Banishing skills
+        if (UsefulPatterns.BANISH_SKILLS.contains( skillName ))
+        	((SingleTurn) logData.getLastTurnSpent()).setBanished(true, skillName, null);
+        
+        //Check for tracking skills
+        if (skillName.contains( "curse of stench" )) {
+        	SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
+        	logData.addHuntedCombat(DataNumberPair.of(st.getEncounterName(), st.getTurnNumber()));
+        }
     }
 
     /**

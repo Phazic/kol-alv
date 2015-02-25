@@ -30,10 +30,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.regex.MatchResult;
+import java.util.regex.Pattern;
 
 import com.googlecode.logVisualizer.logData.consumables.Consumable;
 import com.googlecode.logVisualizer.logData.logSummary.LevelData;
@@ -43,6 +46,7 @@ import com.googlecode.logVisualizer.logData.turn.SimpleTurnInterval;
 import com.googlecode.logVisualizer.logData.turn.SingleTurn;
 import com.googlecode.logVisualizer.logData.turn.Turn;
 import com.googlecode.logVisualizer.logData.turn.TurnInterval;
+import com.googlecode.logVisualizer.logData.turn.TurnVersion;
 import com.googlecode.logVisualizer.logData.turn.turnAction.DayChange;
 import com.googlecode.logVisualizer.logData.turn.turnAction.EquipmentChange;
 import com.googlecode.logVisualizer.logData.turn.turnAction.FamiliarChange;
@@ -54,6 +58,8 @@ import com.googlecode.logVisualizer.util.LookAheadIterator;
 import com.googlecode.logVisualizer.util.Maps;
 import com.googlecode.logVisualizer.util.Pair;
 import com.googlecode.logVisualizer.util.Sets;
+import com.sun.jndi.ldap.ext.StartTlsResponseImpl;
+import com.sun.xml.internal.ws.wsdl.writer.document.StartWithExtensionsType;
 
 /**
  * This class is basically the representation of an ascension log. It can hold
@@ -100,6 +106,10 @@ public final class LogDataHolder {
     private final SortedMap<Integer, EquipmentChange> equipmentChanges = new TreeMap<Integer, EquipmentChange>();
 
     private final List<Pull> pulls = Lists.newArrayList(100);
+
+    private final List<DataNumberPair<String>> learnedSkills = Lists.newArrayList();
+    
+    private final List<DataNumberPair<String>> hybridization = Lists.newArrayList();
 
     private final List<DataNumberPair<String>> huntedCombats = Lists.newArrayList();
 
@@ -169,9 +179,23 @@ public final class LogDataHolder {
     public void createLogSummary() {
         if (isDetailedLog) {
             final LookAheadIterator<SingleTurn> index = new LookAheadIterator<SingleTurn>(turnsSpent.iterator());
+            final LookAheadIterator<SingleTurn> worker = new LookAheadIterator<SingleTurn>(turnsSpent.iterator());
+            
             while (index.hasNext()) {
                 SingleTurn turn = index.next();
-                final TurnInterval interval = new DetailedTurnInterval(turn);
+                SingleTurn other; 
+                boolean isTurnFreeInterval = true;
+                
+                do {
+                	other = worker.next();
+                	if (other.getAreaName().equals( turn.getAreaName() )) {
+                		if (!other.isFreeTurn())
+                			isTurnFreeInterval = false;
+                	}
+                
+                } while (worker.hasNext() && worker.peek().getAreaName().equals( turn.getAreaName() ));
+                
+                final TurnInterval interval = new DetailedTurnInterval(turn, isTurnFreeInterval);
 
                 while (index.hasNext()) {
                     turn = index.peek();
@@ -352,6 +376,21 @@ public final class LogDataHolder {
         turnIntervalsSpent.add(turnInterval);
     }
 
+    public void handleParseFinished() {
+    	if (lastTurn.getTurnNumber() == penultimateTurn.getTurnNumber()) {
+    		if (lastTurn.getAreaName().equals(  penultimateTurn.getAreaName() )) {
+    			final SingleTurn tmp = (SingleTurn) lastTurn;
+
+            	// Note that the turn number of the previous turn needs to be used.
+            	((SingleTurn) penultimateTurn).addEncounter(tmp.toEncounter(((SingleTurn) penultimateTurn).getTurnNumber()));
+            	((SingleTurn) penultimateTurn).addSingleTurnData(tmp);
+            	if (tmp.isRanAwayOnThisTurn() && tmp.isRunawaysEquipmentEquipped())
+                	penultimateTurn.addFreeRunaways(1);
+                turnsSpent.remove(turnsSpent.size() - 1);    			
+    		}
+    	}
+    }
+    
     /**
      * Add the given turn to the log data.
      * <p>
@@ -379,34 +418,47 @@ public final class LogDataHolder {
             addTurnNotMafia(turn);
     }
 
+    
+    
     private void addTurnMafia(
             final SingleTurn turn) {
-        // If the last turn has the same turn number as the to be added turn,
-        // add the data of the last turn to the penultimate turn. Also, in that
-        // case, check if that turn was a navel ring free runaway.
         if (lastTurn.getTurnNumber() == turn.getTurnNumber()) {
-            final SingleTurn tmp = (SingleTurn) lastTurn;
+        	((SingleTurn) lastTurn).setFreeTurn( true );//Flag the last turn as a free turn since it didn't increment the turn count
+        	
+        	//Bombar Change: Needed for Florist, if we detect a free action, log zone you were in
+        	if (lastTurn.getAreaName().equals( penultimateTurn.getAreaName() )) {
+        		// If the last turn has the same turn number as the to be added turn,
+        		// add the data of the last turn to the penultimate turn. Also, in that
+        		// case, check if that turn was a navel ring free runaway.
+        		final SingleTurn tmp = (SingleTurn) lastTurn;
 
-            // Note that the turn number of the previous turn needs to be used.
-            ((SingleTurn) penultimateTurn).addEncounter(tmp.toEncounter(((SingleTurn) penultimateTurn).getTurnNumber()));
-            ((SingleTurn) penultimateTurn).addSingleTurnData(tmp);
-            if (tmp.isRanAwayOnThisTurn() && tmp.isRunawaysEquipmentEquipped())
-                penultimateTurn.addFreeRunaways(1);
-
-            turnsSpent.remove(turnsSpent.size() - 1);
-        } else
+            	// Note that the turn number of the previous turn needs to be used.
+            	((SingleTurn) penultimateTurn).addEncounter(tmp.toEncounter(((SingleTurn) penultimateTurn).getTurnNumber()));
+            	((SingleTurn) penultimateTurn).addSingleTurnData(tmp);
+            	if (tmp.isRanAwayOnThisTurn() && tmp.isRunawaysEquipmentEquipped())
+                	penultimateTurn.addFreeRunaways(1);
+                turnsSpent.remove(turnsSpent.size() - 1);
+        	} else {
+                penultimateTurn = lastTurn;
+        	}
+        } else {
             penultimateTurn = lastTurn;
-
+        }
+        
         lastTurn = turn;
         turnsSpent.add(turn);
     }
 
     private void addTurnNotMafia(
             final SingleTurn turn) {
+    	
+    	if (lastTurn.getTurnNumber() == turn.getTurnNumber())
+        	((SingleTurn) lastTurn).setFreeTurn( true );//Flag the last turn as a free turn since it didn't increment the turn count
+
         // If the last turn has the same turn number as the to be added turn,
         // add the data of the to be added turn to the last turn. Also, in that
         // case, check if that turn was a navel ring free runaway.
-        if (lastTurn.getTurnNumber() == turn.getTurnNumber()) {
+        if (lastTurn.getAreaName().equals( turn.getAreaName()) &&  lastTurn.getTurnNumber() == turn.getTurnNumber()) {
             if (turn.getFreeRunaways() == 0 && turn.isRanAwayOnThisTurn()
                     && turn.isRunawaysEquipmentEquipped())
                 turn.addFreeRunaways(1);
@@ -1202,6 +1254,105 @@ public final class LogDataHolder {
     }
 
     /**
+     * Adds a learned skill entry to the list of entries if multiple entries learned on same turn
+     * will combine up to three of them in one line separated by commas
+     * @param learnedSkillData the skill being learned on a given turn
+     */
+    public void addLearnedSkill(final DataNumberPair<String> learnedSkillData) {
+    	if (learnedSkillData == null || learnedSkillData.getData() == null || learnedSkillData.getNumber() == null)
+    		throw new IllegalArgumentException("Learned Skill data must not be null, and contain a turn number and description");
+    	boolean skillAdded = false;
+    	
+    	for (DataNumberPair<String> skillInMap : this.learnedSkills) {
+    		if (skillInMap.getNumber().intValue() == learnedSkillData.getNumber().intValue()) {
+    			int numCommas = 0;
+    			int startNdx = 0;
+    			String skills = skillInMap.getData();
+    			while (numCommas < 4 ) {
+    				if (startNdx == -1 || skills.indexOf( ';', startNdx ) < 0 )
+    					break; //No more commas left
+    				numCommas++;
+    				startNdx = skills.indexOf( ';', skills.indexOf( ';', startNdx) + 1 );
+    			}
+    			
+    			if (numCommas < 4) {
+    				skills = skills + "; " + learnedSkillData.getData();
+    				this.learnedSkills.remove( this.learnedSkills.indexOf( skillInMap ) );
+
+    				DataNumberPair<String> combinedEntry = DataNumberPair.of(skills, learnedSkillData.getNumber());
+    				this.learnedSkills.add( combinedEntry );
+    				skillAdded = true;
+    				break;
+    			} 
+    		}
+    	}
+    	if (!skillAdded) {
+    		this.learnedSkills.add( learnedSkillData );
+    	}
+    }
+    
+    public List<DataNumberPair<String>> getLearnedSkills() {
+    	return Collections.unmodifiableList( this.learnedSkills );
+    }
+    
+    /**
+     * Adds a hybridation element to the current log, it should either be a 
+     * make - Makes a Gene tonic
+     * hybridizing - Gives intrinsic 1/day
+     * @param hybridData should be in the form <turnNumber>, <stringDescription>
+     */
+    public void addHybridContent( final DataNumberPair<String> hybridData) {
+    	if (hybridData == null || hybridData.getData() == null || hybridData.getNumber() == null)
+    		throw new IllegalArgumentException("Hybrid data must not be null and have a turn number and description");
+    	boolean dataAdded = false;
+    	
+    	
+    	for (DataNumberPair<String> pairInMap : this.hybridization) {
+    		if (pairInMap.getNumber() == hybridData.getNumber()) {
+    			if (pairInMap.getData().startsWith( hybridData.getData() )) {
+    				int ndxExisting = this.hybridization.indexOf( pairInMap );
+
+    				String newDataString = null;
+    	    		if (pairInMap.getData().contains( "(" ) && pairInMap.getData().contains( ")" )) {
+    	    			int startNdx = pairInMap.getData().indexOf( '(' );
+    	    			int endNdx = pairInMap.getData().indexOf( ')', startNdx);
+    	    			
+    	    			if (startNdx < endNdx)  {
+    	    				
+    	    				String numberString = pairInMap.getData().substring( startNdx + 1, endNdx );
+    	    				try {
+    	    					int count = Integer.parseInt( numberString ) + 1;
+    	    					newDataString = pairInMap.getData().substring( 0, startNdx - 1 ) + " (" + count + ")"; 
+    	    				} catch (NumberFormatException ex) {
+    	    					System.out.println( ex );
+        	    				newDataString = pairInMap.getData() + " +1";
+    	    				}    	    				
+    	    			} else {
+    	    				newDataString = pairInMap.getData() + " (2)";    	    					
+    	    			}
+    	    		} else {
+    	    			newDataString = hybridData.getData() + " (2)";
+    	    		}
+    				
+    				this.hybridization.remove( ndxExisting );
+    	    		this.hybridization.add( DataNumberPair.of(newDataString, hybridData.getNumber()) );
+    	    		dataAdded = true;
+    	    		break; //Since we have modified the structure and would get a concurrent issue if we continued
+    			}
+    		}
+    	}
+    	
+    	if (!dataAdded)
+    		this.hybridization.add( hybridData );
+    		
+    }
+    
+    public List<DataNumberPair<String>> getHybridContent() {
+    	return Collections.unmodifiableList( this.hybridization );
+    }
+
+    
+    /**
      * @param huntedCombat
      *            The hunted combat to add.
      */
@@ -1292,6 +1443,10 @@ public final class LogDataHolder {
         return logSummary.getDroppedItems();
     }
 
+    public List<CombatItem> getAllCombatItemsUsed() {
+    	return logSummary.getCombatItemsUsed();
+    }
+    
     /**
      * Returns a list of all skills cast during this ascension.
      * <p>
@@ -1427,6 +1582,7 @@ public final class LogDataHolder {
         AVATAR_OF_BORIS("Avatar of Boris", StatClass.MUSCLE),
         AVATAR_OF_JARLSBERG("Avatar of Jarlsberg", StatClass.MYSTICALITY),
         AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE),
+        ED("Ed", StatClass.MYSTICALITY),
         NOT_DEFINED("not defined", StatClass.MUSCLE);
 
         private static final Map<String, CharacterClass> stringToEnum = Maps.newHashMap();
@@ -1546,6 +1702,7 @@ public final class LogDataHolder {
         HEAVY_RAINS("Heavy Rains"),
         PICKY("Picky"),
         STANDARD("Standard"),
+        ED("Actually Ed the Undying"),
         NOT_DEFINED("not defined");
 
         private static final Map<String, AscensionPath> stringToEnum = Maps.newHashMap();

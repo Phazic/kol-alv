@@ -47,22 +47,26 @@ public final class DetailedTurnInterval extends AbstractTurnInterval {
 
     private int unsuccessfulFreeRunaways = 0;
 
+    public DetailedTurnInterval(final SingleTurn turn, boolean isFreeTurnInterval) {
+        super(turn.getAreaName());
+
+        final int tmpStartTurn = isFreeTurnInterval ? turn.getTurnNumber() : turn.getTurnNumber() - 1;
+        
+        startTurn = tmpStartTurn < 0 ? 0 : tmpStartTurn;
+        endTurn = turn.getTurnNumber();
+        addTurnData(turn);
+        turns.add(turn);
+   	
+    }
+    
     /**
      * Constructs a turn interval with the given turn as a part of it.
      * 
      * @param turn
      *            Starting point of this turn interval to set.
      */
-    public DetailedTurnInterval(
-                                final SingleTurn turn) {
-        super(turn.getAreaName());
-
-        final int tmpStartTurn = turn.getTurnNumber() - 1;
-
-        startTurn = tmpStartTurn < 0 ? 0 : tmpStartTurn;
-        endTurn = turn.getTurnNumber();
-        addTurnData(turn);
-        turns.add(turn);
+    public DetailedTurnInterval(final SingleTurn turn) {
+    	this(turn, false);
     }
 
     /**
