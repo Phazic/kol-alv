@@ -420,7 +420,7 @@ public final class LogDataHolder {
             ((SingleTurn) lastTurn).setFreeTurn( true );//Flag the last turn as a free turn since it didn't increment the turn count
 
             //Bombar Change: Needed for Florist, if we detect a free action, log zone you were in
-            if (lastTurn.getAreaName().equals( penultimateTurn.getAreaName() )) {
+            if (((SingleTurn) lastTurn).getDayNumber() == ((SingleTurn) penultimateTurn).getDayNumber() && lastTurn.getAreaName().equals( penultimateTurn.getAreaName() )) {
                 // If the last turn has the same turn number as the to be added turn,
                 // add the data of the last turn to the penultimate turn. Also, in that
                 // case, check if that turn was a navel ring free runaway.
@@ -452,7 +452,7 @@ public final class LogDataHolder {
         // If the last turn has the same turn number as the to be added turn,
         // add the data of the to be added turn to the last turn. Also, in that
         // case, check if that turn was a navel ring free runaway.
-        if (lastTurn.getAreaName().equals( turn.getAreaName()) &&  lastTurn.getTurnNumber() == turn.getTurnNumber()) {
+        if (lastTurn.getAreaName().equals( turn.getAreaName()) && ((SingleTurn) lastTurn).getDayNumber() == turn.getDayNumber() && lastTurn.getTurnNumber() == turn.getTurnNumber()) {
             if (turn.getFreeRunaways() == 0 && turn.isRanAwayOnThisTurn()
                     && turn.isRunawaysEquipmentEquipped())
                 turn.addFreeRunaways(1);
