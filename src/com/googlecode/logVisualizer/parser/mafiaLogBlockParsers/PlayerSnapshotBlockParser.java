@@ -153,7 +153,7 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
                     s.useDelimiter(NOT_FAMILIAR_NAME_PATTERN);
 
                     // Don't record familiar clearing if path is Actually Ed.
-                    if (logData.getAscensionPath() != LogDataHolder.AscensionPath.ACTUALLY_ED)
+                    if (logData.getAscensionPath() != LogDataHolder.AscensionPath.ED)
                     {
                         logData.addFamiliarChange(new FamiliarChange(s.next(), turnNumber));
                     }

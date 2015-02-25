@@ -68,38 +68,35 @@ public final class UsefulPatterns {
                                                                                      "salsaball",
                                                                                      "suckerpunch",
                                                                                      "sing");
-    
-    public static final Set<String> TRACKED_COMBAT_ITEMS = Sets.immutableSetOf(
-    	"the alpine watercolor set",
-    	"the talisman of renenutet"
-    	);
-    
-    public static final Set<String> BANISH_SKILLS = Sets.immutableSetOf( 
-    	"curse of vacation", //Ed 
-    	"batter up", //Seal Clubber
-    	"talk about politics", //Pantsgiving skill
-    	"creepy grin", //V for Viola mask skill
-		"banishing shot", //AoB
-		"howl of the alpha", //Zombie Slayer
-		"peel out", //AoSP
-		"walk away from explosion", //AoSP
-		"thunder clap"//Heavy Rains
-		);
 
-    public static final Set<String> BANISH_ITEMS = Sets.immutableSetOf( 
-    	"louder than bomb", //Smiths tome 
-		"crystal skull", //Clip-art
-		"ice house",//winter garden
-		"divine champagne popper", //Summon Party Favor
-		"Harold's bell", 
-		"pulled indigo taffy", //Summon Taffy
-		"classy monkey", //Class Act
-		"dirty stinkbomb", //KOLHS
-		"deathchucks", //KOLHS
-		"smoke grenade", //AoSP
-		"cocktail napkin" //Only against clingy pirate
-		);
-    
+    public static final Set<String> TRACKED_COMBAT_ITEMS = Sets.immutableSetOf(
+            "alpine watercolor set", "talisman of renenutet");
+
+    public static final Set<String> BANISH_SKILLS = Sets.immutableSetOf(
+            "curse of vacation", // Ed
+            "batter up", // Seal Clubber
+            "talk about politics", // Pantsgiving skill
+            "creepy grin", // V for Viola mask skill
+            "banishing shout", // AoB
+            "howl of the alpha", // Zombie Slayer
+            "peel out", // AoSP
+            "walk away from explosion", // AoSP
+            "thunder clap"// Heavy Rains
+    );
+
+    public static final Set<String> BANISH_ITEMS = Sets.immutableSetOf(
+            "louder than bomb", // Smiths tome
+            "crystal skull", // Clip-art
+            "ice house",// winter garden
+            "divine champagne popper", // Summon Party Favor
+            "Harold's bell", "pulled indigo taffy", // Summon Taffy
+            "classy monkey", // Class Act
+            "dirty stinkbomb", // KOLHS
+            "deathchucks", // KOLHS
+            "smoke grenade", // AoSP
+            "cocktail napkin" // Only against clingy pirate
+    );
+
     @SuppressWarnings("unchecked")
     public static final Map<String, CharacterClass> TRIVAL_COMBAT_SKILL_CHARACTER_CLASS_MAP = Maps.immutableMapOf(Pair.of("clobber",
                                                                                                                           CharacterClass.SEAL_CLUBBER),
@@ -113,7 +110,7 @@ public final class UsefulPatterns {
                                                                                                                           CharacterClass.DISCO_BANDIT),
                                                                                                                   Pair.of("sing",
                                                                                                                           CharacterClass.ACCORDION_THIEF));
-    
+
     public static final Set<String> SPECIAL_CONSUMABLES = Sets.immutableSetOf("steel margarita",
                                                                                "steel lasagna",
                                                                                "steel-scented air freshener",
@@ -192,7 +189,7 @@ public final class UsefulPatterns {
     /**
      * Returns the creation date of the given mafia log file. Uses the method
      * {@link #getMafiaLogDate(String)} to parse out the creation date.
-     * 
+     *
      * @param mafiaLog
      *            The file name of the mafia log of which the creation date
      *            should be returned.
@@ -208,7 +205,7 @@ public final class UsefulPatterns {
     /**
      * Returns the creation date of the given mafia log file. Uses the method
      * {@link #getMafiaLogDate(String)} to parse out the creation date.
-     * 
+     *
      * @param mafiaLogFileName
      *            The file name of the mafia log of which the creation date
      *            should be returned.
@@ -233,7 +230,7 @@ public final class UsefulPatterns {
      * Parses the creation date out from the given mafia log file. This method
      * makes use of the mafia log file name format which always looks like
      * {@code USERNAME_YYYYMMDD.txt}, where Y is year, M is month and D is day.
-     * 
+     *
      * @param mafiaLog
      *            The file name of the mafia log of which the creation date
      *            should be returned.
@@ -255,7 +252,7 @@ public final class UsefulPatterns {
      * is at the end and not directly interlinked with a number before/after
      * it), where Y is year, M is month and D is day. Log names that do not
      * follow this format cannot be parsed by this method.
-     * 
+     *
      * @param logName
      *            The name of the log of which the creation date should be
      *            returned.

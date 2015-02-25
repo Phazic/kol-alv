@@ -48,11 +48,11 @@ import net.java.dev.spellcast.utilities.DataUtilities;
 import net.java.dev.spellcast.utilities.UtilityConstants;
 
 import com.googlecode.logVisualizer.Settings;
+import com.googlecode.logVisualizer.logData.CombatItem;
 import com.googlecode.logVisualizer.logData.Item;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.LogDataHolder.AscensionPath;
 import com.googlecode.logVisualizer.logData.LogDataHolder.StatClass;
-import com.googlecode.logVisualizer.logData.CombatItem;
 import com.googlecode.logVisualizer.logData.MPGain;
 import com.googlecode.logVisualizer.logData.MeatGain;
 import com.googlecode.logVisualizer.logData.Skill;
@@ -112,13 +112,13 @@ public final class TextLogCreator {
     private static final String PULL_PREFIX = "     #> Turn";
 
     private static final String LEARN_SKILL_PREFIX = "     @>";
-    
+
     private static final String LEVEL_CHANGE_PREFIX = "     => Level ";
 
     private static final String BANISHED_COMBAT_PREFIX = "     b>";
-    
+
     private static final String BANISHED_COMBAT_DESC = "Banished ";
-    
+
     private static final String HUNTED_COMBAT_PREFIX = "     *>";
 
     private static final String HUNTED_COMBAT_MIDDLE_STRING = "Started hunting ";
@@ -140,7 +140,7 @@ public final class TextLogCreator {
     private static final String FREE_RUNAWAYS_PREFIX = "     &> ";
 
     private static final String HYBRIDIZE_PREFIX = "     h> ";
-    
+
     private static final String ADVENTURES_LEFT_STRING = "Adventure count at day start: ";
 
     private static final String CURRENT_MEAT_STRING = "Current meat: ";
@@ -190,17 +190,17 @@ public final class TextLogCreator {
     private DataNumberPair<String> freeRunsByZone;
 
     private final Iterator<DataNumberPair<String>> banishedCombatIter;
-    
+
     private final Iterator<DataNumberPair<String>> disintegratedCombatIter;
 
     private final Iterator<DataNumberPair<String>> hybridDataIter;
-    
+
     private final Iterator<DataNumberPair<String>> learnedSkillIter;
-    
+
     private DataNumberPair<String> currentLearnedSkill;
-    
+
     private DataNumberPair<String> currentBanishedCombat;
-    
+
     private DataNumberPair<String> currentDisintegratedCombat;
 
     private DataNumberPair<String> currentHybridData;
@@ -486,7 +486,7 @@ public final class TextLogCreator {
         currentHuntedCombat = huntedCombatIter.hasNext() ? huntedCombatIter.next() : null;
         currentDisintegratedCombat = disintegratedCombatIter.hasNext() ? disintegratedCombatIter.next() : null;
         currentBanishedCombat = banishedCombatIter.hasNext() ? banishedCombatIter.next() : null;
-        
+
         // Level 1 can be skipped.
         levelIter.next();
         nextLevel = levelIter.hasNext() ? levelIter.next() : null;
@@ -603,7 +603,7 @@ public final class TextLogCreator {
         currentBanishedCombat = banishedCombatIter.hasNext() ? banishedCombatIter.next() : null;
         currentHybridData = hybridDataIter.hasNext() ? hybridDataIter.next() : null;
         currentLearnedSkill = learnedSkillIter.hasNext() ? learnedSkillIter.next() : null;
-        
+
         // Level 1 can be skipped.
         levelIter.next();
         nextLevel = levelIter.hasNext() ? levelIter.next() : null;
@@ -630,26 +630,26 @@ public final class TextLogCreator {
             printNotes(logData.getHeaderFooterComment(currentDay).getHeaderComments());
 
         for (int turnIntervalNdx = 0; turnIntervalNdx < logData.getTurnIntervalsSpent().size(); turnIntervalNdx++) {
-        	final TurnInterval ti = logData.getTurnIntervalsSpent().get( turnIntervalNdx );
-        	        	
+            final TurnInterval ti = logData.getTurnIntervalsSpent().get( turnIntervalNdx );
+
             if (!nextDay.equals(NO_DAY_CHANGE) && ti.getEndTurn() >= nextDay.getTurnNumber()) {
                 if (ti.getEndTurn() == nextDay.getTurnNumber()) {
                     printTurnIntervalContents(ti, currentDay.getDayNumber());
 
                     //Peek at next interval to make sure it doesn't contain any current day turns
                     if (turnIntervalNdx + 1 < logData.getTurnIntervalsSpent().size()) {
-                    	final TurnInterval next = logData.getTurnIntervalsSpent().get( turnIntervalNdx + 1 );
-                    	boolean hasOneOnCurrentDay = false;
-                    	for (final SingleTurn st : next.getTurns()) {
-                    		if (st.getDayNumber() == currentDay.getDayNumber()) {
-                    			hasOneOnCurrentDay = true;
-                    		}
-                    	}
-                    	
-                    	if (hasOneOnCurrentDay)
-                    		continue;
+                        final TurnInterval next = logData.getTurnIntervalsSpent().get( turnIntervalNdx + 1 );
+                        boolean hasOneOnCurrentDay = false;
+                        for (final SingleTurn st : next.getTurns()) {
+                            if (st.getDayNumber() == currentDay.getDayNumber()) {
+                                hasOneOnCurrentDay = true;
+                            }
+                        }
+
+                        if (hasOneOnCurrentDay)
+                            continue;
                     }
-                    
+
                     final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
                             ti.getEndTurn(),
                             currentDay,
@@ -697,33 +697,33 @@ public final class TextLogCreator {
 
                     printTurnIntervalContents(turnsAfterDayChange, currentDay.getDayNumber());
                 } else if (ti.getStartTurn() == nextDay.getTurnNumber()) {
-                	//Check to see if a day change occurs within block
-                	SingleTurn dayChangeTurn = null;
+                    //Check to see if a day change occurs within block
+                    SingleTurn dayChangeTurn = null;
                     for (final SingleTurn st : ti.getTurns()) {
                         if (st.getDayNumber() == nextDay.getDayNumber()) {
                             dayChangeTurn = st;
                             break;
                         }
                     }
-                    
+
                     if (dayChangeTurn == null)  {
-                    	//No Day change occurred
+                        //No Day change occurred
                         printTurnIntervalContents(ti, currentDay.getDayNumber());
 
                         //Peek at next interval to make sure it doesn't contain any current day turns
                         if (turnIntervalNdx + 1 < logData.getTurnIntervalsSpent().size()) {
-                        	final TurnInterval next = logData.getTurnIntervalsSpent().get( turnIntervalNdx + 1 );
-                        	boolean hasOneOnCurrentDay = false;
-                        	for (final SingleTurn st : next.getTurns()) {
-                        		if (st.getDayNumber() == currentDay.getDayNumber()) {
-                        			hasOneOnCurrentDay = true;
-                        		}
-                        	}
-                        	
-                        	if (hasOneOnCurrentDay)
-                        		continue;
+                            final TurnInterval next = logData.getTurnIntervalsSpent().get( turnIntervalNdx + 1 );
+                            boolean hasOneOnCurrentDay = false;
+                            for (final SingleTurn st : next.getTurns()) {
+                                if (st.getDayNumber() == currentDay.getDayNumber()) {
+                                    hasOneOnCurrentDay = true;
+                                }
+                            }
+
+                            if (hasOneOnCurrentDay)
+                                continue;
                         }
-                        
+
                         final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
                                 ti.getEndTurn(),
                                 currentDay,
@@ -736,22 +736,22 @@ public final class TextLogCreator {
                         // last turn before the day change, but were actually done
                         // on the next day.
                         printCurrentConsumables(ti.getConsumablesUsed(), currentDay.getDayNumber());
-                        printCurrentPulls(currentDay.getDayNumber(), ti.getEndTurn());                    	
+                        printCurrentPulls(currentDay.getDayNumber(), ti.getEndTurn());
                     } else {
                         final TurnInterval turnsBeforeDayChange = new DetailedTurnInterval(ti.getTurns()
-                            .headSet(dayChangeTurn),
-                            dayChangeTurn.getAreaName());
+                                .headSet(dayChangeTurn),
+                                dayChangeTurn.getAreaName());
                         final TurnInterval turnsAfterDayChange = new DetailedTurnInterval(ti.getTurns()
-                            .tailSet(dayChangeTurn),
-                            dayChangeTurn.getAreaName());
+                                .tailSet(dayChangeTurn),
+                                dayChangeTurn.getAreaName());
 
                         printTurnIntervalContents(turnsBeforeDayChange, currentDay.getDayNumber());
 
                         final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
-                            ti.getEndTurn(),
-                            currentDay,
-                            nextDay,
-                            dayChangeIter);
+                                ti.getEndTurn(),
+                                currentDay,
+                                nextDay,
+                                dayChangeIter);
                         currentDay = newDayChangeData.getVar1();
                         nextDay = newDayChangeData.getVar2();
 
@@ -759,10 +759,10 @@ public final class TextLogCreator {
                         // last turn before the day change, but were actually done
                         // on the next day.
                         printCurrentConsumables(turnsBeforeDayChange.getConsumablesUsed(),
-                        	currentDay.getDayNumber());
+                                currentDay.getDayNumber());
                         printCurrentPulls(currentDay.getDayNumber(), turnsBeforeDayChange.getEndTurn());
 
-                        printTurnIntervalContents(turnsAfterDayChange, currentDay.getDayNumber());                    	
+                        printTurnIntervalContents(turnsAfterDayChange, currentDay.getDayNumber());
                     }
                 } else {
                     final Pair<DayChange, DayChange> newDayChangeData = printDayChanges(logData,
@@ -797,7 +797,7 @@ public final class TextLogCreator {
     private void printDailyKa(final LogDataHolder logData, int day)
     {
         // Print out Ka acquisition for the day
-        if (logData.getAscensionPath() == AscensionPath.ACTUALLY_ED)
+        if (logData.getAscensionPath() == AscensionPath.ED)
         {
             int kaAcquired = dailyKaEarned.get(day);
 
@@ -1046,7 +1046,7 @@ public final class TextLogCreator {
             // Iterate all encounters on this turn
             // This helps with tracking interesting free turn things
             for (Encounter e : st.getEncounters())
-            {            	            	
+            {
                 // Don't log the encounter if it matches the parent turn interval
                 if (st.getAreaName().contains(e.getAreaName()) == false)
                 {
@@ -1096,7 +1096,7 @@ public final class TextLogCreator {
                     localeOnetimeItemsSet.remove(itemName);
                 }
             }
-            
+
             final Iterator<Item> aquiredItemsIter = importantItems.iterator();
             if (aquiredItemsIter.hasNext()) {
                 printItemAcquisitionStartString(st.getTurnNumber());
@@ -1154,7 +1154,7 @@ public final class TextLogCreator {
         printCurrentConsumables(ti.getConsumablesUsed(), currentDayNumber);
 
         printCurrentPulls(currentDayNumber, ti.getEndTurn());
-        
+
         while (currentHybridData != null && ti.getEndTurn() >= currentHybridData.getNumber()) {
             write(HYBRIDIZE_PREFIX);
             write(UsefulPatterns.SQUARE_BRACKET_OPEN);
@@ -1163,10 +1163,10 @@ public final class TextLogCreator {
             write(UsefulPatterns.WHITE_SPACE);
             write(currentHybridData.getData());
             write(NEW_LINE);
-            
+
             currentHybridData = hybridDataIter.hasNext() ? hybridDataIter.next() : null;
         }
-        
+
         while (currentHuntedCombat != null && ti.getEndTurn() >= currentHuntedCombat.getNumber()) {
             write(HUNTED_COMBAT_PREFIX);
             write(OPENING_TURN_BRACKET);
@@ -1182,18 +1182,18 @@ public final class TextLogCreator {
         }
 
         while (currentBanishedCombat != null && ti.getEndTurn() >= currentBanishedCombat.getNumber()) {
-        	write(BANISHED_COMBAT_PREFIX);
-        	write(UsefulPatterns.WHITE_SPACE);
+            write(BANISHED_COMBAT_PREFIX);
+            write(UsefulPatterns.WHITE_SPACE);
             write(UsefulPatterns.SQUARE_BRACKET_OPEN);
             write(currentBanishedCombat.getNumber());
             write(UsefulPatterns.SQUARE_BRACKET_CLOSE);
             write(UsefulPatterns.WHITE_SPACE);
             write(BANISHED_COMBAT_DESC + currentBanishedCombat.getData());
             write(NEW_LINE);
-            
+
             currentBanishedCombat = banishedCombatIter.hasNext() ? banishedCombatIter.next() : null;
         }
-        
+
         while (currentDisintegratedCombat != null
                 && ti.getEndTurn() >= currentDisintegratedCombat.getNumber()) {
             write(DISINTEGRATED_COMBAT_PREFIX);
@@ -1233,13 +1233,14 @@ public final class TextLogCreator {
         }
 
         while (currentLearnedSkill != null && ti.getEndTurn() >= currentLearnedSkill.getNumber()) {
-        	write(LEARN_SKILL_PREFIX);
-        	write("Learned: " + currentLearnedSkill.getData() + " (Turn " + currentLearnedSkill.getNumber() + ")");
-        	write(NEW_LINE);
-        	
-        	currentLearnedSkill = learnedSkillIter.hasNext() ? learnedSkillIter.next() : null;
+            write(LEARN_SKILL_PREFIX);
+            write(UsefulPatterns.WHITE_SPACE);
+            write("Learned: " + currentLearnedSkill.getData() + " (Turn " + currentLearnedSkill.getNumber() + ")");
+            write(NEW_LINE);
+
+            currentLearnedSkill = learnedSkillIter.hasNext() ? learnedSkillIter.next() : null;
         }
-        
+
         while (nextLevel != null && ti.getEndTurn() >= nextLevel.getLevelReachedOnTurn()) {
             // Only print the level if it actually *is* part of this turn
             // interval.
@@ -1522,9 +1523,9 @@ public final class TextLogCreator {
                 write(dn.getData());
                 write(NEW_LINE);
             }
-            write(NEW_LINE + NEW_LINE + NEW_LINE);        	
+            write(NEW_LINE + NEW_LINE + NEW_LINE);
         }
-        
+
         // Familiars summary
         write("FAMILIARS" + NEW_LINE + "----------" + NEW_LINE);
         for (final DataNumberPair<String> dn : logData.getLogSummary().getFamiliarUsage()) {
@@ -1554,10 +1555,10 @@ public final class TextLogCreator {
             for (final DataNumberPair<String> dn : logData.getLogSummary().getTrackedCombatItemUses()) {
                 write(dn.getNumber());
                 write(" : ");
-            	write(dn.getData());
+                write(dn.getData());
                 write(NEW_LINE);
             }
-            write(NEW_LINE + NEW_LINE + NEW_LINE);        	
+            write(NEW_LINE + NEW_LINE + NEW_LINE);
         }
 
         //Hybrid
@@ -1571,7 +1572,7 @@ public final class TextLogCreator {
             }
             write(NEW_LINE + NEW_LINE + NEW_LINE);
         }
-        
+
         // Hunted combats summary
         write("HUNTED COMBATS" + NEW_LINE + "----------" + NEW_LINE);
         for (final DataNumberPair<String> dn : logData.getHuntedCombats()) {
@@ -1591,7 +1592,7 @@ public final class TextLogCreator {
             write(NEW_LINE);
         }
         write(NEW_LINE + NEW_LINE + NEW_LINE);
-        
+
         // Disintegrated combats summary
         write("YELLOW DESTRUCTION" + NEW_LINE + "----------" + NEW_LINE);
         for (final DataNumberPair<String> dn : logData.getLogSummary().getDisintegratedCombats()) {
@@ -1652,14 +1653,14 @@ public final class TextLogCreator {
         //Combat Items Used
         write("COMBAT ITEMS" + NEW_LINE + "----------" + NEW_LINE);
         for (final CombatItem ci : logData.getLogSummary().getCombatItemsUsed()) {
-        	write("Used ");
-        	write(ci.getAmount());
-        	write(UsefulPatterns.WHITE_SPACE);
-        	write(ci.getName());
-        	write(NEW_LINE);
+            write("Used ");
+            write(ci.getAmount());
+            write(UsefulPatterns.WHITE_SPACE);
+            write(ci.getName());
+            write(NEW_LINE);
         }
         write(NEW_LINE + NEW_LINE + NEW_LINE);
-        
+
         // Skills cast summary
         write("CASTS" + NEW_LINE + "----------" + NEW_LINE);
         for (final Skill s : logData.getLogSummary().getSkillsCast()) {
