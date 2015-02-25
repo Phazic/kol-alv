@@ -362,6 +362,21 @@ public final class LogDataHolder {
         turnIntervalsSpent.add(turnInterval);
     }
 
+    public void handleParseFinished() {
+    	if (lastTurn.getTurnNumber() == penultimateTurn.getTurnNumber()) {
+    		if (lastTurn.getAreaName().equals(  penultimateTurn.getAreaName() )) {
+    			final SingleTurn tmp = (SingleTurn) lastTurn;
+
+            	// Note that the turn number of the previous turn needs to be used.
+            	((SingleTurn) penultimateTurn).addEncounter(tmp.toEncounter(((SingleTurn) penultimateTurn).getTurnNumber()));
+            	((SingleTurn) penultimateTurn).addSingleTurnData(tmp);
+            	if (tmp.isRanAwayOnThisTurn() && tmp.isRunawaysEquipmentEquipped())
+                	penultimateTurn.addFreeRunaways(1);
+                turnsSpent.remove(turnsSpent.size() - 1);    			
+    		}
+    	}
+    }
+    
     /**
      * Add the given turn to the log data.
      * <p>
@@ -389,6 +404,8 @@ public final class LogDataHolder {
             addTurnNotMafia(turn);
     }
 
+    
+    
     private void addTurnMafia(
             final SingleTurn turn) {
         if (lastTurn.getTurnNumber() == turn.getTurnNumber()) {
@@ -404,11 +421,14 @@ public final class LogDataHolder {
             	((SingleTurn) penultimateTurn).addSingleTurnData(tmp);
             	if (tmp.isRanAwayOnThisTurn() && tmp.isRunawaysEquipmentEquipped())
                 	penultimateTurn.addFreeRunaways(1);
-                turnsSpent.remove(turnsSpent.size() - 1);        		
-        	}        	
-        } else
+                turnsSpent.remove(turnsSpent.size() - 1);
+        	} else {
+                penultimateTurn = lastTurn;
+        	}
+        } else {
             penultimateTurn = lastTurn;
-
+        }
+        
         lastTurn = turn;
         turnsSpent.add(turn);
     }
@@ -418,7 +438,7 @@ public final class LogDataHolder {
         // If the last turn has the same turn number as the to be added turn,
         // add the data of the to be added turn to the last turn. Also, in that
         // case, check if that turn was a navel ring free runaway.
-        if (lastTurn.getTurnNumber() == turn.getTurnNumber()) {
+        if (lastTurn.getAreaName().equals( turn.getAreaName()) &&  lastTurn.getTurnNumber() == turn.getTurnNumber()) {
             if (turn.getFreeRunaways() == 0 && turn.isRanAwayOnThisTurn()
                     && turn.isRunawaysEquipmentEquipped())
                 turn.addFreeRunaways(1);

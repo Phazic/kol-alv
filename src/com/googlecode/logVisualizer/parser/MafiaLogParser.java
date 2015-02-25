@@ -207,7 +207,9 @@ public final class MafiaLogParser implements LogParser {
         }
 
         reader.close();
-
+        
+        logData.handleParseFinished();
+        
         // Before creating the summary data, we first need to add MP
         // regeneration from equipment where applicable.
         for (final SingleTurn st : getLogData().getTurnsSpent())
