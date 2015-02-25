@@ -170,7 +170,7 @@ public final class MafiaLogParser implements LogParser {
                 } else if (block.getBlockType() == LogBlockType.OTHER_BLOCK) {
                 	if (block.getBlockLines().size() > 2 && block.getBlockLines().get( 1 ).contains( "Encounter: Returning the MacGuffin" )) {
                 		for (String line : block.getBlockLines()) {
-                			if (line.equals( "choice.php?pwd&whichchoice=1055&option=1" ))
+                			if (line.equals( "choice.php?pwd&whichchoice=1054&option=1" ))
                 				nsFightWon = true;
                 		}
                 	}
