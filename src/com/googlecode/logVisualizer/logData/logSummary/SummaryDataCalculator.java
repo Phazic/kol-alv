@@ -216,15 +216,18 @@ final class SummaryDataCalculator {
                 totalStatgains = totalStatgains.addStats(st.getStatGain());
                 switch (st.getTurnVersion()) {
                     case COMBAT:
-                        totalTurnsCombat++;
+                    	if (!st.isFreeTurn())
+                    		totalTurnsCombat++;
                         combatsStatgains = combatsStatgains.addStats(st.getStatGain());
                         break;
                     case NONCOMBAT:
-                        totalTurnsNoncombat++;
+                    	if (!st.isFreeTurn())
+                    		totalTurnsNoncombat++;
                         noncombatsStatgains = noncombatsStatgains.addStats(st.getStatGain());
                         break;
                     case OTHER:
-                        totalTurnsOther++;
+                    	if (!st.isFreeTurn())
+                    		totalTurnsCombat++;
                         othersStatgains = othersStatgains.addStats(st.getStatGain());
                         break;
                     default:

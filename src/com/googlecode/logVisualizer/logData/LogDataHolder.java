@@ -179,9 +179,23 @@ public final class LogDataHolder {
     public void createLogSummary() {
         if (isDetailedLog) {
             final LookAheadIterator<SingleTurn> index = new LookAheadIterator<SingleTurn>(turnsSpent.iterator());
+            final LookAheadIterator<SingleTurn> worker = new LookAheadIterator<SingleTurn>(turnsSpent.iterator());
+            
             while (index.hasNext()) {
                 SingleTurn turn = index.next();
-                final TurnInterval interval = new DetailedTurnInterval(turn);
+                SingleTurn other; 
+                boolean isTurnFreeInterval = true;
+                
+                do {
+                	other = worker.next();
+                	if (other.getAreaName().equals( turn.getAreaName() )) {
+                		if (!other.isFreeTurn())
+                			isTurnFreeInterval = false;
+                	}
+                
+                } while (worker.hasNext() && worker.peek().getAreaName().equals( turn.getAreaName() ));
+                
+                final TurnInterval interval = new DetailedTurnInterval(turn, isTurnFreeInterval);
 
                 while (index.hasNext()) {
                     turn = index.peek();
@@ -409,6 +423,8 @@ public final class LogDataHolder {
     private void addTurnMafia(
             final SingleTurn turn) {
         if (lastTurn.getTurnNumber() == turn.getTurnNumber()) {
+        	((SingleTurn) lastTurn).setFreeTurn( true );//Flag the last turn as a free turn since it didn't increment the turn count
+        	
         	//Bombar Change: Needed for Florist, if we detect a free action, log zone you were in
         	if (lastTurn.getAreaName().equals( penultimateTurn.getAreaName() )) {
         		// If the last turn has the same turn number as the to be added turn,
@@ -435,6 +451,10 @@ public final class LogDataHolder {
 
     private void addTurnNotMafia(
             final SingleTurn turn) {
+    	
+    	if (lastTurn.getTurnNumber() == turn.getTurnNumber())
+        	((SingleTurn) lastTurn).setFreeTurn( true );//Flag the last turn as a free turn since it didn't increment the turn count
+
         // If the last turn has the same turn number as the to be added turn,
         // add the data of the to be added turn to the last turn. Also, in that
         // case, check if that turn was a navel ring free runaway.

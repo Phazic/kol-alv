@@ -67,6 +67,8 @@ public abstract class AbstractTurn implements Turn {
 
     protected LogComment comment = new LogComment();
 
+    private boolean isFreeTurn = false;
+    
     /**
      * @param areaName
      *            The name of the area to set.
@@ -341,6 +343,21 @@ public abstract class AbstractTurn implements Turn {
         return successfulFreeRunaways;
     }
 
+    /**
+     * Flags a turn as being free or not
+     * @param isFreeTurn
+     */
+    public void setFreeTurn(boolean isFreeTurn) {
+    	this.isFreeTurn = isFreeTurn;
+    }
+    
+    /**
+     * @return Whether or not this turn was "Free"
+     */
+    public boolean isFreeTurn() {
+    	return this.isFreeTurn;
+    }
+    
     /**
      * @see Turn
      */
