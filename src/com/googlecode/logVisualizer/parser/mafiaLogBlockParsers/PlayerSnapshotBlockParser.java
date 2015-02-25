@@ -45,7 +45,7 @@ import com.googlecode.logVisualizer.util.Stack;
  * <p>
  * The snapshot start with this:
  * <p>
- * 
+ *
  * <pre>
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  *                Player Snapshot
@@ -54,7 +54,7 @@ import com.googlecode.logVisualizer.util.Stack;
  * <p>
  * And ends with this:
  * <p>
- * 
+ *
  * <pre>
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  * </pre>
@@ -105,8 +105,8 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
     private final Map<String, String> familiarEquipmentMap;
 
     public PlayerSnapshotBlockParser(
-                                     final Stack<EquipmentChange> equipmentStack,
-                                     final Map<String, String> familiarEquipmentMap) {
+            final Stack<EquipmentChange> equipmentStack,
+            final Map<String, String> familiarEquipmentMap) {
         this.equipmentStack = equipmentStack;
         this.familiarEquipmentMap = familiarEquipmentMap;
     }
@@ -115,7 +115,7 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
      * {@inheritDoc}
      */
     public void parseBlock(
-                           final List<String> block, final LogDataHolder logData) {
+            final List<String> block, final LogDataHolder logData) {
         String hat = EquipmentChange.NO_EQUIPMENT_STRING;
         String weapon = EquipmentChange.NO_EQUIPMENT_STRING;
         String offhand = EquipmentChange.NO_EQUIPMENT_STRING;
@@ -152,16 +152,20 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
                     final Scanner s = new Scanner(line);
                     s.useDelimiter(NOT_FAMILIAR_NAME_PATTERN);
 
-                    logData.addFamiliarChange(new FamiliarChange(s.next(), turnNumber));
+                    // Don't record familiar clearing if path is Actually Ed.
+                    if (logData.getAscensionPath() != LogDataHolder.AscensionPath.ED)
+                    {
+                        logData.addFamiliarChange(new FamiliarChange(s.next(), turnNumber));
+                    }
 
                     s.close();
                 } else if (line.startsWith(ADVENTURES_LINE_BEGINNING_STRING))
                     adventuresLeft = Integer.parseInt(line.substring(line.indexOf(UsefulPatterns.COLON) + 2));
                 else if (line.startsWith(MEAT_LINE_BEGINNING_STRING)
-                         && !line.contains(UsefulPatterns.PERCENTAGE_SIGN))
+                        && !line.contains(UsefulPatterns.PERCENTAGE_SIGN))
                     meat = Integer.parseInt(line.substring(line.indexOf(UsefulPatterns.COLON) + 2)
-                                                .replace(UsefulPatterns.COMMA,
-                                                         UsefulPatterns.EMPTY_STRING));
+                            .replace(UsefulPatterns.COMMA,
+                                    UsefulPatterns.EMPTY_STRING));
                 else if (line.startsWith(HAT_BEGINNING_STRING))
                     hat = getEquipmentName(line);
                 else if (line.startsWith(WEAPON_BEGINNING_STRING))
@@ -179,7 +183,7 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
                 else if (line.startsWith(ACC3_BEGINNING_STRING))
                     acc3 = getEquipmentName(line);
                 else if (line.startsWith(FAM_EQUIP_BEGINNING_STRING)
-                         && !line.contains(UsefulPatterns.PERCENTAGE_SIGN))
+                        && !line.contains(UsefulPatterns.PERCENTAGE_SIGN))
                     famEquip = getEquipmentName(line);
                 else if (line.startsWith(DAY_CHANGE_STRING)) {
                     // Get day number of last day change
@@ -197,15 +201,15 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
         // Add the currently worn equipment.
         familiarEquipmentMap.put(logData.getLastFamiliarChange().getFamiliarName(), famEquip);
         final EquipmentChange equip = new EquipmentChange(turnNumber,
-                                                          hat,
-                                                          weapon,
-                                                          offhand,
-                                                          shirt,
-                                                          pants,
-                                                          acc1,
-                                                          acc2,
-                                                          acc3,
-                                                          famEquip);
+                hat,
+                weapon,
+                offhand,
+                shirt,
+                pants,
+                acc1,
+                acc2,
+                acc3,
+                famEquip);
         if (!equip.equalsIgnoreTurn(equipmentStack.peek().get())) {
             equipmentStack.push(equip);
             logData.addEquipmentChange(equip);
@@ -215,17 +219,17 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
         // snapshot.
         if (mus >= 0 && myst >= 0 && mox >= 0)
             logData.addPlayerSnapshot(new PlayerSnapshot(mus,
-                                                         myst,
-                                                         mox,
-                                                         adventuresLeft,
-                                                         meat,
-                                                         turnNumber));
+                    myst,
+                    mox,
+                    adventuresLeft,
+                    meat,
+                    turnNumber));
     }
 
     private String getEquipmentName(
-                                    final String line) {
+            final String line) {
         String itemName = line.substring(line.indexOf(UsefulPatterns.COLON) + 2)
-                              .toLowerCase(Locale.ENGLISH);
+                .toLowerCase(Locale.ENGLISH);
 
         if (itemName.contains(NO_EQUIP_STRING))
             itemName = EquipmentChange.NO_EQUIPMENT_STRING;
@@ -236,19 +240,19 @@ public final class PlayerSnapshotBlockParser implements LogBlockParser {
                 itemName = itemName.substring(1, itemName.length() - 2);
             else
                 itemName = itemName.substring(0,
-                                              itemName.lastIndexOf(UsefulPatterns.ROUND_BRACKET_OPEN) - 1);
+                        itemName.lastIndexOf(UsefulPatterns.ROUND_BRACKET_OPEN) - 1);
 
         return itemName;
     }
 
     private static int parseStatWBuffed(
-                                        final String line) {
+            final String line) {
         return Integer.parseInt(line.substring(line.indexOf(UsefulPatterns.ROUND_BRACKET_OPEN) + 1,
-                                               line.indexOf(UsefulPatterns.ROUND_BRACKET_CLOSE)));
+                line.indexOf(UsefulPatterns.ROUND_BRACKET_CLOSE)));
     }
 
     private static int parseStatWOBuffed(
-                                         final String line) {
+            final String line) {
         final String tmp = line.substring(line.indexOf(UsefulPatterns.WHITE_SPACE) + 1);
 
         if (tmp.contains(UsefulPatterns.COMMA))

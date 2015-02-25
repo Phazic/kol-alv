@@ -50,7 +50,7 @@ public final class FamiliarChangeLineParse extends AbstractLineParser {
      */
     @Override
     protected void doParsing(
-                             final String line, final LogDataHolder logData) {
+            final String line, final LogDataHolder logData) {
         // Parse the turn number.
         // Note that a log by the AFH parser shows the turn on which the new
         // familiar was first used, which has to be changed to adhere to the
@@ -79,7 +79,7 @@ public final class FamiliarChangeLineParse extends AbstractLineParser {
      */
     @Override
     protected boolean isCompatibleLine(
-                                       final String line) {
+            final String line) {
         return familiarChangedMatcher.reset(line).matches();
     }
 }
