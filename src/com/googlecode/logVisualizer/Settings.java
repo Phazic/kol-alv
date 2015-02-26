@@ -94,7 +94,7 @@ public final class Settings {
         if (!isNimbusLafPresent)
             DEFAULT_SETTINGS.setProperty("LookAndFeel", "Metal");
 
-        DEFAULT_SETTINGS.setProperty("Version", "3.7.4");
+        DEFAULT_SETTINGS.setProperty("Version", "3.7.4.1");
         DEFAULT_SETTINGS.setProperty("Check Updates", FALSE_STRING);
 
         DEFAULT_SETTINGS.setProperty("XML format version", "1.4");
