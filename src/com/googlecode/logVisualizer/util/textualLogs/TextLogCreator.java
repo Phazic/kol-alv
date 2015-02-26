@@ -696,7 +696,7 @@ public final class TextLogCreator {
                     printCurrentPulls(currentDay.getDayNumber(), turnsBeforeDayChange.getEndTurn());
 
                     printTurnIntervalContents(turnsAfterDayChange, currentDay.getDayNumber());
-                } else if (ti.getStartTurn() == nextDay.getTurnNumber()) {
+                } else if (ti.getStartTurn() >= nextDay.getTurnNumber()) {
                     //Check to see if a day change occurs within block
                     SingleTurn dayChangeTurn = null;
                     for (final SingleTurn st : ti.getTurns()) {

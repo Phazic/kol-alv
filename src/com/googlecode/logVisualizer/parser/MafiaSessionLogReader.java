@@ -236,31 +236,80 @@ public final class MafiaSessionLogReader {
             // supposed to be there. Such "false" empty lines should be
             // attempted to be recognised and skipped.
             if (line.length() <= 0) {
-                // Remember current position.
-                log.mark(600);
+                //Special case for ed fights
+                //If previous line was:
+                //choice.php?pwd&whichchoice=1023&option=1
+                //then that means we are in the 'Underworld'
+                //we need to include all lines up to
+                //choice.php?pwd&whichchoice=1024&option=1
+                //in the current encounter
+                //if we see
+                //choice.php?pwd&whichchoice=1024&option=2
+                //Then this means we had to go back to our tomb
+            	if (result.get( result.size() - 1 ).equals( "choice.php?pwd&whichchoice=1023&option=1" )) {
+                    final List<String> underworldBlock = Lists.newArrayList();
+                	boolean edIsDead = true;
+                	log.mark( 600 ); //Just incase something goes wrong
+                	
+                	String lookAhead;
+                    while (edIsDead && (lookAhead = log.readLine()) != null ) {
+                    	if (lookAhead.startsWith( UsefulPatterns.SQUARE_BRACKET_OPEN )) {
+                    		//Means a new turn happened and something went wrong with log
+                    		//just reset all the way back.
+                    		break;
+                    	} else if (lookAhead.equals( "choice.php?pwd&whichchoice=1024&option=2" )) {
+                    		//Means we headed Home
+                    		line = lookAhead;
+                    		edIsDead = false;//Don't reset
+                    		break;
+                    	} else if (lookAhead.equals( "choice.php?pwd&whichchoice=1024&option=1" )) {
+                    		edIsDead = false;//Don't reset
+                    		line = lookAhead;//This will naturally be added
+                    		break;
+                    	} else if (lookAhead.length() <= 0) {
+                    		continue;//blank lines are expected
+                    	} else {
+                    		underworldBlock.add( lookAhead );
+                    	}
+                    }
+                    
+                    if (edIsDead) {
+                    	//Means error occurred
+                		log.reset();
+                    	break;
+                    }
+                    
+                    if (underworldBlock.size() > 0) {
+                    	for (String underworldLine : underworldBlock) 
+                    		result.add(underworldLine);
+                    }
+                } else {
+                	// Remember current position.
+                    log.mark(600);
 
-                // Look-ahead of three lines to try and see whether the combat
-                // is actually continued.
-                boolean isFightContinued = false;
-                for (int i = 0; i < 3; i++) {
-                    final String tmpLine = log.readLine();
-                    // A square bracket means that a new turn was started. Extra
-                    // check for the level 12 quest bossfight.
-                    if (tmpLine == null || tmpLine.startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN)
-                            || tmpLine.startsWith(LEVEL_12_QUEST_BOSSFIGHT_BEGINNING_STRING))
-                        break;
-                    else if (tmpLine.startsWith(UsefulPatterns.COMBAT_ROUND_LINE_BEGINNING_STRING)) {
-                        isFightContinued = true;
-                        line = tmpLine;
+                    // Look-ahead of three lines to try and see whether the combat
+                    // is actually continued.
+                    boolean isFightContinued = false;
+                    for (int i = 0; i < 3; i++) {
+                        final String tmpLine = log.readLine();
+                        // A square bracket means that a new turn was started. Extra
+                        // check for the level 12 quest bossfight.
+                        if (tmpLine == null || tmpLine.startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN)
+                                || tmpLine.startsWith(LEVEL_12_QUEST_BOSSFIGHT_BEGINNING_STRING))
+                            break;
+                        else if (tmpLine.startsWith(UsefulPatterns.COMBAT_ROUND_LINE_BEGINNING_STRING)) {
+                            isFightContinued = true;
+                            line = tmpLine;
+                            break;
+                        }
+                    }
+                    
+                    // If the fight has ended, set the reader back to the original
+                    // position and stop the while loop.
+                    if (!isFightContinued) {
+                        log.reset();
                         break;
                     }
-                }
-
-                // If the fight has ended, set the reader back to the original
-                // position and stop the while loop.
-                if (!isFightContinued) {
-                    log.reset();
-                    break;
                 }
             }
 

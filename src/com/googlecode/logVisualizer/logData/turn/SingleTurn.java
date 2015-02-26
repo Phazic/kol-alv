@@ -422,7 +422,9 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
      */
     public int compareTo(
                          final TurnEntity te) {
-        return turnNumber - te.getTurnNumber();
+    	if (te instanceof SingleTurn)
+    		return 100 * (dayNumber - ((SingleTurn) te).getDayNumber()) + turnNumber - te.getTurnNumber();
+    	return turnNumber - te.getTurnNumber();
     }
 
     @Override
