@@ -59,4 +59,15 @@ public interface Encounter extends TurnEntity {
      *         {@code false} if this turn is not a combat.
      */
     public boolean isDisintegrated();
+    
+    /**
+     * @return {@code true} if during this combat a banishment occurred. Will always return
+     *         {@code false} if this turn is not a combat.
+     */
+    public boolean isBanished();
+    
+    /**
+     * @return {@code null} if isBanished == false, else returns the banishment string.
+     */
+    public String getBanishedInfo();
 }

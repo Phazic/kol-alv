@@ -73,6 +73,10 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
 
     private final MeatGain meatgain;
 
+    private final String banishInfo;
+    
+    private final boolean isBanished;
+    
     private final boolean isDisintegrated;
 
     private final TurnVersion turnVersion;
@@ -94,7 +98,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
                               final MeatGain meatgain, final int freeRunaways,
                               final TurnVersion turnVersion, final String notes,
                               final Collection<Item> itemdrops, final Collection<Skill> skillCasts,
-                              final Collection<Consumable> consumables, final Collection<CombatItem> combatItemsUsed) {
+                              final Collection<Consumable> consumables, final Collection<CombatItem> combatItemsUsed, 
+                              final boolean isBanished, final String banishedInfo) {
         if (areaName == null)
             throw new NullPointerException("Area name must not be null.");
         if (encounterName == null)
@@ -127,7 +132,7 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
             throw new IllegalArgumentException("Day number below 1.");
         if (freeRunaways < 0)
             throw new IllegalArgumentException("The number of free runaways must not be below 0.");
-
+        
         this.areaName = areaName;
         this.encounterName = encounterName;
         this.turnNumber = turnNumber;
@@ -135,6 +140,8 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
         this.usedEquipment = usedEquipment;
         this.usedFamiliar = usedFamiliar;
         this.isDisintegrated = isDisintegrated;
+        this.isBanished = isBanished;
+        this.banishInfo = banishedInfo;
         this.statgain = statgain;
         this.mpGain = mpGain;
         this.meatgain = meatgain;
@@ -200,7 +207,7 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     public EquipmentChange getUsedEquipment() {
         return usedEquipment;
     }
-
+    
     /**
      * @return {@code true} if this combat was disintegrated. Will always return
      *         {@code false} if this turn is not a combat.
@@ -290,6 +297,17 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
         return itemdrops.containsKey(i);
     }
 
+    public boolean isBanished() {
+    	return this.isBanished;
+    }
+    
+    public String getBanishedInfo() {
+    	if (this.isBanished)
+    		return banishInfo;
+    	else
+    		return null;
+    }
+    
     /**
      * @return The combat items used in this turn.
      */
