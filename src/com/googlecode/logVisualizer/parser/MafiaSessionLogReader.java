@@ -235,7 +235,7 @@ public final class MafiaSessionLogReader {
             // sometimes mafia puts empty lines in which aren't actually
             // supposed to be there. Such "false" empty lines should be
             // attempted to be recognised and skipped.
-            if (line.length() <= 0) {
+            if (line.trim().length() <= 0) {
                 //Special case for ed fights
                 //If previous line was:
                 //choice.php?pwd&whichchoice=1023&option=1
@@ -246,7 +246,7 @@ public final class MafiaSessionLogReader {
                 //if we see
                 //choice.php?pwd&whichchoice=1024&option=2
                 //Then this means we had to go back to our tomb
-            	if (result.get( result.size() - 1 ).equals( "choice.php?pwd&whichchoice=1023&option=1" )) {
+            	if (result.get( result.size() - 1 ).contains( "choice.php?" ) && result.get( result.size() -1  ).contains( "whichchoice=1023&option=1" )) {
                     final List<String> underworldBlock = Lists.newArrayList();
                 	boolean edIsDead = true;
                 	log.mark( 600 ); //Just incase something goes wrong
@@ -257,12 +257,12 @@ public final class MafiaSessionLogReader {
                     		//Means a new turn happened and something went wrong with log
                     		//just reset all the way back.
                     		break;
-                    	} else if (lookAhead.equals( "choice.php?pwd&whichchoice=1024&option=2" )) {
+                    	} else if (lookAhead.contains( "choice.php" ) && lookAhead.contains( "whichchoice=1024&option=2" )) {
                     		//Means we headed Home
                     		line = lookAhead;
                     		edIsDead = false;//Don't reset
                     		break;
-                    	} else if (lookAhead.equals( "choice.php?pwd&whichchoice=1024&option=1" )) {
+                    	} else if (lookAhead.contains( "choice.php" ) && lookAhead.contains( "whichchoice=1024&option=1" )) {
                     		edIsDead = false;//Don't reset
                     		line = lookAhead;//This will naturally be added
                     		break;

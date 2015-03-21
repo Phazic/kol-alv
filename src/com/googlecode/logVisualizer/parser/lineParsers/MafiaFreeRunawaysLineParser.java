@@ -28,6 +28,8 @@ import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
 
 public final class MafiaFreeRunawaysLineParser extends AbstractLineParser {
+	private static final CombatItemUsedLineParser ciuLP = new CombatItemUsedLineParser();
+	
     private static final String BANDER_RUNAWAY_MESSAGE_PART_STRING = " snatches you up in his jaws,"
                                                                      + " tosses you onto his back, and flooms away,"
                                                                      + " weaving slightly and hiccelping fire.";
@@ -49,6 +51,9 @@ public final class MafiaFreeRunawaysLineParser extends AbstractLineParser {
     protected void doParsing(
                              final String line, final LogDataHolder logData) {
         logData.getLastTurnSpent().addFreeRunaways(1);
+        
+        if (ciuLP.isCompatibleLine( line ))
+        	ciuLP.parseLine( line, logData );
     }
 
     /**

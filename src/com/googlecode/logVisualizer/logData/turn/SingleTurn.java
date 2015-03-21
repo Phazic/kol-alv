@@ -257,7 +257,10 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
     }
     
     public String getBanishedInfo() {
-    	return this.banishedInfo;
+    	if (this.isBanished)
+    		return this.banishedInfo;
+    	else
+    		return null;
     }
     
 
@@ -335,7 +338,9 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
                                                      e.getDroppedItems(),
                                                      e.getSkillsCast(),
                                                      e.getConsumablesUsed(),
-                                                     e.getCombatItemsUsed()));
+                                                     e.getCombatItemsUsed(),
+                                                     e.isBanished(),
+                                                     e.getBanishedInfo()));
         }
     }
 
@@ -413,7 +418,9 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
                                       getDroppedItems(),
                                       getSkillsCast(),
                                       getConsumablesUsed(),
-                                      getCombatItemsUsed());
+                                      getCombatItemsUsed(),
+                                      isBanished,
+                                      getBanishedInfo());
     }
 
     /**

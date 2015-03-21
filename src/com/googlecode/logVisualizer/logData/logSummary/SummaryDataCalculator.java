@@ -288,6 +288,10 @@ final class SummaryDataCalculator {
                         // Free runaway combats summary
                         if (e.getFreeRunaways() > 0)
                             freeRunawayCombats.add(e);
+                        
+                        if (!st.isBanished() && e.isBanished())
+                        	banishedCombats.add( DataNumberPair.of(e.getBanishedInfo(), e.getTurnNumber()) );
+                        	
                     }
                 }
             }
