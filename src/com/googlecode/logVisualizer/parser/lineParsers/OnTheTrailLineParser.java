@@ -24,8 +24,12 @@
 
 package com.googlecode.logVisualizer.parser.lineParsers;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.turn.SingleTurn;
+import com.googlecode.logVisualizer.parser.UsefulPatterns;
 import com.googlecode.logVisualizer.util.DataNumberPair;
 
 /**
@@ -36,7 +40,9 @@ import com.googlecode.logVisualizer.util.DataNumberPair;
  * {@code You acquire an effect: On the Trail (duration: 40 Adventures)}
  */
 public final class OnTheTrailLineParser extends AbstractLineParser {
-    private final static String ON_THE_TRAIL_ACQUISITION = "You acquire an effect: On the Trail (duration: 40 Adventures)";
+    private static final Pattern ON_THE_TRAIL_ACQUISITION = Pattern.compile("You acquire an effect:\\s*On the Trail.*$");
+
+    private final Matcher trailMatcher = ON_THE_TRAIL_ACQUISITION.matcher(UsefulPatterns.EMPTY_STRING);
 
     /**
      * @see AbstractLineParser#doParsing(String, LogDataHolder)
@@ -54,6 +60,7 @@ public final class OnTheTrailLineParser extends AbstractLineParser {
     @Override
     protected boolean isCompatibleLine(
                                        final String line) {
-        return line.equals(ON_THE_TRAIL_ACQUISITION);
+        return line.startsWith(UsefulPatterns.ACQUIRE_EFFECT_STRING) &&
+                trailMatcher.reset(line).matches();
     }
 }

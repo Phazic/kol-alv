@@ -32,7 +32,9 @@ import com.googlecode.logVisualizer.logData.turn.SingleTurn;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
 
 public final class MafiaDisintegrateLineParser extends AbstractLineParser {
-    private static final String YELLOW_EFFECT_ACQUISITION = "You acquire an effect: Everything Looks Yellow (duration: ";
+    private static final Pattern YELLOW_EFFECT_ACQUISITION = Pattern.compile("You acquire an effect:\\s*Everything Looks Yellow.*$");
+
+    private final Matcher yellowRayMatcher = YELLOW_EFFECT_ACQUISITION.matcher(UsefulPatterns.EMPTY_STRING);
 
     private static final Pattern MAJOR_YELLOW_RAY = Pattern.compile("Round \\d+: .+? swings his eyestalk around and unleashes a massive"
                                                                     + " ray of yellow energy, completely disintegrating your opponent.");
@@ -54,8 +56,12 @@ public final class MafiaDisintegrateLineParser extends AbstractLineParser {
     @Override
     protected boolean isCompatibleLine(
                                        final String line) {
-        return line.startsWith(YELLOW_EFFECT_ACQUISITION)
-               || (line.startsWith(UsefulPatterns.COMBAT_ROUND_LINE_BEGINNING_STRING) && majorYellowRayMatcher.reset(line)
-                                                                                                              .matches());
+        boolean yellowRay = line.startsWith(UsefulPatterns.ACQUIRE_EFFECT_STRING) &&
+                yellowRayMatcher.reset(line).matches();
+
+        boolean heRay = (line.startsWith(UsefulPatterns.COMBAT_ROUND_LINE_BEGINNING_STRING) && majorYellowRayMatcher.reset(
+                line).matches());
+
+        return yellowRay || heRay;
     }
 }

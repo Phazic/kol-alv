@@ -166,6 +166,8 @@ public final class UsefulPatterns {
 
     public static final String COMBAT_ROUND_LINE_BEGINNING_STRING = "Round ";
 
+    public static final String ACQUIRE_EFFECT_STRING = "You acquire an effect:";
+
     public static final String COMMA = ",";
 
     public static final String MINUS = "-";

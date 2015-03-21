@@ -24,8 +24,12 @@
 
 package com.googlecode.logVisualizer.parser.lineParsers;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.MPGain;
+import com.googlecode.logVisualizer.parser.UsefulPatterns;
 
 /**
  * A parser to recognise Mental A-cue-ity effect acquisition.
@@ -33,9 +37,14 @@ import com.googlecode.logVisualizer.logData.MPGain;
  * The format looks like this:
  * <p>
  * {@code You acquire an effect: Mental A-cue-ity (duration: 10 Adventures)}
+ *
+ *
+ *
  */
 public final class PoolMPBuffLineParser extends AbstractLineParser {
-    private final static String POOL_MP_BUFF_ACQUISITION = "You acquire an effect: Mental A-cue-ity (duration: 10 Adventures)";
+    private static final Pattern POOL_MP_BUFF_ACQUISITION = Pattern.compile("You acquire an effect:\\s*Mental A-cue-ity.*$");
+
+    private final Matcher poolMatcher = POOL_MP_BUFF_ACQUISITION.matcher(UsefulPatterns.EMPTY_STRING);
 
     /**
      * @see AbstractLineParser#doParsing(String, LogDataHolder)
@@ -52,6 +61,7 @@ public final class PoolMPBuffLineParser extends AbstractLineParser {
     @Override
     protected boolean isCompatibleLine(
                                        final String line) {
-        return line.equals(POOL_MP_BUFF_ACQUISITION);
+        return line.startsWith(UsefulPatterns.ACQUIRE_EFFECT_STRING) &&
+                poolMatcher.reset(line).matches();
     }
 }
