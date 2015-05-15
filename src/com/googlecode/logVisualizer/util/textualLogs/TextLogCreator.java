@@ -799,7 +799,11 @@ public final class TextLogCreator {
         // Print out Ka acquisition for the day
         if (logData.getAscensionPath() == AscensionPath.ED)
         {
-            int kaAcquired = dailyKaEarned.get(day);
+            int kaAcquired = 0;
+
+            if (dailyKaEarned.containsKey(day)) {
+                kaAcquired = dailyKaEarned.get(day);
+            }
 
             write(NEW_LINE);
             write(KA_EARNED_DAILY);
