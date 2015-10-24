@@ -62,6 +62,8 @@ public final class ItemAcquisitionLineParser extends AbstractLineParser {
 
     private static final String ACQUIRE_STRING = "You acquire";
 
+    private static final String ACQUIRE_EFFECT = "You acquire an effect:";
+
     private final Matcher multipleItemsOldMatcher = MULTIPLE_ITEMS_OLD.matcher(UsefulPatterns.EMPTY_STRING);
 
     private final Matcher multipleItemsNewMatcher = MULTIPLE_ITEMS_NEW.matcher(UsefulPatterns.EMPTY_STRING);
@@ -117,7 +119,10 @@ public final class ItemAcquisitionLineParser extends AbstractLineParser {
     @Override
     protected boolean isCompatibleLine(
                                        final String line) {
-        return line.startsWith(ACQUIRE_STRING)
+
+        // Filter out you acquire an effect from items
+        return !line.startsWith(ACQUIRE_EFFECT) &&
+                line.startsWith(ACQUIRE_STRING)
                && (line.startsWith(SINGLE_ITEM_STRING)
                    || multipleItemsOldMatcher.reset(line).matches() || multipleItemsNewMatcher.reset(line)
                                                                                               .matches());
