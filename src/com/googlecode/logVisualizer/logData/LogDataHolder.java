@@ -1694,9 +1694,10 @@ public final class LogDataHolder {
         AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete"),
         SLOW_AND_STEADY("Slow and Steady"),
         HEAVY_RAINS("Heavy Rains"),
-        PICKY("Picky"),
+ PICKY("Picky"),
         STANDARD("Standard"),
         ED("Actually Ed the Undying"),
+        OCRS("One Crazy Random Summer"),
         NOT_DEFINED("not defined");
 
         private static final Map<String, AscensionPath> stringToEnum = Maps.newHashMap();

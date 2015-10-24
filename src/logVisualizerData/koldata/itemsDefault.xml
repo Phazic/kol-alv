@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <itemdropsData>
+<item name="1952 mickey mantle card" onetimeOnly="false"></item>
 <item name="30669 scroll" onetimeOnly="false"></item>
 <item name="31337 scroll" onetimeOnly="false"></item>
 <item name="33398 scroll" onetimeOnly="false"></item>
@@ -22,7 +23,9 @@
 <item name="azazel's lollipop" onetimeOnly="true"></item>
 <item name="azazel's tutu" onetimeOnly="true"></item>
 <item name="azazel's unicorn" onetimeOnly="true"></item>
+<item name="backwoods banjo" onetimeOnly="true"></item>
 <item name="bad-ass club" onetimeOnly="true"></item>
+<item name="bag of park garbage" onetimeOnly="false"></item>
 <item name="badge of authority" onetimeOnly="true"></item>
 <item name="ball polish" onetimeOnly="true"></item>
 <item name="baron von ratsworth's money clip" onetimeOnly="true"></item>
@@ -38,6 +41,7 @@
 <item name="beignet milgranet" onetimeOnly="false"></item>
 <item name="bejeweled pledge pin" onetimeOnly="true"></item>
 <item name="bird rib" onetimeOnly="true"></item>
+<item name="black mana" onetimeOnly="false"></item>
 <item name="black picnic basket" onetimeOnly="false"></item>
 <item name="black snowcone" onetimeOnly="false"></item>
 <item name="blackberry galoshes" onetimeOnly="true"></item>
@@ -45,6 +49,7 @@
 <item name="blasting soda" onetimeOnly="true"></item>
 <item name="blood-faced volleyball" onetimeOnly="true"></item>
 <item name="bloodied surgical dungarees" onetimeOnly="true"></item>
+<item name="blue mana" onetimeOnly="false"></item>
 <item name="blue snowcone" onetimeOnly="false"></item>
 <item name="blunt cat claw" onetimeOnly="false"></item>
 <item name="blunt icepick" onetimeOnly="false"></item>
@@ -91,6 +96,7 @@
 <item name="bum cheek" onetimeOnly="true"></item>
 <item name="bus pass" onetimeOnly="false"></item>
 <item name="can of sardines" onetimeOnly="false"></item>
+<item name="candlestick" onetimeOnly="false"></item>
 <item name="cap gun" onetimeOnly="false"></item>
 <item name="celestial au jus" onetimeOnly="false"></item>
 <item name="celestial carrot juice" onetimeOnly="false"></item>
@@ -122,14 +128,25 @@
 <item name="crown of the goblin king" onetimeOnly="false"></item>
 <item name="crumbling wooden wheel" onetimeOnly="false"></item>
 <item name="crystal skull" onetimeOnly="false"></item>
+<item name="cubic zirconia" onetimeOnly="false"></item>
 <item name="dance card" onetimeOnly="false"></item>
 <item name="dead mimic" onetimeOnly="false"></item>
 <item name="delicious candy" onetimeOnly="false"></item>
 <item name="dented spoon" onetimeOnly="false"></item>
 <item name="dethklok" onetimeOnly="false"></item>
 <item name="deviled egg" onetimeOnly="false"></item>
+<item name="dice-print pajama pants" onetimeOnly="true"></item>
+<item name="dice-shaped do-rag" onetimeOnly="true"></item>
+<item name="dice-shaped backpack" onetimeOnly="true"></item>
+<item name="dice belt buckle" onetimeOnly="true"></item>
+<item name="dice ring" onetimeOnly="true"></item>
+<item name="dice sunglasses" onetimeOnly="true"></item>
 <item name="dinner roll" onetimeOnly="false"></item>
+<item name="dinsey face paint" onetimeOnly="false"></item>
+<item name="dinsey food-cone" onetimeOnly="false"></item>
+<item name="dinsey whinskey" onetimeOnly="false"></item>
 <item name="dirty hobo gloves" onetimeOnly="true"></item>
+<item name="dirty rigging rope" onetimeOnly="true"></item>
 <item name="disembodied brain" onetimeOnly="false"></item>
 <item name="disintegrating quill pen" onetimeOnly="false"></item>
 <item name="disposable instant camera" onetimeOnly="true"></item>
@@ -137,6 +154,7 @@
 <item name="divine champagne flute" onetimeOnly="false"></item>
 <item name="divine champagne popper" onetimeOnly="false"></item>
 <item name="divine cracker" onetimeOnly="false"></item>
+<item name="dna extraction syringe" onetimeOnly="true"></item>
 <item name="dodecagram" onetimeOnly="true"></item>
 <item name="dollop of barbecue sauce" onetimeOnly="false"></item>
 <item name="dragon snaps" onetimeOnly="false"></item>
@@ -159,6 +177,7 @@
 <item name="extreme scarf" onetimeOnly="true"></item>
 <item name="eye of the tiger-lily" onetimeOnly="false"></item>
 <item name="eyepatch" onetimeOnly="true"></item>
+<item name="fake washboard" onetimeOnly="true"></item>
 <item name="fancy oil painting" onetimeOnly="false"></item>
 <item name="fat loot token" onetimeOnly="false"></item>
 <item name="figurine of a charred seal" onetimeOnly="false"></item>
@@ -171,6 +190,7 @@
 <item name="figurine of a wretched-looking seal" onetimeOnly="false"></item>
 <item name="figurine of an ancient seal" onetimeOnly="false"></item>
 <item name="figurine of an armored seal" onetimeOnly="false"></item>
+<item name="filthy child leash" onetimeOnly="true"></item>
 <item name="filthy corduroys" onetimeOnly="true"></item>
 <item name="filthy knitted dread sack" onetimeOnly="true"></item>
 <item name="filthy lucre" onetimeOnly="false"></item>
@@ -215,6 +235,7 @@
 <item name="frosty halo" onetimeOnly="false"></item>
 <item name="frozen danish" onetimeOnly="false"></item>
 <item name="frozen seal spine" onetimeOnly="true"></item>
+<item name="funfunds" onetimeOnly="false"></item>
 <item name="furry halo" onetimeOnly="false"></item>
 <item name="game grid token" onetimeOnly="false"></item>
 <item name="gameinformpowerdailypro magazine" onetimeOnly="false"></item>
@@ -255,6 +276,7 @@
 <item name="grass whistle" onetimeOnly="true"></item>
 <item name="graveyard snowglobe" onetimeOnly="false"></item>
 <item name="green candy heart" onetimeOnly="false"></item>
+<item name="green mana" onetimeOnly="false"></item>
 <item name="green snowcone" onetimeOnly="false"></item>
 <item name="grimstone mask" onetimeOnly="false"></item>
 <item name="groll doll" onetimeOnly="false"></item>
@@ -309,6 +331,7 @@
 <item name="jarlsberg's key" onetimeOnly="false"></item>
 <item name="ketchup hound" onetimeOnly="true"></item>
 <item name="killing jar" onetimeOnly="true"></item>
+<item name="knife" onetimeOnly="false"></item>
 <item name="knob cake" onetimeOnly="true"></item>
 <item name="knob goblin elite helm" onetimeOnly="true"></item>
 <item name="knob goblin elite pants" onetimeOnly="true"></item>
@@ -326,6 +349,7 @@
 <item name="lady spookyraven's powder puff" onetimeOnly="true"></item>
 <item name="large box" onetimeOnly="false"></item>
 <item name="lavender candy heart" onetimeOnly="false"></item>
+<item name="lead pipe" onetimeOnly="false"></item>
 <item name="leprechaun hatchling" onetimeOnly="true"></item>
 <item name="lime" onetimeOnly="false"></item>
 <item name="limp broccoli" onetimeOnly="false"></item>
@@ -348,6 +372,13 @@
 <item name="magic whistle" onetimeOnly="true"></item>
 <item name="magical ice cubes" onetimeOnly="false"></item>
 <item name="massive dumbbell" onetimeOnly="true"></item>
+<item name="mayodiol" onetimeOnly="false"></item>
+<item name="mayoflex" onetimeOnly="false"></item>
+<item name="mayonex" onetimeOnly="false"></item>
+<item name="mayostat" onetimeOnly="false"></item>
+<item name="mayozapine" onetimeOnly="false"></item>
+<item name="mayo lance" onetimeOnly="false"></item>
+<item name="mayonex" onetimeOnly="false"></item>
 <item name="mcclusky file (complete)" onetimeOnly="true"></item>
 <item name="mcclusky file (page 1)" onetimeOnly="true"></item>
 <item name="mcclusky file (page 2)" onetimeOnly="true"></item>
@@ -362,6 +393,7 @@
 <item name="midriff scrubs" onetimeOnly="true"></item>
 <item name="miner's helmet" onetimeOnly="true"></item>
 <item name="miner's pants" onetimeOnly="true"></item>
+<item name="miracle whip" onetimeOnly="true"></item>
 <item name="miserable pie" onetimeOnly="false"></item>
 <item name="mixed wildflower greens" onetimeOnly="false"></item>
 <item name="mizzenmast mop" onetimeOnly="true"></item>
@@ -398,6 +430,7 @@
 <item name="padded tortoise" onetimeOnly="true"></item>
 <item name="paint a vulgar pitcher" onetimeOnly="false"></item>
 <item name="pat of butter" onetimeOnly="false"></item>
+<item name="perfume soaked bandana" onetimeOnly="true"></item>
 <item name="photograph of a dog" onetimeOnly="true"></item>
 <item name="photograph of a red nugget" onetimeOnly="true"></item>
 <item name="photograph of an ostrich egg" onetimeOnly="true"></item>
@@ -420,6 +453,7 @@
 <item name="potion of x-ray vision" onetimeOnly="false"></item>
 <item name="powdered donut" onetimeOnly="false"></item>
 <item name="powdered wig" onetimeOnly="false"></item>
+<item name="power pill" onetimeOnly="false"></item>
 <item name="power sock" onetimeOnly="false"></item>
 <item name="pregnant mushroom" onetimeOnly="true"></item>
 <item name="priceless diamond" onetimeOnly="false"></item>
@@ -437,10 +471,13 @@
 <item name="purple snowcone" onetimeOnly="false"></item>
 <item name="quasireligious sculpture" onetimeOnly="false"></item>
 <item name="raging hardwood plank" onetimeOnly="false"></item>
+<item name="ratskin pajama pants" onetimeOnly="true"></item>
 <item name="rave whistle" onetimeOnly="true"></item>
+<item name="red mana" onetimeOnly="false"></item>
 <item name="red snowcone" onetimeOnly="false"></item>
 <item name="reinforced beaded headband" onetimeOnly="true"></item>
 <item name="reodorant" onetimeOnly="false"></item>
+<item name="revolver" onetimeOnly="false"></item>
 <item name="rigging shampoo" onetimeOnly="true"></item>
 <item name="ring of aggravate monster" onetimeOnly="true"></item>
 <item name="ring of conflict" onetimeOnly="true"></item>
@@ -457,6 +494,7 @@
 <item name="scratch 'n' sniff upc sticker" onetimeOnly="false"></item>
 <item name="scratch 'n' sniff wrestler sticker" onetimeOnly="false"></item>
 <item name="serpentine sword" onetimeOnly="true"></item>
+<item name="sewage-clogged pistol" onetimeOnly="true"></item>
 <item name="shadowy cat claw" onetimeOnly="false"></item>
 <item name="shadowy seal eye" onetimeOnly="true"></item>
 <item name="shaker of dry rub" onetimeOnly="false"></item>
@@ -489,6 +527,7 @@
 <item name="soft green echo eyedrop antidote" onetimeOnly="false"></item>
 <item name="solid gold rosary" onetimeOnly="false"></item>
 <item name="sonar-in-a-biscuit" onetimeOnly="false"></item>
+<item name="sphygmayomanometer" onetimeOnly="false"></item>
 <item name="spices" onetimeOnly="false"></item>
 <item name="spooky sapling" onetimeOnly="true"></item>
 <item name="spooky temple map" onetimeOnly="true"></item>
@@ -536,6 +575,7 @@
 <item name="tissue paper immateria" onetimeOnly="true"></item>
 <item name="titanium assault umbrella" onetimeOnly="true"></item>
 <item name="toasted brie" onetimeOnly="false"></item>
+<item name="tomayohawk-style reflex hammer" onetimeOnly="false"></item>
 <item name="tomb ratchet" onetimeOnly="false"></item>
 <item name="too legit potion" onetimeOnly="false"></item>
 <item name="topiary nuggets" onetimeOnly="false"></item>
@@ -550,6 +590,7 @@
 <item name="unfinished ice sculpture" onetimeOnly="false"></item>
 <item name="unnamed cocktail" onetimeOnly="false"></item>
 <item name="ur-donut" onetimeOnly="false"></item>
+<item name="valuable coin" onetimeOnly="false"></item>
 <item name="vertebra of the bonerdagon" onetimeOnly="false"></item>
 <item name="vicar's tutu" onetimeOnly="false"></item>
 <item name="victor, the insult comic hellhound puppet" onetimeOnly="true"></item>
@@ -557,6 +598,7 @@
 <item name="wet stew" onetimeOnly="true"></item>
 <item name="wet stunt nut stew" onetimeOnly="true"></item>
 <item name="white candy heart" onetimeOnly="false"></item>
+<item name="white mana" onetimeOnly="false"></item>
 <item name="whole turkey leg" onetimeOnly="false"></item>
 <item name="whoompa fur pants" onetimeOnly="false"></item>
 <item name="wine bomb" onetimeOnly="true"></item>
@@ -570,6 +612,7 @@
 <item name="worthless gewgaw" onetimeOnly="false"></item>
 <item name="worthless knick-knack" onetimeOnly="false"></item>
 <item name="worthless trinket" onetimeOnly="false"></item>
+<item name="wrench" onetimeOnly="false"></item>
 <item name="xiblaxian 5d printer" onetimeOnly="true"></item>
 <item name="xiblaxian alloy" onetimeOnly="false"></item>
 <item name="xiblaxian circuitry" onetimeOnly="false"></item>
@@ -583,4 +626,5 @@
 <item name="xiblaxian ultraburrito" onetimeOnly="false"></item>
 <item name="xiblaxian xeno-detection goggles" onetimeOnly="true"></item>
 <item name="yellow candy heart" onetimeOnly="false"></item>
+<item name="yellow pixel" onetimeOnly="false"></item>
 </itemdropsData>
