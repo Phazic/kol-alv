@@ -70,7 +70,7 @@ public final class MafiaLogParser implements LogParser {
 
     private static final String WINS_THE_FIGHT = "wins the fight!";
 
-    private static final String NAUGHTY_SORCERESS_3RD_FORM = "The Naughty Sorceress (3)";
+    private static final String NAUGHTY_SORCERESS_3RD_FORM = "Naughty Sorceress (3)";
 
     private static final String RAIN_KING = "The Rain King";
 
@@ -103,7 +103,7 @@ public final class MafiaLogParser implements LogParser {
     private final AscensionDataBlockParser ascensionDataParser = new AscensionDataBlockParser();
 
     private final HybridDataBlockParser hybridDataParser = new HybridDataBlockParser();
-    
+
     private final List<LineParser> lineParsers = Lists.newArrayList();
 
     /**
@@ -174,10 +174,16 @@ public final class MafiaLogParser implements LogParser {
                 				nsFightWon = true;
                 		}
                 	}
+                } else if (block.getBlockType() == LogBlockType.OTHER_BLOCK) {
+                    if (block.getBlockLines().size() == 1 &&
+                            block.getBlockLines().get(1).contains(
+                                    "Tower: Freeing King Ralph")) {
+                        nsFightWon = true;
+                    }
                 }
-                
+
             }
-            
+
             // Now, we do the actual parsing.
             switch (block.getBlockType()) {
             case ENCOUNTER_BLOCK:
@@ -207,9 +213,9 @@ public final class MafiaLogParser implements LogParser {
         }
 
         reader.close();
-        
+
         logData.handleParseFinished();
-        
+
         // Before creating the summary data, we first need to add MP
         // regeneration from equipment where applicable.
         for (final SingleTurn st : getLogData().getTurnsSpent())
