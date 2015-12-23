@@ -393,6 +393,7 @@
 <item name="midriff scrubs" onetimeOnly="true"></item>
 <item name="miner's helmet" onetimeOnly="true"></item>
 <item name="miner's pants" onetimeOnly="true"></item>
+<item name="miniature power pill" onetimeOnly="false"></item>
 <item name="miracle whip" onetimeOnly="true"></item>
 <item name="miserable pie" onetimeOnly="false"></item>
 <item name="mixed wildflower greens" onetimeOnly="false"></item>
@@ -438,6 +439,11 @@
 <item name="pick-o-matic lockpicks" onetimeOnly="true"></item>
 <item name="pine-fresh air freshener" onetimeOnly="true"></item>
 <item name="pink candy heart" onetimeOnly="false"></item>
+<item name="pixel banana" onetimeOnly="false"></item>
+<item name="pixel beer" onetimeOnly="false"></item>
+<item name="pixel daiquiri" onetimeOnly="false"></item>
+<item name="pixel lemon" onetimeOnly="false"></item>
+<item name="pixel star" onetimeOnly="false"></item>
 <item name="plastic nunchaku" onetimeOnly="false"></item>
 <item name="plastic wrap immateria" onetimeOnly="true"></item>
 <item name="plus sign" onetimeOnly="true"></item>
@@ -627,4 +633,58 @@
 <item name="xiblaxian xeno-detection goggles" onetimeOnly="true"></item>
 <item name="yellow candy heart" onetimeOnly="false"></item>
 <item name="yellow pixel" onetimeOnly="false"></item>
+<item name="yellow submarine" onetimeOnly="true"></item>
+<item name="volcoino" onetimeOnly="false"></item>
+<item name="basaltmander tongue" onetimeOnly="false"></item>
+<item name="basaltmander buckler" onetimeOnly="true"></item>
+<item name="smelted roe" onetimeOnly="false"></item>
+<item name="lavalarva" onetimeOnly="true"></item>
+<item name="lava water" onetimeOnly="false"></item>
+<item name="lava balaclava" onetimeOnly="true"></item>
+<item name="lavalos's shell" onetimeOnly="true"></item>
+<item name="superduperheated metal" onetimeOnly="false"></item>
+<item name="smooch soda" onetimeOnly="false"></item>
+<item name="demon makeup kit" onetimeOnly="false"></item>
+<item name="love" onetimeOnly="false"></item>
+<item name="pener's drumstick" onetimeOnly="false"></item>
+<item name="smooch coffee cup" onetimeOnly="false"></item>
+<item name="glowing new age crystal" onetimeOnly="false"></item>
+<item name="glowing new age crystal" onetimeOnly="false"></item>
+<item name="new age healing crystal" onetimeOnly="false"></item>
+<item name="fireproof megaphone" onetimeOnly="false"></item>
+<item name="high-temperature mining mask" onetimeOnly="false"></item>
+<item name="new age healing crystal" onetimeOnly="false"></item>
+<item name="labrador cookie" onetimeOnly="false"></item>
+<item name="asbestos thermos" onetimeOnly="false"></item>
+<item name="heat-resistant necktie" onetimeOnly="false"></item>
+<item name="heat-resistant gloves" onetimeOnly="false"></item>
+<item name="lava-proof pants" onetimeOnly="false"></item>
+<item name="Mr. Cheeng's spectacles" onetimeOnly="true"></item>
+<item name="barrel lid" onetimeOnly="true"></item>
+<item name="barrel earring" onetimeOnly="true"></item>
+<item name="bankruptcy barrel" onetimeOnly="true"></item>
+<item name="cherry" onetimeOnly="false"></item>
+<item name="lemon" onetimeOnly="false"></item>
+<item name="grapefruit" onetimeOnly="false"></item>
+<item name="bottle of Amontillado" onetimeOnly="false"></item>
+<item name="barrel-aged martini" onetimeOnly="false"></item>
+<item name="barrel gun" onetimeOnly="false"></item>
+<item name="barrel cracker" onetimeOnly="false"></item>
+<item name="barrel pickle" onetimeOnly="false"></item>
+<item name="tiny barrel" onetimeOnly="false"></item>
+<item name="cute mushroom" onetimeOnly="false"></item>
+<item name="vibrating mushroom" onetimeOnly="false"></item>
+<item name="barrel beryl" onetimeOnly="false"></item>
+<item name="water log" onetimeOnly="false"></item>
+<item name="liquid rhinestones" onetimeOnly="false"></item>
+<item name="disco biscuit" onetimeOnly="false"></item>
+<item name="quaatorade&trade;" onetimeOnly="false"></item>
+<item name="ghost dog chow" onetimeOnly="false"></item>
+<item name="tennis ball" onetimeOnly="false"></item>
+<item name="bowl of eyeballs" onetimeOnly="false"></item>
+<item name="bowl of mummy guts" onetimeOnly="false"></item>
+<item name="bowl of maggots" onetimeOnly="false"></item>
+<item name="blood and blood" onetimeOnly="false"></item>
+<item name="jack-o-lantern beer" onetimeOnly="false"></item>
+<item name="zombie" onetimeOnly="false"></item>
 </itemdropsData>
