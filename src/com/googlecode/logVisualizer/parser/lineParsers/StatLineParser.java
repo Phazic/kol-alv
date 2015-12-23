@@ -44,8 +44,8 @@ import com.googlecode.logVisualizer.parser.UsefulPatterns;
 public final class StatLineParser extends AbstractLineParser {
     private static final String LOSE_STRING = "You lose";
 
-    // String lenght of "You gain " or "You lose " is 9.
-    private static final int GAIN_LOSE_START_STRING_LENGHT = 9;
+    // String length of "You gain " or "You lose " is 9.
+    private static final int GAIN_LOSE_START_STRING_LENGTH = 9;
 
     private final Matcher gainLoseMatcher = UsefulPatterns.GAIN_LOSE.matcher(UsefulPatterns.EMPTY_STRING);
 
@@ -55,7 +55,14 @@ public final class StatLineParser extends AbstractLineParser {
     @Override
     protected void doParsing(
                              final String line, final LogDataHolder logData) {
-        final String informationPart = line.substring(GAIN_LOSE_START_STRING_LENGHT);
+
+        int substrLength = GAIN_LOSE_START_STRING_LENGTH;
+
+        if (line.startsWith(UsefulPatterns.AFTER_BATTLE_STRING)) {
+            substrLength += UsefulPatterns.AFTER_BATTLE_STRING.length();
+        }
+
+        final String informationPart = line.substring(substrLength);
         final int whiteSpaceIndex = informationPart.indexOf(UsefulPatterns.WHITE_SPACE);
 
         final String substatName = informationPart.substring(whiteSpaceIndex + 1,

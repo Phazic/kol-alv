@@ -160,13 +160,15 @@ public final class UsefulPatterns {
 
     public static final Pattern GAIN_LOSE_CAPTURE_PATTERN = Pattern.compile("^You (?:gain|lose) (\\d*,?\\d+) ([\\w\\s]+)");
 
-    public static final Pattern GAIN_LOSE = Pattern.compile("^You (?:gain|lose) \\d*,?\\d+ [\\w\\s]+");
+    public static final Pattern GAIN_LOSE = Pattern.compile("^(?:After Battle: )?You (?:gain|lose) \\d*,?\\d+ [\\w\\s]+");
 
     public static final Pattern USUAL_FORMAT_LOG_NAME = Pattern.compile(".+\\-\\d{8}$");
 
     public static final String COMBAT_ROUND_LINE_BEGINNING_STRING = "Round ";
 
     public static final String ACQUIRE_EFFECT_STRING = "You acquire an effect:";
+
+    public static final String AFTER_BATTLE_STRING = "After Battle: ";
 
     public static final String COMMA = ",";
 
