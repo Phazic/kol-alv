@@ -26,8 +26,6 @@ package com.googlecode.logVisualizer.parser.mafiaLogBlockParsers;
 
 import java.util.List;
 
-import sun.awt.windows.awtLocalization_zh_TW;
-
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.LogDataHolder.AscensionPath;
 import com.googlecode.logVisualizer.logData.LogDataHolder.CharacterClass;
