@@ -43,7 +43,8 @@ import com.googlecode.logVisualizer.logData.turn.TurnInterval;
 import com.googlecode.logVisualizer.logData.turn.turnAction.*;
 import com.googlecode.logVisualizer.util.DataNumberPair;
 import com.googlecode.logVisualizer.util.dataTables.DataTablesHandler;
-import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
+
+import javanet.staxutils.IndentingXMLStreamWriter;
 
 /**
  * This class gives access to methods to create XML data files from detailed log
@@ -83,10 +84,8 @@ public final class XMLLogCreator {
 
         OutputStreamWriter out;
         try {
-            out = new OutputStreamWriter(new FileOutputStream(new File(saveDst,
-                                                                       logData.getLogName()
-                                                                               + ".xml")),
-                                         Charset.forName("UTF-8"));
+        	out = new OutputStreamWriter(new FileOutputStream(new File(saveDst, logData.getLogName() + ".xml")),
+        			                                          Charset.forName("UTF-8"));
         } catch (final FileNotFoundException e) {
             e.printStackTrace();
             throw new FileAccessException("File stream could not be created.");
