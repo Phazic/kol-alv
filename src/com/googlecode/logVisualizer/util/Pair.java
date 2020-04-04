@@ -36,10 +36,13 @@ public final class Pair<T, U> {
     /**
      * Creates a pair of the two given objects.
      * 
+     * @param <T> The type of the first element of the pair
+     * @param <U> The type of the second element of the pair
      * @param var1
      *            The first value to set.
      * @param var2
      *            The second value to set.
+     * @return The newly created pair
      * @throws NullPointerException
      *             if var1 is {@code null}; if var2 is {@code null}
      */

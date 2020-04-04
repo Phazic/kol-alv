@@ -42,7 +42,7 @@ public class CancelableProgessAdapter implements InfiniteProgressAdapter {
      * Must be called with a non-null before any of the adaptee's calls to
      * animationStarting, etc. are called.
      * 
-     * @param progressPanel
+     * @param progressPanel Progress panel for the Adapter to use
      */
     public void setAdaptee(
                            final CancelableAdaptee progressPanel) {
@@ -84,6 +84,7 @@ public class CancelableProgessAdapter implements InfiniteProgressAdapter {
      * <li>Set the cursor on their button, else the busy cursor will not
      * indicate to the user that the button is clickable.
      * </ul>
+     * @return Cancel button
      */
     protected JButton createCancelButton() {
         if (progressPanel instanceof JComponent) {

@@ -57,7 +57,7 @@ public final class CombatItem extends AbstractCountable<CombatItem> {
      *            The name of this item to set.
      * @param amount
      *            The amount of this item to set.
-     * @param foundOnTurn
+     * @param turnNumberUsed
      *            The turn on which this item was found to set.
      * @throws IllegalArgumentException
      *             if amount is below 1; if foundOnTurn is below 0
@@ -68,7 +68,7 @@ public final class CombatItem extends AbstractCountable<CombatItem> {
     }
 
     /**
-     * @param foundOnTurn
+     * @param turnNumberUsed
      *            The turn on which this item was found to set.
      * @throws IllegalArgumentException
      *             if foundOnTurn is below 0

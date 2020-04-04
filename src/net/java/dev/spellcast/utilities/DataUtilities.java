@@ -91,6 +91,7 @@ public final class DataUtilities {
      * 
      * @param file
      *            the file to be retrieved
+     * @return Buffered reader for the file's contents
      */
     public static BufferedReader getReader(
                                            final File file) {
@@ -109,6 +110,7 @@ public final class DataUtilities {
      *            the subdirectory of the file
      * @param filename
      *            the name of the file to be retrieved
+     * @return Buffered reader for the given file in the given directory
      */
     public static BufferedReader getReader(
                                            final String directory, final String filename) {
@@ -190,6 +192,8 @@ public final class DataUtilities {
      *            the subtree in which the file can be found
      * @param filename
      *            the name of the file to be retrieved
+     * @return Input stream of the contents of the given file in the 
+     *      given directory
      */
     public static InputStream getInputStream(
                                              final String directory, final String filename) {

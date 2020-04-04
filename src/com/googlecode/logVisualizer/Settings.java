@@ -38,10 +38,10 @@ import net.java.dev.spellcast.utilities.UtilityConstants;
 /**
  * This class handles access to general settings and preferences of the
  * Ascension Log Visualizer.
- * <p>
+ * 
  * Here is a list of all setting keys (note that the values of these do not
  * necessarily have to be valid):
- * <p>
+ * <ul>
  * <li>{@code "Version"}: The version string of the Ascension Log Visualizer.</li>
  * <li>{@code "Check Updates"}: TRUE if a check for new versions is done at
  * program startup, otherwise FALSE.</li>
@@ -49,7 +49,7 @@ import net.java.dev.spellcast.utilities.UtilityConstants;
  * file format.</li>
  * <li>{@code "cached XML format version"}: The version string of the Ascension
  * Log XML file format currently used by cached ascensions.</li>
- * <li>{@code "LookAndFeel"}: Preferred look&feel to use by the program.</li>
+ * <li>{@code "LookAndFeel"}: Preferred look and feel to use by the program.</li>
  * <li>{@code "Mafia logs location"}: File path to the directory that holds
  * mafia logs.</li>
  * <li>{@code "Parsed logs saving location"}: File path to the directory in
@@ -69,7 +69,7 @@ import net.java.dev.spellcast.utilities.UtilityConstants;
  * characters are to be at all included in parsed logs, otherwise FALSE.</li>
  * <li>{@code "First program startup"}: TRUE if this is the very first startup
  * of the ALV on this machine, even spanning different versions, otherwise
- * FALSE.</li>
+ * FALSE.</li></ul>
  */
 public final class Settings {
     private static final String TRUE_STRING = "TRUE";

@@ -74,7 +74,7 @@ public final class MeatGain {
     }
 
     /**
-     * @param meatGain
+     * @param otherMeatGain
      *            The other meat gain to set.
      * @return A new MeatGain object with the new value for other meat gained.
      */

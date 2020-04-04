@@ -48,8 +48,6 @@ public final class LicenseViewer extends JDialog {
     /**
      * @param owner
      *            The JFrame which owns this dialog.
-     * @param licenses
-     *            The licenses meant to be displayed.
      */
     public LicenseViewer(
                          final JFrame owner) {

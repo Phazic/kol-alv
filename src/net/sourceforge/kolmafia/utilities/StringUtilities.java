@@ -116,7 +116,8 @@ public class StringUtilities
     }
 
     /**
-     * Returns the encoded-encoded version of the provided UTF-8 string.
+     * @param utf8String UTF-8 string to encode
+     * @return the encoded-encoded version of the provided UTF-8 string.
      */
 
     public static final String getEntityEncode( final String utf8String )
@@ -167,9 +168,9 @@ public class StringUtilities
     }
 
     /**
-     * Returns the UTF-8 version of the provided character entity string.
+     * @param entityString The string to decode to UTF-8
+     * @return the UTF-8 version of the provided character entity string.
      */
-
     public static final String getEntityDecode( final String entityString )
     {
         return StringUtilities.getEntityDecode( entityString, true );
@@ -207,9 +208,9 @@ public class StringUtilities
     }
 
     /**
-     * Returns the URL-encoded version of the provided URL string.
+     * @param url URL to encode
+     * @return the URL-encoded version of the provided URL string.
      */
-
     public static final String getURLEncode( final String url )
     {
         if ( url == null )
@@ -237,9 +238,9 @@ public class StringUtilities
     }
 
     /**
-     * Returns the URL-decoded version of the provided URL string.
+     * @param url URL to decode
+     * @return the URL-decoded version of the provided URL string.
      */
-
     public static final String getURLDecode( final String url )
     {
         if ( url == null )
@@ -267,9 +268,9 @@ public class StringUtilities
     }
 
     /**
-     * Returns the display name for the provided canonical name.
+     * @param name Canonical name for a display
+     * @return the display name for the provided canonical name.
      */
-
     public static final String getDisplayName( String name )
     {
         if ( name == null )
@@ -293,9 +294,9 @@ public class StringUtilities
     }
 
     /**
-     * Returns the canonicalized name for the provided display name.
+     * @param name Display name for which to get a canonical name
+     * @return the canonicalized name for the provided display name.
      */
-
     public static final String getCanonicalName( String name )
     {
         if ( name == null )
@@ -322,12 +323,11 @@ public class StringUtilities
     }
 
     /**
-     * Returns a list of all elements which contain the given substring in their name.
      *
-     * @param nameMap The map in which to search for the string
-     * @param substring The substring for which to search
+     * @param names Array of names in which to search for the string
+     * @param searchString The string for which to search
+     * @return a list of all elements which contain the given substring in their name
      */
-
     public static final List<String> getMatchingNames( final String[] names, String searchString )
     {
         if ( searchString == null )

@@ -38,7 +38,7 @@ import org.jfree.ui.RefineryUtilities;
 import com.googlecode.logVisualizer.Settings;
 
 /**
- * An options dialog to change the used Look&Feel of the Ascension Log
+ * An options dialog to change the used Look&amp;Feel of the Ascension Log
  * Visualizer.
  */
 final class LafChangerDialog extends JDialog {

@@ -453,6 +453,7 @@ public abstract class Consumable extends AbstractCountable<Consumable> {
         }
 
         /**
+         * @param consumableVersionName Name of consumable version
          * @return The enum whose toString method returns a string which is
          *         equal to the given string. If no match is found this method
          *         will return {@code OTHER}.

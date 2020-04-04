@@ -42,6 +42,7 @@ public enum TurnVersion {
     }
 
     /**
+     * @param turnVersionName Name a a turn version to translate
      * @return The enum whose toString method returns a string which is equal to
      *         the given string. If no match is found this method will return
      *         {@code NOT_DEFINED}.

@@ -744,6 +744,7 @@ public final class LogDataHolder {
      * <p>
      * Note that the given collection does not need to be sorted, nor is it
      * needed to remove redundant familiar change entries.
+     * @param familiarChanges Familiar change collection
      */
     public void setFamiliarChanges(
             final Collection<FamiliarChange> familiarChanges) {
@@ -898,6 +899,7 @@ public final class LogDataHolder {
     }
 
     /**
+     * @param dc Day in run
      * @return The header/footer comment of the given day.
      */
     public HeaderFooterComment getHeaderFooterComment(
@@ -1079,9 +1081,11 @@ public final class LogDataHolder {
 
     /**
      * Sets the equipment changes of this ascension log.
-     * <p>
+     * 
      * Note that the given collection does not need to be sorted, nor is it
      * needed to remove redundant equipment change entries.
+     * 
+     * @param equipmentChanges Collection of equipment changes
      */
     public void setEquipmentChanges(
             final Collection<EquipmentChange> equipmentChanges) {
@@ -1293,7 +1297,7 @@ public final class LogDataHolder {
      * Adds a hybridation element to the current log, it should either be a
      * make - Makes a Gene tonic
      * hybridizing - Gives intrinsic 1/day
-     * @param hybridData should be in the form <turnNumber>, <stringDescription>
+     * @param hybridData should be in the form {turnNumber}, {stringDescription}
      */
     public void addHybridContent( final DataNumberPair<String> hybridData) {
         if (hybridData == null || hybridData.getData() == null || hybridData.getNumber() == null)
@@ -1521,7 +1525,7 @@ public final class LogDataHolder {
     /**
      * This method will set the ascension path of this ascension log.
      *
-     * @param gameMode
+     * @param ascensionPath
      *            The ascension path to set.
      */
     public void setAscensionPath(
@@ -1609,6 +1613,7 @@ public final class LogDataHolder {
         }
 
         /**
+         * @param className The name of the adventurer's class
          * @return The enum whose toString method returns a string which is
          *         equal to the given string. If no match is found this method
          *         will return {@code NOT_DEFINED}.
@@ -1657,6 +1662,7 @@ public final class LogDataHolder {
         }
 
         /**
+         * @param className The name of the adventurer's class
          * @return The enum whose toString method returns a string which is
          *         equal to the given string. If no match is found this method
          *         will return {@code NOT_DEFINED}.
@@ -1720,6 +1726,7 @@ public final class LogDataHolder {
         }
 
         /**
+         * @param className The name of the adventurer's class
          * @return The enum whose toString method returns a string which is
          *         equal to the given string. If no match is found this method
          *         will return {@code NOT_DEFINED}.

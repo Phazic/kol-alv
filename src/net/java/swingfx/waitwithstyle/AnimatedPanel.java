@@ -131,7 +131,7 @@ public class AnimatedPanel extends JPanel {
     }
 
     /**
-     * Returns the current message.
+     * @return the current message.
      */
     public String getText() {
         return message;

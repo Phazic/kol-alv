@@ -175,8 +175,8 @@ public final class CountableSet<T extends Countable<T>> {
      * <p>
      * This check has a runtime behaviour of O(n).
      * 
-     * @param name
-     * @return
+     * @param name Name to look for in the collection
+     * @return True if and only if the name was found
      */
     public boolean containsByName(
                                   final String name) {

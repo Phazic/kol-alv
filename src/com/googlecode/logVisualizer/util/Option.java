@@ -56,6 +56,7 @@ public class Option<E> {
     /**
      * Creates an Option instance containing the given data.
      * 
+     * @param <T> The type of element for which to make an Option
      * @param element
      *            The data contained inside the Option.
      * @throws IllegalArgumentException
@@ -73,6 +74,7 @@ public class Option<E> {
     /**
      * Returns the {@link Option#NONE} object in a more type-safe way.
      * 
+     * @param <T> The type of Option
      * @return An Option instance containing no data. Is equal with
      *         {@link Option#NONE}.
      */

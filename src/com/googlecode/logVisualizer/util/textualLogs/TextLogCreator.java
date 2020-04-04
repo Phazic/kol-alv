@@ -369,6 +369,7 @@ public final class TextLogCreator {
      *             if saveDest doesn't exist or is a directory; if the given log
      *             data is not a detailed LogDataHolder, see
      *             {@link LogDataHolder#isDetailedLog()}
+     * @throws java.io.IOException If an error occurs writing the file
      */
     public static void saveTextualLogToFile(
             final LogDataHolder logData, final File saveDest,
@@ -403,6 +404,7 @@ public final class TextLogCreator {
      *             if saveDest doesn't exist or is a directory; if the given log
      *             data is not a detailed LogDataHolder, see
      *             {@link LogDataHolder#isDetailedLog()}
+     * @throws java.io.IOException If an error occurs writing the file
      */
     public static void saveTextualLogToFile(
             final LogDataHolder logData,

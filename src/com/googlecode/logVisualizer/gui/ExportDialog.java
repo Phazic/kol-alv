@@ -56,10 +56,12 @@ public final class ExportDialog extends JDialog {
 
     /**
      * Creates and shows the export dialog in the centre of the screen.
-     * <p>
+     * 
      * Please note that this dialog is also modal on the given frame. If the
      * dialog should instead be modal over the whole application, you may use a
      * null reference instead.
+     * @param frame Frame
+     * @param logData Collection of log data
      */
     public static void showExportDialog(
                                         final JFrame frame, final LogDataHolder logData) {
@@ -73,6 +75,9 @@ public final class ExportDialog extends JDialog {
      * Please note that this dialog is also modal on the given frame. If the
      * dialog should instead be modal over the whole application, you may use a
      * null reference instead.
+     * @param frame Frame 
+     * @param logData Collection of log data
+     * @param logVersion Version of log data
      */
     public static void showExportDialog(
                                         final JFrame frame, final LogDataHolder logData,

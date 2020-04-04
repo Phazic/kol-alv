@@ -192,7 +192,7 @@ public final class UsefulPatterns {
 
     /**
      * Returns the creation date of the given mafia log file. Uses the method
-     * {@link #getMafiaLogDate(String)} to parse out the creation date.
+     * {@link #getMafiaLogCalendarDate(String)} to parse out the creation date.
      *
      * @param mafiaLog
      *            The file name of the mafia log of which the creation date
@@ -208,7 +208,7 @@ public final class UsefulPatterns {
 
     /**
      * Returns the creation date of the given mafia log file. Uses the method
-     * {@link #getMafiaLogDate(String)} to parse out the creation date.
+     * {@link #getMafiaLogCalendarDate(String)} to parse out the creation date.
      *
      * @param mafiaLogFileName
      *            The file name of the mafia log of which the creation date

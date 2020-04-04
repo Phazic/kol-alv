@@ -123,7 +123,7 @@ public final class DataCounter<E> {
     }
 
     /**
-     * Returns an unsorted list of {@link DataNumber} objects, which hold the
+     * Returns an unsorted list of {@link DataNumberPair} objects, which hold the
      * counted objects and how many times they appeared.
      * 
      * @return The list of objects and how many times they were counted.

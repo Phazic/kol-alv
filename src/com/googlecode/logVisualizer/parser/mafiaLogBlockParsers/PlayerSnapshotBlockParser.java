@@ -44,16 +44,14 @@ import com.googlecode.logVisualizer.util.Stack;
  * A parser for the player login snapshot data in mafia logs.
  * <p>
  * The snapshot start with this:
- * <p>
  *
  * <pre>
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  *                Player Snapshot
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  * </pre>
- * <p>
+ * 
  * And ends with this:
- * <p>
  *
  * <pre>
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

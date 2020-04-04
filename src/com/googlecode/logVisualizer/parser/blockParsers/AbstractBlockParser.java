@@ -101,6 +101,7 @@ public abstract class AbstractBlockParser implements BlockParser {
      * @param logData
      *            The log data instance in which the parsing results should be
      *            saved in.
+     * @throws java.io.IOException If an error occurs in reading
      */
     protected abstract void doParsing(
                                       BufferedReader reader, LogDataHolder logData)

@@ -345,7 +345,7 @@ public abstract class AbstractTurn implements Turn {
 
     /**
      * Flags a turn as being free or not
-     * @param isFreeTurn
+     * @param isFreeTurn Whether the turn should be marked free
      */
     public void setFreeTurn(boolean isFreeTurn) {
     	this.isFreeTurn = isFreeTurn;

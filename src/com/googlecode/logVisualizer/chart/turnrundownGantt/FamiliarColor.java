@@ -119,6 +119,7 @@ public final class FamiliarColor {
         }
 
         /**
+         * @param colorName The name of a color
          * @return The enum whose toString method returns a string which is
          *         equal to the given string. If no match is found this method
          *         will return <code>WHITE</code>.

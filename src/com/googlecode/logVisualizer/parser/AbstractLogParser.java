@@ -102,6 +102,7 @@ public abstract class AbstractLogParser implements LogParser {
      * 
      * @param reader
      *            The line to be parsed.
+     * @throws java.io.IOException If a read failure occurs
      */
     protected void parseBlock(
                               final BufferedReader reader)

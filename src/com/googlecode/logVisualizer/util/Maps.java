@@ -37,6 +37,8 @@ public final class Maps {
     private Maps() {}
 
     /**
+     * @param <K> Type of map key
+     * @param <V> Type of map value
      * @return A new {@link HashMap}.
      */
     public static <K, V> Map<K, V> newHashMap() {
@@ -44,6 +46,8 @@ public final class Maps {
     }
 
     /**
+     * @param <K> Type of map key
+     * @param <V> Type of map value
      * @param initialCapacity
      *            The initial capacity of the new {@link HashMap}.
      * @return A new {@link HashMap} with the given initial capacity.
@@ -54,6 +58,8 @@ public final class Maps {
     }
 
     /**
+     * @param <K> Type of map key
+     * @param <V> Type of map value
      * @param elements
      *            The key-value-pairs to be added to the new {@link HashMap}.
      * @return A new {@link HashMap} populated with the given key-value-pairs.
@@ -68,6 +74,8 @@ public final class Maps {
     }
 
     /**
+     * @param <K> Type of map key
+     * @param <V> Type of map value
      * @param elements
      *            The key-value-pairs to be added to the new {@link HashMap}.
      * @return A new {@link HashMap} populated with the given key-value-pairs.
@@ -82,6 +90,8 @@ public final class Maps {
     }
 
     /**
+     * @param <K> Type of map key
+     * @param <V> Type of map value
      * @param elements
      *            The key-value-pairs to be added to the new {@link HashMap}.
      * @return A new {@link HashMap} populated with the given key-value-pairs.
@@ -96,6 +106,8 @@ public final class Maps {
     }
 
     /**
+     * @param <K> Type of map key
+     * @param <V> Type of map value
      * @param elements
      *            The key-value-pairs to be added to the new immutable map.
      * @return A new immutable map populated with the given key-value-pairs.
@@ -106,6 +118,8 @@ public final class Maps {
     }
 
     /**
+     * @param <K> Type of map key
+     * @param <V> Type of map value
      * @param elements
      *            The key-value-pairs to be added to the new immutable map.
      * @return A new immutable map populated with the given key-value-pairs.
@@ -116,6 +130,8 @@ public final class Maps {
     }
 
     /**
+     * @param <K> Type of map key
+     * @param <V> Type of map value
      * @param elements
      *            The key-value-pairs to be added to the new immutable map.
      * @return A new immutable map populated with the given key-value-pairs.

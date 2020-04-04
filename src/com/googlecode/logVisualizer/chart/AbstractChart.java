@@ -70,6 +70,7 @@ public abstract class AbstractChart extends JPanel {
     /**
      * Empty method body. Override in implementing classes to add listeners of
      * your choice to the finished chart panel.
+     * @param cp Chart panel to which to add a listener
      */
     protected void addChartPanelListeners(
                                           final ChartPanel cp) {}

@@ -23,7 +23,7 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
  * closes the tab.
  * <p>
  * <b>Source</b>: <br>
- * <a href=http://forums.java.sun.com/thread.jspa?threadID=337070&start=15> Java
+ * <a href="http://forums.java.sun.com/thread.jspa?threadID=337070&start=15"> Java
  * Forums - JTabbedPane with close icons, Post #15 </a>
  */
 public class CloseableTabbedPane extends JTabbedPane implements MouseListener, MouseMotionListener {
@@ -271,8 +271,8 @@ public class CloseableTabbedPane extends JTabbedPane implements MouseListener, M
      * (regardless of whether the mouse position is within the bounds of the
      * component).
      * <p>
-     * Due to platform-dependent Drag&Drop implementations, {@code
-     * MOUSE_DRAGGED} events may not be delivered during a native Drag&Drop
+     * Due to platform-dependent Drag and Drop implementations, {@code
+     * MOUSE_DRAGGED} events may not be delivered during a native Drag and Drop
      * operation.
      * 
      * @param e
@@ -400,7 +400,7 @@ public class CloseableTabbedPane extends JTabbedPane implements MouseListener, M
     /**
      * Returns an array of all the {@code CloseableTabbedPaneListener}s added to
      * this {@code CloseableTabbedPane} with
-     * {@link #addCloseableTabbedPaneListener()}.
+     * {@link #addCloseableTabbedPaneListener(CloseableTabbedPaneListener)}.
      * 
      * @return all of the {@code CloseableTabbedPaneListener}s added or an empty
      *         array if no listeners have been added

@@ -54,10 +54,11 @@ import com.googlecode.logVisualizer.util.textualLogs.TextLogCreator;
  * interface to manage log notes.
  */
 public final class Notetaker extends JFrame {
-    /**
+    /**	
      * Will show a dialog to let the user choose which turncounts should be
      * included inside the Notetaker and then show the actual Notetaker
      * interface based on that decision.
+     * @param log Collection of log data
      */
     public static void showNotetaker(
                                      final LogDataHolder log) {

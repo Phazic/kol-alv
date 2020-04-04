@@ -68,6 +68,10 @@ public final class XMLLogCreator {
      *             if the given log is not a detailed log (see
      *             {@link LogDataHolder#isDetailedLog()}); if the given file
      *             isn't a directory
+     * @throws FileAccessException If the file cannot be accessed, such as by
+     *      permission violation
+     * @throws XMLAccessException If the XML file could not be written for
+     *      some reason
      */
     public static void createXMLLog(
                                     final LogDataHolder logData, final File saveDst)
