@@ -37,10 +37,12 @@ public final class DataNumberPair<T> implements Comparable<DataNumberPair<?>> {
     /**
      * Creates a data number pairing of a generic object and a number.
      * 
+     * @param <T> The type of data to associate with the number
      * @param data
      *            The data to set.
      * @param number
      *            The number to set.
+     * @return A pair made from the given arguments
      * @throws NullPointerException
      *             if data is {@code null}; if number is {@code null}
      */

@@ -40,7 +40,7 @@ public final class Goatlet {
     Goatlet() {}
 
     /**
-     * @param turnSpent
+     * @param turnsSpent
      *            The number of turns spent in the Goatlet to set.
      * @throws IllegalArgumentException
      *             if turnsSpent is below 0

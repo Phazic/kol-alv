@@ -36,6 +36,7 @@ public final class Sets {
     private Sets() {}
 
     /**
+     * @param <E> Type of element for the hash set
      * @return A new {@link HashSet}.
      */
     public static <E> Set<E> newHashSet() {
@@ -43,6 +44,7 @@ public final class Sets {
     }
 
     /**
+     * @param <E> Type of element for the hash set
      * @param initialCapacity
      *            The initial capacity of the new {@link HashSet}.
      * @return A new {@link HashSet} with the given initial capacity.
@@ -53,6 +55,7 @@ public final class Sets {
     }
 
     /**
+     * @param <E> Type of element for the hash set
      * @param elements
      *            The elements to be added to the new {@link HashSet}.
      * @return A new {@link HashSet} populated with the given elements.
@@ -63,6 +66,7 @@ public final class Sets {
     }
 
     /**
+     * @param <E> Type of element for the hash set
      * @param elements
      *            The elements to be added to the new {@link HashSet}.
      * @return A new {@link HashSet} populated with the given elements.
@@ -77,6 +81,7 @@ public final class Sets {
     }
 
     /**
+     * @param <E> Type of element for the hash set
      * @param elements
      *            The elements to be added to the new {@link HashSet}.
      * @return A new {@link HashSet} populated with the given elements.
@@ -91,6 +96,7 @@ public final class Sets {
     }
 
     /**
+     * @param <E> Type of element for the immutable set
      * @param elements
      *            The elements to be added to the new immutable set.
      * @return A new immutable set populated with the given elements.
@@ -101,6 +107,7 @@ public final class Sets {
     }
 
     /**
+     * @param <E> Type of element for the immutable set
      * @param elements
      *            The elements to be added to the new immutable set.
      * @return A new immutable set populated with the given elements.
@@ -111,6 +118,7 @@ public final class Sets {
     }
 
     /**
+     * @param <E> Type of element for the immutable set
      * @param elements
      *            The elements to be added to the new immutable set.
      * @return A new immutable set populated with the given elements.

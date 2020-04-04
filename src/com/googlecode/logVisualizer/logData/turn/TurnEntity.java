@@ -73,6 +73,7 @@ public interface TurnEntity {
     public Collection<Item> getDroppedItems();
 
     /**
+     * @param i Item to check for dropping
      * @return {@code true} if the given item has dropped on this turn,
      *         otherwise {@code false}. This check is solely based on
      *         {@link Item#getComparator()} and nothing else.
@@ -81,6 +82,7 @@ public interface TurnEntity {
                                  final Item i);
 
     /**
+     * @param i Name of item to check for dropping
      * @return {@code true} if an item with the given name has been dropped on
      *         this turn, otherwise {@code false}. This check is solely based on
      *         {@link Item#getName()} and nothing else.
@@ -94,6 +96,7 @@ public interface TurnEntity {
     public Collection<Skill> getSkillsCast();
     
     /**
+     * @param s Skill to check for having been cast
      * @return {@code true} if the given skill has been cast on this turn,
      *         otherwise {@code false}. This check is solely based on
      *         {@link Skill#getComparator()} and nothing else.
@@ -102,6 +105,7 @@ public interface TurnEntity {
                                final Skill s);
 
     /**
+     * @param s Skill to check for having been cast
      * @return {@code true} if a skill with the given name has been cast on this
      *         turn, otherwise {@code false}. This check is solely based on
      *         {@link Skill#getName()} and nothing else.
@@ -110,6 +114,7 @@ public interface TurnEntity {
                                final String s);
     
     /**
+     * @param i Combat item to check for having been used
      * @return {@code true} if the given combat item has been used on this turn,
      *         otherwise {@code false}. This check is solely based on
      *         {@link CombatItem#getComparator()} and nothing else.
@@ -117,6 +122,7 @@ public interface TurnEntity {
     public boolean isCombatItemUsed(final CombatItem i);
 
     /**
+     * @param s Name of combat item to check for having been used
      * @return {@code true} if a combat item with the given name has been used on this
      *         turn, otherwise {@code false}. This check is solely based on
      *         {@link Skill#getName()} and nothing else.
@@ -134,6 +140,7 @@ public interface TurnEntity {
     public Collection<Consumable> getConsumablesUsed();
 
     /**
+     * @param c Consumable to check for having been used
      * @return {@code true} if the given consumable has been used on this turn,
      *         otherwise {@code false}. This check is solely based on
      *         {@link Consumable#getComparator()} and nothing else.
@@ -142,6 +149,7 @@ public interface TurnEntity {
                                     final Consumable c);
 
     /**
+     * @param c Name of consumable to check for having been consumed
      * @return {@code true} if a consumable with the given name has been used on
      *         this turn, otherwise {@code false}. This check is solely based on
      *         {@link Consumable#getName()} and nothing else.

@@ -25,18 +25,21 @@ public interface CancelableAdaptee {
 
     /**
      * Sets the text in the animation
+     * @param text Text to put in the animation
      */
     public void setText(
                         String text);
 
     /**
-     * Gets the interface as a JComponent (usually returns "this")
+     * Gets the interface as a JComponent
+     * @return Usually 'this'
      */
     public JComponent getComponent();
 
     /**
      * Adds a listener to the cancel button. Usually delegated to the
      * CancelableProgressAdapter.
+     * @param listener Listener to attach to the Cancel button
      */
     public void addCancelListener(
                                   ActionListener listener);
@@ -44,6 +47,7 @@ public interface CancelableAdaptee {
     /**
      * Removes a listener from the cancel button. Usually delegated to the
      * CancelableProgressAdapter.
+     * @param listener Listener to remove from the Cancel button
      */
     public void removeCancelListener(
                                      ActionListener listener);

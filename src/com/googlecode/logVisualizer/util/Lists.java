@@ -33,6 +33,7 @@ public final class Lists {
     private Lists() {}
 
     /**
+     * @param <E> Type of list element
      * @return A new {@link ArrayList}.
      */
     public static <E> List<E> newArrayList() {
@@ -40,6 +41,7 @@ public final class Lists {
     }
 
     /**
+     * @param <E> Type of list element
      * @param initialCapacity
      *            The initial capacity of the new {@link ArrayList}.
      * @return A new {@link ArrayList} with the given initial capacity.
@@ -50,6 +52,7 @@ public final class Lists {
     }
 
     /**
+     * @param <E> Type of list element
      * @param elements
      *            The elements to be added to the new {@link ArrayList}.
      * @return A new {@link ArrayList} populated with the given elements.
@@ -60,6 +63,7 @@ public final class Lists {
     }
 
     /**
+     * @param <E> Type of list element
      * @param elements
      *            The elements to be added to the new {@link ArrayList}.
      * @return A new {@link ArrayList} populated with the given elements.
@@ -74,6 +78,7 @@ public final class Lists {
     }
 
     /**
+     * @param <E> Type of list element
      * @param elements
      *            The elements to be added to the new {@link ArrayList}.
      * @return A new {@link ArrayList} populated with the given elements.
@@ -88,6 +93,7 @@ public final class Lists {
     }
 
     /**
+     * @param <E> Type of list element
      * @param elements
      *            The elements to be added to the new immutable list.
      * @return A new immutable list populated with the given elements.
@@ -101,6 +107,7 @@ public final class Lists {
     }
 
     /**
+     * @param <E> Type of list element
      * @param elements
      *            The elements to be added to the new immutable list.
      * @return A new immutable list populated with the given elements.
@@ -111,6 +118,7 @@ public final class Lists {
     }
 
     /**
+     * @param <E> Type of list element
      * @param elements
      *            The elements to be added to the new immutable list.
      * @return A new immutable list populated with the given elements.
@@ -129,6 +137,8 @@ public final class Lists {
      * This method is a convenience method that simply calls
      * {@link Collections#reverse(List)} <i>and</i> returns the given list.
      * 
+     * @param <E> Type of list element
+     * @param list List to reverse
      * @return The given list after it was reversed.
      */
     public static <E> List<E> reverse(
@@ -140,10 +150,12 @@ public final class Lists {
     /**
      * Sorts the given list according to the natural ordering of its elements
      * and returns it.
-     * <p>
-     * This method is a convenience method that simply calls
+     * 
+     * <p>This method is a convenience method that simply calls
      * {@link Collections#sort(List)} <i>and</i> returns the given list.
      * 
+     * @param <E> Type of list element
+     * @param list List to sort
      * @return The given list after it was sorted.
      */
     public static <E extends Comparable<? super E>> List<E> sort(
@@ -159,6 +171,9 @@ public final class Lists {
      * {@link Collections#sort(List, Comparator)} <i>and</i> returns the given
      * list.
      * 
+     * @param <E> Type of list element
+     * @param list List to sort
+     * @param comparator Comparison function to apply pairwise to the list elements
      * @return The given list after it was sorted.
      */
     public static <E> List<E> sort(

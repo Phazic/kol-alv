@@ -53,7 +53,7 @@ abstract class DataPerLevelSummary<T> {
      * 
      * @param levelNumber
      *            The level number.
-     * @param meatData
+     * @param data
      *            The data to add to the given level.
      */
     public void addLevelData(

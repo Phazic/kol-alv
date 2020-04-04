@@ -136,7 +136,8 @@ public final class SingleElementList<E> implements List<E> {
     }
 
     /**
-     * @see List#toArray(T[])
+     * TODO: Fix reference below
+     * @see List#toArray()
      */
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(
@@ -182,7 +183,7 @@ public final class SingleElementList<E> implements List<E> {
     }
 
     /**
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException In all cases
      */
     public boolean add(
                        E e) {
@@ -190,7 +191,7 @@ public final class SingleElementList<E> implements List<E> {
     }
 
     /**
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException In all cases
      */
     public void add(
                     int index, E element) {
@@ -198,7 +199,7 @@ public final class SingleElementList<E> implements List<E> {
     }
 
     /**
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException In all cases
      */
     public boolean addAll(
                           Collection<? extends E> c) {
@@ -206,7 +207,7 @@ public final class SingleElementList<E> implements List<E> {
     }
 
     /**
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException In all cases
      */
     public boolean addAll(
                           int index, Collection<? extends E> c) {
@@ -214,7 +215,7 @@ public final class SingleElementList<E> implements List<E> {
     }
 
     /**
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException In all cases
      */
     public E set(
                  int index, E element) {
@@ -222,7 +223,7 @@ public final class SingleElementList<E> implements List<E> {
     }
 
     /**
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException In all cases
      */
     public boolean remove(
                           Object o) {
@@ -230,7 +231,7 @@ public final class SingleElementList<E> implements List<E> {
     }
 
     /**
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException In all cases
      */
     public E remove(
                     int index) {
@@ -238,7 +239,7 @@ public final class SingleElementList<E> implements List<E> {
     }
 
     /**
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException In all cases
      */
     public boolean removeAll(
                              Collection<?> c) {
@@ -246,7 +247,7 @@ public final class SingleElementList<E> implements List<E> {
     }
 
     /**
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException In all cases
      */
     public boolean retainAll(
                              Collection<?> c) {
@@ -254,7 +255,7 @@ public final class SingleElementList<E> implements List<E> {
     }
 
     /**
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException In all cases
      */
     public void clear() {
         throw new UnsupportedOperationException();

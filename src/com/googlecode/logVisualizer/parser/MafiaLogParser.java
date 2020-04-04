@@ -108,7 +108,9 @@ public final class MafiaLogParser implements LogParser {
 
     /**
      * @param log
-     *            The mafia ascension log which is intended to be parsed to set.
+     * 		The mafia ascension log which is intended to be parsed to set.
+     * @param isIncludeMafiaLogNotes
+     * 		Whether the file includes Mafia log nots that need to be parsed
      * @throws NullPointerException
      *             if log is {@code null}
      */

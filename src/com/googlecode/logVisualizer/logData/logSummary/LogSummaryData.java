@@ -654,7 +654,7 @@ public class LogSummaryData {
     }
 
     /**
-     * @param totalAmountSkillsCast
+     * @param totalAmountSkillCasts
      *            The total amount of skill casts to set.
      * @throws IllegalArgumentException
      *             if totalAmountSkillCasts is below 0
@@ -675,7 +675,7 @@ public class LogSummaryData {
     }
 
     /**
-     * @param totalAmountMP
+     * @param totalMPUsed
      *            The total amount of MP spent on skills to set.
      * @throws IllegalArgumentException
      *             if totalMPUsed is below 0
@@ -717,7 +717,7 @@ public class LogSummaryData {
     }
 
     /**
-     * @param totalMeatGain
+     * @param totalMeatSpent
      *            The total amount of meat spent to set.
      * @throws IllegalArgumentException
      *             if totalMeatGain is below 0

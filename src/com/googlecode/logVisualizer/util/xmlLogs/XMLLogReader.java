@@ -88,6 +88,8 @@ public final class XMLLogReader {
      * @return The resulting log data from the given ascension log XML file.
      * @throws IllegalArgumentException
      *             if the given file isn't an existing file
+     * @throws FileAccessException If the file stream could not be created
+     * @throws XMLAccessException If the XML file could not be read
      */
     public static LogDataHolder parseXMLLog(
             final File xmlLog)

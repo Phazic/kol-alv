@@ -99,7 +99,7 @@ public interface Turn extends TurnEntity {
     public void addCombatItemUsed(final CombatItem combatItem);
     
     /**
-     * @parmam collection of combat items to set
+     * @param combatItems collection of combat items to set
      */
     public void setCombatItemsUsed(final Collection<CombatItem> combatItems);
     

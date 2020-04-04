@@ -82,7 +82,7 @@ public abstract class AbstractCountable<T extends AbstractCountable<?>> implemen
      * this Countable together and then sets the new amount of this Countable by
      * calling {@link #setAmount(int)}.
      * 
-     * @param c
+     * @param t
      *            The Countable instance to be merged.
      * @throws NullPointerException
      *             if c is {@code null}

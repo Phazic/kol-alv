@@ -69,7 +69,7 @@ public interface Countable<T extends Countable<?>> extends Comparable<T> {
      * Note that the object returned by {@link #getComparator()} before a merge
      * must be equal to the object returned afterwards.
      * 
-     * @param c
+     * @param t
      *            The Countable instance to be merged.
      */
     public void merge(

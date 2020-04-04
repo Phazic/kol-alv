@@ -18,6 +18,8 @@ public final class FreeRunaways {
      * Creates a new FreeRunaways instance with the given number of runaways and
      * successful runaways.
      * 
+     * @param numberOfAttemptedRunaways Number of runaways
+     * @param numberOfSuccessfulRunaways Number of successful runaways
      * @throws IllegalArgumentException
      *             if either numberOfSuccessfulUsages or numberOfAttemptedUsages
      *             is below zero; if numberOfSuccessfulUsages is greater than

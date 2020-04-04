@@ -36,27 +36,27 @@ import javax.swing.event.AncestorListener;
 /**
  * A InfiniteProgressPanel-like component, but more efficient. This is the
  * preferred class to use unless you need the total control over the appearance
- * that InfiniteProgressPanel gives you.<br />
- * <br />
+ * that InfiniteProgressPanel gives you.<br>
+ * <br>
  * An infinite progress panel displays a rotating figure and a message to notice
  * the user of a long, duration unknown task. The shape and the text are drawn
  * upon a white veil which alpha level (or shield value) lets the underlying
  * component shine through. This panel is meant to be used as a <i>glass
- * pane</i> in the window performing the long operation. <br />
- * <br />
+ * pane</i> in the window performing the long operation. <br>
+ * <br>
  * Calling setVisible(true) makes the component visible and starts the
  * animation. Calling setVisible(false) halts the animation and makes the
  * component invisible. Once you've started the animation all the mouse events
  * are intercepted by this panel, preventing them from being forwared to the
- * underlying components. <br />
- * <br />
- * The panel can be controlled by the <code>setVisible()</code>, method. <br />
- * <br />
+ * underlying components. <br>
+ * <br>
+ * The panel can be controlled by the <code>setVisible()</code>, method. <br>
+ * <br>
  * This version of the infinite progress panel does not display any fade in/out
- * when the animation is started/stopped.<br />
- * <br />
- * Example: <br />
- * <br />
+ * when the animation is started/stopped.<br>
+ * <br>
+ * Example: <br>
+ * <br>
  * 
  * <pre>
  * PerformanceInfiniteProgressPanel pane = new PerformanceInfiniteProgressPanel();
@@ -68,8 +68,8 @@ import javax.swing.event.AncestorListener;
  * pane.setVisible(false);
  * </pre>
  * 
- * @see InfiniteProgressPanel <br />
- * <br />
+ * @see InfiniteProgressPanel <br>
+ * <br>
  *      $Revision: 1.5 $
  * @author Romain Guy
  * @author Henry Story
@@ -127,10 +127,7 @@ public class PerformanceInfiniteProgressPanel extends JComponent implements Acti
     private String text;
 
     /**
-     * @param i_bUseBackBuffer
-     *            When true a screen capture of the underlying window is taken.
-     *            Therefore no update in the background can be visible through
-     *            this glass pane. Increases performances.
+     * Defaults to using a back buffer.
      */
     public PerformanceInfiniteProgressPanel() {
         this(true);
@@ -439,7 +436,7 @@ public class PerformanceInfiniteProgressPanel extends JComponent implements Acti
      * @throws RuntimeException
      *             if the infiniteProgressAdapter is null or is not a
      *             CancelableProgessAdapter
-     * @param listener
+     * @param listener Listener to add to the Cancel button
      */
     public void addCancelListener(
                                   final ActionListener listener) {
@@ -456,7 +453,7 @@ public class PerformanceInfiniteProgressPanel extends JComponent implements Acti
      * @throws RuntimeException
      *             if the infiniteProgressAdapter is null or is not a
      *             CancelableProgessAdapter
-     * @param listener
+     * @param listener Listener to remove from the Cancel button
      */
     public void removeCancelListener(
                                      final ActionListener listener) {

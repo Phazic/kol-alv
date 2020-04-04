@@ -47,7 +47,6 @@ import javax.swing.JComponent;
  * and <code>interrupt()</code> methods.
  * <p>
  * Example:
- * <p>
  * 
  * <pre>
  * InfiniteProgressPanel pane = new InfiniteProgressPanel();
@@ -129,7 +128,7 @@ public class InfiniteProgressPanel extends JComponent implements MouseListener, 
     protected InfiniteProgressAdapter infiniteProgressAdapter = null;
 
     /**
-     * Creates a new progress panel with default values:<br />
+     * Creates a new progress panel with default values:<br>
      * <ul>
      * <li>No message</li>
      * <li>14 bars</li>
@@ -143,7 +142,7 @@ public class InfiniteProgressPanel extends JComponent implements MouseListener, 
     }
 
     /**
-     * Creates a new progress panel with default values:<br />
+     * Creates a new progress panel with default values:<br>
      * <ul>
      * <li>14 bars</li>
      * <li>Veil's alpha level is 70%</li>
@@ -160,7 +159,7 @@ public class InfiniteProgressPanel extends JComponent implements MouseListener, 
     }
 
     /**
-     * Creates a new progress panel with default values:<br />
+     * Creates a new progress panel with default values:<br>
      * <ul>
      * <li>Veil's alpha level is 70%</li>
      * <li>15 frames per second</li>
@@ -178,7 +177,7 @@ public class InfiniteProgressPanel extends JComponent implements MouseListener, 
     }
 
     /**
-     * Creates a new progress panel with default values:<br />
+     * Creates a new progress panel with default values:<br>
      * <ul>
      * <li>15 frames per second</li>
      * <li>Fade in/out last 300 ms</li>
@@ -198,7 +197,7 @@ public class InfiniteProgressPanel extends JComponent implements MouseListener, 
     }
 
     /**
-     * Creates a new progress panel with default values:<br />
+     * Creates a new progress panel with default values:<br>
      * <ul>
      * <li>Fade in/out last 300 ms</li>
      * </ul>
@@ -266,7 +265,7 @@ public class InfiniteProgressPanel extends JComponent implements MouseListener, 
     }
 
     /**
-     * Returns the current displayed message.
+     * @return the current displayed message.
      */
     public String getText() {
         return text;
@@ -288,7 +287,7 @@ public class InfiniteProgressPanel extends JComponent implements MouseListener, 
      * @throws RuntimeException
      *             if the infiniteProgressAdapter is null or is not a
      *             CancelableProgessAdapter
-     * @param listener
+     * @param listener Listener for the Cancel button
      */
     public void addCancelListener(
                                   final ActionListener listener) {
@@ -305,7 +304,7 @@ public class InfiniteProgressPanel extends JComponent implements MouseListener, 
      * @throws RuntimeException
      *             if the infiniteProgressAdapter is null or is not a
      *             CancelableProgessAdapter
-     * @param listener
+     * @param listener Listener to remove from the Cancel button
      */
     public void removeCancelListener(
                                      final ActionListener listener) {

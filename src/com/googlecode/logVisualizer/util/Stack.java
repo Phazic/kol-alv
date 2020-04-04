@@ -35,6 +35,7 @@ import java.util.List;
 public final class Stack<E> {
 
     /**
+     * @param <E> The type of element in the Stack
      * @return A new Stack.
      */
     public static <E> Stack<E> newStack() {

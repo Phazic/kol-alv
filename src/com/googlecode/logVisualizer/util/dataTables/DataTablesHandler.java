@@ -327,9 +327,19 @@ public enum DataTablesHandler {
     /**
      * Updates the data tables with the data from the given collections and sets
      * it as the current data set.
-     * <p>
-     * Please note that using {@code null} as a parameter will result in the
+     * 
+     * <p>Please note that using {@code null} as a parameter will result in the
      * given data table and linked collection to stay the way it is.
+     * 
+     * @param badmoonAdventuresSet Set of Bad Moon adventures
+     * @param semirareAdventuresSet Set of semi-rare adventures
+     * @param wanderingAdventuresSet Set of adventures with wandering monsters
+     * @param itemdropsMap Map of items and whether they drop more than once
+     * @param skillsMap Map of skills to numbers
+     * @param mpRegenEquipmentsMap Map of equipment to regen rates
+     * @param mpCostEquipmentsMap Map of MP equipment to cost
+     * @param statsEquipmentsMap Map of equipment to extra stats offered
+     * @param outfitsMap Map of outfit names to outfits
      */
     public synchronized void updateDataTables(
                                               final Set<String> badmoonAdventuresSet,
