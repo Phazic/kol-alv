@@ -1,0 +1,30 @@
+<project name="ALV" default="dist" basedir=".">
+   	
+    <target name="compile">
+        <javac includeantruntime="false"
+		       srcdir="src" destdir="bin"
+               classpath="jcommon-1.0.16.jar;stax-utils-20070216.jar;jfreechart-1.0.13.jar;stax-1.2.0.jar" />
+   	</target>
+    
+    <target name="dist" depends="compile">
+        <delete file="alv.jar"/>
+        <jar jarfile="alv.jar" basedir="bin" excludes="alv.jar">
+            <restrict>
+                <name regex=".*[.](class|properties)"/>
+                <archives>
+                    <zips>
+                        <fileset dir="." includes="*.jar"/>
+                    </zips>
+                </archives>
+            </restrict>
+            <manifest>
+                <attribute name="Main-Class"
+                    value="com.googlecode.logVisualizer.LogVisualizer" />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="doc">
+        <javadoc sourcepath="src" destdir="doc" />
+    </target>
+</project>
