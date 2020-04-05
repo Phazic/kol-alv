@@ -249,6 +249,8 @@ public final class LogsCreator {
                         System.err.println(f.getName());
                         e.printStackTrace();
                     }
+                    // TODO: Flesh out notification when parsing an ascension is complete
+                    System.out.println(parser.getLogData().getLogName());
                 }
             });
         }

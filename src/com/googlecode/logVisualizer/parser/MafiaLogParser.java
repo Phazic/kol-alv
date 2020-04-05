@@ -110,7 +110,7 @@ public final class MafiaLogParser implements LogParser {
      * @param log
      * 		The mafia ascension log which is intended to be parsed to set.
      * @param isIncludeMafiaLogNotes
-     * 		Whether the file includes Mafia log nots that need to be parsed
+     * 		Whether the file includes Mafia log notes that need to be parsed
      * @throws NullPointerException
      *             if log is {@code null}
      */
@@ -154,20 +154,21 @@ public final class MafiaLogParser implements LogParser {
             // Sorceress was beaten in it.
             if (!isOldAscensionCounting) {
                 if (block.getBlockType() == LogBlockType.ENCOUNTER_BLOCK) {
-                	// Get the encounter name instead of the location
-                	String tmp;
-                	if (block.getBlockLines().size() > 1)
-                		tmp = block.getBlockLines().get(1);
-                	else
-                		tmp = "";
+                	// Get the encounter name and the location
+                	List<String> lines = block.getBlockLines();
+                	String tmp = lines.size() > 1 ? lines.get(1) : "";
+                	String tmp0 = lines.size() > 0 ? lines.get(0) : "";
 
                 	// First check the encounter type to see if the location
                 	// is the Naughty Sorceress or one of the end bosses
                 	if (tmp.endsWith(NAUGHTY_SORCERESS_3RD_FORM))
                 		nsFightWon = isFightWon(block);
-                	if (tmp.endsWith(RAIN_KING))
+                	else if (tmp.endsWith(RAIN_KING))
                 		nsFightWon = isFightWon(block);
-                	if (tmp.endsWith(AVATAR_OF_JARLSBERG))
+                	else if (tmp.endsWith(AVATAR_OF_JARLSBERG))
+                		nsFightWon = isFightWon(block);
+                	// Path of the Plumber - final boss varies, but always the same place
+                	else if (tmp.contains("Encounter: Wa") && tmp0.contains(NAUGHTY_SORCERESS_FIGHT_STRING_2015))
                 		nsFightWon = isFightWon(block);
                 } else if (block.getBlockType() == LogBlockType.OTHER_BLOCK) {
                 	if (block.getBlockLines().size() > 2 && block.getBlockLines().get( 1 ).contains( "Encounter: Returning the MacGuffin" )) {
