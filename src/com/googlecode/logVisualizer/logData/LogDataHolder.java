@@ -1581,6 +1581,8 @@ public final class LogDataHolder {
         AVATAR_OF_JARLSBERG("Avatar of Jarlsberg", StatClass.MYSTICALITY),
         AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE),
         ED("Ed", StatClass.MYSTICALITY),
+        VAMPYRE("Vampyre", StatClass.MUSCLE),
+        PLUMBER("Plumber", StatClass.MOXIE),	// TODO: His level is whatever his highest stat is
         NOT_DEFINED("not defined", StatClass.MUSCLE);
 
         private static final Map<String, CharacterClass> stringToEnum = Maps.newHashMap();
@@ -1686,24 +1688,48 @@ public final class LogDataHolder {
         TEETOTALER("Teetotaler"),
         BOOZETAFARIAN("Boozetafarian"),
         OXYGENARIAN("Oxygenarian"),
+        // 2011
         BEES_HATE_YOU("Bees Hate You"),
         WAY_OF_THE_SURPRISING_FIST("Way of the Surprising Fist"),
         TRENDY("Trendy"),
+        // 2012
         AVATAR_OF_BORIS("Avatar of Boris"),
         BUGBEAR_INVASION("Bugbear Invasion"),
         ZOMBIE_SLAYER("Zombie Slayer"),
+        // 2013
         AVATAR_OF_JARLSBERG("Avatar of Jarlsberg"),
         BIG("BIG!"),
         KOLHS("KOLHS"),
         CLASS_ACT_II("Class Act II: A Class For Pigs"),
-        CLASS_ACT("Class Act"), // This needs to come after Class Act II as it's a substring
+        // 2014
+        CLASS_ACT("Class Act"), // This 2012 needs to come after Class Act II as it's a substring
         AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete"),
         SLOW_AND_STEADY("Slow and Steady"),
         HEAVY_RAINS("Heavy Rains"),
- PICKY("Picky"),
+        PICKY("Picky"),
+        // 2015
         STANDARD("Standard"),
         ED("Actually Ed the Undying"),
         OCRS("One Crazy Random Summer"),
+        COMMUNITY_SERVICE("Community Service"),
+        // 2016
+        AVATAR_OF_WOL("Avatar of West of Loathing"),
+        THE_SOURCE("The Source"),
+        NUCLEAR_AUTUMN("Nuclear Autumn"),
+        // 2017
+        GELATINOUS_NOOB("Gelatinous Noob"),
+        LICENSE_TO_ADVENTURE("License to Advenure"),
+        LIVE_ASCEND_REPEAT("Live. Ascend. Repeat."),
+        // 2018
+        POCKET_FAMILIARS("Pocket Familiars"),
+        G_LOVER("G-Lover"),
+        DISGUISES_DELIMIT("Disguises Delimit"),
+        // 2019
+        DARK_GYFFTE("Dark Gyffte"),
+        TWO_CRS("Two Crazy Random Summer"),
+        KINGDOM_OF_EXPLOATHING("Kingdom of Exploathing"),
+        // 2020
+        PLUMBER("Path of the Plumber"),
         NOT_DEFINED("not defined");
 
         private static final Map<String, AscensionPath> stringToEnum = Maps.newHashMap();
