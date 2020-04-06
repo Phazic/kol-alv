@@ -41,7 +41,23 @@ import com.googlecode.logVisualizer.util.Sets;
  * This class can read mafia session logs and return them to the caller in nice
  * and easier to handle chunks.
  */
-public final class MafiaSessionLogReader {
+public final class MafiaSessionLogReader 
+{
+    /**
+     * An enumeration of all the possible types that a {@link LogBlock} can
+     * have.
+     */
+    static enum LogBlockType {
+        ENCOUNTER_BLOCK, 
+        CONSUMABLE_BLOCK, 
+        PLAYER_SNAPSHOT_BLOCK, 
+        ASCENSION_DATA_BLOCK, 
+        HYBRID_DATA_BLOCK, 
+        SERVICE_BLOCK,
+        COMBING_BLOCK,
+        OTHER_BLOCK;
+    }
+
     public static final Set<String> BROKEN_AREAS_ENCOUNTER_SET = Sets.immutableSetOf("Encounter: Big Wisniewski",
             "Encounter: The Big Wisniewski",
             "Encounter: The Man",
@@ -72,6 +88,8 @@ public final class MafiaSessionLogReader {
     private static final String ASCENSION_DATA_START_STRING = "Ascension #";
 
     private static final String LEVEL_12_QUEST_BOSSFIGHT_BEGINNING_STRING = "bigisland.php?";
+    
+    private static final String SERVICE_BLOCK_PREFIX = "Took choice 1089";
 
     private final BufferedReader log;
 
@@ -79,7 +97,8 @@ public final class MafiaSessionLogReader {
 
     // The standard constructor should not be accessible.
     @SuppressWarnings("unused")
-    private MafiaSessionLogReader() {
+    private MafiaSessionLogReader() 
+    {
         log = null;
     }
 
@@ -89,9 +108,9 @@ public final class MafiaSessionLogReader {
      * @throws IOException
      *             if there were issues with accessing the log
      */
-    MafiaSessionLogReader(
-            final File log)
-                    throws IOException {
+    MafiaSessionLogReader(final File log)
+            throws IOException 
+    {
         if (!log.exists())
             throw new IllegalArgumentException("Log file must exist.");
         if (log.isDirectory())
@@ -120,7 +139,8 @@ public final class MafiaSessionLogReader {
      *             if there is no more block to parse in the session log
      */
     LogBlock next()
-            throws IOException {
+            throws IOException 
+    {
         final LogBlock block;
 
         log.mark(500);
@@ -133,7 +153,9 @@ public final class MafiaSessionLogReader {
         if (line2 == null)
             line2 = UsefulPatterns.EMPTY_STRING;
 
-        if (isEncounterBlockStart(line, line2))
+        if (isCombingBlockStart(line))
+            block = new LogBlockImpl(parseCombingBlock(), LogBlockType.COMBING_BLOCK);
+        else if (isEncounterBlockStart(line, line2))
             block = new LogBlockImpl(parseEncounterBlock(), LogBlockType.ENCOUNTER_BLOCK);
         else if (isConsumableBlockStart(line))
             block = new LogBlockImpl(parseNormalBlock(), LogBlockType.CONSUMABLE_BLOCK);
@@ -142,7 +164,9 @@ public final class MafiaSessionLogReader {
         else if (line.startsWith(ASCENSION_DATA_START_STRING))
             block = new LogBlockImpl(parseNormalBlock(), LogBlockType.ASCENSION_DATA_BLOCK);
         else if (HybridDataBlockParser.isHybridBlock(line))
-        	block = new LogBlockImpl(parseNormalBlock(), LogBlockType.HYBRID_DATA_BLOCK);
+            block = new LogBlockImpl(parseNormalBlock(), LogBlockType.HYBRID_DATA_BLOCK);
+        else if (line.startsWith(SERVICE_BLOCK_PREFIX))
+            block = new LogBlockImpl(parseServiceBlock(), LogBlockType.SERVICE_BLOCK);
         else
             block = new LogBlockImpl(parseNormalBlock(), LogBlockType.OTHER_BLOCK);
 
@@ -160,14 +184,30 @@ public final class MafiaSessionLogReader {
         return block;
     }
 
-    private boolean isLineOnBlackList(
-            final String line) {
+    private boolean isLineOnBlackList(final String line) 
+    {
         return line.startsWith("mall.php") || line.startsWith("manageprices.php")
                 || line.startsWith("familiarnames.php");
     }
 
-    private boolean isEncounterBlockStart(
-            String line, String line2) {
+    private boolean isCombingBlockStart(String line)
+    {
+        return line.contains("Combing") && line.contains("Beach Head");
+    }
+    
+    private List<String> parseCombingBlock()
+            throws IOException
+    {
+        List<String> result = Lists.newArrayList();
+        
+        result.add(log.readLine());
+        result.add(log.readLine());
+        
+        return result;
+    }
+    
+    private boolean isEncounterBlockStart(String line, String line2) 
+    {
         // Add support for Rain Man detection
 
         boolean isAdventure = (line.startsWith(UsefulPatterns.SQUARE_BRACKET_OPEN) &&
@@ -181,8 +221,8 @@ public final class MafiaSessionLogReader {
 
     }
 
-    private boolean isConsumableBlockStart(
-            String line) {
+    private boolean isConsumableBlockStart(String line) 
+    {
         boolean isConsumable = (line.startsWith(USE_STRING) || line.startsWith(EAT_STRING)
                 || line.startsWith(DRINK_STRING) || line.startsWith(BUY_STRING) 
                 || line.startsWith( SPLEEN_STRING ))   
@@ -192,8 +232,16 @@ public final class MafiaSessionLogReader {
 
     }
 
+    /**
+     * Parse an Encounter block.  This terminates with an empty line, but encounters
+     * often have extra empty lines which must be accounted for.
+     * 
+     * @return List of Strings comprising the Encounter block.
+     * @throws IOException If an error occurs while reading the log file
+     */
     private List<String> parseEncounterBlock()
-            throws IOException {
+            throws IOException 
+    {
         final List<String> result = Lists.newArrayList();
         String line;
 
@@ -246,45 +294,48 @@ public final class MafiaSessionLogReader {
                 //if we see
                 //choice.php?pwd&whichchoice=1024&option=2
                 //Then this means we had to go back to our tomb
-            	if (result.get( result.size() - 1 ).contains( "choice.php?" ) && result.get( result.size() -1  ).contains( "whichchoice=1023&option=1" )) {
+                if (result.get( result.size() - 1 ).contains( "choice.php?" ) 
+                        && result.get( result.size() -1  ).contains( "whichchoice=1023&option=1" )) {
                     final List<String> underworldBlock = Lists.newArrayList();
-                	boolean edIsDead = true;
-                	log.mark( 600 ); //Just incase something goes wrong
-                	
-                	String lookAhead;
+                    boolean edIsDead = true;
+                    log.mark( 600 ); //Just incase something goes wrong
+                    
+                    String lookAhead;
                     while (edIsDead && (lookAhead = log.readLine()) != null ) {
-                    	if (lookAhead.startsWith( UsefulPatterns.SQUARE_BRACKET_OPEN )) {
-                    		//Means a new turn happened and something went wrong with log
-                    		//just reset all the way back.
-                    		break;
-                    	} else if (lookAhead.contains( "choice.php" ) && lookAhead.contains( "whichchoice=1024&option=2" )) {
-                    		//Means we headed Home
-                    		line = lookAhead;
-                    		edIsDead = false;//Don't reset
-                    		break;
-                    	} else if (lookAhead.contains( "choice.php" ) && lookAhead.contains( "whichchoice=1024&option=1" )) {
-                    		edIsDead = false;//Don't reset
-                    		line = lookAhead;//This will naturally be added
-                    		break;
-                    	} else if (lookAhead.length() <= 0) {
-                    		continue;//blank lines are expected
-                    	} else {
-                    		underworldBlock.add( lookAhead );
-                    	}
+                        if (lookAhead.startsWith( UsefulPatterns.SQUARE_BRACKET_OPEN )) {
+                            //Means a new turn happened and something went wrong with log
+                            //just reset all the way back.
+                            break;
+                        } else if (lookAhead.contains( "choice.php" ) 
+                                    && lookAhead.contains( "whichchoice=1024&option=2" )) {
+                            //Means we headed Home
+                            line = lookAhead;
+                            edIsDead = false;//Don't reset
+                            break;
+                        } else if (lookAhead.contains( "choice.php" ) 
+                                    && lookAhead.contains( "whichchoice=1024&option=1" )) {
+                            edIsDead = false;//Don't reset
+                            line = lookAhead;//This will naturally be added
+                            break;
+                        } else if (lookAhead.length() <= 0) {
+                            continue;//blank lines are expected
+                        } else {
+                            underworldBlock.add( lookAhead );
+                        }
                     }
                     
                     if (edIsDead) {
-                    	//Means error occurred
-                		log.reset();
-                    	break;
+                        //Means error occurred
+                        log.reset();
+                        break;
                     }
                     
                     if (underworldBlock.size() > 0) {
-                    	for (String underworldLine : underworldBlock) 
-                    		result.add(underworldLine);
+                        for (String underworldLine : underworldBlock) 
+                            result.add(underworldLine);
                     }
                 } else {
-                	// Remember current position.
+                    // Remember current position.
                     log.mark(600);
 
                     // Look-ahead of three lines to try and see whether the combat
@@ -322,8 +373,15 @@ public final class MafiaSessionLogReader {
         return result;
     }
 
+    /**
+     * Parse a Snapshot block, which terminates with repeating '-=' strings.
+     * 
+     * @return List of Strings comprising the block
+     * @throws IOException If a problem occurs when reading the log file
+     */
     private List<String> parsePlayerSnapshotBlock()
-            throws IOException {
+            throws IOException 
+    {
         final List<String> result = Lists.newArrayList();
         String line;
 
@@ -341,13 +399,48 @@ public final class MafiaSessionLogReader {
         return result;
     }
 
+    /**
+     * Parse a Service block for Community Service.  Such blocks are always
+     * exactly 4 lines.
+     * 
+     * @return List of Strings comprising the block
+     * @throws IOException If a problem occurs in reading the log file
+     */
+    private List<String> parseServiceBlock() 
+            throws IOException
+    {
+        final List<String> result = Lists.newArrayList();
+        
+        for (int i=0; i<4; i++)
+            result.add(log.readLine());
+        return result;
+    }
+    
+    /**
+     * Parse a Normal block, which list consists of lines terminated by an empty line.
+     * Because of Community Service, Normal blocks are also terminated by the first line
+     * of a Service block, so we have to check for that.
+     * 
+     * @return List of Strings comprising the block
+     * @throws IOException
+     */
     private List<String> parseNormalBlock()
-            throws IOException {
+            throws IOException 
+    {
         final List<String> result = Lists.newArrayList();
         String line;
 
-        while ((line = log.readLine()) != null && line.length() > 0)
+        while (true) {
+            log.mark(500);
+            line = log.readLine();
+            if ((line == null) || (line.length() == 0))
+                break;
+            if (line.startsWith(SERVICE_BLOCK_PREFIX)) {
+                log.reset();
+                break;
+            }
             result.add(line);
+        }
 
         if (line == null)
             hasNext = false;
@@ -361,14 +454,16 @@ public final class MafiaSessionLogReader {
      *
      * @return True if there are still blocks left to parse in the session log.
      */
-    boolean hasNext() {
+    boolean hasNext() 
+    {
         return hasNext;
     }
 
     /**
      * Closes the {@link Reader} used to read the session log.
      */
-    void close() {
+    void close() 
+    {
         // Calling close() on a reader should not actually throw an exception,
         // so we'll just catch it in here.
         try {
@@ -379,31 +474,25 @@ public final class MafiaSessionLogReader {
     }
 
     /**
-     * An enumeration of all the possible types that a {@link LogBlock} can
-     * have.
-     */
-    static enum LogBlockType {
-        ENCOUNTER_BLOCK, CONSUMABLE_BLOCK, PLAYER_SNAPSHOT_BLOCK, ASCENSION_DATA_BLOCK, HYBRID_DATA_BLOCK, OTHER_BLOCK;
-    }
-
-    /**
      * Implementations of this interface are container classes to hold the block
      * of text that was parsed by a {@link MafiaSessionLogReader} and link it
      * with a certain version of {@link LogBlockType}.
      */
-    static interface LogBlock {
+    static interface LogBlock 
+    {
         List<String> getBlockLines();
 
         LogBlockType getBlockType();
     }
 
-    private static class LogBlockImpl implements LogBlock {
+    private static class LogBlockImpl implements LogBlock 
+    {
         private final List<String> blockLines;
 
         private final LogBlockType blockType;
 
-        LogBlockImpl(
-                final List<String> blockLines, final LogBlockType blockType) {
+        LogBlockImpl(final List<String> blockLines, final LogBlockType blockType) 
+        {
             if (blockLines == null)
                 throw new NullPointerException("The list of lines must not be null.");
             if (blockType == null)
@@ -413,11 +502,13 @@ public final class MafiaSessionLogReader {
             this.blockType = blockType;
         }
 
-        public List<String> getBlockLines() {
+        public List<String> getBlockLines() 
+        {
             return Collections.unmodifiableList(blockLines);
         }
 
-        public LogBlockType getBlockType() {
+        public LogBlockType getBlockType() 
+        {
             return blockType;
         }
     }

@@ -221,14 +221,15 @@ public final class EncounterBlockParser implements LogBlockParser {
             // Turn number
             // Special handling for crafting turns, because mafia screws up the
             // turn numbers of those.
+            // NOTE (MM): I don't think Mafia screws up those turn numbers anymore
             int turnNumber;
             final int positionTurnStartBrace = turnSpentLine.indexOf(UsefulPatterns.SQUARE_BRACKET_OPEN);
-            if (isCraftingTurn)
-                turnNumber = Integer.parseInt(turnSpentLine.substring(positionTurnStartBrace + 1,
-                        positionTurnEndBrace)) - 1;
-            else
-                turnNumber = Integer.parseInt(turnSpentLine.substring(positionTurnStartBrace + 1,
-                        positionTurnEndBrace));
+            //if (isCraftingTurn)
+            //    turnNumber = Integer.parseInt(turnSpentLine.substring(positionTurnStartBrace + 1,
+            //            positionTurnEndBrace)) - 1;
+            //else
+            turnNumber = Integer.parseInt(turnSpentLine.substring(positionTurnStartBrace + 1,
+                                                                  positionTurnEndBrace));
 
             // Now parse the encounter name.
             String encounterName = UsefulPatterns.EMPTY_STRING;

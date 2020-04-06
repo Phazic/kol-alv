@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -60,12 +60,14 @@ import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.ConsumableBlockP
 import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.EncounterBlockParser;
 import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.HybridDataBlockParser;
 import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.PlayerSnapshotBlockParser;
+import com.googlecode.logVisualizer.parser.mafiaLogBlockParsers.ServiceBlockParser;
 import com.googlecode.logVisualizer.util.Lists;
 import com.googlecode.logVisualizer.util.Maps;
 import com.googlecode.logVisualizer.util.Pair;
 import com.googlecode.logVisualizer.util.Stack;
 
-public final class MafiaLogParser implements LogParser {
+public final class MafiaLogParser implements LogParser 
+{
     private static final Pattern THREE_FIGURE_STATGAIN = Pattern.compile("You gain \\d{3} [\\w\\s]+");
 
     private static final String WINS_THE_FIGHT = "wins the fight!";
@@ -79,6 +81,8 @@ public final class MafiaLogParser implements LogParser {
     private static final String NAUGHTY_SORCERESS_FIGHT_STRING = "Sorceress Tower: Naughty Sorceress";
 
     private static final String NAUGHTY_SORCERESS_FIGHT_STRING_2015 = "The Naughty Sorceress' Chamber";
+    
+    private static final String DONATE_BODY = "Took choice 1089/30";
 
     private final LogDataHolder logData = new LogDataHolder(true);
 
@@ -91,31 +95,33 @@ public final class MafiaLogParser implements LogParser {
 
     private final Map<String, String> familiarEquipmentMap = Maps.newHashMap();
 
-    private final EncounterBlockParser encounterParser = new EncounterBlockParser(equipmentStack,
-            familiarEquipmentMap);
+    private final EncounterBlockParser encounterParser 
+        = new EncounterBlockParser(equipmentStack, familiarEquipmentMap);
 
-    private final ConsumableBlockParser consumableParser = new ConsumableBlockParser(equipmentStack,
-            familiarEquipmentMap);
+    private final ConsumableBlockParser consumableParser 
+        = new ConsumableBlockParser(equipmentStack, familiarEquipmentMap);
 
-    private final PlayerSnapshotBlockParser playerSnapshotParser = new PlayerSnapshotBlockParser(equipmentStack,
-            familiarEquipmentMap);
+    private final PlayerSnapshotBlockParser playerSnapshotParser 
+        = new PlayerSnapshotBlockParser(equipmentStack, familiarEquipmentMap);
 
     private final AscensionDataBlockParser ascensionDataParser = new AscensionDataBlockParser();
 
     private final HybridDataBlockParser hybridDataParser = new HybridDataBlockParser();
+    
+    private final ServiceBlockParser serviceParser = new ServiceBlockParser();
 
     private final List<LineParser> lineParsers = Lists.newArrayList();
 
     /**
      * @param log
-     * 		The mafia ascension log which is intended to be parsed to set.
+     *         The mafia ascension log which is intended to be parsed to set.
      * @param isIncludeMafiaLogNotes
-     * 		Whether the file includes Mafia log notes that need to be parsed
+     *         Whether the file includes Mafia log notes that need to be parsed
      * @throws NullPointerException
      *             if log is {@code null}
      */
-    public MafiaLogParser(
-            final File log, final boolean isIncludeMafiaLogNotes) {
+    public MafiaLogParser(final File log, final boolean isIncludeMafiaLogNotes) 
+    {
         this.log = log;
 
         // Set the log name
@@ -141,7 +147,8 @@ public final class MafiaLogParser implements LogParser {
      * {@inheritDoc}
      */
     public void parse()
-            throws IOException {
+            throws IOException 
+    {
         final MafiaSessionLogReader reader = new MafiaSessionLogReader(log);
         final boolean isOldAscensionCounting = Settings.getSettingBoolean("Using old ascension counting");
         boolean nsFightWon = false;
@@ -154,33 +161,37 @@ public final class MafiaLogParser implements LogParser {
             // Sorceress was beaten in it.
             if (!isOldAscensionCounting) {
                 if (block.getBlockType() == LogBlockType.ENCOUNTER_BLOCK) {
-                	// Get the encounter name and the location
-                	List<String> lines = block.getBlockLines();
-                	String tmp = lines.size() > 1 ? lines.get(1) : "";
-                	String tmp0 = lines.size() > 0 ? lines.get(0) : "";
+                    // Get the encounter name and the location
+                    List<String> lines = block.getBlockLines();
+                    String tmp = lines.size() > 1 ? lines.get(1) : "";
+                    String tmp0 = lines.size() > 0 ? lines.get(0) : "";
 
-                	// First check the encounter type to see if the location
-                	// is the Naughty Sorceress or one of the end bosses
-                	if (tmp.endsWith(NAUGHTY_SORCERESS_3RD_FORM))
-                		nsFightWon = isFightWon(block);
-                	else if (tmp.endsWith(RAIN_KING))
-                		nsFightWon = isFightWon(block);
-                	else if (tmp.endsWith(AVATAR_OF_JARLSBERG))
-                		nsFightWon = isFightWon(block);
-                	// Path of the Plumber - final boss varies, but always the same place
-                	else if (tmp.contains("Encounter: Wa") && tmp0.contains(NAUGHTY_SORCERESS_FIGHT_STRING_2015))
-                		nsFightWon = isFightWon(block);
+                    // First check the encounter type to see if the location
+                    // is the Naughty Sorceress or one of the end bosses
+                    if (tmp.endsWith(NAUGHTY_SORCERESS_3RD_FORM))
+                        nsFightWon = isFightWon(block);
+                    else if (tmp.endsWith(RAIN_KING))
+                        nsFightWon = isFightWon(block);
+                    else if (tmp.endsWith(AVATAR_OF_JARLSBERG))
+                        nsFightWon = isFightWon(block);
+                    // Path of the Plumber - final boss varies, but always the same place
+                    else if (tmp.contains("Encounter: Wa") && tmp0.contains(NAUGHTY_SORCERESS_FIGHT_STRING_2015))
+                        nsFightWon = isFightWon(block);
+                } else if (block.getBlockType() == LogBlockType.SERVICE_BLOCK) {
+                    // Community Service - last block is donating your body
+                    if (block.getBlockLines().get(0).startsWith(DONATE_BODY))
+                        nsFightWon = true;
                 } else if (block.getBlockType() == LogBlockType.OTHER_BLOCK) {
-                	if (block.getBlockLines().size() > 2 && block.getBlockLines().get( 1 ).contains( "Encounter: Returning the MacGuffin" )) {
-                		for (String line : block.getBlockLines()) {
-                			if (line.equals( "choice.php?pwd&whichchoice=1054&option=1" ))
-                				nsFightWon = true;
-                		}
-                	}
-                } else if (block.getBlockType() == LogBlockType.OTHER_BLOCK) {
-                    if (block.getBlockLines().size() == 1 &&
-                            block.getBlockLines().get(1).contains(
-                                    "Tower: Freeing King Ralph")) {
+                    // Actually Ed
+                    if (block.getBlockLines().size() > 2 && block.getBlockLines().get( 1 ).contains( "Encounter: Returning the MacGuffin" )) {
+                        for (String line : block.getBlockLines()) {
+                            if (line.equals( "choice.php?pwd&whichchoice=1054&option=1" ))
+                                nsFightWon = true;
+                        }
+                    }
+                    // If all else fails, find out if we freed the King
+                    else if (block.getBlockLines().size() > 1 &&
+                             block.getBlockLines().get(1).contains("Tower: Freeing King Ralph")) {
                         nsFightWon = true;
                     }
                 }
@@ -202,7 +213,12 @@ public final class MafiaLogParser implements LogParser {
                 ascensionDataParser.parseBlock(block.getBlockLines(), logData);
                 break;
             case HYBRID_DATA_BLOCK:
-            	hybridDataParser.parseBlock( block.getBlockLines(), logData );
+                hybridDataParser.parseBlock( block.getBlockLines(), logData );
+                break;
+            case SERVICE_BLOCK:
+                serviceParser.parseBlock(block.getBlockLines(), logData);
+                break;
+            case COMBING_BLOCK:        // TODO Fill this in
             	break;
             case OTHER_BLOCK:
                 for (final String line : block.getBlockLines())
@@ -268,8 +284,8 @@ public final class MafiaLogParser implements LogParser {
      *            The Naughty Sorceress encounter block.
      * @return True if the Naughty Sorceress was beaten, otherwise false.
      */
-    private boolean isNaughtySorceressBeaten(
-            final LogBlock block) {
+    private boolean isNaughtySorceressBeaten(final LogBlock block) 
+    {
         for (final String line : block.getBlockLines())
             // Three figure stat gains aren't possible through combat items
             // while winning against the NS will give these amounts, so if there
@@ -313,14 +329,16 @@ public final class MafiaLogParser implements LogParser {
     /**
      * {@inheritDoc}
      */
-    public LogDataHolder getLogData() {
+    public LogDataHolder getLogData() 
+    {
         return logData;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean isDetailedLogData() {
+    public boolean isDetailedLogData() 
+    {
         return true;
     }
 }
