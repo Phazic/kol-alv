@@ -229,7 +229,7 @@ public final class EncounterBlockParser implements LogBlockParser {
             //            positionTurnEndBrace)) - 1;
             //else
             turnNumber = Integer.parseInt(turnSpentLine.substring(positionTurnStartBrace + 1,
-                     											  positionTurnEndBrace));
+                                                                  positionTurnEndBrace));
 
             // Now parse the encounter name.
             String encounterName = UsefulPatterns.EMPTY_STRING;
