@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -96,10 +96,10 @@ public final class LogsCreator {
      * @throws IllegalArgumentException
      *             if mafiaLogs does not contain any elements
      */
-    public static final File[] createCondensedMafiaLogs(
-                                                        final File[] mafiaLogs)
-                                                                               throws IOException {
-        return new CondensedMafiaLogsCreator(mafiaLogs).parse();
+    public static final File[] createCondensedMafiaLogs(final File[] mafiaLogs)
+    throws IOException 
+    {
+        return new CondensedMafiaLogsCreator(mafiaLogs).condense();
     }
 
     /**
@@ -112,34 +112,34 @@ public final class LogsCreator {
      * and D is the day of the first day of that ascension.
      * 
      * @param mafiaLogs
-     *            The mafia logs which should be turned into parsed ascension
-     *            logs.
+     *    	The mafia logs which should be turned into parsed ascension
+     *   	logs.
      * @param savingDestDir
-     *            The directory inside which the parsed ascension logs should be
-     *            saved in.
+     *    	The directory inside which the parsed ascension logs should be
+     *    	saved in.
      * @param logVersion
-     *            The output format of the parsed logs.
+     *     	The output format of the parsed logs.
      * @return A list containing pairs with filenames and turns of condensed
-     *         mafia log files that were attempted to be parsed, but had an
-     *         exception thrown during the parsing process. The included turn
-     *         the turn after which the exception occurred. This list will be
-     *         empty if all files were correctly parsed.
+     *   	mafia log files that were attempted to be parsed, but had an
+     *  	exception thrown during the parsing process. The included turn
+     * 		the turn after which the exception occurred. This list will be
+     *    	empty if all files were correctly parsed.
      * @throws IOException
-     *             if there was a problem while accessing or writing files
-     *             handled by this method
+     *     	if there was a problem while accessing or writing files
+     *    	handled by this method
      * @throws NullPointerException
-     *             if mafiaLogs is {@code null}; if savingDestDir is
-     *             {@code null}
+     *     	if mafiaLogs is {@code null}; if savingDestDir is
+     *     	{@code null}
      * @throws IllegalArgumentException
-     *             if mafiaLogs does not contain any elements; if the directory
-     *             savingDestDir does not exist; if savingDestDir is not a
-     *             directory
+     *    	if mafiaLogs does not contain any elements; if the directory
+     *    	savingDestDir does not exist; if savingDestDir is not a
+     *     	directory
      */
-    public static final List<Pair<String, Encounter>> createParsedLogs(
-                                                                       final File[] mafiaLogs,
+    public static final List<Pair<String, Encounter>> createParsedLogs(final File[] mafiaLogs,
                                                                        final File savingDestDir,
                                                                        final LogOutputFormat logVersion)
-                                                                                                        throws IOException {
+    throws IOException 
+    {
         return createParsedLogs(mafiaLogs, savingDestDir, logVersion, Integer.MAX_VALUE);
     }
 
@@ -155,37 +155,36 @@ public final class LogsCreator {
      * Note that only the last n ascensions will be parsed.
      * 
      * @param mafiaLogs
-     *            The mafia logs which should be turned into parsed ascension
-     *            logs.
+     *   	The mafia logs which should be turned into parsed ascension
+     *    	logs.
      * @param savingDestDir
-     *            The directory inside which the parsed ascension logs should be
-     *            saved in.
+     *    	The directory inside which the parsed ascension logs should be
+     *     	saved in.
      * @param logVersion
-     *            The output format of the parsed logs.
+     *    	The output format of the parsed logs.
      * @param logsToParse
-     *            The last n ascensions that should be parsed.
+     *    	The last n ascensions that should be parsed.
      * @return A list containing pairs with filenames and turns of condensed
-     *         mafia log files that were attempted to be parsed, but had an
-     *         exception thrown during the parsing process. The included turn
-     *         the turn after which the exception occurred. This list will be
-     *         empty if all files were correctly parsed.
+     *    	mafia log files that were attempted to be parsed, but had an
+     *   	exception thrown during the parsing process. The included turn
+     *    	the turn after which the exception occurred. This list will be
+     *    	empty if all files were correctly parsed.
      * @throws IOException
-     *             if there was a problem while accessing or writing files
-     *             handled by this method
+     *    	if there was a problem while accessing or writing files
+     *   	handled by this method
      * @throws NullPointerException
-     *             if mafiaLogs is {@code null}; if savingDestDir is
-     *             {@code null}
+     *     	if mafiaLogs is {@code null}; if savingDestDir is {@code null}
      * @throws IllegalArgumentException
-     *             if mafiaLogs does not contain any elements; if the directory
-     *             savingDestDir does not exist; if savingDestDir is not a
-     *             directory; if logsToParse is smaller than 1
+     *    	if mafiaLogs does not contain any elements; if the directory
+     *     	savingDestDir does not exist; if savingDestDir is not a
+     *     	directory; if logsToParse is smaller than 1
      */
-    public static final List<Pair<String, Encounter>> createParsedLogs(
-                                                                       final File[] mafiaLogs,
+    public static final List<Pair<String, Encounter>> createParsedLogs(final File[] mafiaLogs,
                                                                        final File savingDestDir,
                                                                        final LogOutputFormat logVersion,
                                                                        final int logsToParse)
-                                                                                             throws IOException {
+    throws IOException 
+    {
         if (!savingDestDir.exists())
             throw new IllegalArgumentException("The directory doesn't exist.");
         if (!savingDestDir.isDirectory())
@@ -193,12 +192,13 @@ public final class LogsCreator {
         if (logsToParse <= 0)
             throw new IllegalArgumentException("The number of logs to parse must not be below 1.");
 
-        final List<Pair<String, Encounter>> errorFileList = Collections.synchronizedList(new ArrayList<Pair<String, Encounter>>());
+        final List<Pair<String, Encounter>> errorFileList 
+        	= Collections.synchronizedList(new ArrayList<Pair<String, Encounter>>());
 
         final File[] condensedMafiaLogs = createCondensedMafiaLogs(mafiaLogs);
         Arrays.sort(condensedMafiaLogs, new Comparator<File>() {
-            public int compare(
-                               final File o1, final File o2) {
+            public int compare(final File o1, final File o2) 
+            {
                 return o2.getName().compareToIgnoreCase(o1.getName());
             }
         });
@@ -206,8 +206,8 @@ public final class LogsCreator {
         // 4 Threads per CPU should be a high enough number to not slow the
         // computation too much down by scheduler overhead while still making
         // use of threaded computing.
-        final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime()
-                                                                             .availableProcessors() * 4);
+        final ExecutorService executor 
+        	= Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4);
 
         int logsLeftToParse = logsToParse;
         for (final File f : condensedMafiaLogs) {
@@ -218,8 +218,8 @@ public final class LogsCreator {
 
             executor.execute(new Runnable() {
                 public void run() {
-                    final MafiaLogParser parser = new MafiaLogParser(f,
-                                                                     Settings.getSettingBoolean("Include mafia log notes"));
+                    final MafiaLogParser parser 
+                    	= new MafiaLogParser(f, Settings.getSettingBoolean("Include mafia log notes"));
 
                     try {
                         parser.parse();
@@ -227,9 +227,10 @@ public final class LogsCreator {
                         if (logVersion == LogOutputFormat.XML_LOG)
                             XMLLogCreator.createXMLLog(parser.getLogData(), savingDestDir);
                         else {
-                            final File parsedLog = new File(savingDestDir,
-                                                            getParsedLogNameFromCondensedMafiaLog(f.getName(),
-                                                                                                  logVersion));
+                            final File parsedLog 
+                            	= new File(savingDestDir, 
+                            			   getParsedLogNameFromCondensedMafiaLog(f.getName(),
+                            					   								 logVersion));
                             if (parsedLog.exists())
                                 parsedLog.delete();
                             parsedLog.createNewFile();
@@ -281,14 +282,14 @@ public final class LogsCreator {
      * is the day of the first day of that ascension.
      * 
      * @param condensedMafiaLogFileName
-     *            File name of the condensed mafia log.
+     *    	File name of the condensed mafia log.
      * @param logVersion
-     *            The output format of the parsed log.
+     *     	The output format of the parsed log.
      * @return The proper parsed ascension log file name.
      */
-    public static String getParsedLogNameFromCondensedMafiaLog(
-                                                               final String condensedMafiaLogFileName,
-                                                               final LogOutputFormat logVersion) {
+    public static String getParsedLogNameFromCondensedMafiaLog(final String condensedMafiaLogFileName,
+                                                               final LogOutputFormat logVersion) 
+    {
         final String userName = condensedMafiaLogFileName.substring(0,
                                                                     condensedMafiaLogFileName.lastIndexOf("-"));
         String tail = condensedMafiaLogFileName.substring(userName.length())
@@ -345,8 +346,8 @@ public final class LogsCreator {
          * @throws IllegalArgumentException
          *             if mafiaLogs does not contain any elements
          */
-        CondensedMafiaLogsCreator(
-                                  final File[] mafiaLogs) {
+        CondensedMafiaLogsCreator(final File[] mafiaLogs) 
+        {
             if (mafiaLogs == null)
                 throw new NullPointerException("The File array mafiaLogs must not be null.");
             if (mafiaLogs.length == 0)
@@ -389,11 +390,12 @@ public final class LogsCreator {
          * 
          * @return The condensed mafia logs.
          * @throws IOException
-         *             if there was a problem while accessing the given mafia
-         *             logs or writing the condensed ones
+         *     	if there was a problem while accessing the given mafia
+         *    	logs or writing the condensed ones
          */
-        File[] parse()
-                      throws IOException {
+        File[] condense()
+        throws IOException 
+        {
             String userName = mafiaLogs[0].getName()
                                           .substring(0, mafiaLogs[0].getName().lastIndexOf("_"))
                                           .toLowerCase();
@@ -463,9 +465,8 @@ public final class LogsCreator {
             // Sort array in case it isn't already in the proper order, which is
             // oldest mafia log first.
             Arrays.sort(condensedMafiaLogs, new Comparator<File>() {
-
-                public int compare(
-                                   final File o1, final File o2) {
+                public int compare(final File o1, final File o2)
+                {
                     return o1.getName().compareToIgnoreCase(o2.getName());
                 }
             });
@@ -482,11 +483,11 @@ public final class LogsCreator {
          * be the condensed mafia log.
          * 
          * @param currentMafiaLogFileName
-         *            The file name of the current mafia log.
+         *     	The file name of the current mafia log.
          */
-        private void openNextWritingFile(
-                                         final String currentMafiaLogFileName)
-                                                                              throws IOException {
+        private void openNextWritingFile(final String currentMafiaLogFileName)
+        throws IOException 
+        {
             if (currentWritingFile != null)
                 currentWritingFile.close();
 
