@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -33,6 +33,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -57,11 +59,13 @@ import com.googlecode.logVisualizer.parser.LogParser;
 import com.googlecode.logVisualizer.parser.MafiaLogParser;
 import com.googlecode.logVisualizer.parser.PreparsedLogParser;
 import com.googlecode.logVisualizer.util.Lists;
+import com.googlecode.logVisualizer.util.LogOutputFormat;
 import com.googlecode.logVisualizer.util.xmlLogs.FileAccessException;
 import com.googlecode.logVisualizer.util.xmlLogs.XMLAccessException;
 import com.googlecode.logVisualizer.util.xmlLogs.XMLLogReader;
 
-public final class LogVisualizer {
+public final class LogVisualizer 
+{
     static {
         // Create data directories if they do not exist.
         if (!ROOT_LOCATION.exists())
@@ -131,21 +135,22 @@ public final class LogVisualizer {
             e.printStackTrace();
         }
 
-        gui = new LogVisualizerGUI(new LogLoaderListener() {
-            public void loadMafiaLog(
-                                     final File file) {
+        gui = new LogVisualizerGUI(new LogLoaderListener() 
+        {
+            public void loadMafiaLog(final File file) 
+            {
                 loadLog(file,
                         new MafiaLogParser(file,
                                            Settings.getSettingBoolean("Include mafia log notes")));
             }
 
-            public void loadPreparsedLog(
-                                         final File file) {
+            public void loadPreparsedLog(final File file) 
+            {
                 loadLog(file, new PreparsedLogParser(file));
             }
 
-            public void loadXMLLog(
-                                   final File file) {
+            public void loadXMLLog(final File file) 
+            {
                 try {
                     final LogDataHolder logData = XMLLogReader.parseXMLLog(file);
                     addLogGUI(file, logData);
@@ -196,8 +201,8 @@ public final class LogVisualizer {
             }).start();
     }
 
-    private void loadLog(
-                         final File file, final LogParser parser) {
+    private void loadLog(final File file, final LogParser parser) 
+    {
         try {
             parser.parse();
             addLogGUI(file, parser.getLogData());
@@ -220,8 +225,8 @@ public final class LogVisualizer {
      * Adds a {@link LogGUI} with the given logData to the log pane as a task to
      * do on the EventQueue.
      */
-    private void addLogGUI(
-                           final File log, final LogDataHolder logData) {
+    private void addLogGUI(final File log, final LogDataHolder logData) 
+    {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 final LogGUI logGUI = new LogGUI(log, logData, !logData.isDetailedLog());
@@ -245,7 +250,8 @@ public final class LogVisualizer {
     /**
      * Creates KoL data files if they do not already exist in the file system.
      */
-    public static void writeDataFilesToFileSystem() {
+    public static void writeDataFilesToFileSystem() 
+    {
         final List<File> kolDataFiles = Lists.newArrayList();
         kolDataFiles.add(new File(ROOT_DIRECTORY + File.separator + KOL_DATA_DIRECTORY
                                   + "bbcodeAugmentations.txt"));
@@ -274,13 +280,121 @@ public final class LogVisualizer {
             }
     }
 
-    public static void main(
-                            final String[] args) {
-        if (args.length > 0 && (args[0].equals("-parse") || args[0].equals("-p")))
-            LogVisualizerCLI.runCLIParsing(args);
+    /**
+     * Class that parses and holds command line parameters.
+     */
+    public static class ALVParameters
+    {
+    	private static final Matcher VALID_DATE = Pattern.compile("^[0-9]{8}$").matcher(""); 
+    	public boolean isParsing = false;
+    	public boolean hasError = false;
+    	public LogOutputFormat format = LogOutputFormat.TEXT_LOG;
+    	public File srcDir = null;
+    	public File destDir = null;
+    	public int ascensionCount = Integer.MAX_VALUE;
+    	public int ascensionNumber = 0;
+    	public String playerName = null;
+    	public String date = null;
+    	
+    	public ALVParameters(final String[] args)
+    	{
+    		int arg = 0;
+    		// First, look for options (start with -)
+    		while (arg < args.length) {
+    			// Break loop if we're not at an option
+    			if (! args[arg].startsWith("-"))
+    				break;
+    			// Process the options
+    			String opt = args[arg];
+    			switch (opt) {
+    			case "-p":
+    			case "-parse":
+    			case "--parse":
+    				isParsing = true;
+    				break;
+    			case "-html":
+    			case "--html":
+    				format = LogOutputFormat.HTML_LOG;
+    				break;
+    			case "-bbcode":
+    			case "--bbcode":
+    				format = LogOutputFormat.BBCODE_LOG;
+    				break;
+    			case "-xml":
+    			case "--xml":
+    				format = LogOutputFormat.XML_LOG;
+    				break;
+    			case "-c":
+    			case "-count":
+    			case "--count":
+    				arg++;
+    				ascensionCount = Integer.parseInt(args[arg]);
+    	        	if (ascensionCount <= 0) {
+    	        		System.out.println("Ascension count must be a positive number");
+    	        		hasError = true;
+    	        		return;
+    	        	}
+    				break;
+    			case "-a":
+    			case "--ascension":
+    				arg++;
+    				ascensionNumber = Integer.parseInt(args[arg]);
+    	        	if (ascensionNumber <= 0) {
+    	        		System.out.println("Ascension number must be a positive number");
+    	        		hasError = true;
+    	        		return;
+    	        	}
+   				break;
+    			case "-n":
+    			case "--name":
+    				arg++;
+    				playerName = args[arg];
+    				break;
+    			case "-d":
+    			case "--date":
+    				arg++;
+    				date = args[arg];
+    				VALID_DATE.reset(date);
+    				if (! VALID_DATE.find()) {
+    					System.out.println("Date must be in the formay yyyymmdd");
+    					hasError = true;
+    					return;
+    				}
+    				break;
+    			default:
+    				System.out.println("Unrecognized option " + opt);
+    				hasError = true;
+    				return;
+    			}
+    			
+    			// Next!
+    			arg++;
+    		}
+    		// arg now points to the first non-option
+    		// Non-option parameters are source log directory and destination log directory
+    		if (arg < args.length)
+    			srcDir = new File(args[arg]);
+    		if (arg+1 < args.length)
+    			destDir = new File(args[arg+1]);
+    	}
+    }
+    
+    /**
+     * Main method for Ascension Log Visualizer.
+     * @param args Arguments passed in from the caller.
+     */
+    public static void main(final String[] args) 
+    {
+    	ALVParameters params = new ALVParameters(args);
+    	if (params.hasError)
+    		return;
+        if (params.isParsing) {
+            LogVisualizerCLI.runCLIParsing(params);
+        }
         else
             EventQueue.invokeLater(new Runnable() {
-                public void run() {
+                public void run() 
+                {
                     new LogVisualizer();
                 }
             });
