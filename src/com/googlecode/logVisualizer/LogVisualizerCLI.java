@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -31,29 +31,66 @@ import java.util.List;
 import com.googlecode.logVisualizer.gui.InternalMafiaLogParserDialog;
 import com.googlecode.logVisualizer.logData.turn.Encounter;
 import com.googlecode.logVisualizer.parser.LogsCreator;
+import com.googlecode.logVisualizer.parser.MafiaLogIndex;
 import com.googlecode.logVisualizer.util.LogOutputFormat;
 import com.googlecode.logVisualizer.util.Pair;
 
-public final class LogVisualizerCLI {
-    public static void runCLIParsing(
-                                     final String[] args) {
-        final LogOutputFormat outputFormat = getOutputFormat(args);
-        final int numberToParse = getNumberOfLogsToParse(args);
-        final Pair<File, File> logFolders = getLogsSrcDestFolders(args);
-        final File mafiaLogsDirectory = logFolders.getVar1();
-        final File parsedLogsSavingDirectory = logFolders.getVar2();
+public final class LogVisualizerCLI 
+{
+    public static void runCLIParsing(LogVisualizer.ALVParameters params) 
+    {
+        final LogOutputFormat outputFormat = params.format;
+        final int numberToParse = params.ascensionCount;
+        final File mafiaLogsDirectory 
+        	= (params.srcDir == null) ? new File(Settings.getSettingString("Mafia logs location"))
+        						      : params.srcDir ;
+        final File parsedLogsSavingDirectory 
+        	= (params.destDir == null) ? new File(Settings.getSettingString("Parsed logs saving location"))
+        							   : params.destDir ;
+        //final Pair<File, File> logFolders = getLogsSrcDestFolders(args);
+        //final File mafiaLogsDirectory = logFolders.getVar1();
+        //final File parsedLogsSavingDirectory = logFolders.getVar2();
 
         if (!mafiaLogsDirectory.isDirectory() || !parsedLogsSavingDirectory.isDirectory()) {
             System.out.println("Please specify only existing directories.");
             return;
         }
 
-        final File[] mafiaLogs = mafiaLogsDirectory.listFiles(InternalMafiaLogParserDialog.MAFIA_LOG_FILTER);
-        if (mafiaLogs.length == 0) {
+        final File[] allMafiaLogs = mafiaLogsDirectory.listFiles(InternalMafiaLogParserDialog.MAFIA_LOG_FILTER);
+        if (allMafiaLogs.length == 0) {
             System.out.println("The directory specified for mafia logs does not contain any mafia logs.");
             return;
         }
+        
+        // Load the index
+        MafiaLogIndex mafiaLogIndex = null;
+        try {
+        	mafiaLogIndex = MafiaLogIndex.getMafiaLogIndex(mafiaLogsDirectory.getAbsolutePath());
+        	//mafiaLogIndex.dump();
+        } catch (IOException e) {
+        	System.out.println(e);
+        	return;
+        }
 
+        // Make sure we have only the necessary logs
+        File[] mafiaLogs = { };
+        String playerName = params.playerName;	// null if not supplied in command line
+        if (params.ascensionNumber > 0) {
+        	mafiaLogs = mafiaLogIndex.getAscensionN(params.ascensionNumber, playerName);
+        } else if (params.date != null) {
+        	mafiaLogs = mafiaLogIndex.getAscensionForDate(params.date, playerName);
+        } else if (params.ascensionCount > 0) {
+        	mafiaLogs = mafiaLogIndex.getLastNMafiaLogs(params.ascensionCount, playerName);
+        }
+        // Make sure we have ANY logs
+        if (mafiaLogs.length == 0) {
+        	System.out.println("No Mafia logs found for this request.");
+        	return;
+        }
+		// TODO debug Show selected files
+		for (File f : mafiaLogs)
+			System.out.println(f.getName());
+        
         // If the input seems to be correct, save the directories used.
         Settings.setSettingString("Mafia logs location", mafiaLogsDirectory.getAbsolutePath());
         Settings.setSettingString("Parsed logs saving location",
@@ -86,6 +123,7 @@ public final class LogVisualizerCLI {
         }
     }
 
+    /*
     private static LogOutputFormat getOutputFormat(
                                                    final String[] args) {
         LogOutputFormat outputFormat = LogOutputFormat.TEXT_LOG;
@@ -133,4 +171,5 @@ public final class LogVisualizerCLI {
 
         return Pair.of(new File(mafiaLogsDirectoryPath), new File(parsedLogsSavingDirectoryPath));
     }
+    */
 }
