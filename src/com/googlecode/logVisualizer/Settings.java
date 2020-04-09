@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -71,7 +71,8 @@ import net.java.dev.spellcast.utilities.UtilityConstants;
  * of the ALV on this machine, even spanning different versions, otherwise
  * FALSE.</li></ul>
  */
-public final class Settings {
+public final class Settings 
+{
     private static final String TRUE_STRING = "TRUE";
 
     private static final String FALSE_STRING = "FALSE";
@@ -94,7 +95,7 @@ public final class Settings {
         if (!isNimbusLafPresent)
             DEFAULT_SETTINGS.setProperty("LookAndFeel", "Metal");
 
-        DEFAULT_SETTINGS.setProperty("Version", "3.7.4.3-gb905bce");
+        DEFAULT_SETTINGS.setProperty("Version", "3.8.0.0");
         DEFAULT_SETTINGS.setProperty("Check Updates", FALSE_STRING);
 
         DEFAULT_SETTINGS.setProperty("XML format version", "1.4");
@@ -141,8 +142,8 @@ public final class Settings {
     /**
      * Writes the given Properties object to the file system.
      */
-    private static void saveSettingsToFile(
-            final Properties p) {
+    private static void saveSettingsToFile(final Properties p) 
+    {
         synchronized (DEFAULT_SETTINGS) {
             try {
                 SETTINGS_FILE.delete();
@@ -163,7 +164,8 @@ public final class Settings {
      * Loads the current Properties from the file system.
      */
     private static Properties loadSettingsFromFile()
-            throws IOException {
+    throws IOException 
+    {
         final Properties p = new Properties(DEFAULT_SETTINGS);
 
         synchronized (DEFAULT_SETTINGS) {
@@ -183,8 +185,8 @@ public final class Settings {
      * @param value
      *            The value of the setting.
      */
-    public static void setSettingString(
-            final String key, final String value) {
+    public static void setSettingString(final String key, final String value) 
+    {
         try {
             final Properties p = loadSettingsFromFile();
             p.setProperty(key, value);
@@ -201,8 +203,8 @@ public final class Settings {
      *         doesn't exist or there was a problem with reading the settings
      *         file.
      */
-    public static String getSettingString(
-            final String key) {
+    public static String getSettingString(final String key) 
+    {
         String value = null;
 
         try {
@@ -225,8 +227,8 @@ public final class Settings {
      * @param value
      *            The value of the setting.
      */
-    public static void setSettingBoolean(
-            final String key, final Boolean value) {
+    public static void setSettingBoolean(final String key, final Boolean value) 
+    {
         if (value)
             setSettingString(key, TRUE_STRING);
         else
@@ -240,8 +242,8 @@ public final class Settings {
      *         otherwise false. Returns {@code null} if the setting doesn't
      *         exist or there was a problem with reading the settings file.
      */
-    public static Boolean getSettingBoolean(
-            final String key) {
+    public static Boolean getSettingBoolean(final String key) 
+    {
         final String value = getSettingString(key);
 
         if (value == null)
