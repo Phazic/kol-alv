@@ -87,9 +87,6 @@ public final class LogVisualizerCLI
         	System.out.println("No Mafia logs found for this request.");
         	return;
         }
-		// TODO debug Show selected files
-		for (File f : mafiaLogs)
-			System.out.println(f.getName());
         
         // If the input seems to be correct, save the directories used.
         Settings.setSettingString("Mafia logs location", mafiaLogsDirectory.getAbsolutePath());
