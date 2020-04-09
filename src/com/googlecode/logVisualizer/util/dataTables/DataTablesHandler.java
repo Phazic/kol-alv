@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -42,6 +42,7 @@ import javax.xml.stream.XMLStreamWriter;
 import net.java.dev.spellcast.utilities.DataUtilities;
 import net.java.dev.spellcast.utilities.UtilityConstants;
 
+import com.googlecode.logVisualizer.creator.util.XMLAccessException;
 import com.googlecode.logVisualizer.logData.turn.Encounter;
 import com.googlecode.logVisualizer.logData.turn.turnAction.EquipmentChange;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
@@ -50,7 +51,6 @@ import com.googlecode.logVisualizer.util.Maps;
 import com.googlecode.logVisualizer.util.Pair;
 import com.googlecode.logVisualizer.util.Sets;
 import com.googlecode.logVisualizer.util.dataTables.XMLDataFilesWriter.DataWriter;
-import com.googlecode.logVisualizer.util.xmlLogs.XMLAccessException;
 
 /**
  * This class is a centralised place to handle access to various useful data
@@ -85,7 +85,8 @@ public enum DataTablesHandler {
 
     private Map<String, Outfit> outfitsMap;
 
-    private DataTablesHandler() {
+    private DataTablesHandler() 
+    {
         fullnessHitMap = Maps.newHashMap(500);
         drunkennessHitMap = Maps.newHashMap(500);
         spleenHitMap = Maps.newHashMap(300);
@@ -114,7 +115,8 @@ public enum DataTablesHandler {
      * emptied and repopulated. This means that references to the old
      * collections will continue to link to the old data.
      */
-    public synchronized void reloadDataTables() {
+    public synchronized void reloadDataTables() 
+    {
         final Set<String> badmoonAdventuresSet = Sets.newHashSet(150);
         final Set<String> semirareAdventuresSet = Sets.newHashSet(150);
         final Set<String> wanderingAdventuresSet = Sets.newHashSet(150);
@@ -125,7 +127,8 @@ public enum DataTablesHandler {
         final Map<String, ExtraStats> statsEquipmentsMap = Maps.newHashMap(300);
         final Map<String, Outfit> outfitsMap = Maps.newHashMap(300);
 
-        final ArgumetsHandler badmoonArgumentsHandler = new ArgumetsHandler() {
+        final ArgumetsHandler badmoonArgumentsHandler = new ArgumetsHandler() 
+        {
             public void parseArguments(
                                        List<Pair<String, String>> arguments) {
                 for (final Pair<String, String> arg : arguments)
@@ -341,8 +344,7 @@ public enum DataTablesHandler {
      * @param statsEquipmentsMap Map of equipment to extra stats offered
      * @param outfitsMap Map of outfit names to outfits
      */
-    public synchronized void updateDataTables(
-                                              final Set<String> badmoonAdventuresSet,
+    public synchronized void updateDataTables(final Set<String> badmoonAdventuresSet,
                                               final Set<String> semirareAdventuresSet,
                                               final Set<String> wanderingAdventuresSet,
                                               final Map<String, Boolean> itemdropsMap,
@@ -350,7 +352,8 @@ public enum DataTablesHandler {
                                               final Map<String, Integer> mpRegenEquipmentsMap,
                                               final Map<String, Integer> mpCostEquipmentsMap,
                                               final Map<String, ExtraStats> statsEquipmentsMap,
-                                              final Map<String, Outfit> outfitsMap) {
+                                              final Map<String, Outfit> outfitsMap) 
+    {
         if (badmoonAdventuresSet != null)
             writeXMLDataFile("badmoon.xml", new DataWriter<String>(badmoonAdventuresSet,
                                                                    "badmoonAdventures",
@@ -468,8 +471,8 @@ public enum DataTablesHandler {
      *            The consumable name whose fullness hit should be returned.
      * @return The fullness hit of the given consumable.
      */
-    public int getFullnessHit(
-                              final String consumableName) {
+    public int getFullnessHit(final String consumableName) 
+    {
         final String name = NON_ASCII.matcher(consumableName)
                                      .replaceAll(UsefulPatterns.EMPTY_STRING);
         return getOrZero(fullnessHitMap.get(name.toLowerCase(Locale.ENGLISH)));
@@ -480,8 +483,8 @@ public enum DataTablesHandler {
      *            The consumable name whose drunkenness hit should be returned.
      * @return The drunkenness hit of the given consumable.
      */
-    public int getDrunkennessHit(
-                                 final String consumableName) {
+    public int getDrunkennessHit(final String consumableName) 
+    {
         final String name = NON_ASCII.matcher(consumableName)
                                      .replaceAll(UsefulPatterns.EMPTY_STRING);
         return getOrZero(drunkennessHitMap.get(name.toLowerCase(Locale.ENGLISH)));
@@ -492,8 +495,8 @@ public enum DataTablesHandler {
      *            The consumable name whose spleen hit should be returned.
      * @return The spleen hit of the given consumable.
      */
-    public int getSpleenHit(
-                            final String consumableName) {
+    public int getSpleenHit(final String consumableName) 
+    {
         final String name = NON_ASCII.matcher(consumableName)
                                      .replaceAll(UsefulPatterns.EMPTY_STRING);
         return getOrZero(spleenHitMap.get(name.toLowerCase(Locale.ENGLISH)));
@@ -505,8 +508,8 @@ public enum DataTablesHandler {
      *            semi-rare.
      * @return True if the encounter is a semi-rare, otherwise false.
      */
-    public boolean isSemirareEncounter(
-                                       final Encounter encounter) {
+    public boolean isSemirareEncounter(final Encounter encounter) 
+    {
         return isSemirareEncounter(encounter.getEncounterName());
     }
 
@@ -516,8 +519,8 @@ public enum DataTablesHandler {
      *            semi-rare.
      * @return True if the encounter is a semi-rare, otherwise false.
      */
-    public boolean isSemirareEncounter(
-                                       final String encounterName) {
+    public boolean isSemirareEncounter(final String encounterName) 
+    {
         final String name = NON_ASCII.matcher(encounterName)
                                      .replaceAll(UsefulPatterns.EMPTY_STRING);
 
@@ -530,8 +533,8 @@ public enum DataTablesHandler {
      *            Moon adventure.
      * @return True if the encounter is a Bad Moon adventure, otherwise false.
      */
-    public boolean isBadMoonEncounter(
-                                      final Encounter encounter) {
+    public boolean isBadMoonEncounter(final Encounter encounter) 
+    {
         return isBadMoonEncounter(encounter.getEncounterName());
     }
 
@@ -541,8 +544,8 @@ public enum DataTablesHandler {
      *            Bad Moon adventure.
      * @return True if the encounter is a Bad Moon adventure, otherwise false.
      */
-    public boolean isBadMoonEncounter(
-                                      final String encounterName) {
+    public boolean isBadMoonEncounter(final String encounterName) 
+    {
         final String name = NON_ASCII.matcher(encounterName.toLowerCase(Locale.ENGLISH))
                                      .replaceAll(UsefulPatterns.EMPTY_STRING);
 
@@ -556,8 +559,8 @@ public enum DataTablesHandler {
      *            wandering adventure.
      * @return True if the encounter is a wandering adventure, otherwise false.
      */
-    public boolean isWanderingEncounter(
-                                        final Encounter encounter) {
+    public boolean isWanderingEncounter(final Encounter encounter) 
+    {
         return isWanderingEncounter(encounter.getEncounterName());
     }
 
@@ -567,8 +570,8 @@ public enum DataTablesHandler {
      *            wandering adventure.
      * @return True if the encounter is a wandering adventure, otherwise false.
      */
-    public boolean isWanderingEncounter(
-                                        final String encounterName) {
+    public boolean isWanderingEncounter(final String encounterName) 
+    {
         final String name = NON_ASCII.matcher(encounterName.toLowerCase(Locale.ENGLISH))
                                      .replaceAll(UsefulPatterns.EMPTY_STRING);
 
@@ -580,8 +583,8 @@ public enum DataTablesHandler {
      *            The skill name whose MP cost should be returned.
      * @return The MP cost of the given skill.
      */
-    public int getSkillMPCost(
-                              final String skillName) {
+    public int getSkillMPCost(final String skillName) 
+    {
         final String name = NON_ASCII.matcher(skillName).replaceAll(UsefulPatterns.EMPTY_STRING);
         return getOrZero(skillsMap.get(name.toLowerCase(Locale.ENGLISH)));
     }
@@ -592,8 +595,8 @@ public enum DataTablesHandler {
      * @return The MP cost offset for skill casts, based on the given
      *         parameters. Can be -3 at minimum, but not lower.
      */
-    public int getMPCostOffset(
-                               final EquipmentChange equipment) {
+    public int getMPCostOffset(final EquipmentChange equipment) 
+    {
         int mpCostOffset = 0;
         mpCostOffset += getOrZero(mpCostEquipmentsMap.get(equipment.getHat()));
         mpCostOffset += getOrZero(mpCostEquipmentsMap.get(equipment.getWeapon()));
@@ -618,8 +621,8 @@ public enum DataTablesHandler {
      *            returned.
      * @return The MP per turn regeneration of the given equipment.
      */
-    public int getMPFromEquipment(
-                                  final String equipmentName) {
+    public int getMPFromEquipment(final String equipmentName) 
+    {
         final String name = NON_ASCII.matcher(equipmentName)
                                      .replaceAll(UsefulPatterns.EMPTY_STRING);
         return getOrZero(mpRegenEquipmentsMap.get(name.toLowerCase(Locale.ENGLISH)));
@@ -631,7 +634,8 @@ public enum DataTablesHandler {
      *         lowest with the order of general stats, muscle stats, mysticality
      *         stats and moxie stats.
      */
-    public List<Pair<String, ExtraStats>> getStatsItems() {
+    public List<Pair<String, ExtraStats>> getStatsItems() 
+    {
         final List<Pair<String, ExtraStats>> result = Lists.newArrayList(statsEquipmentsMap.size());
 
         for (final String s : statsEquipmentsMap.keySet())
@@ -653,8 +657,8 @@ public enum DataTablesHandler {
      *         If the outfit is unknown, {@link Outfit#NO_CHANGE} will be
      *         returned.
      */
-    public Outfit getOutfitChange(
-                                  final String outfitName) {
+    public Outfit getOutfitChange(final String outfitName) 
+    {
         final Outfit outfit = outfitsMap.get(outfitName);
 
         return outfit != null ? outfit : Outfit.NO_CHANGE;
@@ -669,8 +673,8 @@ public enum DataTablesHandler {
      *            important item.
      * @return True if the item is an important item, otherwise false.
      */
-    public boolean isImportantItem(
-                                   final String itemName) {
+    public boolean isImportantItem(final String itemName) 
+    {
         final Boolean onetimeOnly = itemdropsMap.get(itemName);
 
         return onetimeOnly != null ? !onetimeOnly : false;
@@ -686,8 +690,8 @@ public enum DataTablesHandler {
      *            onetime-only item.
      * @return True if the item is an one-time item, otherwise false.
      */
-    public boolean isOnetimeItem(
-                                 final String itemName) {
+    public boolean isOnetimeItem(final String itemName) 
+    {
         final Boolean onetimeOnly = itemdropsMap.get(itemName);
 
         return onetimeOnly != null ? onetimeOnly : false;
@@ -697,7 +701,8 @@ public enum DataTablesHandler {
      * @return A set of Bad Moon adventure names. Note that the set is
      *         read-only.
      */
-    public Set<String> getBadmoonAdventuresSet() {
+    public Set<String> getBadmoonAdventuresSet() 
+    {
         return badmoonAdventuresSet;
     }
 
@@ -705,7 +710,8 @@ public enum DataTablesHandler {
      * @return A set of semi-rare adventure names. Note that the set is
      *         read-only.
      */
-    public Set<String> getSemirareAdventuresSet() {
+    public Set<String> getSemirareAdventuresSet() 
+    {
         return semirareAdventuresSet;
     }
 
@@ -713,7 +719,8 @@ public enum DataTablesHandler {
      * @return A set of wandering adventure names. Note that the set is
      *         read-only.
      */
-    public Set<String> getWanderingAdventuresSet() {
+    public Set<String> getWanderingAdventuresSet() 
+    {
         return wanderingAdventuresSet;
     }
 
@@ -721,7 +728,8 @@ public enum DataTablesHandler {
      * @return A map of skills and their MP costs. Note that the map is
      *         read-only.
      */
-    public Map<String, Integer> getSkillCostsMap() {
+    public Map<String, Integer> getSkillCostsMap() 
+    {
         return skillsMap;
     }
 
@@ -729,7 +737,8 @@ public enum DataTablesHandler {
      * @return A map of equipment names and their MP cost offsets. Note that the
      *         map is read-only.
      */
-    public Map<String, Integer> getMPCostOffsetEquipmentMap() {
+    public Map<String, Integer> getMPCostOffsetEquipmentMap() 
+    {
         return mpCostEquipmentsMap;
     }
 
@@ -737,7 +746,8 @@ public enum DataTablesHandler {
      * @return A map of equipment names and their MP regeneration per turn. Note
      *         that the map is read-only.
      */
-    public Map<String, Integer> getMPFromEquipmentMap() {
+    public Map<String, Integer> getMPFromEquipmentMap() 
+    {
         return mpRegenEquipmentsMap;
     }
 
@@ -745,7 +755,8 @@ public enum DataTablesHandler {
      * @return A map of equipment names and their substat gain per turn. Note
      *         that the map is read-only.
      */
-    public Map<String, ExtraStats> getStatsEquipmentMap() {
+    public Map<String, ExtraStats> getStatsEquipmentMap() 
+    {
         return statsEquipmentsMap;
     }
 
@@ -753,7 +764,8 @@ public enum DataTablesHandler {
      * @return A map of outfit names and how and whether they change equipment
      *         slots. Note that the map is read-only.
      */
-    public Map<String, Outfit> getOutfitsMap() {
+    public Map<String, Outfit> getOutfitsMap() 
+    {
         return outfitsMap;
     }
 
@@ -762,15 +774,16 @@ public enum DataTablesHandler {
      *         textual logs. Items not named don't show up at all in textual
      *         logs. Note that the map is read-only.
      */
-    public Map<String, Boolean> getItemdropsMap() {
+    public Map<String, Boolean> getItemdropsMap() 
+    {
         return itemdropsMap;
     }
 
     /**
      * @return The given value or, if the value is null, 0.
      */
-    private static int getOrZero(
-                                 final Integer value) {
+    private static int getOrZero(final Integer value) 
+    {
         return value == null ? 0 : value.intValue();
     }
 
@@ -799,9 +812,10 @@ public enum DataTablesHandler {
         }
     }
 
-    private static void readXMLDataFile(
-                                        final String filename, final String dataNodeName,
-                                        final ArgumetsHandler argumentsParser) {
+    private static void readXMLDataFile(final String filename, 
+                                        final String dataNodeName,
+                                        final ArgumetsHandler argumentsParser) 
+    {
         try {
             for (final List<Pair<String, String>> args : XMLDataFilesReader.parseXMLDataFile(filename,
                                                                                              dataNodeName))
@@ -811,8 +825,9 @@ public enum DataTablesHandler {
         }
     }
 
-    private static <T> void writeXMLDataFile(
-                                             final String filename, final DataWriter<T> dataWriter) {
+    private static <T> void writeXMLDataFile(final String filename, 
+                                             final DataWriter<T> dataWriter) 
+    {
         final File saveDest = new File(ROOT_DIRECTORY + File.separator + KOL_DATA_DIRECTORY
                                        + filename);
         try {
@@ -825,8 +840,7 @@ public enum DataTablesHandler {
     }
 
     private interface ArgumetsHandler {
-        void parseArguments(
-                            final List<Pair<String, String>> arguments);
+        void parseArguments(final List<Pair<String, String>> arguments);
     }
 
     private static final class NameIntegerArgumentsHandler implements ArgumetsHandler {
@@ -863,18 +877,19 @@ public enum DataTablesHandler {
         }
     }
 
-    private static <T> NameSimpleObjectDataWriter<T> newNameSimpleObjectDataWriter(
-                                                                                   Iterable<Entry<String, T>> dataItems,
+    private static <T> NameSimpleObjectDataWriter<T> newNameSimpleObjectDataWriter(Iterable<Entry<String, T>> dataItems,
                                                                                    String rootNodeName,
                                                                                    String dataNodeName,
-                                                                                   final String simpleObjectKeyName) {
+                                                                                   final String simpleObjectKeyName)
+    {
         return new NameSimpleObjectDataWriter<T>(dataItems,
                                                  rootNodeName,
                                                  dataNodeName,
                                                  simpleObjectKeyName);
     }
 
-    private static final class NameSimpleObjectDataWriter<T> extends DataWriter<Entry<String, T>> {
+    private static final class NameSimpleObjectDataWriter<T> extends DataWriter<Entry<String, T>> 
+    {
         private final String simpleObjectKeyName;
 
         private NameSimpleObjectDataWriter(

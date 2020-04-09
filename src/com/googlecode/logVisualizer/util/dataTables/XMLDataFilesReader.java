@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -36,9 +36,9 @@ import javax.xml.stream.XMLStreamReader;
 import net.java.dev.spellcast.utilities.DataUtilities;
 import net.java.dev.spellcast.utilities.UtilityConstants;
 
+import com.googlecode.logVisualizer.creator.util.XMLAccessException;
 import com.googlecode.logVisualizer.util.Lists;
 import com.googlecode.logVisualizer.util.Pair;
-import com.googlecode.logVisualizer.util.xmlLogs.XMLAccessException;
 
 /**
  * This class can read the simple XML data files used by the Ascension Log
@@ -48,7 +48,8 @@ import com.googlecode.logVisualizer.util.xmlLogs.XMLAccessException;
  * All methods in this class throw a {@link NullPointerException} if a null
  * object reference is passed in any parameter.
  */
-final class XMLDataFilesReader {
+final class XMLDataFilesReader 
+{
     static {
         System.setProperty("javax.xml.stream.XMLInputFactory", "com.bea.xml.stream.MXParserFactory");
         System.setProperty("javax.xml.stream.XMLEventFactory", "com.bea.xml.stream.EventFactory");
@@ -68,10 +69,10 @@ final class XMLDataFilesReader {
      *             if the given file name doesn't contain any characters; if the
      *             given data node name doesn't contain any characters
      */
-    static List<List<Pair<String, String>>> parseXMLDataFile(
-                                                             final String filename,
+    static List<List<Pair<String, String>>> parseXMLDataFile(final String filename,
                                                              final String dataNodeName)
-                                                                                       throws XMLAccessException {
+    throws XMLAccessException 
+    {
         if (filename == null)
             throw new NullPointerException("The file name must not be null.");
         if (dataNodeName == null)
@@ -117,8 +118,8 @@ final class XMLDataFilesReader {
 
     private final String dataNodeName;
 
-    private XMLDataFilesReader(
-                               final XMLStreamReader parser, final String dataNodeName) {
+    private XMLDataFilesReader(final XMLStreamReader parser, final String dataNodeName) 
+    {
         if (parser == null)
             throw new NullPointerException("The XML parser must not be null.");
         if (dataNodeName == null)
@@ -129,7 +130,8 @@ final class XMLDataFilesReader {
     }
 
     private List<List<Pair<String, String>>> parseDataFile()
-                                                            throws XMLStreamException {
+    throws XMLStreamException 
+    {
         final List<List<Pair<String, String>>> result = Lists.newArrayList(200);
 
         while (parser.hasNext()) {

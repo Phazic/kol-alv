@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -48,6 +48,8 @@ import net.java.dev.spellcast.utilities.DataUtilities;
 import net.java.dev.spellcast.utilities.UtilityConstants;
 
 import com.googlecode.logVisualizer.Settings;
+import com.googlecode.logVisualizer.creator.util.SpookyravenPowerleveling;
+import com.googlecode.logVisualizer.creator.util.StatgiverItem;
 import com.googlecode.logVisualizer.logData.CombatItem;
 import com.googlecode.logVisualizer.logData.Item;
 import com.googlecode.logVisualizer.logData.LogDataHolder;

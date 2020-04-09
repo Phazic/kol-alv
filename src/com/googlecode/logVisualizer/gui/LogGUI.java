@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -36,12 +36,12 @@ import javax.swing.event.ListSelectionListener;
 import com.googlecode.logVisualizer.chart.*;
 import com.googlecode.logVisualizer.chart.perDayConsumption.PerDayConsumptionBarCharts;
 import com.googlecode.logVisualizer.chart.turnrundownGantt.TurnrundownGantt;
+import com.googlecode.logVisualizer.creator.TextLogCreator;
 import com.googlecode.logVisualizer.gui.notetaker.Notetaker;
 import com.googlecode.logVisualizer.gui.searchDialogs.SearchDialogs;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.turn.TurnInterval;
 import com.googlecode.logVisualizer.util.LogOutputFormat;
-import com.googlecode.logVisualizer.util.textualLogs.TextLogCreator;
 
 public final class LogGUI extends JSplitPane {
     private static final String[] LIST_MENU_ITEM_NAMES = { "Turn rundown gantt",

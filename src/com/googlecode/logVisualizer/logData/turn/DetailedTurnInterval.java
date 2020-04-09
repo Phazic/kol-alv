@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -56,7 +56,7 @@ public final class DetailedTurnInterval extends AbstractTurnInterval {
         endTurn = turn.getTurnNumber();
         addTurnData(turn);
         turns.add(turn);
-   	
+       
     }
     
     /**
@@ -66,7 +66,7 @@ public final class DetailedTurnInterval extends AbstractTurnInterval {
      *            Starting point of this turn interval to set.
      */
     public DetailedTurnInterval(final SingleTurn turn) {
-    	this(turn, false);
+        this(turn, false);
     }
 
     /**

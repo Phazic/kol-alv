@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -38,6 +38,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.jfree.ui.RefineryUtilities;
 
+import com.googlecode.logVisualizer.creator.TextLogCreator;
 import com.googlecode.logVisualizer.gui.ExportDialog;
 import com.googlecode.logVisualizer.gui.MultiLineCellRenderer;
 import com.googlecode.logVisualizer.logData.HeaderFooterComment;
@@ -47,14 +48,13 @@ import com.googlecode.logVisualizer.logData.turn.TurnInterval;
 import com.googlecode.logVisualizer.logData.turn.turnAction.DayChange;
 import com.googlecode.logVisualizer.util.LookAheadIterator;
 import com.googlecode.logVisualizer.util.Pair;
-import com.googlecode.logVisualizer.util.textualLogs.TextLogCreator;
 
 /**
  * This class is ascension log notes editor, that gives the user a basic
  * interface to manage log notes.
  */
 public final class Notetaker extends JFrame {
-    /**	
+    /**
      * Will show a dialog to let the user choose which turncounts should be
      * included inside the Notetaker and then show the actual Notetaker
      * interface based on that decision.

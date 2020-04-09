@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -202,7 +202,7 @@ final class SummaryDataCalculator {
                 skillsCast.addElement(s);
             
             for (final CombatItem ci : ti.getCombatItemsUsed())
-            	combatItemsUsed.addElement( ci );
+                combatItemsUsed.addElement( ci );
 
             // MP summary
             totalMPGains = totalMPGains.addMPGains(ti.getMPGain());
@@ -216,18 +216,18 @@ final class SummaryDataCalculator {
                 totalStatgains = totalStatgains.addStats(st.getStatGain());
                 switch (st.getTurnVersion()) {
                     case COMBAT:
-                    	if (!st.isFreeTurn())
-                    		totalTurnsCombat++;
+                        if (!st.isFreeTurn())
+                            totalTurnsCombat++;
                         combatsStatgains = combatsStatgains.addStats(st.getStatGain());
                         break;
                     case NONCOMBAT:
-                    	if (!st.isFreeTurn())
-                    		totalTurnsNoncombat++;
+                        if (!st.isFreeTurn())
+                            totalTurnsNoncombat++;
                         noncombatsStatgains = noncombatsStatgains.addStats(st.getStatGain());
                         break;
                     case OTHER:
-                    	if (!st.isFreeTurn())
-                    		totalTurnsCombat++;
+                        if (!st.isFreeTurn())
+                            totalTurnsCombat++;
                         othersStatgains = othersStatgains.addStats(st.getStatGain());
                         break;
                     default:
@@ -235,15 +235,15 @@ final class SummaryDataCalculator {
                 }
 
                 if (st.getTurnVersion() == TurnVersion.COMBAT) {
-                	
-                	//Search for important combat item usage
-                	if (st.getCombatItemsUsed().size() > 0) {
-                		for ( CombatItem ci : st.getCombatItemsUsed() )
-						{
-							if (UsefulPatterns.TRACKED_COMBAT_ITEMS.contains( ci.getName() ))
-	                			trackedCombatItemUsage.add( DataNumberPair.of( ci.getName() + " (" + st.getEncounterName() + ")" , st.getTurnNumber() ));
-						}
-                	}
+                    
+                    //Search for important combat item usage
+                    if (st.getCombatItemsUsed().size() > 0) {
+                        for ( CombatItem ci : st.getCombatItemsUsed() )
+                        {
+                            if (UsefulPatterns.TRACKED_COMBAT_ITEMS.contains( ci.getName() ))
+                                trackedCombatItemUsage.add( DataNumberPair.of( ci.getName() + " (" + st.getEncounterName() + ")" , st.getTurnNumber() ));
+                        }
+                    }
                 }
                 
                 // Familiar usage summary
@@ -252,7 +252,7 @@ final class SummaryDataCalculator {
 
                 // Banished Combats Summary //Bombar: Add Banished Combat Support
                 if (st.isBanished())
-                	banishedCombats.add( DataNumberPair.of(st.getBanishedInfo(), st.getTurnNumber()) );
+                    banishedCombats.add( DataNumberPair.of(st.getBanishedInfo(), st.getTurnNumber()) );
                 
                 // Disintegrated combats summary
                 if (st.isDisintegrated())
@@ -277,7 +277,7 @@ final class SummaryDataCalculator {
                     if (e.getTurnVersion() == TurnVersion.COMBAT) {
                         // Romantic arrow usages
                         if (e.isSkillCast("fire a badly romantic arrow")
-                        		|| e.isSkillCast("wink at"))
+                                || e.isSkillCast("wink at"))
                             romanticArrowUsages.add(DataNumberPair.of(e.getEncounterName(),
                                                                       e.getTurnNumber()));
 
@@ -290,8 +290,8 @@ final class SummaryDataCalculator {
                             freeRunawayCombats.add(e);
                         
                         if (!st.isBanished() && e.isBanished())
-                        	banishedCombats.add( DataNumberPair.of(e.getBanishedInfo(), e.getTurnNumber()) );
-                        	
+                            banishedCombats.add( DataNumberPair.of(e.getBanishedInfo(), e.getTurnNumber()) );
+                            
                     }
                 }
             }
@@ -588,7 +588,7 @@ final class SummaryDataCalculator {
     }
 
     Collection<CombatItem> getCombatItemsUsed() {
-    	return this.combatItemsUsed.getElements();
+        return this.combatItemsUsed.getElements();
     }
     
     /**
@@ -616,7 +616,7 @@ final class SummaryDataCalculator {
      * @return a list of combat items that we want to track their usage, turn number and encounter name
      */
     List<DataNumberPair<String>> getTrackedCombatItemUses() {
-    	return trackedCombatItemUsage;
+        return trackedCombatItemUsage;
     }
     
     /**

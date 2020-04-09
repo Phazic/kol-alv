@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -244,8 +244,8 @@ public final class ConsumableBlockParser implements LogBlockParser {
             else if (usageIdentifier.contains(SPLEEN_STRING)) 
                 tmpCon = Consumable.newSpleenConsumable(itemName, adventureGain, amount, currentTurn);
             else if (DataTablesHandler.HANDLER.getSpleenHit(itemName) > 0) {
-            	//TODO: This is using the old parsing where it was use _#_ _spleenItem_ it has since been changed to chew
-            	//		should eventually remove this.
+                //TODO: This is using the old parsing where it was use _#_ _spleenItem_ it has since been changed to chew
+                //        should eventually remove this.
                 tmpCon = Consumable.newSpleenConsumable(itemName, adventureGain, amount, currentTurn);
             }else
                 tmpCon = Consumable.newOtherConsumable(itemName, adventureGain, amount, currentTurn);

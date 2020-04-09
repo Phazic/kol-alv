@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -27,9 +27,10 @@ package com.googlecode.logVisualizer.parser.lineParsers;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
 
-public final class MafiaFreeRunawaysLineParser extends AbstractLineParser {
-	private static final CombatItemUsedLineParser ciuLP = new CombatItemUsedLineParser();
-	
+public final class MafiaFreeRunawaysLineParser extends AbstractLineParser 
+{
+    private static final CombatItemUsedLineParser ciuLP = new CombatItemUsedLineParser();
+    
     private static final String BANDER_RUNAWAY_MESSAGE_PART_STRING = " snatches you up in his jaws,"
                                                                      + " tosses you onto his back, and flooms away,"
                                                                      + " weaving slightly and hiccelping fire.";
@@ -48,20 +49,20 @@ public final class MafiaFreeRunawaysLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected void doParsing(
-                             final String line, final LogDataHolder logData) {
+    protected void doParsing(final String line, final LogDataHolder logData) 
+    {
         logData.getLastTurnSpent().addFreeRunaways(1);
         
         if (ciuLP.isCompatibleLine( line ))
-        	ciuLP.parseLine( line, logData );
+            ciuLP.parseLine( line, logData );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected boolean isCompatibleLine(
-                                       final String line) {
+    protected boolean isCompatibleLine(final String line) 
+    {
         return line.startsWith(UsefulPatterns.COMBAT_ROUND_LINE_BEGINNING_STRING)
                && (line.contains(POPPER_USAGE_STRING) || line.contains(BLACK_OUT_USAGE_STRING)
                    || line.contains(BANDER_RUNAWAY_MESSAGE_PART_STRING) 

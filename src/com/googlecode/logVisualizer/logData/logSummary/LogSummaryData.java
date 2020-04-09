@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -188,11 +188,11 @@ public class LogSummaryData {
 
         combatItemsUsed = Lists.newArrayList(data.getCombatItemsUsed());
         Collections.sort( combatItemsUsed, new Comparator<CombatItem>() {
-        	public int compare(final CombatItem o1, final CombatItem o2) {
+            public int compare(final CombatItem o1, final CombatItem o2) {
                 // Reverse order, so that the list starts with the highest
                 // element.
-        		return o2.compareTo( o1 );
-        	}
+                return o2.compareTo( o1 );
+            }
         });
         
         skillsCast = Lists.newArrayList(data.getSkillsCast());
@@ -334,7 +334,7 @@ public class LogSummaryData {
      * @return A sorted list of all combat items used during this ascension, the list starts with skill that was used most.
      */
     public List<CombatItem> getCombatItemsUsed() {
-    	return combatItemsUsed;
+        return combatItemsUsed;
     }
     
     /**
@@ -383,10 +383,10 @@ public class LogSummaryData {
     }
 
     public void setTrackedCombatItemUses(final List<DataNumberPair<String>> trackedCombatItemUses) {
-    	this.trackedCombatItemUses = trackedCombatItemUses;
+        this.trackedCombatItemUses = trackedCombatItemUses;
     }
     public List<DataNumberPair<String>> getTrackedCombatItemUses() {
-    	return this.trackedCombatItemUses;
+        return this.trackedCombatItemUses;
     }
     
     /**

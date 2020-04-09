@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -43,8 +43,8 @@ import net.java.swingfx.waitwithstyle.PerformanceInfiniteProgressPanel;
 import org.jfree.ui.RefineryUtilities;
 
 import com.googlecode.logVisualizer.Settings;
+import com.googlecode.logVisualizer.creator.LogsCreator;
 import com.googlecode.logVisualizer.logData.turn.Encounter;
-import com.googlecode.logVisualizer.parser.LogsCreator;
 import com.googlecode.logVisualizer.util.LogOutputFormat;
 import com.googlecode.logVisualizer.util.Pair;
 

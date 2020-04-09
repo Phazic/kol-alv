@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -32,11 +32,11 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.jfree.ui.RefineryUtilities;
 
+import com.googlecode.logVisualizer.creator.TextLogCreator;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.turn.*;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
 import com.googlecode.logVisualizer.util.LogOutputFormat;
-import com.googlecode.logVisualizer.util.textualLogs.TextLogCreator;
 
 /**
  * A useful and mostly self-contained class that can be used to view a more

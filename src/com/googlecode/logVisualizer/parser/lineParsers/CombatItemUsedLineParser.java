@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -41,7 +41,8 @@ import com.googlecode.logVisualizer.parser.UsefulPatterns;
  * <p>
  * {@code Round _roundNumber_: _accountName_ uses the _skillName_!}
  */
-public final class CombatItemUsedLineParser extends AbstractLineParser {
+public final class CombatItemUsedLineParser extends AbstractLineParser 
+{
     private static final Pattern COMBAT_ITEM_USED_CAPTURE_PATTERN = Pattern.compile(".*uses the ([\\p{L}\\d\\p{Punct}\\s]+)!(?: \\(auto-attack\\))?");
 
     private static final String COMBAT_ITEM_USED_STRING = "uses the";
@@ -52,7 +53,8 @@ public final class CombatItemUsedLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected void doParsing(final String line, final LogDataHolder logData) {
+    protected void doParsing(final String line, final LogDataHolder logData) 
+    {
         final String combatItemName;
         int amount = 1;
 
@@ -69,7 +71,7 @@ public final class CombatItemUsedLineParser extends AbstractLineParser {
                 
         //Check for Banishing combat items
         if (UsefulPatterns.BANISH_ITEMS.contains( combatItemName )) {
-        	((SingleTurn) logData.getLastTurnSpent()).setBanished(true, combatItemName, null);        
+            ((SingleTurn) logData.getLastTurnSpent()).setBanished(true, combatItemName, null);        
         }
     }
 
@@ -77,7 +79,8 @@ public final class CombatItemUsedLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected boolean isCompatibleLine(final String line) {
+    protected boolean isCompatibleLine(final String line) 
+    {
         return line.contains(COMBAT_ITEM_USED_STRING) && combatItemUsedMatcher.reset(line).matches();
     }
 }

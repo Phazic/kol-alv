@@ -34,6 +34,8 @@ import javax.xml.stream.XMLStreamWriter;
 
 import com.bea.xml.stream.XMLOutputFactoryBase;
 import com.googlecode.logVisualizer.Settings;
+import com.googlecode.logVisualizer.creator.util.FileAccessException;
+import com.googlecode.logVisualizer.creator.util.XMLAccessException;
 import com.googlecode.logVisualizer.logData.*;
 import com.googlecode.logVisualizer.logData.consumables.Consumable;
 import com.googlecode.logVisualizer.logData.logSummary.LevelData;
@@ -88,8 +90,8 @@ public final class XMLLogCreator {
 
         OutputStreamWriter out;
         try {
-        	out = new OutputStreamWriter(new FileOutputStream(new File(saveDst, logData.getLogName() + ".xml")),
-        			                                          Charset.forName("UTF-8"));
+            out = new OutputStreamWriter(new FileOutputStream(new File(saveDst, logData.getLogName() + ".xml")),
+                                                              Charset.forName("UTF-8"));
         } catch (final FileNotFoundException e) {
             e.printStackTrace();
             throw new FileAccessException("File stream could not be created.");

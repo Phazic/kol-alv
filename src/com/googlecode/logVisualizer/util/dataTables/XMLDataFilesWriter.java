@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -32,7 +32,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import com.bea.xml.stream.XMLOutputFactoryBase;
-import com.googlecode.logVisualizer.util.xmlLogs.XMLAccessException;
+import com.googlecode.logVisualizer.creator.util.XMLAccessException;
 
 /**
  * This class can write the simple XML data files used by the Ascension Log
@@ -42,7 +42,8 @@ import com.googlecode.logVisualizer.util.xmlLogs.XMLAccessException;
  * All methods in this class throw a {@link NullPointerException} if a null
  * object reference is passed in any parameter.
  */
-final class XMLDataFilesWriter<T> {
+final class XMLDataFilesWriter<T> 
+{
 
     /**
      * @param saveDest
@@ -52,10 +53,11 @@ final class XMLDataFilesWriter<T> {
      * @throws IllegalArgumentException
      *             if the given saveDest references is a directory
      */
-    public static <T> void writeXMLDataFile(
-                                            final File saveDest, final DataWriter<T> dataWriter)
-                                                                                                throws XMLAccessException,
-                                                                                                IOException {
+    public static <T> void writeXMLDataFile(final File saveDest, 
+                                            final DataWriter<T> dataWriter)
+    throws XMLAccessException,
+            IOException 
+    {
         if (saveDest == null)
             throw new NullPointerException("The save destination must not be null.");
         if (dataWriter == null)
@@ -90,7 +92,8 @@ final class XMLDataFilesWriter<T> {
         out.close();
     }
 
-    static abstract class DataWriter<T> {
+    static abstract class DataWriter<T> 
+    {
         private final Iterable<T> dataItems;
 
         private final String rootNodeName;
@@ -116,20 +119,22 @@ final class XMLDataFilesWriter<T> {
             this.dataNodeName = dataNodeName;
         }
 
-        final Iterable<T> getDataItems() {
+        final Iterable<T> getDataItems() 
+        {
             return dataItems;
         }
 
-        final String getRootNodeName() {
+        final String getRootNodeName() 
+        {
             return rootNodeName;
         }
 
-        final String getDataNodeName() {
+        final String getDataNodeName() 
+        {
             return dataNodeName;
         }
 
-        abstract void writeArguments(
-                                     final XMLStreamWriter writer, final T item)
-                                                                                throws XMLStreamException;
+        abstract void writeArguments(final XMLStreamWriter writer, final T item)
+        throws XMLStreamException;
     }
 }

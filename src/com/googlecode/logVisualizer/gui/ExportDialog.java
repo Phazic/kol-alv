@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -35,13 +35,13 @@ import javax.swing.*;
 import org.jfree.ui.RefineryUtilities;
 
 import com.googlecode.logVisualizer.Settings;
+import com.googlecode.logVisualizer.creator.LogsCreator;
+import com.googlecode.logVisualizer.creator.TextLogCreator;
+import com.googlecode.logVisualizer.creator.XMLLogCreator;
+import com.googlecode.logVisualizer.creator.util.FileAccessException;
+import com.googlecode.logVisualizer.creator.util.XMLAccessException;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
-import com.googlecode.logVisualizer.parser.LogsCreator;
 import com.googlecode.logVisualizer.util.LogOutputFormat;
-import com.googlecode.logVisualizer.util.textualLogs.TextLogCreator;
-import com.googlecode.logVisualizer.util.xmlLogs.FileAccessException;
-import com.googlecode.logVisualizer.util.xmlLogs.XMLAccessException;
-import com.googlecode.logVisualizer.util.xmlLogs.XMLLogCreator;
 
 /**
  * A dialog that can be used to preview the parsed output of a log and save it

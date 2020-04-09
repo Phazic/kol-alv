@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -33,14 +33,15 @@ import com.googlecode.logVisualizer.logData.turn.SingleTurn;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
 import com.googlecode.logVisualizer.util.Sets;
 
-public final class MafiaBanishLineParser extends AbstractLineParser {
-	    
+public final class MafiaBanishLineParser extends AbstractLineParser 
+{
+        
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void doParsing(
-                             final String line, final LogDataHolder logData) {
+    protected void doParsing(final String line, final LogDataHolder logData) 
+    {
         ((SingleTurn) logData.getLastTurnSpent()).setBanished(true);
     }
 
@@ -48,7 +49,8 @@ public final class MafiaBanishLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected boolean isCompatibleLine(final String line) {
-    	return false;//currently nothing uses this.
+    protected boolean isCompatibleLine(final String line) 
+    {
+        return false;//currently nothing uses this.
     }
 }

@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -42,25 +42,28 @@ import com.googlecode.logVisualizer.util.DataNumberPair;
  * <p>
  * {@code You learned a new skill: _skillName_}
  */
-public final class MafiaLearnedSkillLineParser extends AbstractLineParser {
-	private static final String LEARNED_SKILL_STRING = "You learned a new skill: ";
+public final class MafiaLearnedSkillLineParser extends AbstractLineParser 
+{
+    private static final String LEARNED_SKILL_STRING = "You learned a new skill: ";
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void doParsing(final String line, final LogDataHolder logData) {
-    	String skillName = line.substring( LEARNED_SKILL_STRING.length());
-    	int currentTurn = logData.getLastTurnSpent().getTurnNumber();
-    	DataNumberPair<String> learnedSkillData = DataNumberPair.of( skillName, currentTurn );
-    	logData.addLearnedSkill( learnedSkillData );
+    protected void doParsing(final String line, final LogDataHolder logData) 
+    {
+        String skillName = line.substring( LEARNED_SKILL_STRING.length());
+        int currentTurn = logData.getLastTurnSpent().getTurnNumber();
+        DataNumberPair<String> learnedSkillData = DataNumberPair.of( skillName, currentTurn );
+        logData.addLearnedSkill( learnedSkillData );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected boolean isCompatibleLine(final String line) {
+    protected boolean isCompatibleLine(final String line) 
+    {
         return line.startsWith( LEARNED_SKILL_STRING );
     }    
 }

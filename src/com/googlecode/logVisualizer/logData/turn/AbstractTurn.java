@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -211,35 +211,35 @@ public abstract class AbstractTurn implements Turn {
      * @see Turn
      */
     public void addCombatItemUsed(CombatItem ci) {
-    	this.combatItemsUsed.addElement( ci );
+        this.combatItemsUsed.addElement( ci );
     }
     
     /**
      * @see Turn
      */
     public void setCombatItemsUsed(final Collection<CombatItem> combatItemsUsed) {
-    	this.combatItemsUsed.setElements( combatItemsUsed );
+        this.combatItemsUsed.setElements( combatItemsUsed );
     }
     
     /**
      * @see TurnEntity
      */
     public Collection<CombatItem> getCombatItemsUsed() {
-    	return this.combatItemsUsed.getElements();
+        return this.combatItemsUsed.getElements();
     }
     
     /**
      * @see TurnEntity
      */
     public boolean isCombatItemUsed(final CombatItem ci) {
-    	return this.combatItemsUsed.contains( ci );
+        return this.combatItemsUsed.contains( ci );
     }
     
     /**
      * @see TurnEntity
      */
     public boolean isCombatItemUsed(String combatItemName) {
-    	return this.combatItemsUsed.containsByName( combatItemName );
+        return this.combatItemsUsed.containsByName( combatItemName );
     }
     
     /**
@@ -348,14 +348,14 @@ public abstract class AbstractTurn implements Turn {
      * @param isFreeTurn Whether the turn should be marked free
      */
     public void setFreeTurn(boolean isFreeTurn) {
-    	this.isFreeTurn = isFreeTurn;
+        this.isFreeTurn = isFreeTurn;
     }
     
     /**
      * @return Whether or not this turn was "Free"
      */
     public boolean isFreeTurn() {
-    	return this.isFreeTurn;
+        return this.isFreeTurn;
     }
     
     /**
@@ -402,7 +402,7 @@ public abstract class AbstractTurn implements Turn {
         for (final Consumable c : turn.getConsumablesUsed())
             addConsumableUsed(c);
         for (final CombatItem ci : turn.getCombatItemsUsed())
-        	addCombatItemUsed( ci );
+            addCombatItemUsed( ci );
     }
 
     /**

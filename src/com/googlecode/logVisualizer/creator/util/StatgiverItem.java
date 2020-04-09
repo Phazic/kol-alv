@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -34,7 +34,7 @@ import com.googlecode.logVisualizer.util.dataTables.ExtraStats;
  * Helper class used to help handle the +STAT BREAKDOWN summary, namely counting
  * the stats gained from specific items.
  */
-final class StatgiverItem {
+final public class StatgiverItem {
     private static final String TAB = "\t";
 
     private final String itemName;
@@ -67,8 +67,10 @@ final class StatgiverItem {
 
     private double lvl12Stats;
 
-    StatgiverItem(
-                  final String itemName, final ExtraStats perTurnStatgain, final StatClass mainStat) {
+    public StatgiverItem(final String itemName, 
+                         final ExtraStats perTurnStatgain, 
+                         final StatClass mainStat) 
+    {
         this.itemName = itemName;
         itemNameLower = itemName.toLowerCase(Locale.ENGLISH);
 
@@ -87,13 +89,15 @@ final class StatgiverItem {
         this.perTurnStatgain = stats;
     }
 
-    String getItemName() {
+    public String getItemName() 
+    {
         // The ALV internally saves item names only in lower case.
         return itemNameLower;
     }
 
-    void incrementLvlStatgain(
-                              final int levelNumber, final int numberOfIncrements) {
+    public void incrementLvlStatgain(final int levelNumber,
+                                     final int numberOfIncrements) 
+    {
         for (int i = 0; i < numberOfIncrements; i++)
             switch (levelNumber) {
                 case 1:
@@ -137,55 +141,55 @@ final class StatgiverItem {
             }
     }
 
-    int getLvl1Stats() {
+    public int getLvl1Stats() {
         return (int) lvl1Stats;
     }
 
-    int getLvl2Stats() {
+    public int getLvl2Stats() {
         return (int) lvl2Stats;
     }
 
-    int getLvl3Stats() {
+    public int getLvl3Stats() {
         return (int) lvl3Stats;
     }
 
-    int getLvl4Stats() {
+    public int getLvl4Stats() {
         return (int) lvl4Stats;
     }
 
-    int getLvl5Stats() {
+    public int getLvl5Stats() {
         return (int) lvl5Stats;
     }
 
-    int getLvl6Stats() {
+    public int getLvl6Stats() {
         return (int) lvl6Stats;
     }
 
-    int getLvl7Stats() {
+    public int getLvl7Stats() {
         return (int) lvl7Stats;
     }
 
-    int getLvl8Stats() {
+    public int getLvl8Stats() {
         return (int) lvl8Stats;
     }
 
-    int getLvl9Stats() {
+    public int getLvl9Stats() {
         return (int) lvl9Stats;
     }
 
-    int getLvl10Stats() {
+    public int getLvl10Stats() {
         return (int) lvl10Stats;
     }
 
-    int getLvl11Stats() {
+    public int getLvl11Stats() {
         return (int) lvl11Stats;
     }
 
-    int getLvl12Stats() {
+    public int getLvl12Stats() {
         return (int) lvl12Stats;
     }
 
-    int getTotalStats() {
+    public int getTotalStats() {
         return (int) (lvl1Stats + lvl2Stats + lvl3Stats + lvl4Stats + lvl5Stats + lvl6Stats
                       + lvl7Stats + lvl8Stats + lvl9Stats + lvl10Stats + lvl11Stats + lvl12Stats);
     }

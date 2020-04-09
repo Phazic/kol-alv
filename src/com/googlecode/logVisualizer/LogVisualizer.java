@@ -50,6 +50,9 @@ import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.ui.RefineryUtilities;
 
 import com.googlecode.logVisualizer.chart.turnrundownGantt.TurnrundownGantt;
+import com.googlecode.logVisualizer.creator.util.FileAccessException;
+import com.googlecode.logVisualizer.creator.util.XMLAccessException;
+import com.googlecode.logVisualizer.creator.util.XMLLogReader;
 import com.googlecode.logVisualizer.gui.*;
 import com.googlecode.logVisualizer.gui.LogGUI.GanttPaneButtonListener;
 import com.googlecode.logVisualizer.gui.LogVisualizerGUI.LogLoaderListener;
@@ -60,9 +63,6 @@ import com.googlecode.logVisualizer.parser.MafiaLogParser;
 import com.googlecode.logVisualizer.parser.PreparsedLogParser;
 import com.googlecode.logVisualizer.util.Lists;
 import com.googlecode.logVisualizer.util.LogOutputFormat;
-import com.googlecode.logVisualizer.util.xmlLogs.FileAccessException;
-import com.googlecode.logVisualizer.util.xmlLogs.XMLAccessException;
-import com.googlecode.logVisualizer.util.xmlLogs.XMLLogReader;
 
 public final class LogVisualizer 
 {
@@ -285,98 +285,98 @@ public final class LogVisualizer
      */
     public static class ALVParameters
     {
-    	private static final Matcher VALID_DATE = Pattern.compile("^[0-9]{8}$").matcher(""); 
-    	public boolean isParsing = false;
-    	public boolean hasError = false;
-    	public LogOutputFormat format = LogOutputFormat.TEXT_LOG;
-    	public File srcDir = null;
-    	public File destDir = null;
-    	public int ascensionCount = Integer.MAX_VALUE;
-    	public int ascensionNumber = 0;
-    	public String playerName = null;
-    	public String date = null;
-    	
-    	public ALVParameters(final String[] args)
-    	{
-    		int arg = 0;
-    		// First, look for options (start with -)
-    		while (arg < args.length) {
-    			// Break loop if we're not at an option
-    			if (! args[arg].startsWith("-"))
-    				break;
-    			// Process the options
-    			String opt = args[arg];
-    			switch (opt) {
-    			case "-p":
-    			case "-parse":
-    			case "--parse":
-    				isParsing = true;
-    				break;
-    			case "-html":
-    			case "--html":
-    				format = LogOutputFormat.HTML_LOG;
-    				break;
-    			case "-bbcode":
-    			case "--bbcode":
-    				format = LogOutputFormat.BBCODE_LOG;
-    				break;
-    			case "-xml":
-    			case "--xml":
-    				format = LogOutputFormat.XML_LOG;
-    				break;
-    			case "-c":
-    			case "-count":
-    			case "--count":
-    				arg++;
-    				ascensionCount = Integer.parseInt(args[arg]);
-    	        	if (ascensionCount <= 0) {
-    	        		System.out.println("Ascension count must be a positive number");
-    	        		hasError = true;
-    	        		return;
-    	        	}
-    				break;
-    			case "-a":
-    			case "--ascension":
-    				arg++;
-    				ascensionNumber = Integer.parseInt(args[arg]);
-    	        	if (ascensionNumber <= 0) {
-    	        		System.out.println("Ascension number must be a positive number");
-    	        		hasError = true;
-    	        		return;
-    	        	}
-   				break;
-    			case "-n":
-    			case "--name":
-    				arg++;
-    				playerName = args[arg];
-    				break;
-    			case "-d":
-    			case "--date":
-    				arg++;
-    				date = args[arg];
-    				VALID_DATE.reset(date);
-    				if (! VALID_DATE.find()) {
-    					System.out.println("Date must be in the formay yyyymmdd");
-    					hasError = true;
-    					return;
-    				}
-    				break;
-    			default:
-    				System.out.println("Unrecognized option " + opt);
-    				hasError = true;
-    				return;
-    			}
-    			
-    			// Next!
-    			arg++;
-    		}
-    		// arg now points to the first non-option
-    		// Non-option parameters are source log directory and destination log directory
-    		if (arg < args.length)
-    			srcDir = new File(args[arg]);
-    		if (arg+1 < args.length)
-    			destDir = new File(args[arg+1]);
-    	}
+        private static final Matcher VALID_DATE = Pattern.compile("^[0-9]{8}$").matcher(""); 
+        public boolean isParsing = false;
+        public boolean hasError = false;
+        public LogOutputFormat format = LogOutputFormat.TEXT_LOG;
+        public File srcDir = null;
+        public File destDir = null;
+        public int ascensionCount = Integer.MAX_VALUE;
+        public int ascensionNumber = 0;
+        public String playerName = null;
+        public String date = null;
+        
+        public ALVParameters(final String[] args)
+        {
+            int arg = 0;
+            // First, look for options (start with -)
+            while (arg < args.length) {
+                // Break loop if we're not at an option
+                if (! args[arg].startsWith("-"))
+                    break;
+                // Process the options
+                String opt = args[arg];
+                switch (opt) {
+                case "-p":
+                case "-parse":
+                case "--parse":
+                    isParsing = true;
+                    break;
+                case "-html":
+                case "--html":
+                    format = LogOutputFormat.HTML_LOG;
+                    break;
+                case "-bbcode":
+                case "--bbcode":
+                    format = LogOutputFormat.BBCODE_LOG;
+                    break;
+                case "-xml":
+                case "--xml":
+                    format = LogOutputFormat.XML_LOG;
+                    break;
+                case "-c":
+                case "-count":
+                case "--count":
+                    arg++;
+                    ascensionCount = Integer.parseInt(args[arg]);
+                    if (ascensionCount <= 0) {
+                        System.out.println("Ascension count must be a positive number");
+                        hasError = true;
+                        return;
+                    }
+                    break;
+                case "-a":
+                case "--ascension":
+                    arg++;
+                    ascensionNumber = Integer.parseInt(args[arg]);
+                    if (ascensionNumber <= 0) {
+                        System.out.println("Ascension number must be a positive number");
+                        hasError = true;
+                        return;
+                    }
+                   break;
+                case "-n":
+                case "--name":
+                    arg++;
+                    playerName = args[arg];
+                    break;
+                case "-d":
+                case "--date":
+                    arg++;
+                    date = args[arg];
+                    VALID_DATE.reset(date);
+                    if (! VALID_DATE.find()) {
+                        System.out.println("Date must be in the formay yyyymmdd");
+                        hasError = true;
+                        return;
+                    }
+                    break;
+                default:
+                    System.out.println("Unrecognized option " + opt);
+                    hasError = true;
+                    return;
+                }
+                
+                // Next!
+                arg++;
+            }
+            // arg now points to the first non-option
+            // Non-option parameters are source log directory and destination log directory
+            if (arg < args.length)
+                srcDir = new File(args[arg]);
+            if (arg+1 < args.length)
+                destDir = new File(args[arg+1]);
+        }
     }
     
     /**
@@ -385,9 +385,9 @@ public final class LogVisualizer
      */
     public static void main(final String[] args) 
     {
-    	ALVParameters params = new ALVParameters(args);
-    	if (params.hasError)
-    		return;
+        ALVParameters params = new ALVParameters(args);
+        if (params.hasError)
+            return;
         if (params.isParsing) {
             LogVisualizerCLI.runCLIParsing(params);
         }

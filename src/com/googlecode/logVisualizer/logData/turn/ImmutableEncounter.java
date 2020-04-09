@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -123,7 +123,7 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
         if (skillCasts == null)
             throw new NullPointerException("The skill casts must not be null.");
         if (combatItemsUsed == null)
-        	throw new NullPointerException("The combat items used must not be null.");
+            throw new NullPointerException("The combat items used must not be null.");
         if (consumables == null)
             throw new NullPointerException("The consumables must not be null.");
         if (turnNumber < 0)
@@ -159,7 +159,7 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
 
         this.combatItemsUsed = Maps.newHashMap((int) (combatItemsUsed.size() * 1.4));
         for (final CombatItem ci : combatItemsUsed)
-        	this.combatItemsUsed.put( ci.getName(), ci.newInstance() );
+            this.combatItemsUsed.put( ci.getName(), ci.newInstance() );
         
         this.consumables = new CountableSet<Consumable>();
         for (final Consumable c : consumables)
@@ -298,29 +298,29 @@ public final class ImmutableEncounter implements Encounter, Comparable<TurnEntit
     }
 
     public boolean isBanished() {
-    	return this.isBanished;
+        return this.isBanished;
     }
     
     public String getBanishedInfo() {
-    	if (this.isBanished)
-    		return banishInfo;
-    	else
-    		return null;
+        if (this.isBanished)
+            return banishInfo;
+        else
+            return null;
     }
     
     /**
      * @return The combat items used in this turn.
      */
     public Collection<CombatItem> getCombatItemsUsed() {
-    	return getCollectionFromMap( combatItemsUsed );
+        return getCollectionFromMap( combatItemsUsed );
     }
     
     public boolean isCombatItemUsed(String name) {
-    	return this.combatItemsUsed.containsKey( name );
+        return this.combatItemsUsed.containsKey( name );
     }
     
     public boolean isCombatItemUsed(CombatItem ci) {
-    	return isCombatItemUsed(ci.getName());
+        return isCombatItemUsed(ci.getName());
     }
     
     /**
