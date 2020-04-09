@@ -219,7 +219,7 @@ public final class MafiaLogParser implements LogParser
                 serviceParser.parseBlock(block.getBlockLines(), logData);
                 break;
             case COMBING_BLOCK:        // TODO Fill this in
-            	break;
+                break;
             case OTHER_BLOCK:
                 for (final String line : block.getBlockLines())
                     for (final LineParser lp : lineParsers)
