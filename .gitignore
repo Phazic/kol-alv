@@ -10,5 +10,5 @@ hs_err_pid*
 /ant/
 /release/
 /doc/
-# Output jar
-alv.jar
+# Output jars
+alv*.jar
