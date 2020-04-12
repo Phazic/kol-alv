@@ -227,7 +227,7 @@ final class SummaryDataCalculator {
                         break;
                     case OTHER:
                         if (!st.isFreeTurn())
-                            totalTurnsCombat++;
+                            totalTurnsOther++;
                         othersStatgains = othersStatgains.addStats(st.getStatGain());
                         break;
                     default:
