@@ -1,5 +1,5 @@
 <project name="ALV" default="dist" basedir=".">
-   	
+       
     <target name="clean">
         <delete dir="bin"/>
         <mkdir dir="bin"/>
@@ -7,9 +7,10 @@
 
     <target name="compile">
         <javac includeantruntime="false"
-		       srcdir="src" destdir="bin"
+               srcdir="src" destdir="bin"
+               compiler="javac1.9"
                classpath="jcommon-1.0.16.jar;stax-utils-20070216.jar;jfreechart-1.0.13.jar;stax-1.2.0.jar" />
-   	</target>
+       </target>
     
     <target name="dist" depends="compile">
         <delete file="alv.jar"/>
@@ -18,7 +19,8 @@
                 <name regex=".*[.](class|properties)"/>
                 <archives>
                     <zips>
-                        <fileset dir="." includes="*.jar"/>
+                        <fileset dir="." includes="*.jar"
+                                         excludes="alv*.jar"/>
                     </zips>
                 </archives>
             </restrict>

@@ -92,14 +92,14 @@ final class LafChangerDialog extends JDialog {
         for (final LookAndFeelInfo lafi : UIManager.getInstalledLookAndFeels())
             lafLister.addItem(lafi.getName());
 
-        lafLister.setSelectedItem(Settings.getSettingString("LookAndFeel"));
+        lafLister.setSelectedItem(Settings.getString("LookAndFeel"));
     }
 
     private void changeUsedLaf(
                                final JFrame owner) {
         final String lafName = (String) lafLister.getSelectedItem();
 
-        Settings.setSettingString("LookAndFeel", lafName);
+        Settings.setString("LookAndFeel", lafName);
         for (final LookAndFeelInfo lafi : UIManager.getInstalledLookAndFeels())
             if (lafi.getName().equals(lafName)) {
                 try {

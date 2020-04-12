@@ -142,7 +142,7 @@ final class MafiaLogsVisualizerDialog extends JDialog {
                     ((AscensionLogsTableModel) visualizableAscensionLogsTable.getModel()).setVisualizeAll(toggleAllBox.isSelected());
             }
         });
-        mafiaLogsDirectoryField = new JTextField(Settings.getSettingString("Mafia logs location"));
+        mafiaLogsDirectoryField = new JTextField(Settings.getString("Mafia logs location"));
         mafiaLogsDirectoryField.addActionListener(new ActionListener() {
             public void actionPerformed(
                                         final ActionEvent e) {
@@ -230,7 +230,7 @@ final class MafiaLogsVisualizerDialog extends JDialog {
         gbc.insets = new Insets(5, 25, 5, 10);
         panel.add(directoryChooserButton, gbc);
 
-        File mafiaLogsDirectory = new File(Settings.getSettingString("Mafia logs location"));
+        File mafiaLogsDirectory = new File(Settings.getString("Mafia logs location"));
         if (!mafiaLogsDirectory.exists())
             mafiaLogsDirectory = null;
 
@@ -326,7 +326,7 @@ final class MafiaLogsVisualizerDialog extends JDialog {
         }
 
         // If the input seems to be correct, save the directory used.
-        Settings.setSettingString("Mafia logs location", mafiaLogsDirectoryField.getText());
+        Settings.setString("Mafia logs location", mafiaLogsDirectoryField.getText());
 
         // In case there are still some logs in the temporary data directory
         // delete all of its contents.

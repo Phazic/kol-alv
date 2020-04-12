@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -143,10 +143,10 @@ public final class XMLLogCreator {
 
         writer.writeStartDocument("UTF-8", "1.0");
         writer.writeStartElement("ascensionlogxml");
-        writer.writeAttribute("version", Settings.getSettingString("XML format version"));
+        writer.writeAttribute("version", Settings.getString("XML format version"));
         writer.writeStartElement("filecreator");
         writer.writeAttribute("program", "Ascension Log Visualizer");
-        writer.writeAttribute("programversion", Settings.getSettingString("Version"));
+        writer.writeAttribute("programversion", Settings.getString("Version"));
         writer.writeEndElement();
         writer.writeStartElement("ascension");
         writer.writeAttribute("charactername", characterName);

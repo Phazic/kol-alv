@@ -41,6 +41,7 @@ import com.googlecode.logVisualizer.creator.util.XMLAccessException;
 import com.googlecode.logVisualizer.logData.turn.Encounter;
 import com.googlecode.logVisualizer.parser.LogParser;
 import com.googlecode.logVisualizer.parser.MafiaLogParser;
+import com.googlecode.logVisualizer.util.Lists;
 
 /**
  * This class should be used to handle ascension log caching to limit the amount
@@ -69,10 +70,10 @@ public enum LogsCache {
     {
         // If the XML format version changed, we want to delete all cached logs,
         // because there might be incompatibilities.
-        final String currentXMLVersion = Settings.getSettingString("XML format version");
-        if (!currentXMLVersion.equals(Settings.getSettingString("cached XML format version"))) {
+        final String currentXMLVersion = Settings.getString("XML format version");
+        if (!currentXMLVersion.equals(Settings.getString("cached XML format version"))) {
             deleteCache();
-            Settings.setSettingString("cached XML format version", currentXMLVersion);
+            Settings.setString("cached XML format version", currentXMLVersion);
         } else
             reloadCache();
     }
@@ -124,8 +125,8 @@ public enum LogsCache {
         for (final File log : condensedMafiaLogs)
             executor.execute(new Runnable() {
                 public void run() {
-                    final LogParser logParser = new MafiaLogParser(log,
-                                                                   Settings.getSettingBoolean("Include mafia log notes"));
+                    final LogParser logParser 
+                        = new MafiaLogParser(log, Settings.getBoolean("Include mafia log notes"));
 
                     try {
                         logParser.parse();

@@ -47,7 +47,7 @@ import com.googlecode.logVisualizer.util.Lists;
 
 final class ProjectFeedReader {
     static final String CURRENT_ALV_VERSION_FILE_NAME 
-        = "AscensionLogVisualizer " + Settings.getSettingString("Version") + ".jar";
+        = "AscensionLogVisualizer " + Settings.ALV_VERSION + ".jar";
 
     private static final Pattern REVISION_PATTERN = Pattern.compile("\\w{10}\\:");
 

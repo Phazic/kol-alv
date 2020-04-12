@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 import net.java.dev.spellcast.utilities.UtilityConstants;
 
 import com.googlecode.logVisualizer.Settings;
+import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.turn.Encounter;
 import com.googlecode.logVisualizer.parser.MafiaLogParser;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
@@ -117,7 +118,7 @@ public final class LogsCreator {
      * @param savingDestDir
      *        The directory inside which the parsed ascension logs should be
      *        saved in.
-     * @param logVersion
+     * @param logFormat
      *         The output format of the parsed logs.
      * @return A list containing pairs with filenames and turns of condensed
      *       mafia log files that were attempted to be parsed, but had an
@@ -137,10 +138,10 @@ public final class LogsCreator {
      */
     public static final List<Pair<String, Encounter>> createParsedLogs(final File[] mafiaLogs,
                                                                        final File savingDestDir,
-                                                                       final LogOutputFormat logVersion)
+                                                                       final LogOutputFormat logFormat)
     throws IOException 
     {
-        return createParsedLogs(mafiaLogs, savingDestDir, logVersion, Integer.MAX_VALUE);
+        return createParsedLogs(mafiaLogs, savingDestDir, logFormat, Integer.MAX_VALUE);
     }
 
     /**
@@ -160,7 +161,7 @@ public final class LogsCreator {
      * @param savingDestDir
      *        The directory inside which the parsed ascension logs should be
      *         saved in.
-     * @param logVersion
+     * @param logFormat
      *        The output format of the parsed logs.
      * @param logsToParse
      *        The last n ascensions that should be parsed.
@@ -181,7 +182,7 @@ public final class LogsCreator {
      */
     public static final List<Pair<String, Encounter>> createParsedLogs(final File[] mafiaLogs,
                                                                        final File savingDestDir,
-                                                                       final LogOutputFormat logVersion,
+                                                                       final LogOutputFormat logFormat,
                                                                        final int logsToParse)
     throws IOException 
     {
@@ -219,30 +220,21 @@ public final class LogsCreator {
             executor.execute(new Runnable() {
                 public void run() {
                     final MafiaLogParser parser 
-                        = new MafiaLogParser(f, Settings.getSettingBoolean("Include mafia log notes"));
+                        = new MafiaLogParser(f, Settings.getBoolean("Include mafia log notes"));
 
                     try {
                         parser.parse();
 
-                        if (logVersion == LogOutputFormat.XML_LOG)
-                            XMLLogCreator.createXMLLog(parser.getLogData(), savingDestDir);
-                        else {
-                            final File parsedLog 
-                                = new File(savingDestDir, 
-                                           getParsedLogNameFromCondensedMafiaLog(f.getName(),
-                                                                                    logVersion));
-                            if (parsedLog.exists())
-                                parsedLog.delete();
-                            parsedLog.createNewFile();
-
-                            TextLogCreator.saveTextualLogToFile(parser.getLogData(),
-                                                                parsedLog,
-                                                                logVersion);
-                        }
+                        File newLogFile = createNewLog(f, savingDestDir, logFormat);
+                        LogDataHolder logData = parser.getLogData();
+                        if (logFormat == LogOutputFormat.XML_LOG)
+                            XMLLogCreator.createXMLLog(logData, savingDestDir);
+                        else
+                            TextLogCreator.saveTextualLogToFile(logData, newLogFile, logFormat);
                     } catch (final Exception e) {
                         // Add the erroneous log to the error file list.
                         errorFileList.add(Pair.of(getParsedLogNameFromCondensedMafiaLog(f.getName(),
-                                                                                        logVersion),
+                                                                                        logFormat),
                                                   (Encounter) parser.getLogData()
                                                                     .getLastTurnSpent()));
                         // Print stack trace and the file name of the file in
@@ -273,6 +265,20 @@ public final class LogsCreator {
         return errorFileList;
     }
 
+    private static final File createNewLog(File f, 
+                                           File destDir, 
+                                           LogOutputFormat logFormat)
+    throws IOException
+    {
+        final File parsedLogFile = new File(destDir, 
+                                            getParsedLogNameFromCondensedMafiaLog(f.getName(),
+                                                                                  logFormat));
+        if (parsedLogFile.exists())
+            parsedLogFile.delete();
+        parsedLogFile.createNewFile();
+        return parsedLogFile;
+    }
+
     /**
      * Takes the file name of a condensed mafia log and changes it into the
      * proper format for parsed ascension logs.
@@ -283,18 +289,18 @@ public final class LogsCreator {
      * 
      * @param condensedMafiaLogFileName
      *        File name of the condensed mafia log.
-     * @param logVersion
+     * @param logFormat
      *         The output format of the parsed log.
      * @return The proper parsed ascension log file name.
      */
     public static String getParsedLogNameFromCondensedMafiaLog(final String condensedMafiaLogFileName,
-                                                               final LogOutputFormat logVersion) 
+                                                               final LogOutputFormat logFormat) 
     {
         final String userName = condensedMafiaLogFileName.substring(0,
                                                                     condensedMafiaLogFileName.lastIndexOf("-"));
         String tail = condensedMafiaLogFileName.substring(userName.length())
                                                .replace("-", "_ascend");
-        if (logVersion == LogOutputFormat.HTML_LOG)
+        if (logFormat == LogOutputFormat.HTML_LOG)
             tail = tail.replace(".txt", ".html");
 
         return userName + tail;

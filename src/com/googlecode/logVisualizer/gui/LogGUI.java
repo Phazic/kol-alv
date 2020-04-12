@@ -76,8 +76,8 @@ public final class LogGUI extends JSplitPane {
      *            exists in the given file. (should only be true if the file
      *            holds a pre-parsed ascension log)
      */
-    public LogGUI(
-                  final File log, final LogDataHolder logData, final boolean isTextLogFromFile) {
+    public LogGUI(final File log, final LogDataHolder logData, final boolean isTextLogFromFile) 
+    {
         super();
 
         if (log == null)
@@ -149,14 +149,16 @@ public final class LogGUI extends JSplitPane {
     /**
      * @return The data of the ascension log.
      */
-    public LogDataHolder getLogData() {
+    public LogDataHolder getLogData() 
+    {
         return logData;
     }
 
     /**
      * @return The name of the ascension log.
      */
-    public String getLogName() {
+    public String getLogName() 
+    {
         return logData.getLogName();
     }
 
@@ -164,23 +166,24 @@ public final class LogGUI extends JSplitPane {
      * @param gpbl
      *            The button listener for the {@link GanttPanelGUI} to set.
      */
-    public void setGanttPanelButtonListener(
-                                            final GanttPaneButtonListener gpbl) {
+    public void setGanttPanelButtonListener(final GanttPaneButtonListener gpbl) 
+    {
         ganttPanel.setButtonListener(gpbl);
     }
 
     /**
      * A simple JTextArea that holds the whole contents of the given log file.
      */
-    private final static class LogViewer extends JPanel {
+    private final static class LogViewer extends JPanel 
+    {
         private static final String NEW_LINE = "\n";
 
-        LogViewer(
-                  final LogDataHolder logData) {
+        LogViewer(final LogDataHolder logData) 
+        {
             super(new BorderLayout());
 
-            final JTextArea log = new JTextArea(TextLogCreator.getTextualLog(logData,
-                                                                             LogOutputFormat.TEXT_LOG));
+            final JTextArea log 
+                = new JTextArea(TextLogCreator.getTextualLog(logData, LogOutputFormat.TEXT_LOG));
             log.setWrapStyleWord(true);
             log.setLineWrap(true);
             log.setCaretPosition(0);
@@ -243,8 +246,8 @@ public final class LogGUI extends JSplitPane {
             add(splitter, BorderLayout.CENTER);
         }
 
-        LogViewer(
-                  final File logFile) {
+        LogViewer(final File logFile) 
+        {
             super(new BorderLayout());
 
             final JTextArea log = new JTextArea();
@@ -280,8 +283,8 @@ public final class LogGUI extends JSplitPane {
             add(new JScrollPane(log), BorderLayout.CENTER);
         }
 
-        private void jumpToInterval(
-                                    final JTextArea text, final TurnInterval ti) {
+        private void jumpToInterval(final JTextArea text, final TurnInterval ti) 
+        {
             // If a turn interval was selected, jump to it in the ascension log.
             // We want the turn interval to be the first displayed line in the
             // text area. For that to always work correctly we first jump to the
@@ -307,7 +310,8 @@ public final class LogGUI extends JSplitPane {
     /**
      * A listener for all gantt chart configurators.
      */
-    public interface GanttPaneButtonListener {
+    public interface GanttPaneButtonListener 
+    {
         /**
          * This method will fire if the button for the area category customizer
          * has been pressed.
@@ -316,8 +320,7 @@ public final class LogGUI extends JSplitPane {
          *            The turnrundown gantt chart on which certain actions can
          *            be performed.
          */
-        public void areaCategoryCustomizerPressed(
-                                                  TurnrundownGantt turnrundownChart);
+        public void areaCategoryCustomizerPressed(TurnrundownGantt turnrundownChart);
 
         /**
          * This method will fire if the button for the familiar color customizer
@@ -327,7 +330,6 @@ public final class LogGUI extends JSplitPane {
          *            The turnrundown gantt chart on which certain actions can
          *            be performed.
          */
-        public void familiarColorizerPressed(
-                                             TurnrundownGantt turnrundownChart);
+        public void familiarColorizerPressed(TurnrundownGantt turnrundownChart);
     }
 }

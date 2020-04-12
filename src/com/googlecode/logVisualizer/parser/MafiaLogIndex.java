@@ -30,13 +30,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -76,7 +74,7 @@ public class MafiaLogIndex {
     private final Map<String, TreeMap<String, Integer>> indexByDate
         = new TreeMap<String, TreeMap<String, Integer>>();
     
-    private final Map<String, TreeSet<File>> includedFiles = new HashMap();
+    private final Map<String, TreeSet<File>> includedFiles = new HashMap<String, TreeSet<File>>();
     
     private String logDirectoryPath;
 
@@ -156,7 +154,7 @@ public class MafiaLogIndex {
         TreeSet<File> playersFiles = includedFiles.get(playerName);
         if (playersFiles == null) {
             playersFiles = new TreeSet<File>();
-            includedFiles.put(playerName,  playersFiles);
+            includedFiles.put(playerName, playersFiles);
         }
         playersFiles.add(file);
     }
@@ -167,18 +165,19 @@ public class MafiaLogIndex {
     private void load()
             throws IOException
     {
-        BufferedReader br = new BufferedReader(new FileReader(indexFile));
-        String line;
-        while ((line = br.readLine()) != null) {
-            INDEX_LINE_MATCHER.reset(line);
-            if (INDEX_LINE_MATCHER.find()) {
-                String playerName = INDEX_LINE_MATCHER.group(1);
-                int ascNumber = Integer.parseInt(INDEX_LINE_MATCHER.group(2));
-                String fileName = INDEX_LINE_MATCHER.group(3);
-                String date = INDEX_LINE_MATCHER.group(4);
-                File namedFile = new File(logDirectoryPath, fileName);
-                addDateEntry(playerName, date, ascNumber);
-                addNumberEntry(playerName, ascNumber, namedFile);
+        try ( BufferedReader br = new BufferedReader(new FileReader(indexFile)) ) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                INDEX_LINE_MATCHER.reset(line);
+                if (INDEX_LINE_MATCHER.find()) {
+                    String playerName = INDEX_LINE_MATCHER.group(1);
+                    int ascNumber = Integer.parseInt(INDEX_LINE_MATCHER.group(2));
+                    String fileName = INDEX_LINE_MATCHER.group(3);
+                    String date = INDEX_LINE_MATCHER.group(4);
+                    File namedFile = new File(logDirectoryPath, fileName);
+                    addDateEntry(playerName, date, ascNumber);
+                    addNumberEntry(playerName, ascNumber, namedFile);
+                }
             }
         }
     }
@@ -329,7 +328,9 @@ public class MafiaLogIndex {
                 ascensionNumber = -1;
             }
             // If file doesn't exist, read it for ascension number changes
-            if (includedFiles.get(playerName).contains(f)) {
+            TreeSet<File> playerFiles = includedFiles.get(playerName);
+            if (playerFiles != null
+                    && playerFiles.contains(f)) {
                 // If file already present, derive info from log
                 ascensionNumber = readLogFileFromIndex(f, ascensionNumber);
             } else {

@@ -32,6 +32,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.jfree.ui.RefineryUtilities;
 
+import com.googlecode.logVisualizer.creator.HTMLLogCreator;
 import com.googlecode.logVisualizer.creator.TextLogCreator;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.turn.*;
@@ -59,7 +60,7 @@ final class DetailedLogViewer extends JFrame {
         if (logData == null)
             throw new NullPointerException("The log data holder must not be null.");
 
-        htmlLog = TextLogCreator.getTextualLog(logData, LogOutputFormat.HTML_LOG);
+        htmlLog = HTMLLogCreator.getTextualLog(logData, LogOutputFormat.HTML_LOG);
 
         final JSplitPane splitter = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitter.setLeftComponent(new JScrollPane(createTurnRundownTree(logData)));

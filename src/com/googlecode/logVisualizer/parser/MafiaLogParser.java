@@ -150,7 +150,7 @@ public final class MafiaLogParser implements LogParser
             throws IOException 
     {
         final MafiaSessionLogReader reader = new MafiaSessionLogReader(log);
-        final boolean isOldAscensionCounting = Settings.getSettingBoolean("Using old ascension counting");
+        final boolean isOldAscensionCounting = Settings.getBoolean("Using old ascension counting");
         boolean nsFightWon = false;
 
         while (reader.hasNext() && !nsFightWon) {

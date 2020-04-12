@@ -42,10 +42,10 @@ public final class LogVisualizerCLI
         final LogOutputFormat outputFormat = params.format;
         final int numberToParse = params.ascensionCount;
         final File mafiaLogsDirectory 
-            = (params.srcDir == null) ? new File(Settings.getSettingString("Mafia logs location"))
+            = (params.srcDir == null) ? new File(Settings.getString("Mafia logs location"))
                                       : params.srcDir ;
         final File parsedLogsSavingDirectory 
-            = (params.destDir == null) ? new File(Settings.getSettingString("Parsed logs saving location"))
+            = (params.destDir == null) ? new File(Settings.getString("Parsed logs saving location"))
                                        : params.destDir ;
         //final Pair<File, File> logFolders = getLogsSrcDestFolders(args);
         //final File mafiaLogsDirectory = logFolders.getVar1();
@@ -89,8 +89,8 @@ public final class LogVisualizerCLI
         }
         
         // If the input seems to be correct, save the directories used.
-        Settings.setSettingString("Mafia logs location", mafiaLogsDirectory.getAbsolutePath());
-        Settings.setSettingString("Parsed logs saving location",
+        Settings.setString("Mafia logs location", mafiaLogsDirectory.getAbsolutePath());
+        Settings.setString("Parsed logs saving location",
                                   parsedLogsSavingDirectory.getAbsolutePath());
 
         // Now, the actual parsing can start.

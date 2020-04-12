@@ -73,8 +73,13 @@ import net.java.dev.spellcast.utilities.UtilityConstants;
  */
 public final class Settings 
 {
+    public static final String VERSION_PROPERTY_NAME = "Version";
+    public static final String ALV_VERSION = "3.8.0.0a";
+    
+    public static final String XML_VERSION_PROPERTY_NAME = "1.4";
+    public static final String XML_VERSION = "XML format version";
+    
     private static final String TRUE_STRING = "TRUE";
-
     private static final String FALSE_STRING = "FALSE";
 
     private static final Properties DEFAULT_SETTINGS = new Properties();
@@ -95,10 +100,10 @@ public final class Settings
         if (!isNimbusLafPresent)
             DEFAULT_SETTINGS.setProperty("LookAndFeel", "Metal");
 
-        DEFAULT_SETTINGS.setProperty("Version", "3.8.0.0");
+        DEFAULT_SETTINGS.setProperty(VERSION_PROPERTY_NAME, ALV_VERSION);
         DEFAULT_SETTINGS.setProperty("Check Updates", FALSE_STRING);
 
-        DEFAULT_SETTINGS.setProperty("XML format version", "1.4");
+        DEFAULT_SETTINGS.setProperty(XML_VERSION_PROPERTY_NAME, XML_VERSION);
         DEFAULT_SETTINGS.setProperty("cached XML format version", "0.0");
 
         DEFAULT_SETTINGS.setProperty("Mafia logs location", "");
@@ -118,31 +123,21 @@ public final class Settings
         // values. Otherwise only make sure that the version number is correct.
         if (SETTINGS_FILE.exists())
             try {
-                final Properties p = new Properties();
-                final FileInputStream fis = new FileInputStream(SETTINGS_FILE);
-                p.load(fis);
-                fis.close();
-
-                // The version and XML format version properties have to be set
-                // anyway, so that they hold the correct version string.
-                p.setProperty("Version", DEFAULT_SETTINGS.getProperty("Version"));
-                p.setProperty("XML format version",
-                        DEFAULT_SETTINGS.getProperty("XML format version"));
-
-                saveSettingsToFile(p);
+                final Properties p = loadFromFile();
+                saveToFile(p);
             } catch (final IOException e) {
                 e.printStackTrace();
                 // In case something went wrong go back to default values.
-                saveSettingsToFile(DEFAULT_SETTINGS);
+                saveToFile(DEFAULT_SETTINGS);
             }
         else
-            saveSettingsToFile(DEFAULT_SETTINGS);
+            saveToFile(DEFAULT_SETTINGS);
     }
 
     /**
      * Writes the given Properties object to the file system.
      */
-    private static void saveSettingsToFile(final Properties p) 
+    private static void saveToFile(final Properties p) 
     {
         synchronized (DEFAULT_SETTINGS) {
             try {
@@ -163,7 +158,7 @@ public final class Settings
     /**
      * Loads the current Properties from the file system.
      */
-    private static Properties loadSettingsFromFile()
+    private static Properties loadFromFile()
     throws IOException 
     {
         final Properties p = new Properties(DEFAULT_SETTINGS);
@@ -173,6 +168,10 @@ public final class Settings
             p.load(fis);
             fis.close();
         }
+        // The version and XML format version properties have to be set
+        // anyway, so that they hold the correct version string.
+        p.setProperty(VERSION_PROPERTY_NAME, ALV_VERSION);
+        p.setProperty(XML_VERSION_PROPERTY_NAME, XML_VERSION);
 
         return p;
     }
@@ -185,12 +184,12 @@ public final class Settings
      * @param value
      *            The value of the setting.
      */
-    public static void setSettingString(final String key, final String value) 
+    public static void setString(final String key, final String value) 
     {
         try {
-            final Properties p = loadSettingsFromFile();
+            final Properties p = loadFromFile();
             p.setProperty(key, value);
-            saveSettingsToFile(p);
+            saveToFile(p);
         } catch (final IOException e) {
             e.printStackTrace();
         }
@@ -203,12 +202,12 @@ public final class Settings
      *         doesn't exist or there was a problem with reading the settings
      *         file.
      */
-    public static String getSettingString(final String key) 
+    public static String getString(final String key) 
     {
         String value = null;
 
         try {
-            value = loadSettingsFromFile().getProperty(key);
+            value = loadFromFile().getProperty(key);
         } catch (final IOException e) {
             e.printStackTrace();
         }
@@ -227,12 +226,12 @@ public final class Settings
      * @param value
      *            The value of the setting.
      */
-    public static void setSettingBoolean(final String key, final Boolean value) 
+    public static void setBoolean(final String key, final Boolean value) 
     {
         if (value)
-            setSettingString(key, TRUE_STRING);
+            setString(key, TRUE_STRING);
         else
-            setSettingString(key, FALSE_STRING);
+            setString(key, FALSE_STRING);
     }
 
     /**
@@ -242,9 +241,9 @@ public final class Settings
      *         otherwise false. Returns {@code null} if the setting doesn't
      *         exist or there was a problem with reading the settings file.
      */
-    public static Boolean getSettingBoolean(final String key) 
+    public static Boolean getBoolean(final String key) 
     {
-        final String value = getSettingString(key);
+        final String value = getString(key);
 
         if (value == null)
             return null;

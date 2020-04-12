@@ -119,7 +119,7 @@ public final class LogVisualizer
 
     private LogVisualizer() {
         try {
-            final String wantedLaf = Settings.getSettingString("LookAndFeel");
+            final String wantedLaf = Settings.getString("LookAndFeel");
             LookAndFeelInfo usedLaf = null;
             for (final LookAndFeelInfo lafi : UIManager.getInstalledLookAndFeels())
                 if (lafi.getName().equals(wantedLaf)) {
@@ -141,7 +141,7 @@ public final class LogVisualizer
             {
                 loadLog(file,
                         new MafiaLogParser(file,
-                                           Settings.getSettingBoolean("Include mafia log notes")));
+                                           Settings.getBoolean("Include mafia log notes")));
             }
 
             public void loadPreparsedLog(final File file) 
@@ -174,7 +174,7 @@ public final class LogVisualizer
         RefineryUtilities.centerFrameOnScreen(gui);
         gui.setVisible(true);
 
-        if (Settings.getSettingBoolean("First program startup")) {
+        if (Settings.getBoolean("First program startup")) {
             final JLabel text = new JLabel("<html>Note that <b>for the purpose of logging your own runs with KolMafia, it is best</b> to "
                                            + "turn on all options but <i>Log adventures left instead of adventures used</i> under "
                                            + "<i>General->Preferences->Session Logs</i> in KolMafia."
@@ -185,10 +185,10 @@ public final class LogVisualizer
                                           "KolMafia logging options",
                                           JOptionPane.INFORMATION_MESSAGE);
 
-            Settings.setSettingBoolean("First program startup", false);
+            Settings.setBoolean("First program startup", false);
         }
 
-        if (Settings.getSettingBoolean("Check Updates"))
+        if (Settings.getBoolean("Check Updates"))
             new Thread(new Runnable() {
                 public void run() {
                     if (ProjectUpdateViewer.isNewerVersionUploaded())
@@ -385,6 +385,7 @@ public final class LogVisualizer
      */
     public static void main(final String[] args) 
     {
+        System.out.println("Ascension Log Visualizer build " + Settings.ALV_VERSION);
         ALVParameters params = new ALVParameters(args);
         if (params.hasError)
             return;

@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -129,7 +129,7 @@ final class ExternalMafiaLogParserDialog extends JDialog {
         final JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createTitledBorder("AFH MafiaLog Parser location"));
 
-        fileLocationField = new JTextField(Settings.getSettingString("AFH Parser location"));
+        fileLocationField = new JTextField(Settings.getString("AFH Parser location"));
         final JButton fileChooserButton = new JButton("Find File");
         GridBagConstraints gbc;
 
@@ -152,7 +152,7 @@ final class ExternalMafiaLogParserDialog extends JDialog {
 
         fileLocationField.addActionListener(runAFHParserAction);
 
-        File mafiaLogsDirectory = new File(Settings.getSettingString("Mafia logs location"));
+        File mafiaLogsDirectory = new File(Settings.getString("Mafia logs location"));
         if (!mafiaLogsDirectory.exists())
             mafiaLogsDirectory = null;
 
@@ -175,8 +175,8 @@ final class ExternalMafiaLogParserDialog extends JDialog {
         final JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createTitledBorder("AFH MafiaLog Parser options"));
 
-        argumentsField = new JTextField(Settings.getSettingString("AFH Parser arguments"));
-        userNameField = new JTextField(Settings.getSettingString("AFH Parser user name"));
+        argumentsField = new JTextField(Settings.getString("AFH Parser arguments"));
+        userNameField = new JTextField(Settings.getString("AFH Parser user name"));
         final JLabel argumentsLabel = new JLabel("Arguments:");
         final JLabel userNameLabel = new JLabel("User Name:");
         GridBagConstraints gbc;
@@ -235,9 +235,9 @@ final class ExternalMafiaLogParserDialog extends JDialog {
      */
     private void runAFHParser() {
         // Save the used text field inputs.
-        Settings.setSettingString("AFH Parser location", fileLocationField.getText());
-        Settings.setSettingString("AFH Parser arguments", argumentsField.getText());
-        Settings.setSettingString("AFH Parser user name", userNameField.getText());
+        Settings.setString("AFH Parser location", fileLocationField.getText());
+        Settings.setString("AFH Parser arguments", argumentsField.getText());
+        Settings.setString("AFH Parser user name", userNameField.getText());
 
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {

@@ -35,6 +35,8 @@ import javax.swing.*;
 import org.jfree.ui.RefineryUtilities;
 
 import com.googlecode.logVisualizer.Settings;
+import com.googlecode.logVisualizer.creator.BBCodeLogCreator;
+import com.googlecode.logVisualizer.creator.HTMLLogCreator;
 import com.googlecode.logVisualizer.creator.LogsCreator;
 import com.googlecode.logVisualizer.creator.TextLogCreator;
 import com.googlecode.logVisualizer.creator.XMLLogCreator;
@@ -48,7 +50,7 @@ import com.googlecode.logVisualizer.util.LogOutputFormat;
  * to a file.
  */
 public final class ExportDialog extends JDialog {
-    private final JTextField directoryLocationField = new JTextField(Settings.getSettingString("Parsed logs saving location"));
+    private final JTextField directoryLocationField = new JTextField(Settings.getString("Parsed logs saving location"));
 
     private final LogDataHolder logData;
 
@@ -128,17 +130,17 @@ public final class ExportDialog extends JDialog {
         group.add(xmlButton);
 
         final ActionListener listener = new ActionListener() {
-            public void actionPerformed(
-                                        final ActionEvent e) {
-                if (htmlButton.isSelected())
-                    logVersion = LogOutputFormat.HTML_LOG;
-                else if (bbcodeButton.isSelected())
-                    logVersion = LogOutputFormat.BBCODE_LOG;
-                else
-                    logVersion = LogOutputFormat.TEXT_LOG;
-
+            public void actionPerformed(final ActionEvent e) {
                 previewArea.setEnabled(true);
-                previewArea.setText(TextLogCreator.getTextualLog(logData, logVersion));
+                if (htmlButton.isSelected())
+                    previewArea.setText(HTMLLogCreator.getTextualLog(logData, 
+                                                                     LogOutputFormat.HTML_LOG));
+                else if (bbcodeButton.isSelected())
+                    previewArea.setText(BBCodeLogCreator.getTextualLog(logData,
+                                                                       LogOutputFormat.BBCODE_LOG));
+                else
+                    previewArea.setText(TextLogCreator.getTextualLog(logData,
+                                                                     LogOutputFormat.TEXT_LOG));
                 previewArea.setCaretPosition(0);
             }
         };
@@ -266,8 +268,8 @@ public final class ExportDialog extends JDialog {
         return buttonPanel;
     }
 
-    private void saveTextualLog(
-                                final String directoryPath, final LogOutputFormat format) {
+    private void saveTextualLog(final String directoryPath, final LogOutputFormat format) 
+    {
         try {
             final File directory = new File(directoryPath);
             if (!directory.exists())
@@ -281,9 +283,10 @@ public final class ExportDialog extends JDialog {
                 logDest.delete();
             logDest.createNewFile();
 
+            
             TextLogCreator.saveTextualLogToFile(logData, logDest, format);
 
-            Settings.setSettingString("Parsed logs saving location",
+            Settings.setString("Parsed logs saving location",
                                       directoryLocationField.getText());
         } catch (final IOException e) {
             JOptionPane.showMessageDialog(null,
@@ -303,8 +306,8 @@ public final class ExportDialog extends JDialog {
 
             XMLLogCreator.createXMLLog(logData, logDest);
 
-            Settings.setSettingString("Parsed logs saving location",
-                                      directoryLocationField.getText());
+            Settings.setString("Parsed logs saving location",
+                               directoryLocationField.getText());
         } catch (final FileAccessException e) {
             JOptionPane.showMessageDialog(null,
                                           "A problem occurred while creating/writing to the file.",
