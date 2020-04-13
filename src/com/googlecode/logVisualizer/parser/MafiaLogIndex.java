@@ -390,7 +390,7 @@ public class MafiaLogIndex {
      * @param playerName Player whose ascension logs are to be gathered
      * @return Array of File objects representing the Mafia logs covering that ascension
      */
-    public File[] getAscensionN(int asc, String playerName)
+    public File[] getAscensionsN(int asc, String playerName, int count)
     {
         if (playerName == null) {
             // If no player name, choose player with the most log files
@@ -400,7 +400,12 @@ public class MafiaLogIndex {
             return emptyFiles;
         
         // Get files for that ascension
-        SortedSet<File> mafiaLogs = indexByNumber.get(playerName).get(asc);
+        TreeMap<Integer, SortedSet<File>> playersIndex = indexByNumber.get(playerName);
+        SortedSet<File> mafiaLogs = playersIndex.get(asc);
+        // Get more files if subsequent ascensions wanted
+        while (--count > 0) {
+            mafiaLogs.addAll(playersIndex.get(++asc));
+        }
         return mafiaLogs.toArray(new File[mafiaLogs.size()]);        
     }
     
@@ -413,7 +418,7 @@ public class MafiaLogIndex {
      * @param playerName Player whose ascension logs are to be gathered
      * @return Array of File objects representing the Mafia logs covering that ascension
      */
-    public File[] getAscensionForDate(String date, String playerName)
+    public File[] getAscensionsForDate(String date, String playerName, int count)
     {
         if (playerName == null) {
             // If no player name, choose player with the most log files
@@ -427,7 +432,12 @@ public class MafiaLogIndex {
         if (asc == null)
             return emptyFiles;
         // Get files for that ascension
-        SortedSet<File> mafiaLogs = indexByNumber.get(playerName).get(asc);
+        TreeMap<Integer, SortedSet<File> >playersIndex = indexByNumber.get(playerName);
+        SortedSet<File> mafiaLogs = playersIndex.get(asc);
+        // Get subsequent ascensions if more than one
+        while (--count > 0) {
+            mafiaLogs.addAll(playersIndex.get(++asc));
+        }
         return mafiaLogs.toArray(new File[mafiaLogs.size()]);
     }
     

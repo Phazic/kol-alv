@@ -40,7 +40,7 @@ public final class LogVisualizerCLI
     public static void runCLIParsing(LogVisualizer.ALVParameters params) 
     {
         final LogOutputFormat outputFormat = params.format;
-        final int numberToParse = params.ascensionCount;
+        int numberToParse = params.ascensionCount;
         final File mafiaLogsDirectory 
             = (params.srcDir == null) ? new File(Settings.getString("Mafia logs location"))
                                       : params.srcDir ;
@@ -76,10 +76,19 @@ public final class LogVisualizerCLI
         File[] mafiaLogs = { };
         String playerName = params.playerName;    // null if not supplied in command line
         if (params.ascensionNumber > 0) {
-            mafiaLogs = mafiaLogIndex.getAscensionN(params.ascensionNumber, playerName);
+            // If ascension number is supplied and count is not, only do one ascension
+            if (numberToParse == Integer.MAX_VALUE)
+                numberToParse = 1;
+            mafiaLogs = mafiaLogIndex.getAscensionsN(params.ascensionNumber, playerName,
+                                                     numberToParse);
         } else if (params.date != null) {
-            mafiaLogs = mafiaLogIndex.getAscensionForDate(params.date, playerName);
+            // If ascension date is supplied and count is not, only do one ascension
+            if (numberToParse == Integer.MAX_VALUE)
+                numberToParse = 1;
+            mafiaLogs = mafiaLogIndex.getAscensionsForDate(params.date, playerName,
+                                                           numberToParse);
         } else if (params.ascensionCount > 0) {
+            // If neither ascension number nor date is supplied, do last n runs
             mafiaLogs = mafiaLogIndex.getLastNMafiaLogs(params.ascensionCount, playerName);
         }
         // Make sure we have ANY logs

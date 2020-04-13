@@ -28,8 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import com.googlecode.logVisualizer.Settings;
 import com.googlecode.logVisualizer.logData.HeaderFooterComment;
@@ -68,7 +66,7 @@ import com.googlecode.logVisualizer.util.Stack;
 
 public final class MafiaLogParser implements LogParser 
 {
-    private static final Pattern THREE_FIGURE_STATGAIN = Pattern.compile("You gain \\d{3} [\\w\\s]+");
+    //private static final Pattern THREE_FIGURE_STATGAIN = Pattern.compile("You gain \\d{3} [\\w\\s]+");
 
     private static final String WINS_THE_FIGHT = "wins the fight!";
 
@@ -78,7 +76,7 @@ public final class MafiaLogParser implements LogParser
 
     private static final String AVATAR_OF_JARLSBERG = "Avatar of Jarlsberg";
 
-    private static final String NAUGHTY_SORCERESS_FIGHT_STRING = "Sorceress Tower: Naughty Sorceress";
+    //private static final String NAUGHTY_SORCERESS_FIGHT_STRING = "Sorceress Tower: Naughty Sorceress";
 
     private static final String NAUGHTY_SORCERESS_FIGHT_STRING_2015 = "The Naughty Sorceress' Chamber";
     
@@ -277,13 +275,13 @@ public final class MafiaLogParser implements LogParser
         getLogData().createLogSummary();
     }
 
-    /**
+    /*
      * This method checks whether the Naughty Sorceress has been beaten.
      *
      * @param block
      *            The Naughty Sorceress encounter block.
      * @return True if the Naughty Sorceress was beaten, otherwise false.
-     */
+     
     private boolean isNaughtySorceressBeaten(final LogBlock block) 
     {
         for (final String line : block.getBlockLines())
@@ -304,6 +302,7 @@ public final class MafiaLogParser implements LogParser
 
         return false;
     }
+    */
 
     /**
      * This method checks whether the fight was won

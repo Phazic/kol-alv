@@ -200,7 +200,7 @@ public final class LogsCreator {
         Arrays.sort(condensedMafiaLogs, new Comparator<File>() {
             public int compare(final File o1, final File o2) 
             {
-                return o2.getName().compareToIgnoreCase(o1.getName());
+                return o1.getName().compareToIgnoreCase(o2.getName());
             }
         });
 
