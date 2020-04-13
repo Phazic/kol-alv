@@ -1,18 +1,16 @@
 package com.googlecode.logVisualizer.creator;
 
 import java.util.Collections;
-import java.util.Map;
 
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.Skill;
 import com.googlecode.logVisualizer.logData.turn.turnAction.DayChange;
-import com.googlecode.logVisualizer.util.LogOutputFormat;
 
 public class HTMLLogCreator extends TextLogCreator {
 
     public HTMLLogCreator(LogDataHolder logData) {
         super(logData);
-        // TODO Auto-generated constructor stub
+        // Nothing else to do for this class
     }
 
     @Override

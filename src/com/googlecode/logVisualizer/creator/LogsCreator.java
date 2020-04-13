@@ -226,6 +226,7 @@ public final class LogsCreator {
                         parser.parse();
 
                         File newLogFile = createNewLog(f, savingDestDir, logFormat);
+                        System.out.println("Writing " + newLogFile.getAbsolutePath() + "...");
                         LogDataHolder logData = parser.getLogData();
                         if (logFormat == LogOutputFormat.XML_LOG)
                             XMLLogCreator.createXMLLog(logData, savingDestDir);
@@ -242,8 +243,6 @@ public final class LogsCreator {
                         System.err.println(f.getName());
                         e.printStackTrace();
                     }
-                    // TODO: Flesh out notification when parsing an ascension is complete
-                    System.out.println(parser.getLogData().getLogName());
                 }
             });
         }
