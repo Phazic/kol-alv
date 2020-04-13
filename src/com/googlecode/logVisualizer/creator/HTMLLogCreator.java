@@ -33,6 +33,8 @@ public class HTMLLogCreator extends TextLogCreator {
         writeln("P { text-indent: -2em; margin-left: 2em; margin-top: 0; margin-bottom: 0; }");
         writeln("TD { font-size: 11px; padding-left: 1em; padding-right: 1em; \n" + 
                 "     text-align: right; }");
+        writeln("TD.toc { font-size: 11px; padding-left: 1em; padding-right: 1em; \n" + 
+                "         text-align: left; background-color: #cccccc }");
         writeln("</style></head>");
         writeln("<body>");
     }
@@ -44,10 +46,48 @@ public class HTMLLogCreator extends TextLogCreator {
                 + logData.getAscensionPath() + " ASCENSION STARTED " + ascensionStartDate + "</h1>");
     }
     
-    @Override
-    protected void printSectionHeader(String title)
+    protected void printTOCLine(String text, String anchor)
     {
-        writeln("<h2>" + title + "</h2>");
+        writeln("<br><a href=\"#" + anchor + "\">" + text + "</a>");
+    }
+    
+    @Override
+    protected void printTableOfContents(LogDataHolder logData)
+    {
+        writeln("<table><tr><td class=\"toc\"><b>TABLE OF CONTENTS</b>");
+        printTOCLine("Adventures", "adventures");
+        printTOCLine("Quest Turns", "questturns");
+        printTOCLine("Pulls", "pulls");
+        printTOCLine("Levels", "levels");
+        printTOCLine("Stats", "stats");
+        printTOCLine("+Stat Breakdown", "statbreakdown");
+        if (logData.getLearnedSkills().size() > 0) 
+            printTOCLine("Skills Learned", "skills");
+        printTOCLine("Familiars", "familiars");
+        printTOCLine("Semi-rares", "semirares");
+        if (logData.getLogSummary().getTrackedCombatItemUses().size() > 0) 
+            printTOCLine("Tracked Combat Items", "trackedcombatitems");
+        if (logData.getHybridContent().size() > 0) 
+            printTOCLine("DNA Lab", "hybrid");
+        printTOCLine("Hunted Combats", "onthetrail");
+        printTOCLine("Banishment", "banishment");
+        printTOCLine("Yellow Destruction", "yellowray");
+        printTOCLine("Copied Combats", "copies");
+        printTOCLine("Free Runaways", "runaways");
+        printTOCLine("Wandering Encounters", "wanderers");
+        printTOCLine("Combat Items", "combatitems");
+        printTOCLine("Casts", "casts");
+        printTOCLine("MP Gains", "mpgains");
+        printTOCLine("Eating and Drinking and Using", "consuming");
+        printTOCLine("Meat", "meat");
+        printTOCLine("Bottlenecks", "bottlenecks");
+        writeln("</td></tr></table>");
+    }
+    
+    @Override
+    protected void printSectionHeader(String title, String anchor)
+    {
+        writeln("<a name=\"" + anchor + "\"/><h2>" + title + "</h2>");
     }
 
     @Override
@@ -81,7 +121,7 @@ public class HTMLLogCreator extends TextLogCreator {
     protected void printCastsSection(LogDataHolder logData)
     {
         // Skills cast summary
-        printSectionHeader("CASTS");
+        printSectionHeader("CASTS", "casts");
         for (final Skill s : logData.getLogSummary().getSkillsCast()) {
             writelnWithBreak(s.toString());
         }
