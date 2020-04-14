@@ -1,0 +1,43 @@
+// This file lists all HTML augmentations to parsed log outputs.
+// You can make manual changes/additions to this file if you want to.
+// Note that the key names are case sensitive.
+// If a key name is not used it will be seen as an empty string, so
+// if you do not want to use a particular key, just delete it or
+// comment it out from the list.
+// In case you want to include a line change in a value, use N_L to
+// mark the position.
+// Changes to this file will be loaded the next time the Log Visualizer is started.
+
+// Empty lines are ignored
+// This is a comment :)
+// Format for this file -> key name | value
+// Nothing more :D
+
+logHeaderStart | <i>
+logHeaderEnd | </i>
+turnStart | <b>
+turnEnd | </b>
+dayChangeLineStart | <b>
+dayChangeLineEnd | </b>
+statgainStart | <font color=#808080>
+statgainEnd | </font>
+pullStart | <font color=#008B8B>
+pullEnd | </font>
+consumableStart | <font color=#009933><b>
+consumableEnd | </b></font>
+itemStart | <font color=#0000CD>
+itemEnd | </font>
+familiarStart | <font color=#B03030>
+familiarEnd | </font>
+huntedStart | <font color=#006400><b>
+huntedEnd | </b></font>
+yellowRayStart | <font color=#B8860B><b>
+yellowRayEnd | </b></font>
+specialEncounterStart | <font color=#8B008B><b>
+specialEncounterEnd | </b></font>
+levelStart | <font color=#DC143C><b>
+levelEnd | </b></font>
+runawayStart | <font color=#CD853F><b>
+runawayEnd | </b></font>
+notesStart | <br>
+notesEnd | <br><br>
