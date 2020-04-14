@@ -26,7 +26,7 @@
             </restrict>
             <manifest>
                 <attribute name="Main-Class"
-                    value="com.googlecode.logVisualizer.LogVisualizer" />
+                    value="com.googlecode.alv.LogVisualizer" />
             </manifest>
         </jar>
     </target>
