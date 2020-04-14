@@ -59,11 +59,11 @@ public final class UtilityConstants {
 
     public static final String CACHE_DIRECTORY = "cache/";
 
-    public static final String DATA_DIRECTORY = "logVisualizerData/";
+    public static final String DATA_DIRECTORY = "alvdata/";
 
-    public static final String LICENSE_DIRECTORY = "logVisualizerData/license/";
+    public static final String LICENSE_DIRECTORY = "alvdata/license/";
 
-    public static final String KOL_DATA_DIRECTORY = "logVisualizerData/koldata/";
+    public static final String KOL_DATA_DIRECTORY = "alvdata/koldata/";
 
     public static final File TEMP_LOCATION = new File(ROOT_LOCATION, TEMP_DIRECTORY);
 
