@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -43,8 +43,8 @@ import net.java.swingfx.waitwithstyle.PerformanceInfiniteProgressPanel;
 import org.jfree.ui.RefineryUtilities;
 
 import com.googlecode.logVisualizer.Settings;
+import com.googlecode.logVisualizer.creator.LogsCreator;
 import com.googlecode.logVisualizer.logData.turn.Encounter;
-import com.googlecode.logVisualizer.parser.LogsCreator;
 import com.googlecode.logVisualizer.util.LogOutputFormat;
 import com.googlecode.logVisualizer.util.Pair;
 
@@ -98,8 +98,8 @@ public final class InternalMafiaLogParserDialog extends JDialog {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setGlassPane(new PerformanceInfiniteProgressPanel());
 
-        mafiaLogsDirectoryField = new JTextField(Settings.getSettingString("Mafia logs location"));
-        parsedLogsSavingDirectoryField = new JTextField(Settings.getSettingString("Parsed logs saving location"));
+        mafiaLogsDirectoryField = new JTextField(Settings.getString("Mafia logs location"));
+        parsedLogsSavingDirectoryField = new JTextField(Settings.getString("Parsed logs saving location"));
 
         File mafiaLogsDirectory = new File(mafiaLogsDirectoryField.getText());
         if (!mafiaLogsDirectory.exists())
@@ -291,8 +291,8 @@ public final class InternalMafiaLogParserDialog extends JDialog {
         }
 
         // If the input seems to be correct, save the directories used.
-        Settings.setSettingString("Mafia logs location", mafiaLogsDirectoryField.getText());
-        Settings.setSettingString("Parsed logs saving location",
+        Settings.setString("Mafia logs location", mafiaLogsDirectoryField.getText());
+        Settings.setString("Parsed logs saving location",
                                   parsedLogsSavingDirectoryField.getText());
 
         final ExecutorService executor = Executors.newSingleThreadExecutor();

@@ -28,9 +28,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import com.googlecode.logVisualizer.creator.LogsCreator;
 import com.googlecode.logVisualizer.gui.InternalMafiaLogParserDialog;
 import com.googlecode.logVisualizer.logData.turn.Encounter;
-import com.googlecode.logVisualizer.parser.LogsCreator;
 import com.googlecode.logVisualizer.parser.MafiaLogIndex;
 import com.googlecode.logVisualizer.util.LogOutputFormat;
 import com.googlecode.logVisualizer.util.Pair;
@@ -40,13 +40,13 @@ public final class LogVisualizerCLI
     public static void runCLIParsing(LogVisualizer.ALVParameters params) 
     {
         final LogOutputFormat outputFormat = params.format;
-        final int numberToParse = params.ascensionCount;
+        int numberToParse = params.ascensionCount;
         final File mafiaLogsDirectory 
-        	= (params.srcDir == null) ? new File(Settings.getSettingString("Mafia logs location"))
-        						      : params.srcDir ;
+            = (params.srcDir == null) ? new File(Settings.getString("Mafia logs location"))
+                                      : params.srcDir ;
         final File parsedLogsSavingDirectory 
-        	= (params.destDir == null) ? new File(Settings.getSettingString("Parsed logs saving location"))
-        							   : params.destDir ;
+            = (params.destDir == null) ? new File(Settings.getString("Parsed logs saving location"))
+                                       : params.destDir ;
         //final Pair<File, File> logFolders = getLogsSrcDestFolders(args);
         //final File mafiaLogsDirectory = logFolders.getVar1();
         //final File parsedLogsSavingDirectory = logFolders.getVar2();
@@ -65,44 +65,51 @@ public final class LogVisualizerCLI
         // Load the index
         MafiaLogIndex mafiaLogIndex = null;
         try {
-        	mafiaLogIndex = MafiaLogIndex.getMafiaLogIndex(mafiaLogsDirectory.getAbsolutePath());
-        	//mafiaLogIndex.dump();
+            mafiaLogIndex = MafiaLogIndex.getMafiaLogIndex(mafiaLogsDirectory.getAbsolutePath());
+            //mafiaLogIndex.dump();
         } catch (IOException e) {
-        	System.out.println(e);
-        	return;
+            System.out.println(e);
+            return;
         }
 
         // Make sure we have only the necessary logs
         File[] mafiaLogs = { };
-        String playerName = params.playerName;	// null if not supplied in command line
+        String playerName = params.playerName;    // null if not supplied in command line
         if (params.ascensionNumber > 0) {
-        	mafiaLogs = mafiaLogIndex.getAscensionN(params.ascensionNumber, playerName);
+            // If ascension number is supplied and count is not, only do one ascension
+            if (numberToParse == Integer.MAX_VALUE)
+                numberToParse = 1;
+            mafiaLogs = mafiaLogIndex.getAscensionsN(params.ascensionNumber, playerName,
+                                                     numberToParse);
         } else if (params.date != null) {
-        	mafiaLogs = mafiaLogIndex.getAscensionForDate(params.date, playerName);
+            // If ascension date is supplied and count is not, only do one ascension
+            if (numberToParse == Integer.MAX_VALUE)
+                numberToParse = 1;
+            mafiaLogs = mafiaLogIndex.getAscensionsForDate(params.date, playerName,
+                                                           numberToParse);
         } else if (params.ascensionCount > 0) {
-        	mafiaLogs = mafiaLogIndex.getLastNMafiaLogs(params.ascensionCount, playerName);
+            // If neither ascension number nor date is supplied, do last n runs
+            mafiaLogs = mafiaLogIndex.getLastNMafiaLogs(params.ascensionCount, playerName);
         }
         // Make sure we have ANY logs
         if (mafiaLogs.length == 0) {
-        	System.out.println("No Mafia logs found for this request.");
-        	return;
+            System.out.println("No Mafia logs found for this request.");
+            return;
         }
-		// TODO debug Show selected files
-		for (File f : mafiaLogs)
-			System.out.println(f.getName());
         
         // If the input seems to be correct, save the directories used.
-        Settings.setSettingString("Mafia logs location", mafiaLogsDirectory.getAbsolutePath());
-        Settings.setSettingString("Parsed logs saving location",
+        Settings.setString("Mafia logs location", mafiaLogsDirectory.getAbsolutePath());
+        Settings.setString("Parsed logs saving location",
                                   parsedLogsSavingDirectory.getAbsolutePath());
 
         // Now, the actual parsing can start.
         try {
             System.out.println("Parsing, please wait.");
-            final List<Pair<String, Encounter>> errorFileList = LogsCreator.createParsedLogs(mafiaLogs,
-                                                                                             parsedLogsSavingDirectory,
-                                                                                             outputFormat,
-                                                                                             numberToParse);
+            final List<Pair<String, Encounter>> errorFileList 
+                = LogsCreator.createParsedLogs(mafiaLogs,
+                                               parsedLogsSavingDirectory,
+                                               outputFormat,
+                                               numberToParse);
             System.out.println("Parsing finished.\n\n");
 
             // If there were error logs, give the user feedback on them.
@@ -122,54 +129,4 @@ public final class LogVisualizerCLI
             e.printStackTrace();
         }
     }
-
-    /*
-    private static LogOutputFormat getOutputFormat(
-                                                   final String[] args) {
-        LogOutputFormat outputFormat = LogOutputFormat.TEXT_LOG;
-
-        for (final String s : args)
-            if (s.equals("-html"))
-                outputFormat = LogOutputFormat.HTML_LOG;
-            else if (s.equals("-bbcode"))
-                outputFormat = LogOutputFormat.BBCODE_LOG;
-            else if (s.equals("-xml"))
-                outputFormat = LogOutputFormat.XML_LOG;
-
-        return outputFormat;
-    }
-
-    private static int getNumberOfLogsToParse(
-                                              final String[] args) {
-        int number = Integer.MAX_VALUE;
-
-        for (int i = 0; i < args.length; i++)
-            if (args[i].equals("-c") || args[i].equals("-count"))
-                number = Integer.parseInt(args[i + 1]);
-
-        return number;
-    }
-
-    private static Pair<File, File> getLogsSrcDestFolders(
-                                                          final String[] args) {
-        String mafiaLogsDirectoryPath = Settings.getSettingString("Mafia logs location");
-        String parsedLogsSavingDirectoryPath = Settings.getSettingString("Parsed logs saving location");
-        for (int i = 0; i < args.length; i++) {
-            final File tmp = new File(args[i]);
-            if (tmp.exists()) {
-                mafiaLogsDirectoryPath = args[i];
-
-                final int j = i + 1;
-                if (j < args.length)
-                    parsedLogsSavingDirectoryPath = args[j];
-                else
-                    parsedLogsSavingDirectoryPath = args[i];
-
-                break;
-            }
-        }
-
-        return Pair.of(new File(mafiaLogsDirectoryPath), new File(parsedLogsSavingDirectoryPath));
-    }
-    */
 }

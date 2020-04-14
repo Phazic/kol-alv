@@ -22,7 +22,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.googlecode.logVisualizer.util.xmlLogs;
+package com.googlecode.logVisualizer.creator.util;
 
 import java.io.File;
 import java.io.FileInputStream;

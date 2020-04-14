@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -46,9 +46,8 @@ import com.googlecode.logVisualizer.Settings;
 import com.googlecode.logVisualizer.util.Lists;
 
 final class ProjectFeedReader {
-    static final String CURRENT_ALV_VERSION_FILE_NAME = "AscensionLogVisualizer "
-                                                        + Settings.getSettingString("Version")
-                                                        + ".jar";
+    static final String CURRENT_ALV_VERSION_FILE_NAME 
+        = "AscensionLogVisualizer " + Settings.ALV_VERSION + ".jar";
 
     private static final Pattern REVISION_PATTERN = Pattern.compile("\\w{10}\\:");
 
@@ -65,12 +64,12 @@ final class ProjectFeedReader {
      * @throws UnknownHostException
      *             if the server cannot be connected
      */
-    static List<ProjectUpdateContainer> readUpdatesFeed(
-                                                        final String url)
-                                                                         throws IOException,
-                                                                         ParserConfigurationException,
-                                                                         SAXException,
-                                                                         XPathExpressionException {
+    static List<ProjectUpdateContainer> readUpdatesFeed(final String url)
+    throws IOException,
+           ParserConfigurationException,
+           SAXException,
+           XPathExpressionException 
+    {
         final DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
         domFactory.setNamespaceAware(true);
         final DocumentBuilder builder = domFactory.newDocumentBuilder();
@@ -125,8 +124,8 @@ final class ProjectFeedReader {
         return updates;
     }
 
-    private static String decodeXMLEntities(
-                                            final String xml) {
+    private static String decodeXMLEntities(final String xml)
+    {
         if (xml.contains("&"))
             return xml.replaceAll("&quot;", "\"")
                       .replaceAll("&amp;", "&")
@@ -141,9 +140,10 @@ final class ProjectFeedReader {
      * Namespace interface implementation necessary due to the usage of the Atom
      * namespace by the project updates feed.
      */
-    private static final class GoogleProjectFeedNamespaceContext implements NamespaceContext {
-        public String getNamespaceURI(
-                                      final String prefix) {
+    private static final class GoogleProjectFeedNamespaceContext implements NamespaceContext 
+    {
+        public String getNamespaceURI(final String prefix) 
+        {
             if (prefix == null)
                 throw new NullPointerException("Null prefix");
             else if ("pre".equals(prefix))
@@ -153,15 +153,15 @@ final class ProjectFeedReader {
             return XMLConstants.NULL_NS_URI;
         }
 
-        public String getPrefix(
-                                final String uri) {
+        public String getPrefix(final String uri) 
+        {
             return uri.equals("http://www.w3.org/2005/Atom") ? "pre"
                                                             : XMLConstants.DEFAULT_NS_PREFIX;
         }
 
         // This method isn't necessary for XPath processing.
-        public Iterator<?> getPrefixes(
-                                       final String uri) {
+        public Iterator<String> getPrefixes(final String uri) 
+        {
             throw new UnsupportedOperationException();
         }
 

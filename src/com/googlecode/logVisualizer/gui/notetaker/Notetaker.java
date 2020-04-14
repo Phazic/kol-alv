@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -38,6 +38,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.jfree.ui.RefineryUtilities;
 
+import com.googlecode.logVisualizer.creator.TextLogCreator;
 import com.googlecode.logVisualizer.gui.ExportDialog;
 import com.googlecode.logVisualizer.gui.MultiLineCellRenderer;
 import com.googlecode.logVisualizer.logData.HeaderFooterComment;
@@ -45,23 +46,24 @@ import com.googlecode.logVisualizer.logData.LogComment;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.logData.turn.TurnInterval;
 import com.googlecode.logVisualizer.logData.turn.turnAction.DayChange;
+import com.googlecode.logVisualizer.util.LogOutputFormat;
 import com.googlecode.logVisualizer.util.LookAheadIterator;
 import com.googlecode.logVisualizer.util.Pair;
-import com.googlecode.logVisualizer.util.textualLogs.TextLogCreator;
 
 /**
  * This class is ascension log notes editor, that gives the user a basic
  * interface to manage log notes.
  */
-public final class Notetaker extends JFrame {
-    /**	
+public final class Notetaker extends JFrame 
+{
+    /**
      * Will show a dialog to let the user choose which turncounts should be
      * included inside the Notetaker and then show the actual Notetaker
      * interface based on that decision.
      * @param log Collection of log data
      */
-    public static void showNotetaker(
-                                     final LogDataHolder log) {
+    public static void showNotetaker(final LogDataHolder log) 
+    {
         // When trying to open the Notetaker with a non-detailed log, users are
         // only shown an info dialog, telling them that the given log cannot be
         // used with the Notetaker.
@@ -136,8 +138,8 @@ public final class Notetaker extends JFrame {
      *            The log data on which the other given log is based on. May be
      *            the same log in case the other log is not a sub interval log.
      */
-    Notetaker(
-              final LogDataHolder log, final LogDataHolder baseLog) {
+    Notetaker(final LogDataHolder log, final LogDataHolder baseLog) 
+    {
         super("Notetaker for " + log.getLogName());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout(5, 25));
@@ -165,7 +167,8 @@ public final class Notetaker extends JFrame {
         setVisible(true);
     }
 
-    private JComponent createNotePanel() {
+    private JComponent createNotePanel() 
+    {
         final JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         final JPanel commentPanel = new JPanel(new BorderLayout());
         final JScrollPane fullPostCommentArea = new JScrollPane(postCommentArea);
@@ -211,7 +214,8 @@ public final class Notetaker extends JFrame {
         return splitPane;
     }
 
-    private JPanel createButtonPanel() {
+    private JPanel createButtonPanel() 
+    {
         final JPanel buttonPanel = new JPanel(new GridLayout(1, 0, 200, 0));
         final JButton closeButton = new JButton("Close window");
 
@@ -232,7 +236,8 @@ public final class Notetaker extends JFrame {
         return buttonPanel;
     }
 
-    private void addListeners() {
+    private void addListeners() 
+    {
         turnIntervalMenu.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(
                                      final ListSelectionEvent lse) {
@@ -278,7 +283,8 @@ public final class Notetaker extends JFrame {
         });
     }
 
-    private void saveCommentsToCurrentContainer() {
+    private void saveCommentsToCurrentContainer() 
+    {
         if (activeTurnInterval != null) {
             if (!activeTurnInterval.isSingleCommentContainer()) {
                 setLogEdited(preCommentArea.getText(), activeTurnInterval.getPreIntervalComment());
@@ -290,8 +296,8 @@ public final class Notetaker extends JFrame {
         }
     }
 
-    private void setLogEdited(
-                              final String currentComment, final LogComment matchingLogComment) {
+    private void setLogEdited(final String currentComment, final LogComment matchingLogComment) 
+    {
         if (!baseLog.isEdited())
             if (!currentComment.equals(matchingLogComment.getComments()))
                 baseLog.setEdited(true);
@@ -301,7 +307,8 @@ public final class Notetaker extends JFrame {
      * Just a little helper class make instantiation of the turn interval menu a
      * little nicer.
      */
-    private static final class TurnIntervalMenuList extends JList {
+    private static final class TurnIntervalMenuList extends JList 
+    {
 
         /**
          * Creates the turn interval menu.
@@ -309,16 +316,17 @@ public final class Notetaker extends JFrame {
          * @param log
          *            The log data whose notes should be managed.
          */
-        TurnIntervalMenuList(
-                             final LogDataHolder log) {
+        TurnIntervalMenuList(final LogDataHolder log) 
+        {
             super(new DefaultListModel());
             setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             setCellRenderer(new MultiLineCellRenderer());
 
             final DefaultListModel model = (DefaultListModel) getModel();
-            final Iterator<String> turnRundownListIndex = TextLogCreator.getTurnRundownList(log)
-                                                                        .iterator();
-            final LookAheadIterator<Pair<DayChange, HeaderFooterComment>> headerFooterIndex = new LookAheadIterator<Pair<DayChange, HeaderFooterComment>>(log.getHeaderFooterComments()
+            final Iterator<String> turnRundownListIndex 
+                = TextLogCreator.getTurnRundownList(log).iterator();
+            final LookAheadIterator<Pair<DayChange, HeaderFooterComment>> headerFooterIndex 
+                = new LookAheadIterator<Pair<DayChange, HeaderFooterComment>>(log.getHeaderFooterComments()
                                                                                                                                                              .iterator());
             Pair<DayChange, HeaderFooterComment> currentHeaderFooter = headerFooterIndex.next();
 
@@ -342,9 +350,9 @@ public final class Notetaker extends JFrame {
                                                                                 " footer")));
         }
 
-        private void addHeaderFooter(
-                                     final boolean isHeader,
-                                     final Pair<DayChange, HeaderFooterComment> headerFooter) {
+        private void addHeaderFooter(final boolean isHeader,
+                                     final Pair<DayChange, HeaderFooterComment> headerFooter) 
+        {
             final LogComment comment;
             final String description;
             if (isHeader) {
@@ -358,13 +366,14 @@ public final class Notetaker extends JFrame {
             ((DefaultListModel) getModel()).addElement(new LogCommentContainer(comment, description));
         }
 
-        private static String getHeaderFooterDescription(
-                                                         final Pair<DayChange, HeaderFooterComment> headerFooter,
-                                                         final String headerFooterEnding) {
+        private static String getHeaderFooterDescription(final Pair<DayChange, HeaderFooterComment> headerFooter,
+                                                         final String headerFooterEnding) 
+        {
             return "===Day " + headerFooter.getVar1().getDayNumber() + headerFooterEnding + "===";
         }
 
-        LogCommentContainer getCurrentlySelectedTurnInterval() {
+        LogCommentContainer getCurrentlySelectedTurnInterval() 
+        {
             if (isSelectionEmpty())
                 throw new IllegalStateException("No turn interval is currently selected.");
 
@@ -372,15 +381,16 @@ public final class Notetaker extends JFrame {
         }
     }
 
-    private static final class LogInterval {
+    private static final class LogInterval 
+    {
         private final String name;
 
         private final int startTurn;
 
         private final int endTurn;
 
-        LogInterval(
-                    final String name, final int startTurn, final int endTurn) {
+        LogInterval(final String name, final int startTurn, final int endTurn) 
+        {
             if (name == null)
                 throw new IllegalArgumentException("The name must not be null.");
 
@@ -389,25 +399,30 @@ public final class Notetaker extends JFrame {
             this.endTurn = endTurn;
         }
 
-        String getName() {
+        String getName() 
+        {
             return name;
         }
 
-        int getStartTurn() {
+        int getStartTurn() 
+        {
             return startTurn;
         }
 
-        int getEndTurn() {
+        int getEndTurn() 
+        {
             return endTurn;
         }
 
         @Override
-        public String toString() {
+        public String toString() 
+        {
             return name;
         }
 
         @Override
-        public int hashCode() {
+        public int hashCode() 
+        {
             final int prime = 31;
             int result = 8421;
             result = prime * result + startTurn;
@@ -417,8 +432,8 @@ public final class Notetaker extends JFrame {
         }
 
         @Override
-        public boolean equals(
-                              final Object obj) {
+        public boolean equals(final Object obj) 
+        {
             if (this == obj)
                 return true;
             if (obj == null)

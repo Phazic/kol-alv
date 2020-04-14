@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -28,9 +28,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
+import com.googlecode.logVisualizer.creator.TextLogCreator;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
 import com.googlecode.logVisualizer.util.Lists;
-import com.googlecode.logVisualizer.util.textualLogs.TextLogCreator;
 
 /**
  * A basic implementation of the {@link LogParser} interface for an ascension
@@ -40,7 +40,8 @@ import com.googlecode.logVisualizer.util.textualLogs.TextLogCreator;
  * All methods in this class throw a {@link NullPointerException} if a null
  * object reference is passed in any parameter.
  */
-public abstract class AbstractLogParser implements LogParser {
+public abstract class AbstractLogParser implements LogParser 
+{
     private final LogDataHolder logData;
 
     private final List<LineParser> lineParsers = Lists.newArrayList();
@@ -51,8 +52,8 @@ public abstract class AbstractLogParser implements LogParser {
      * @param logData
      *            The log data of this log parser to set.
      */
-    public AbstractLogParser(
-                             final LogDataHolder logData) {
+    public AbstractLogParser(final LogDataHolder logData) 
+    {
         if (logData == null)
             throw new NullPointerException("The LogDataHolder must not be null.");
 
@@ -75,8 +76,8 @@ public abstract class AbstractLogParser implements LogParser {
      * @param line
      *            The line to be parsed.
      */
-    protected void parseLine(
-                             final String line) {
+    protected void parseLine(final String line) 
+    {
         for (final LineParser lp : lineParsers)
             // If the parser can parse the line, this method also returns true.
             // This is used to cut back on the amount of loops.
@@ -104,9 +105,9 @@ public abstract class AbstractLogParser implements LogParser {
      *            The line to be parsed.
      * @throws java.io.IOException If a read failure occurs
      */
-    protected void parseBlock(
-                              final BufferedReader reader)
-                                                          throws IOException {
+    protected void parseBlock(final BufferedReader reader)
+    throws IOException 
+    {
         if (!blockParsers.isEmpty()) {
             // Get the next line and reset the reader back to its previous
             // position afterwards.
@@ -125,7 +126,8 @@ public abstract class AbstractLogParser implements LogParser {
     /**
      * @return The log data of this log parser.
      */
-    public LogDataHolder getLogData() {
+    public LogDataHolder getLogData() 
+    {
         return logData;
     }
 
@@ -136,7 +138,8 @@ public abstract class AbstractLogParser implements LogParser {
      * 
      * @see LogParser
      */
-    public boolean isDetailedLogData() {
+    public boolean isDetailedLogData() 
+    {
         return logData.isDetailedLog();
     }
 
@@ -144,8 +147,8 @@ public abstract class AbstractLogParser implements LogParser {
      * @param lineParser
      *            The line parser to add.
      */
-    protected void addLineParser(
-                                 final LineParser lineParser) {
+    protected void addLineParser(final LineParser lineParser) 
+    {
         lineParsers.add(lineParser);
     }
 
@@ -153,8 +156,8 @@ public abstract class AbstractLogParser implements LogParser {
      * @param blockParser
      *            The block parser to add.
      */
-    protected void addBlockParser(
-                                  final BlockParser blockParser) {
+    protected void addBlockParser(final BlockParser blockParser) 
+    {
         blockParsers.add(blockParser);
     }
 }

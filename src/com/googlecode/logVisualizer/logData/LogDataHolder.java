@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -1582,7 +1582,7 @@ public final class LogDataHolder {
         AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE),
         ED("Ed", StatClass.MYSTICALITY),
         VAMPYRE("Vampyre", StatClass.MUSCLE),
-        PLUMBER("Plumber", StatClass.MOXIE),	// TODO: His level is whatever his highest stat is
+        PLUMBER("Plumber", StatClass.MOXIE),    // TODO: His level is whatever his highest stat is
         NOT_DEFINED("not defined", StatClass.MUSCLE);
 
         private static final Map<String, CharacterClass> stringToEnum = Maps.newHashMap();

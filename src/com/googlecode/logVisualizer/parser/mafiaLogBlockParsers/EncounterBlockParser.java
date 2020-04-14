@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -172,7 +172,7 @@ public final class EncounterBlockParser implements LogBlockParser {
         lineParsers.add(new MafiaLearnedSkillLineParser() );
         
         // Add a note parser to encounter blocks
-        if (Settings.getSettingBoolean("Include mafia log notes"))
+        if (Settings.getBoolean("Include mafia log notes"))
             lineParsers.add(new NotesLineParser());
     }
 

@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -34,13 +34,14 @@ import java.util.concurrent.TimeUnit;
 import net.java.dev.spellcast.utilities.UtilityConstants;
 
 import com.googlecode.logVisualizer.Settings;
+import com.googlecode.logVisualizer.creator.LogsCreator;
+import com.googlecode.logVisualizer.creator.XMLLogCreator;
+import com.googlecode.logVisualizer.creator.util.FileAccessException;
+import com.googlecode.logVisualizer.creator.util.XMLAccessException;
 import com.googlecode.logVisualizer.logData.turn.Encounter;
 import com.googlecode.logVisualizer.parser.LogParser;
-import com.googlecode.logVisualizer.parser.LogsCreator;
 import com.googlecode.logVisualizer.parser.MafiaLogParser;
-import com.googlecode.logVisualizer.util.xmlLogs.FileAccessException;
-import com.googlecode.logVisualizer.util.xmlLogs.XMLAccessException;
-import com.googlecode.logVisualizer.util.xmlLogs.XMLLogCreator;
+import com.googlecode.logVisualizer.util.Lists;
 
 /**
  * This class should be used to handle ascension log caching to limit the amount
@@ -57,21 +58,22 @@ public enum LogsCache {
     CACHE;
 
     private static final Comparator<File> FILE_COMPARATOR = new Comparator<File>() {
-        public int compare(
-                           final File o1, final File o2) {
+        public int compare(final File o1, final File o2) 
+        {
             return o1.getName().compareToIgnoreCase(o2.getName());
         }
     };
 
     private Map<String, List<File>> logsByCharacterMap = Collections.emptyMap();
 
-    private LogsCache() {
+    private LogsCache() 
+    {
         // If the XML format version changed, we want to delete all cached logs,
         // because there might be incompatibilities.
-        final String currentXMLVersion = Settings.getSettingString("XML format version");
-        if (!currentXMLVersion.equals(Settings.getSettingString("cached XML format version"))) {
+        final String currentXMLVersion = Settings.getString("XML format version");
+        if (!currentXMLVersion.equals(Settings.getString("cached XML format version"))) {
             deleteCache();
-            Settings.setSettingString("cached XML format version", currentXMLVersion);
+            Settings.setString("cached XML format version", currentXMLVersion);
         } else
             reloadCache();
     }
@@ -80,14 +82,16 @@ public enum LogsCache {
      * @return A read-only map of all cached log files with their corresponding
      *         character name used as the key.
      */
-    public synchronized Map<String, List<File>> getLogsByCharacter() {
+    public synchronized Map<String, List<File>> getLogsByCharacter() 
+    {
         return Collections.unmodifiableMap(logsByCharacterMap);
     }
 
     /**
      * @return A list of all cached log files sorted alphabetically.
      */
-    public synchronized List<File> getLogs() {
+    public synchronized List<File> getLogs() 
+    {
         final List<File> logs = Lists.newArrayList(50);
         for (final String character : logsByCharacterMap.keySet())
             logs.addAll(logsByCharacterMap.get(character));
@@ -111,17 +115,18 @@ public enum LogsCache {
      *         the turn after which the exception occurred. This list will be
      *         empty if all files were correctly parsed.
      */
-    public synchronized List<Pair<String, Encounter>> createCache(
-                                                                  final File[] condensedMafiaLogs) {
-        final List<Pair<String, Encounter>> errorFileList = Collections.synchronizedList(new ArrayList<Pair<String, Encounter>>());
-        final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime()
-                                                                             .availableProcessors() * 2);
+    public synchronized List<Pair<String, Encounter>> createCache(final File[] condensedMafiaLogs) 
+    {
+        final List<Pair<String, Encounter>> errorFileList 
+            = Collections.synchronizedList(new ArrayList<Pair<String, Encounter>>());
+        final ExecutorService executor 
+            = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
         for (final File log : condensedMafiaLogs)
             executor.execute(new Runnable() {
                 public void run() {
-                    final LogParser logParser = new MafiaLogParser(log,
-                                                                   Settings.getSettingBoolean("Include mafia log notes"));
+                    final LogParser logParser 
+                        = new MafiaLogParser(log, Settings.getBoolean("Include mafia log notes"));
 
                     try {
                         logParser.parse();
@@ -159,7 +164,8 @@ public enum LogsCache {
      * which backs {@link #getLogsByCharacter()}, but won't clear it in case it
      * is still needed on the users side.
      */
-    public synchronized void reloadCache() {
+    public synchronized void reloadCache() 
+    {
         logsByCharacterMap = Maps.newHashMap();
 
         final File[] cachedFiles = UtilityConstants.CACHE_LOCATION.listFiles();
@@ -185,7 +191,8 @@ public enum LogsCache {
     /**
      * Deletes all cached ascension logs.
      */
-    public synchronized void deleteCache() {
+    public synchronized void deleteCache() 
+    {
         for (final File f : UtilityConstants.CACHE_LOCATION.listFiles())
             if (!f.isDirectory())
                 f.delete();

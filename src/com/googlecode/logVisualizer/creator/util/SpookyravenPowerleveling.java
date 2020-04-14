@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -22,7 +22,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.googlecode.logVisualizer.util.textualLogs;
+package com.googlecode.logVisualizer.creator.util;
 
 import com.googlecode.logVisualizer.logData.Item;
 import com.googlecode.logVisualizer.logData.turn.SingleTurn;
@@ -32,7 +32,7 @@ import com.googlecode.logVisualizer.logData.turn.TurnVersion;
 /**
  * A helper class for Spookyraven powerleveling statistics.
  */
-final class SpookyravenPowerleveling {
+final public class SpookyravenPowerleveling {
     private int ballroomTurns;
 
     private int ballStatNoncom;
@@ -49,8 +49,8 @@ final class SpookyravenPowerleveling {
 
     private int bathNoncom;
 
-    SpookyravenPowerleveling(
-                             final Iterable<TurnInterval> turns) {
+    public SpookyravenPowerleveling(final Iterable<TurnInterval> turns)
+    {
         if (turns == null)
             throw new NullPointerException("The turns collection must not be null.");
 
@@ -84,35 +84,43 @@ final class SpookyravenPowerleveling {
         }
     }
 
-    int getBallroomTurns() {
+    public int getBallroomTurns() 
+    {
         return ballroomTurns;
     }
 
-    int getBallroomStatNoncombats() {
+    public int getBallroomStatNoncombats() 
+    {
         return ballStatNoncom;
     }
 
-    int getZombieWaltzers() {
+    public int getZombieWaltzers() 
+    {
         return zombieWaltzers;
     }
 
-    int getDanceCards() {
+    public int getDanceCards() 
+    {
         return danceCards;
     }
 
-    int getGalleryTurns() {
+    public int getGalleryTurns() 
+    {
         return galleryTurns;
     }
 
-    int getLouvres() {
+    public int getLouvres() 
+    {
         return louvre;
     }
 
-    int getBathroomTurns() {
+    public int getBathroomTurns() 
+    {
         return bathroomTurns;
     }
 
-    int getBathroomNoncombats() {
+    public int getBathroomNoncombats() 
+    {
         return bathNoncom;
     }
 }

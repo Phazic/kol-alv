@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -51,14 +51,14 @@ import net.java.swingfx.waitwithstyle.PerformanceInfiniteProgressPanel;
 import org.jfree.ui.RefineryUtilities;
 
 import com.googlecode.logVisualizer.Settings;
+import com.googlecode.logVisualizer.creator.LogsCreator;
+import com.googlecode.logVisualizer.creator.XMLLogCreator;
+import com.googlecode.logVisualizer.creator.util.XMLLogReader;
 import com.googlecode.logVisualizer.logData.turn.Encounter;
-import com.googlecode.logVisualizer.parser.LogsCreator;
 import com.googlecode.logVisualizer.parser.UsefulPatterns;
 import com.googlecode.logVisualizer.util.Lists;
 import com.googlecode.logVisualizer.util.LogsCache;
 import com.googlecode.logVisualizer.util.Pair;
-import com.googlecode.logVisualizer.util.xmlLogs.XMLLogCreator;
-import com.googlecode.logVisualizer.util.xmlLogs.XMLLogReader;
 
 /**
  * A dialog to select mafia logs for direct visualisation without having to
@@ -142,7 +142,7 @@ final class MafiaLogsVisualizerDialog extends JDialog {
                     ((AscensionLogsTableModel) visualizableAscensionLogsTable.getModel()).setVisualizeAll(toggleAllBox.isSelected());
             }
         });
-        mafiaLogsDirectoryField = new JTextField(Settings.getSettingString("Mafia logs location"));
+        mafiaLogsDirectoryField = new JTextField(Settings.getString("Mafia logs location"));
         mafiaLogsDirectoryField.addActionListener(new ActionListener() {
             public void actionPerformed(
                                         final ActionEvent e) {
@@ -230,7 +230,7 @@ final class MafiaLogsVisualizerDialog extends JDialog {
         gbc.insets = new Insets(5, 25, 5, 10);
         panel.add(directoryChooserButton, gbc);
 
-        File mafiaLogsDirectory = new File(Settings.getSettingString("Mafia logs location"));
+        File mafiaLogsDirectory = new File(Settings.getString("Mafia logs location"));
         if (!mafiaLogsDirectory.exists())
             mafiaLogsDirectory = null;
 
@@ -326,7 +326,7 @@ final class MafiaLogsVisualizerDialog extends JDialog {
         }
 
         // If the input seems to be correct, save the directory used.
-        Settings.setSettingString("Mafia logs location", mafiaLogsDirectoryField.getText());
+        Settings.setString("Mafia logs location", mafiaLogsDirectoryField.getText());
 
         // In case there are still some logs in the temporary data directory
         // delete all of its contents.

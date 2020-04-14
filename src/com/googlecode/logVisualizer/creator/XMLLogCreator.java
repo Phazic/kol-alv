@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -22,7 +22,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.googlecode.logVisualizer.util.xmlLogs;
+package com.googlecode.logVisualizer.creator;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -34,6 +34,8 @@ import javax.xml.stream.XMLStreamWriter;
 
 import com.bea.xml.stream.XMLOutputFactoryBase;
 import com.googlecode.logVisualizer.Settings;
+import com.googlecode.logVisualizer.creator.util.FileAccessException;
+import com.googlecode.logVisualizer.creator.util.XMLAccessException;
 import com.googlecode.logVisualizer.logData.*;
 import com.googlecode.logVisualizer.logData.consumables.Consumable;
 import com.googlecode.logVisualizer.logData.logSummary.LevelData;
@@ -88,8 +90,8 @@ public final class XMLLogCreator {
 
         OutputStreamWriter out;
         try {
-        	out = new OutputStreamWriter(new FileOutputStream(new File(saveDst, logData.getLogName() + ".xml")),
-        			                                          Charset.forName("UTF-8"));
+            out = new OutputStreamWriter(new FileOutputStream(new File(saveDst, logData.getLogName() + ".xml")),
+                                                              Charset.forName("UTF-8"));
         } catch (final FileNotFoundException e) {
             e.printStackTrace();
             throw new FileAccessException("File stream could not be created.");
@@ -141,10 +143,10 @@ public final class XMLLogCreator {
 
         writer.writeStartDocument("UTF-8", "1.0");
         writer.writeStartElement("ascensionlogxml");
-        writer.writeAttribute("version", Settings.getSettingString("XML format version"));
+        writer.writeAttribute("version", Settings.getString("XML format version"));
         writer.writeStartElement("filecreator");
         writer.writeAttribute("program", "Ascension Log Visualizer");
-        writer.writeAttribute("programversion", Settings.getSettingString("Version"));
+        writer.writeAttribute("programversion", Settings.getString("Version"));
         writer.writeEndElement();
         writer.writeStartElement("ascension");
         writer.writeAttribute("charactername", characterName);

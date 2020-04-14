@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -246,21 +246,21 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
      *            Sets the flag on whether this combat was banished or not.
      */
     public void setBanished(final boolean isBanished) {
-    	setBanished(isBanished, null, null);
+        setBanished(isBanished, null, null);
     }
     
     public void setBanished(final boolean isBanished, String banishName, String turns) {
-    	this.isBanished = turnVersion == TurnVersion.COMBAT ? isBanished : false;
-    	if (isBanished) {
-    		this.banishedInfo = getEncounterName() + " {" + (banishName != null ? banishName : "unknown") + " (" + (turns != null ? turns : "???") + " turns )}";  
-    	}
+        this.isBanished = turnVersion == TurnVersion.COMBAT ? isBanished : false;
+        if (isBanished) {
+            this.banishedInfo = getEncounterName() + " {" + (banishName != null ? banishName : "unknown") + " (" + (turns != null ? turns : "???") + " turns )}";  
+        }
     }
     
     public String getBanishedInfo() {
-    	if (this.isBanished)
-    		return this.banishedInfo;
-    	else
-    		return null;
+        if (this.isBanished)
+            return this.banishedInfo;
+        else
+            return null;
     }
     
 
@@ -429,9 +429,9 @@ public final class SingleTurn extends AbstractTurn implements Encounter, Compara
      */
     public int compareTo(
                          final TurnEntity te) {
-    	if (te instanceof SingleTurn)
-    		return 100 * (dayNumber - ((SingleTurn) te).getDayNumber()) + turnNumber - te.getTurnNumber();
-    	return turnNumber - te.getTurnNumber();
+        if (te instanceof SingleTurn)
+            return 100 * (dayNumber - ((SingleTurn) te).getDayNumber()) + turnNumber - te.getTurnNumber();
+        return turnNumber - te.getTurnNumber();
     }
 
     @Override

@@ -22,18 +22,18 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.googlecode.logVisualizer.util.xmlLogs;
+package com.googlecode.logVisualizer.creator.util;
 
 /**
- * An exception thrown in case a XML file could not be read/written to.
+ * An exception thrown in case a file could not be created/read/written to.
  */
-public final class XMLAccessException extends Exception {
-    public XMLAccessException() {
+public final class FileAccessException extends Exception {
+    public FileAccessException() {
         super();
     }
 
-    public XMLAccessException(
-                              final String s) {
+    public FileAccessException(
+                               final String s) {
         super(s);
     }
 }

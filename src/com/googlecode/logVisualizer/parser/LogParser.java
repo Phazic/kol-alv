@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -26,8 +26,8 @@ package com.googlecode.logVisualizer.parser;
 
 import java.io.IOException;
 
+import com.googlecode.logVisualizer.creator.TextLogCreator;
 import com.googlecode.logVisualizer.logData.LogDataHolder;
-import com.googlecode.logVisualizer.util.textualLogs.TextLogCreator;
 
 /**
  * An interface for an ascension log parser.
@@ -46,7 +46,7 @@ public interface LogParser {
      *             shouldn't be used for further computations
      */
     public void parse()
-                       throws IOException;
+    throws IOException;
 
     /**
      * @return The log data of this log parser.

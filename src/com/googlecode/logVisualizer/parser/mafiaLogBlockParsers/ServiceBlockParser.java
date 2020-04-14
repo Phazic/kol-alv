@@ -25,6 +25,7 @@
 package com.googlecode.logVisualizer.parser.mafiaLogBlockParsers;
 
 import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -46,20 +47,22 @@ public class ServiceBlockParser implements LogBlockParser
 
     private static final ItemAcquisitionLineParser acquisitionParser = new ItemAcquisitionLineParser();
 
-    private static final Map<String, String> SERVICES
-        = Map.ofEntries(new AbstractMap.SimpleEntry<String, String>("1", "Donate Blood"),
-                        new AbstractMap.SimpleEntry<String, String>("2", "Feed the Children (But Not Too Much)"),
-                        new AbstractMap.SimpleEntry<String, String>("3", "Build Playground Mazes"),
-                        new AbstractMap.SimpleEntry<String, String>("4", "Feed Conspirators"),
-                        new AbstractMap.SimpleEntry<String, String>("5", "Breed More Collies"),
-                        new AbstractMap.SimpleEntry<String, String>("6", "Reduce Gazelle Population"),
-                        new AbstractMap.SimpleEntry<String, String>("7", "Make Sausage"),
-                        new AbstractMap.SimpleEntry<String, String>("8", "Be a Living Statue"),
-                        new AbstractMap.SimpleEntry<String, String>("9", "Make Margaritas"),
-                        new AbstractMap.SimpleEntry<String, String>("10", "Clean Steam Tunnels"),
-                        new AbstractMap.SimpleEntry<String, String>("11", "Coil Wire"),
-                        new AbstractMap.SimpleEntry<String, String>("30", "Donate Body")
-                        );
+    private static final Map<String, String> SERVICES = new HashMap<String, String>();
+    
+    static {
+        SERVICES.put("1", "Donate Blood");
+        SERVICES.put("2", "Feed the Children (But Not Too Much)");
+        SERVICES.put("3", "Build Playground Mazes");
+        SERVICES.put("4", "Feed Conspirators");
+        SERVICES.put("5", "Breed More Collies");
+        SERVICES.put("6", "Reduce Gazelle Population");
+        SERVICES.put("7", "Make Sausage");
+        SERVICES.put("8", "Be a Living Statue");
+        SERVICES.put("9", "Make Margaritas");
+        SERVICES.put("10", "Clean Steam Tunnels");
+        SERVICES.put("11", "Coil Wire");
+        SERVICES.put("30", "Donate Body");
+    }
     
     @Override
     public void parseBlock(List<String> block, LogDataHolder logData) 

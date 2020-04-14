@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -77,7 +77,7 @@ public final class LogVisualizerGUI extends JFrame {
         if (logLoaderlistener == null)
             throw new NullPointerException("The LogLoaderListener must not be null.");
 
-        File mafiaLogsDirectory = new File(Settings.getSettingString("Mafia logs location"));
+        File mafiaLogsDirectory = new File(Settings.getString("Mafia logs location"));
         if (!mafiaLogsDirectory.exists())
             mafiaLogsDirectory = null;
 
@@ -101,29 +101,29 @@ public final class LogVisualizerGUI extends JFrame {
         final JMenu helpMenu = new JMenu("Help");
 
         final JCheckBoxMenuItem ascensionCountingMenu = new JCheckBoxMenuItem("Using old ascension day/turn counting",
-                                                                              Settings.getSettingBoolean("Using old ascension counting"));
+                                                                              Settings.getBoolean("Using old ascension counting"));
         ascensionCountingMenu.addItemListener(new ItemListener() {
             public void itemStateChanged(
                                          final ItemEvent e) {
-                Settings.setSettingBoolean("Using old ascension counting",
+                Settings.setBoolean("Using old ascension counting",
                                            ascensionCountingMenu.isSelected());
             }
         });
         final JCheckBoxMenuItem mafiaNotesParsingMenu = new JCheckBoxMenuItem("Include mafia log notes",
-                                                                              Settings.getSettingBoolean("Include mafia log notes"));
+                                                                              Settings.getBoolean("Include mafia log notes"));
         mafiaNotesParsingMenu.addItemListener(new ItemListener() {
             public void itemStateChanged(
                                          final ItemEvent e) {
-                Settings.setSettingBoolean("Include mafia log notes",
+                Settings.setBoolean("Include mafia log notes",
                                            mafiaNotesParsingMenu.isSelected());
             }
         });
         final JCheckBoxMenuItem showNonASCIIInLogsMenu = new JCheckBoxMenuItem("Show non-ASCII characters in parsed logs",
-                                                                               Settings.getSettingBoolean("Show non-ASCII characters in parsed logs"));
+                                                                               Settings.getBoolean("Show non-ASCII characters in parsed logs"));
         showNonASCIIInLogsMenu.addItemListener(new ItemListener() {
             public void itemStateChanged(
                                          final ItemEvent e) {
-                Settings.setSettingBoolean("Show non-ASCII characters in parsed logs",
+                Settings.setBoolean("Show non-ASCII characters in parsed logs",
                                            showNonASCIIInLogsMenu.isSelected());
             }
         });
@@ -265,11 +265,11 @@ public final class LogVisualizerGUI extends JFrame {
         });
 
         final JCheckBoxMenuItem updatesCheckMenu = new JCheckBoxMenuItem("Automatically check for newer versions",
-                                                                         Settings.getSettingBoolean("Check Updates"));
+                                                                         Settings.getBoolean("Check Updates"));
         updatesCheckMenu.addItemListener(new ItemListener() {
             public void itemStateChanged(
                                          final ItemEvent e) {
-                Settings.setSettingBoolean("Check Updates", updatesCheckMenu.isSelected());
+                Settings.setBoolean("Check Updates", updatesCheckMenu.isSelected());
             }
         });
         helpMenu.add(updatesCheckMenu);
@@ -286,7 +286,7 @@ public final class LogVisualizerGUI extends JFrame {
             }
         });
         helpMenu.addSeparator();
-        helpMenu.add("Version: " + Settings.getSettingString("Version"));
+        helpMenu.add("Version: " + Settings.getString("Version"));
 
         menuBar.add(fileMenu);
         menuBar.add(extraMenu);

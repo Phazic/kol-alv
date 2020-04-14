@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2011, developers of the Ascension Log Visualizer
+/* Copyright (c) 2008-2020, developers of the Ascension Log Visualizer
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -51,7 +51,8 @@ import com.googlecode.logVisualizer.util.dataTables.DataTablesHandler;
  * <p>
  * {@code Round _roundNumber_: _accountName_ casts _skillName_! (auto-attack)}
  */
-public final class SkillCastLineParser extends AbstractLineParser {
+public final class SkillCastLineParser extends AbstractLineParser 
+{
     private static final Pattern SKILL_CAST = Pattern.compile("cast \\d+ [\\p{L}\\d\\p{Punct}\\s]+|.*casts [\\p{L}\\d\\p{Punct}\\s]+!(?: \\(auto-attack\\))?");
 
     private static final Pattern COMBAT_CAST_CAPTURE_PATTERN = Pattern.compile(".*casts ([\\p{L}\\d\\p{Punct}\\s]+)!(?: \\(auto-attack\\))?");
@@ -66,7 +67,8 @@ public final class SkillCastLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected void doParsing(final String line, final LogDataHolder logData) {
+    protected void doParsing(final String line, final LogDataHolder logData) 
+    {
         final String skillName;
         int amount = 1;
 
@@ -99,12 +101,12 @@ public final class SkillCastLineParser extends AbstractLineParser {
         
         //Check for Banishing skills
         if (UsefulPatterns.BANISH_SKILLS.contains( skillName ))
-        	((SingleTurn) logData.getLastTurnSpent()).setBanished(true, skillName, null);
+            ((SingleTurn) logData.getLastTurnSpent()).setBanished(true, skillName, null);
         
         //Check for tracking skills
         if (skillName.contains( "curse of stench" )) {
-        	SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
-        	logData.addHuntedCombat(DataNumberPair.of(st.getEncounterName(), st.getTurnNumber()));
+            SingleTurn st = (SingleTurn) logData.getLastTurnSpent();
+            logData.addHuntedCombat(DataNumberPair.of(st.getEncounterName(), st.getTurnNumber()));
         }
     }
 
@@ -112,7 +114,8 @@ public final class SkillCastLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected boolean isCompatibleLine(final String line) {
+    protected boolean isCompatibleLine(final String line) 
+    {
         return line.contains("cast") && skillCastMatcher.reset(line).matches();
     }
 }
