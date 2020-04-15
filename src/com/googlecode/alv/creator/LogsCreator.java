@@ -39,6 +39,7 @@ import com.googlecode.alv.parser.MafiaLogParser;
 import com.googlecode.alv.parser.UsefulPatterns;
 import com.googlecode.alv.util.Lists;
 import com.googlecode.alv.util.LogOutputFormat;
+import com.googlecode.alv.util.LogsCache;
 import com.googlecode.alv.util.Pair;
 
 import net.java.dev.spellcast.utilities.UtilityConstants;
@@ -197,12 +198,7 @@ public final class LogsCreator {
             = Collections.synchronizedList(new ArrayList<Pair<String, Encounter>>());
 
         final File[] condensedMafiaLogs = createCondensedMafiaLogs(mafiaLogs);
-        Arrays.sort(condensedMafiaLogs, new Comparator<File>() {
-            public int compare(final File o1, final File o2) 
-            {
-                return o1.getName().compareToIgnoreCase(o2.getName());
-            }
-        });
+        Arrays.sort(condensedMafiaLogs, LogsCache.FILE_COMPARATOR);
 
         // 4 Threads per CPU should be a high enough number to not slow the
         // computation too much down by scheduler overhead while still making
@@ -360,13 +356,7 @@ public final class LogsCreator {
 
             // Sort array in case it isn't already in the proper order, which is
             // oldest mafia log first.
-            Arrays.sort(mafiaLogs, new Comparator<File>() {
-
-                public int compare(
-                                   final File o1, final File o2) {
-                    return o1.getName().compareToIgnoreCase(o2.getName());
-                }
-            });
+            Arrays.sort(mafiaLogs, LogsCache.FILE_COMPARATOR);
             this.mafiaLogs = mafiaLogs;
         }
 
@@ -469,12 +459,7 @@ public final class LogsCreator {
             final File[] condensedMafiaLogs = UtilityConstants.TEMP_LOCATION.listFiles(CONDENSED_MAFIA_LOG_FILTER);
             // Sort array in case it isn't already in the proper order, which is
             // oldest mafia log first.
-            Arrays.sort(condensedMafiaLogs, new Comparator<File>() {
-                public int compare(final File o1, final File o2)
-                {
-                    return o1.getName().compareToIgnoreCase(o2.getName());
-                }
-            });
+            Arrays.sort(condensedMafiaLogs, LogsCache.FILE_COMPARATOR);
             return condensedMafiaLogs;
         }
 

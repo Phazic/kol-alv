@@ -76,8 +76,8 @@ public final class Settings
     public static final String VERSION_PROPERTY_NAME = "Version";
     public static final String ALV_VERSION = "3.8.0.0a";
     
-    public static final String XML_VERSION_PROPERTY_NAME = "1.4";
-    public static final String XML_VERSION = "XML format version";
+    public static final String XML_VERSION_PROPERTY_NAME = "XML format version";
+    public static final String XML_VERSION = "1.4";
     
     private static final String TRUE_STRING = "TRUE";
     private static final String FALSE_STRING = "FALSE";
