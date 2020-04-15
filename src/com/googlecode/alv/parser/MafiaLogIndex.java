@@ -42,6 +42,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.googlecode.alv.gui.InternalMafiaLogParserDialog;
+import com.googlecode.alv.util.LogsCache;
 
 /**
  * This class represents an index of Mafia logs.  It associates ascensions with the
@@ -147,13 +148,13 @@ public class MafiaLogIndex {
         }
         SortedSet<File> files = ascFileLists.get(number);
         if (files == null) {
-            files = new TreeSet<File>();
+            files = new TreeSet<File>(LogsCache.FILE_COMPARATOR);
             ascFileLists.put(number, files);
         }
         files.add(file);
         TreeSet<File> playersFiles = includedFiles.get(playerName);
         if (playersFiles == null) {
-            playersFiles = new TreeSet<File>();
+            playersFiles = new TreeSet<File>(LogsCache.FILE_COMPARATOR);
             includedFiles.put(playerName, playersFiles);
         }
         playersFiles.add(file);
@@ -311,7 +312,7 @@ public class MafiaLogIndex {
         final File[] mafiaLogs = mafiaLogsDirectory.listFiles(InternalMafiaLogParserDialog.MAFIA_LOG_FILTER);
         // Make sure they're sorted.  Alphabetical separates by player name as well as sorting by date
         List<File> sortedMafiaLogs = Arrays.asList(mafiaLogs);
-        Collections.sort(sortedMafiaLogs);
+        Collections.sort(sortedMafiaLogs, LogsCache.FILE_COMPARATOR);
         // If we're going through the files in order now, then we can keep track of 
         // ascension numbers with an int
         String playerName = "";
@@ -374,7 +375,7 @@ public class MafiaLogIndex {
         TreeMap<Integer, SortedSet<File>> ascensions = indexByNumber.get(playerName);
         Integer lastAsc = ascensions.lastKey();
         // Collect all the files, in order, for the last n ascensions
-        TreeSet<File> mafiaLogs = new TreeSet<File>();
+        TreeSet<File> mafiaLogs = new TreeSet<File>(LogsCache.FILE_COMPARATOR);
         while ((lastAsc != null) && (n > 0)) {
             mafiaLogs.addAll(ascensions.get(lastAsc));
             n--;

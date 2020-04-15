@@ -57,7 +57,7 @@ import net.java.dev.spellcast.utilities.UtilityConstants;
 public enum LogsCache {
     CACHE;
 
-    private static final Comparator<File> FILE_COMPARATOR = new Comparator<File>() {
+    public static final Comparator<File> FILE_COMPARATOR = new Comparator<File>() {
         public int compare(final File o1, final File o2) 
         {
             return o1.getName().compareToIgnoreCase(o2.getName());

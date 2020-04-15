@@ -359,12 +359,7 @@ final class MafiaLogsVisualizerDialog extends JDialog {
     private void createDataTable(
                                  final File[] mafiaLogs)
                                                         throws IOException {
-        Arrays.sort(mafiaLogs, new Comparator<File>() {
-            public int compare(
-                               final File o1, final File o2) {
-                return o1.getName().compareToIgnoreCase(o2.getName());
-            }
-        });
+        Arrays.sort(mafiaLogs, LogsCache.FILE_COMPARATOR);
 
         final List<Pair<String, Encounter>> errorFileList;
 
