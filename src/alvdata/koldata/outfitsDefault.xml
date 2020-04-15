@@ -1,2 +1,188 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfits><outfit acc3="false" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="8-bit finery" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="antique arms and armor" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="arboreal raiment" acc1="false" hat="false"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="arrrbor day apparrrrrel" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="black armaments" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="bounty-hunting rig" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="bow tux" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="brickofig outfit" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="bugbear costume" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="false" acc2="false" pants="true" name="cloaca-cola uniform" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="true" offhand="false" weapon="false" acc2="false" pants="true" name="clockwork apparatus" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="crimbo duds" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="crimborg assault armor" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="cursed zombie pirate costume" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="false" acc2="false" pants="true" name="dire drifter duds" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="dwarvish war uniform" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="false" acc2="false" pants="true" name="dyspepsi-cola uniform" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="el vibrato relics" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="encephalic ensemble" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="extreme cold-weather gear" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="filthy hippy disguise" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="floaty fatigues" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="frat boy ensemble" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="frat warrior fatigues" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="furry suit" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="glad bag glad rags" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="gnauga hides" acc1="false" hat="false"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="grass guise" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="grimy reaper's vestments" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="hodgman's regal frippery" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="hot and cold running ninja suit" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="true" weapon="true" acc2="false" pants="false" name="hyperborean hobo habiliments" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="knob goblin elite guard uniform" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="knob goblin harem girl disguise" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="legendary regalia of the chelonian overlord" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="legendary regalia of the groovelord" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="legendary regalia of the master squeezeboxer" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="legendary regalia of the pasta master" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="legendary regalia of the saucemaestro" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="legendary regalia of the seal crusher" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="mining gear" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="mutant couture" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="ok lumberjack outfit" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="palmist paraphernalia" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="pork elf prizes" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="primitive radio duds" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="false" acc2="false" pants="true" name="pyretic panhandler paraphernalia" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="radio free regalia" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="roy orbison disguise" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="slimesuit" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="snowman suit" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="true" weapon="false" acc2="false" pants="true" name="star garb" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="swashbuckling getup" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="tapered threads" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="true" weapon="true" acc2="false" pants="true" name="tawdry tramp togs" acc1="false" hat="false"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="true" pants="true" name="terrifying clown suit" acc1="true" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="terrycloth tackle" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="time trappings" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="tropical crimbo duds" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="vestments of the treeslayer" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="true" weapon="false" acc2="false" pants="true" name="vile vagrant vestments" acc1="false" hat="false"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="false" acc2="false" pants="true" name="war hippy fatigues" acc1="false" hat="true"></outfit><outfit acc3="false" shirt="false" offhand="false" weapon="true" acc2="false" pants="true" name="wumpus-hair wardrobe" acc1="false" hat="true"></outfit><outfit acc3="true" shirt="false" offhand="false" weapon="true" acc2="false" pants="false" name="yendorian finery" acc1="false" hat="true"></outfit></outfits>
+<outfits>
+	<outfit acc3="false" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="8-bit finery" acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="antique arms and armor" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="arboreal raiment" acc1="false"
+		hat="false" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="arrrbor day apparrrrrel" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="black armaments" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="bounty-hunting rig" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="bow tux" acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="brickofig outfit" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false"
+		weapon="false" acc2="false" pants="true" name="bugbear costume"
+		acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="false"
+		acc2="false" pants="true" name="cloaca-cola uniform" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="true" offhand="false" weapon="false"
+		acc2="false" pants="true" name="clockwork apparatus" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="crimbo duds" acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="crimborg assault armor" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="cursed zombie pirate costume"
+		acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="false"
+		acc2="false" pants="true" name="dire drifter duds" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="dwarvish war uniform" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="false"
+		acc2="false" pants="true" name="dyspepsi-cola uniform" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="el vibrato relics" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="encephalic ensemble" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="extreme cold-weather gear"
+		acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false"
+		weapon="false" acc2="false" pants="true" name="filthy hippy disguise"
+		acc1="false" hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="floaty fatigues" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="frat boy ensemble" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="frat warrior fatigues" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false"
+		weapon="false" acc2="false" pants="true" name="furry suit"
+		acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="glad bag glad rags" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="gnauga hides" acc1="false" hat="false" />
+	<outfit acc3="false" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="grass guise" acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="grimy reaper's vestments" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="hodgman's regal frippery" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="hot and cold running ninja suit"
+		acc1="false" hat="true" />
+	<outfit acc3="true" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="false" name="hyperborean hobo habiliments"
+		acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="knob goblin elite guard uniform"
+		acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false"
+		weapon="false" acc2="false" pants="true"
+		name="knob goblin harem girl disguise" acc1="false" hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true"
+		name="legendary regalia of the chelonian overlord" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="legendary regalia of the groovelord"
+		acc1="false" hat="true" />
+	<outfit acc3="true" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true"
+		name="legendary regalia of the master squeezeboxer" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="legendary regalia of the pasta master"
+		acc1="false" hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="legendary regalia of the saucemaestro"
+		acc1="false" hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="legendary regalia of the seal crusher"
+		acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="mining gear" acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="mutant couture" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="ok lumberjack outfit" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="palmist paraphernalia" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="pork elf prizes" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="primitive radio duds" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="false"
+		acc2="false" pants="true" name="pyretic panhandler paraphernalia"
+		acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="radio free regalia" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="roy orbison disguise" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="slimesuit" acc1="false" hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="snowman suit" acc1="false" hat="true" />
+	<outfit acc3="false" shirt="false" offhand="true" weapon="false"
+		acc2="false" pants="true" name="star garb" acc1="false" hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="swashbuckling getup" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="tapered threads" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="true" weapon="true"
+		acc2="false" pants="true" name="tawdry tramp togs" acc1="false"
+		hat="false" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="true" pants="true" name="terrifying clown suit" acc1="true"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="terrycloth tackle" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="time trappings" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="tropical crimbo duds" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="vestments of the treeslayer"
+		acc1="false" hat="true" />
+	<outfit acc3="true" shirt="false" offhand="true" weapon="false"
+		acc2="false" pants="true" name="vile vagrant vestments" acc1="false"
+		hat="false" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="false"
+		acc2="false" pants="true" name="war hippy fatigues" acc1="false"
+		hat="true" />
+	<outfit acc3="false" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="true" name="wumpus-hair wardrobe" acc1="false"
+		hat="true" />
+	<outfit acc3="true" shirt="false" offhand="false" weapon="true"
+		acc2="false" pants="false" name="yendorian finery" acc1="false"
+		hat="true" />
+</outfits>

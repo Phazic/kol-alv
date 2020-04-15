@@ -1,782 +1,784 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <skillCosts>
-<skill mpCost="0" name="&amp;quot;blow&amp;quot;"></skill>
-<skill mpCost="0" name="abs of tin"></skill>
-<skill mpCost="0" name="accordion appreciation"></skill>
-<skill mpCost="5" name="accordion bash"></skill>
-<skill mpCost="0" name="activate butt"></skill>
-<skill mpCost="10" name="advanced cocktailcrafting"></skill>
-<skill mpCost="10" name="advanced saucecrafting"></skill>
-<skill mpCost="0" name="adventurer of leisure"></skill>
-<skill mpCost="3" name="ag-grave-ation"></skill>
-<skill mpCost="0" name="air blast"></skill>
-<skill mpCost="0" name="air dirty laundry"></skill>
-<skill mpCost="0" name="alien source code"></skill>
-<skill mpCost="10" name="all-you-can-beat wing buffet"></skill>
-<skill mpCost="40" name="aloysius' antiphon of aptitude"></skill>
-<skill mpCost="0" name="ambidextrous funkslinging"></skill>
-<skill mpCost="0" name="amphibian sympathy"></skill>
-<skill mpCost="0" name="ancestral recall"></skill>
-<skill mpCost="0" name="animal magnetism"></skill>
-<skill mpCost="0" name="another extra spleen"></skill>
-<skill mpCost="20" name="antarctic flap"></skill>
-<skill mpCost="15" name="antibiotic saucesphere"></skill>
-<skill mpCost="3" name="apprivoisez la tortue"></skill>
-<skill mpCost="10" name="arched eyebrow of the archmage"></skill>
-<skill mpCost="0" name="arm blade"></skill>
-<skill mpCost="0" name="armor plating"></skill>
-<skill mpCost="0" name="armorcraftiness"></skill>
-<skill mpCost="5" name="arse shoot"></skill>
-<skill mpCost="0" name="asbestos heart"></skill>
-<skill mpCost="0" name="ask richard for a bandage"></skill>
-<skill mpCost="0" name="ask richard for a grenade"></skill>
-<skill mpCost="0" name="ask richard to rough the hobo up a bit"></skill>
-<skill mpCost="0" name="ask the hobo for a drink"></skill>
-<skill mpCost="0" name="ask the hobo for some violence"></skill>
-<skill mpCost="0" name="ask the hobo for something to eat"></skill>
-<skill mpCost="0" name="ask the hobo to dance for you"></skill>
-<skill mpCost="0" name="ask the hobo to tell you a joke"></skill>
-<skill mpCost="10" name="astral shell"></skill>
-<skill mpCost="0" name="audacity of the otter"></skill>
-<skill mpCost="120" name="awesome balls of fire"></skill>
-<skill mpCost="5" name="bake"></skill>
-<skill mpCost="0" name="ball bust"></skill>
-<skill mpCost="0" name="ball lightning"></skill>
-<skill mpCost="0" name="ball sack"></skill>
-<skill mpCost="0" name="ball sweat"></skill>
-<skill mpCost="0" name="bang! bang! bang! bang!"></skill>
-<skill mpCost="50" name="banishing shout"></skill>
-<skill mpCost="0" name="barrel chested"></skill>
-<skill mpCost="15" name="bashing slam smash"></skill>
-<skill mpCost="0" name="batter up!"></skill>
-<skill mpCost="11" name="bawdy refrain"></skill>
-<skill mpCost="0" name="bear essence"></skill>
-<skill mpCost="0" name="bear hug"></skill>
-<skill mpCost="0" name="bear-backrub"></skill>
-<skill mpCost="0" name="bear-ly legal"></skill>
-<skill mpCost="15" name="beardfreeze"></skill>
-<skill mpCost="5" name="belch the rainbow"></skill>
-<skill mpCost="50" name="benetton's medley of diversity"></skill>
-<skill mpCost="0" name="best dressed"></skill>
-<skill mpCost="0" name="best served cold"></skill>
-<skill mpCost="10" name="bifurcating blow"></skill>
-<skill mpCost="0" name="big boned"></skill>
-<skill mpCost="0" name="big lungs"></skill>
-<skill mpCost="30" name="biker swagger"></skill>
-<skill mpCost="5" name="bilious burst"></skill>
-<skill mpCost="60" name="bind angel hair wisp"></skill>
-<skill mpCost="200" name="bind lasagmbie"></skill>
-<skill mpCost="150" name="bind penne dreadful"></skill>
-<skill mpCost="150" name="bind spaghetti elemental"></skill>
-<skill mpCost="250" name="bind spice ghost"></skill>
-<skill mpCost="100" name="bind undead elbow macaroni"></skill>
-<skill mpCost="12" name="bind vampieroghi"></skill>
-<skill mpCost="30" name="bind vermincelli"></skill>
-<skill mpCost="1" name="bite minion"></skill>
-<skill mpCost="0" name="blade roller"></skill>
-<skill mpCost="0" name="blade runner"></skill>
-<skill mpCost="0" name="blade sling"></skill>
-<skill mpCost="7" name="blend"></skill>
-<skill mpCost="15" name="blessing of serqet"></skill>
-<skill mpCost="30" name="blessing of she-who-was"></skill>
-<skill mpCost="50" name="blessing of the storm tortoise"></skill>
-<skill mpCost="15" name="blessing of the war snapper"></skill>
-<skill mpCost="0" name="blinding flash"></skill>
-<skill mpCost="0" name="blood sugar sauce magic"></skill>
-<skill mpCost="0" name="blow house down"></skill>
-<skill mpCost="0" name="blow wolf whistle"></skill>
-<skill mpCost="7" name="blubber up"></skill>
-<skill mpCost="5" name="boil"></skill>
-<skill mpCost="0" name="bone spikes"></skill>
-<skill mpCost="0" name="born showman"></skill>
-<skill mpCost="20" name="bounty of renenutet"></skill>
-<skill mpCost="0" name="brand"></skill>
-<skill mpCost="13" name="brawnee's anthem of absorption"></skill>
-<skill mpCost="2" name="break it on down"></skill>
-<skill mpCost="0" name="bringing up the rear"></skill>
-<skill mpCost="10" name="broadside"></skill>
-<skill mpCost="20" name="brood"></skill>
-<skill mpCost="0" name="brutal strike"></skill>
-<skill mpCost="0" name="buoyancy of the beluga"></skill>
-<skill mpCost="0" name="burn"></skill>
-<skill mpCost="0" name="butts of steel"></skill>
-<skill mpCost="0" name="cadenza"></skill>
-<skill mpCost="1" name="calculate the universe"></skill>
-<skill mpCost="8" name="candyblast"></skill>
-<skill mpCost="8" name="cannelloni cannon"></skill>
-<skill mpCost="20" name="cannelloni cocoon"></skill>
-<skill mpCost="10" name="canticle of carboloading"></skill>
-<skill mpCost="30" name="carbohydrate cudgel"></skill>
-<skill mpCost="20" name="carlweather's cantata of confrontation"></skill>
-<skill mpCost="4" name="catchphrase"></skill>
-<skill mpCost="15" name="cavalcade of fury"></skill>
-<skill mpCost="30" name="check hair"></skill>
-<skill mpCost="0" name="check mirror"></skill>
-<skill mpCost="0" name="chillblain"></skill>
-<skill mpCost="0" name="chilled monkey brain technique"></skill>
-<skill mpCost="0" name="chilling grip"></skill>
-<skill mpCost="0" name="chip on your shoulder"></skill>
-<skill mpCost="10" name="chocolatesphere"></skill>
-<skill mpCost="5" name="chop"></skill>
-<skill mpCost="50" name="chorale of companionship"></skill>
-<skill mpCost="5" name="chronic indigestion"></skill>
-<skill mpCost="0" name="claws of the walrus"></skill>
-<skill mpCost="0" name="clean-hair lightning"></skill>
-<skill mpCost="5" name="cleave"></skill>
-<skill mpCost="10" name="cleesh"></skill>
-<skill mpCost="4" name="cletus's canticle of celerity"></skill>
-<skill mpCost="1" name="clobber"></skill>
-<skill mpCost="50" name="club earth"></skill>
-<skill mpCost="8" name="club foot"></skill>
-<skill mpCost="0" name="cocktail magic"></skill>
-<skill mpCost="10" name="coffeesphere"></skill>
-<skill mpCost="0" name="cold blow"></skill>
-<skill mpCost="5" name="cold breath"></skill>
-<skill mpCost="0" name="cold shoulder"></skill>
-<skill mpCost="0" name="cold-blooded fearlessness"></skill>
-<skill mpCost="0" name="communism!"></skill>
-<skill mpCost="8" name="concerto de los muertos"></skill>
-<skill mpCost="15" name="cone of zydeco"></skill>
-<skill mpCost="30" name="conjure cheese"></skill>
-<skill mpCost="30" name="conjure cream"></skill>
-<skill mpCost="30" name="conjure dough"></skill>
-<skill mpCost="10" name="conjure eggs"></skill>
-<skill mpCost="10" name="conjure fruit"></skill>
-<skill mpCost="30" name="conjure meat product"></skill>
-<skill mpCost="10" name="conjure potato"></skill>
-<skill mpCost="30" name="conjure relaxing campfire"></skill>
-<skill mpCost="10" name="conjure vegetables"></skill>
-<skill mpCost="25" name="conspiratorial whispers"></skill>
-<skill mpCost="0" name="consult the helix fossil"></skill>
-<skill mpCost="0" name="consume burrowgrub"></skill>
-<skill mpCost="3" name="corpse pile"></skill>
-<skill mpCost="0" name="cosmic ugnderstanding"></skill>
-<skill mpCost="0" name="crab claw technique"></skill>
-<skill mpCost="15" name="cream puff"></skill>
-<skill mpCost="30" name="creepy grin"></skill>
-<skill mpCost="30" name="creepy lullaby"></skill>
-<skill mpCost="5" name="cringle's curative carol"></skill>
-<skill mpCost="0" name="curdle"></skill>
-<skill mpCost="10" name="curiosity of br'er tarrypin"></skill>
-<skill mpCost="0" name="curse of fortune"></skill>
-<skill mpCost="10" name="curse of heredity"></skill>
-<skill mpCost="5" name="curse of indecision"></skill>
-<skill mpCost="4" name="curse of marinara"></skill>
-<skill mpCost="35" name="curse of stench"></skill>
-<skill mpCost="2" name="curse of the marshmallow"></skill>
-<skill mpCost="6" name="curse of the thousand islands"></skill>
-<skill mpCost="30" name="curse of vacation"></skill>
-<skill mpCost="2" name="curse of vichyssoise"></skill>
-<skill mpCost="8" name="curse of weaksauce"></skill>
-<skill mpCost="5" name="curse of yuck"></skill>
-<skill mpCost="0" name="dark ritual"></skill>
-<skill mpCost="100" name="deep dark visions"></skill>
-<skill mpCost="0" name="deep saucery"></skill>
-<skill mpCost="0" name="deft hands"></skill>
-<skill mpCost="5" name="demand sandwich"></skill>
-<skill mpCost="4" name="devour minions"></skill>
-<skill mpCost="0" name="diminished gag reflex"></skill>
-<skill mpCost="0" name="dinsey operations expert"></skill>
-<skill mpCost="9" name="dirge of dreadfulness"></skill>
-<skill mpCost="15" name="disarm"></skill>
-<skill mpCost="1" name="disco aerobics"></skill>
-<skill mpCost="0" name="disco bravado"></skill>
-<skill mpCost="10" name="disco dance 3: back in the habit"></skill>
-<skill mpCost="4" name="disco dance ii: electric boogaloo"></skill>
-<skill mpCost="3" name="disco dance of doom"></skill>
-<skill mpCost="2" name="disco eye-poke"></skill>
-<skill mpCost="8" name="disco face stab"></skill>
-<skill mpCost="10" name="disco fever"></skill>
-<skill mpCost="0" name="disco greed"></skill>
-<skill mpCost="15" name="disco inferno"></skill>
-<skill mpCost="10" name="disco leer"></skill>
-<skill mpCost="8" name="disco nap"></skill>
-<skill mpCost="13" name="disco shank"></skill>
-<skill mpCost="10" name="disco smirk"></skill>
-<skill mpCost="0" name="disco state of mind"></skill>
-<skill mpCost="0" name="dismiss pasta thrall"></skill>
-<skill mpCost="5" name="disquiet riot"></skill>
-<skill mpCost="2" name="dissonant riff"></skill>
-<skill mpCost="1" name="distracting minion"></skill>
-<skill mpCost="0" name="dive into a puddle"></skill>
-<skill mpCost="0" name="dog tired"></skill>
-<skill mpCost="75" name="donho's bubbly ballad"></skill>
-<skill mpCost="0" name="double-fisted skull smashing"></skill>
-<skill mpCost="0" name="doubt shackles"></skill>
-<skill mpCost="0" name="draw new tiles"></skill>
-<skill mpCost="40" name="drescher's annoying noise"></skill>
-<skill mpCost="0" name="drunken baby style"></skill>
-<skill mpCost="0" name="early riser"></skill>
-<skill mpCost="0" name="easy riding"></skill>
-<skill mpCost="15" name="egg man"></skill>
-<skill mpCost="120" name="eggsplosion"></skill>
-<skill mpCost="0" name="elemental obliviousness"></skill>
-<skill mpCost="10" name="elemental saucesphere"></skill>
-<skill mpCost="0" name="elemental wards"></skill>
-<skill mpCost="50" name="elron's explosive etude"></skill>
-<skill mpCost="15" name="empathy of the newt"></skill>
-<skill mpCost="15" name="entangle"></skill>
-<skill mpCost="3" name="entangling noodles"></skill>
-<skill mpCost="0" name="envy"></skill>
-<skill mpCost="0" name="even more elemental wards"></skill>
-<skill mpCost="0" name="executive narcolepsy"></skill>
-<skill mpCost="0" name="expert panhandling"></skill>
-<skill mpCost="0" name="extra spleen"></skill>
-<skill mpCost="15" name="extreme high note"></skill>
-<skill mpCost="10" name="falling leaf whirlwind"></skill>
-<skill mpCost="0" name="fashionably late"></skill>
-<skill mpCost="11" name="fat leon's phat loot lyric"></skill>
-<skill mpCost="0" name="fear vapor"></skill>
-<skill mpCost="32" name="fearful fettucini"></skill>
-<skill mpCost="20" name="feast on carrion"></skill>
-<skill mpCost="0" name="feed"></skill>
-<skill mpCost="0" name="ferocity"></skill>
-<skill mpCost="0" name="fire a badly romantic arrow"></skill>
-<skill mpCost="0" name="fire a boxing-glove arrow"></skill>
-<skill mpCost="0" name="fire a fingertrap arrow"></skill>
-<skill mpCost="0" name="fire a poison arrow"></skill>
-<skill mpCost="5" name="fire black bottle-rocket"></skill>
-<skill mpCost="5" name="fire blue bottle-rocket"></skill>
-<skill mpCost="0" name="fire death ray"></skill>
-<skill mpCost="10" name="fire off a roman candle"></skill>
-<skill mpCost="5" name="fire orange bottle-rocket"></skill>
-<skill mpCost="5" name="fire purple bottle-rocket"></skill>
-<skill mpCost="5" name="fire red bottle-rocket"></skill>
-<skill mpCost="0" name="fire rocket"></skill>
-<skill mpCost="0" name="fire sewage pistol"></skill>
-<skill mpCost="0" name="firebolt"></skill>
-<skill mpCost="50" name="firegate"></skill>
-<skill mpCost="0" name="first aid"></skill>
-<skill mpCost="5" name="fist of the mummy"></skill>
-<skill mpCost="0" name="five finger discount"></skill>
-<skill mpCost="25" name="fix jukebox"></skill>
-<skill mpCost="15" name="flash headlight"></skill>
-<skill mpCost="0" name="flashy dancer"></skill>
-<skill mpCost="0" name="flavour of magic"></skill>
-<skill mpCost="3" name="flesh mob"></skill>
-<skill mpCost="0" name="flying fire fist"></skill>
-<skill mpCost="0" name="food coma"></skill>
-<skill mpCost="0" name="forceblast"></skill>
-<skill mpCost="0" name="fortitude of the muskox"></skill>
-<skill mpCost="0" name="frantic gyrations"></skill>
-<skill mpCost="5" name="freeze"></skill>
-<skill mpCost="300" name="frigidalmatian"></skill>
-<skill mpCost="50" name="frost bite"></skill>
-<skill mpCost="20" name="fry"></skill>
-<skill mpCost="10" name="funk bluegrass fusion"></skill>
-<skill mpCost="5" name="furious cleave"></skill>
-<skill mpCost="0" name="furious wallop"></skill>
-<skill mpCost="50" name="garbage nova"></skill>
-<skill mpCost="15" name="gemelli's march of testery"></skill>
-<skill mpCost="0" name="get a good whiff of this guy"></skill>
-<skill mpCost="30" name="get a you-eye view"></skill>
-<skill mpCost="6" name="ghostly shell"></skill>
-<skill mpCost="0" name="giant growth"></skill>
-<skill mpCost="0" name="gift of the assassin"></skill>
-<skill mpCost="0" name="gift of the bodyguard"></skill>
-<skill mpCost="0" name="gift of the cat"></skill>
-<skill mpCost="0" name="gift of the dancer"></skill>
-<skill mpCost="0" name="gift of the maid"></skill>
-<skill mpCost="0" name="gift of the priest"></skill>
-<skill mpCost="0" name="gift of the scribe"></skill>
-<skill mpCost="0" name="give in to your vampiric urges"></skill>
-<skill mpCost="20" name="give your opponent &amp;quot;the bird&amp;quot;"></skill>
-<skill mpCost="0" name="give your opponent the stinkeye"></skill>
-<skill mpCost="0" name="gluttony"></skill>
-<skill mpCost="0" name="gnefarious pickpocketing"></skill>
-<skill mpCost="0" name="gnomish hardigness"></skill>
-<skill mpCost="0" name="goldensh&amp;ouml;wer"></skill>
-<skill mpCost="0" name="good singing voice"></skill>
-<skill mpCost="1" name="gothy handwave"></skill>
-<skill mpCost="0" name="gourmand"></skill>
-<skill mpCost="30" name="grab a cold one"></skill>
-<skill mpCost="120" name="grease lightning"></skill>
-<skill mpCost="15" name="grease up"></skill>
-<skill mpCost="0" name="great slash"></skill>
-<skill mpCost="0" name="greed"></skill>
-<skill mpCost="30" name="grill"></skill>
-<skill mpCost="10" name="gristlesphere"></skill>
-<skill mpCost="0" name="grizzly scene"></skill>
-<skill mpCost="3" name="haggis kick"></skill>
-<skill mpCost="0" name="hammer ghost"></skill>
-<skill mpCost="0" name="hard drinker"></skill>
-<skill mpCost="30" name="harpoon!"></skill>
-<skill mpCost="0" name="hateful gaze"></skill>
-<skill mpCost="3" name="headbutt"></skill>
-<skill mpCost="0" name="healing salve"></skill>
-<skill mpCost="0" name="healing scarabs"></skill>
-<skill mpCost="0" name="heart of polyester"></skill>
-<skill mpCost="0" name="heat space"></skill>
-<skill mpCost="0" name="hero of the half-shell"></skill>
-<skill mpCost="5" name="heroic belch"></skill>
-<skill mpCost="0" name="hibernate"></skill>
-<skill mpCost="0" name="hide behind a tree"></skill>
-<skill mpCost="10" name="hide of sobek"></skill>
-<skill mpCost="0" name="hide of the walrus"></skill>
-<skill mpCost="0" name="hide under a rock"></skill>
-<skill mpCost="15" name="hippotatomous"></skill>
-<skill mpCost="0" name="his master's voice"></skill>
-<skill mpCost="10" name="holiday weight gain"></skill>
-<skill mpCost="0" name="hollow leg"></skill>
-<skill mpCost="0" name="hot blow"></skill>
-<skill mpCost="5" name="hot breath"></skill>
-<skill mpCost="9" name="howl of the alpha"></skill>
-<skill mpCost="10" name="howl of the jackal"></skill>
-<skill mpCost="0" name="huff"></skill>
-<skill mpCost="0" name="hungry eyes"></skill>
-<skill mpCost="0" name="hunter's sprint"></skill>
-<skill mpCost="0" name="hypersane"></skill>
-<skill mpCost="100" name="hypnotize hobo"></skill>
-<skill mpCost="0" name="i can bearly hear you over the applause"></skill>
-<skill mpCost="10" name="icy glare"></skill>
-<skill mpCost="0" name="impetuous sauciness"></skill>
-<skill mpCost="30" name="inappropriate backrub"></skill>
-<skill mpCost="0" name="incite riot"></skill>
-<skill mpCost="0" name="indefatigable"></skill>
-<skill mpCost="0" name="infectious bite"></skill>
-<skill mpCost="100" name="inigo's incantation of inspiration"></skill>
-<skill mpCost="0" name="inner sauce"></skill>
-<skill mpCost="0" name="insatiable hunger"></skill>
-<skill mpCost="4" name="insult"></skill>
-<skill mpCost="3" name="intimidating bellow"></skill>
-<skill mpCost="15" name="intimidating mien"></skill>
-<skill mpCost="0" name="intrinsic spiciness"></skill>
-<skill mpCost="0" name="ire of the orca"></skill>
-<skill mpCost="0" name="iron palm technique"></skill>
-<skill mpCost="0" name="irrepressible spunk"></skill>
-<skill mpCost="0" name="itchy curse finger"></skill>
-<skill mpCost="9" name="jackasses' symphony of destruction"></skill>
-<skill mpCost="5" name="jalape&amp;ntilde;o saucesphere"></skill>
-<skill mpCost="5" name="jingle bells"></skill>
-<skill mpCost="25" name="jump shark"></skill>
-<skill mpCost="0" name="just one more extra spleen"></skill>
-<skill mpCost="10" name="k&amp;auml;seso&amp;szlig;esturm"></skill>
-<skill mpCost="4" name="kneebutt"></skill>
-<skill mpCost="10" name="knife in the dark"></skill>
-<skill mpCost="10" name="knowing smile"></skill>
-<skill mpCost="0" name="knuckle sandwich"></skill>
-<skill mpCost="0" name="kodiak moment"></skill>
-<skill mpCost="0" name="kung fu hustler"></skill>
-<skill mpCost="6" name="lasagna bandages"></skill>
-<skill mpCost="12" name="lash of the cobra"></skill>
-<skill mpCost="1" name="laugh it off"></skill>
-<skill mpCost="12" name="leash of linguini"></skill>
-<skill mpCost="0" name="legendary appetite"></skill>
-<skill mpCost="0" name="legendary bravado"></skill>
-<skill mpCost="0" name="legendary girth"></skill>
-<skill mpCost="0" name="legendary impatience"></skill>
-<skill mpCost="0" name="legendary luck"></skill>
-<skill mpCost="0" name="light"></skill>
-<skill mpCost="0" name="lightning bolt"></skill>
-<skill mpCost="0" name="lightning bolt"></skill>
-<skill mpCost="0" name="lightning rod"></skill>
-<skill mpCost="0" name="lightning strike"></skill>
-<skill mpCost="5" name="live fast"></skill>
-<skill mpCost="0" name="liver of steel"></skill>
-<skill mpCost="0" name="louder bellows"></skill>
-<skill mpCost="10" name="lunch break"></skill>
-<skill mpCost="0" name="lunch like a king"></skill>
-<skill mpCost="1" name="lunge smack"></skill>
-<skill mpCost="8" name="lunging thrust-smack"></skill>
-<skill mpCost="0" name="lure minions"></skill>
-<skill mpCost="0" name="lust"></skill>
-<skill mpCost="0" name="mad looting skillz"></skill>
-<skill mpCost="6" name="magic missile"></skill>
-<skill mpCost="30" name="make friends"></skill>
-<skill mpCost="0" name="make it rain"></skill>
-<skill mpCost="5" name="managerial manipulation"></skill>
-<skill mpCost="1" name="manicotti meditation"></skill>
-<skill mpCost="0" name="marginally insane"></skill>
-<skill mpCost="0" name="mariachi memory"></skill>
-<skill mpCost="0" name="master accordion master thief"></skill>
-<skill mpCost="0" name="master of the surprising fist"></skill>
-<skill mpCost="0" name="master saucier"></skill>
-<skill mpCost="10" name="mathematical precision"></skill>
-<skill mpCost="30" name="maximum chill"></skill>
-<skill mpCost="1" name="meat shields"></skill>
-<skill mpCost="0" name="mighty axing"></skill>
-<skill mpCost="0" name="mighty shout"></skill>
-<skill mpCost="1" name="mild curse"></skill>
-<skill mpCost="0" name="mixologist"></skill>
-<skill mpCost="5" name="miyagi massage"></skill>
-<skill mpCost="0" name="more elemental wards"></skill>
-<skill mpCost="0" name="more legs"></skill>
-<skill mpCost="0" name="more to love"></skill>
-<skill mpCost="0" name="mosh"></skill>
-<skill mpCost="1" name="moxie of the mariachi"></skill>
-<skill mpCost="30" name="mudbath"></skill>
-<skill mpCost="0" name="mug for the audience"></skill>
-<skill mpCost="10" name="musk of the moose"></skill>
-<skill mpCost="0" name="natural born scrabbler"></skill>
-<skill mpCost="0" name="natural born skeleton killer"></skill>
-<skill mpCost="0" name="natural dancer"></skill>
-<skill mpCost="0" name="net gain"></skill>
-<skill mpCost="0" name="net loss"></skill>
-<skill mpCost="0" name="net neutrality"></skill>
-<skill mpCost="0" name="neurogourmet"></skill>
-<skill mpCost="0" name="never late for dinner"></skill>
-<skill mpCost="0" name="nightcap"></skill>
-<skill mpCost="0" name="nimble fingers"></skill>
-<skill mpCost="15" name="noodles of fire"></skill>
-<skill mpCost="16" name="northern explosion"></skill>
-<skill mpCost="0" name="northern exposure"></skill>
-<skill mpCost="10" name="nuclear breath"></skill>
-<skill mpCost="15" name="offensive joke"></skill>
-<skill mpCost="10" name="oilsphere"></skill>
-<skill mpCost="0" name="okay seriously, this is the last spleen"></skill>
-<skill mpCost="0" name="olfactory burnout"></skill>
-<skill mpCost="0" name="open a big red present"></skill>
-<skill mpCost="0" name="open a big yellow present"></skill>
-<skill mpCost="0" name="open the bag o' tricks"></skill>
-<skill mpCost="0" name="overdeveloped sense of self preservation"></skill>
-<skill mpCost="100" name="overload discarded refrigerator"></skill>
-<skill mpCost="0" name="overload teddy bear"></skill>
-<skill mpCost="10" name="pastamastery"></skill>
-<skill mpCost="1" name="patience of the tortoise"></skill>
-<skill mpCost="10" name="patient smile"></skill>
-<skill mpCost="10" name="peel out"></skill>
-<skill mpCost="1" name="pep talk"></skill>
-<skill mpCost="5" name="perfect freeze"></skill>
-<skill mpCost="5" name="pinch ghost"></skill>
-<skill mpCost="11" name="pirate bellow"></skill>
-<skill mpCost="0" name="pizza lover"></skill>
-<skill mpCost="0" name="plague claws"></skill>
-<skill mpCost="10" name="play a drum solo"></skill>
-<skill mpCost="10" name="play a flute solo"></skill>
-<skill mpCost="10" name="play a guitar solo"></skill>
-<skill mpCost="10" name="play an accordion solo"></skill>
-<skill mpCost="0" name="play hog fiddle"></skill>
-<skill mpCost="0" name="ply reality"></skill>
-<skill mpCost="0" name="pocket crumbs"></skill>
-<skill mpCost="0" name="point at your opponent"></skill>
-<skill mpCost="2" name="pop and lock it"></skill>
-<skill mpCost="10" name="pop wheelie"></skill>
-<skill mpCost="0" name="pow"></skill>
-<skill mpCost="10" name="power of heka"></skill>
-<skill mpCost="0" name="powers of observatiogn"></skill>
-<skill mpCost="5" name="prayer of seshat"></skill>
-<skill mpCost="0" name="precision of the penguin"></skill>
-<skill mpCost="50" name="prelude of precision"></skill>
-<skill mpCost="0" name="pride"></skill>
-<skill mpCost="30" name="pride of the puffin"></skill>
-<skill mpCost="0" name="propose to your opponent"></skill>
-<skill mpCost="0" name="psychokinetic hug"></skill>
-<skill mpCost="0" name="puff"></skill>
-<skill mpCost="0" name="pull voice box string"></skill>
-<skill mpCost="0" name="pulverize"></skill>
-<skill mpCost="10" name="purr of the feline"></skill>
-<skill mpCost="15" name="put down roots"></skill>
-<skill mpCost="15" name="pyromania"></skill>
-<skill mpCost="0" name="quick attack"></skill>
-<skill mpCost="15" name="radish horse"></skill>
-<skill mpCost="0" name="rage flame"></skill>
-<skill mpCost="10" name="rage of the reindeer"></skill>
-<skill mpCost="0" name="rage of the war snapper"></skill>
-<skill mpCost="0" name="rain coat"></skill>
-<skill mpCost="0" name="rain dance"></skill>
-<skill mpCost="0" name="rain delay"></skill>
-<skill mpCost="0" name="rain man"></skill>
-<skill mpCost="0" name="rainbow"></skill>
-<skill mpCost="0" name="rainbow gravitation"></skill>
-<skill mpCost="0" name="rainy day"></skill>
-<skill mpCost="120" name="raise backup dancer"></skill>
-<skill mpCost="0" name="rapid prototyping"></skill>
-<skill mpCost="2" name="ravenous pounce"></skill>
-<skill mpCost="4" name="ravioli shurikens"></skill>
-<skill mpCost="0" name="really expensive jewelrycrafting"></skill>
-<skill mpCost="0" name="recite 'the spirit of crimbo'"></skill>
-<skill mpCost="0" name="recruit zombie"></skill>
-<skill mpCost="0" name="refusal to freeze"></skill>
-<skill mpCost="0" name="release the boots"></skill>
-<skill mpCost="0" name="replacement liver"></skill>
-<skill mpCost="0" name="replacement stomach"></skill>
-<skill mpCost="10" name="reptilian fortitude"></skill>
-<skill mpCost="5" name="request sandwich"></skill>
-<skill mpCost="5" name="rev engine"></skill>
-<skill mpCost="0" name="riding tall"></skill>
-<skill mpCost="0" name="riding the lightning"></skill>
-<skill mpCost="20" name="rise from your ashes"></skill>
-<skill mpCost="0" name="rive armor"></skill>
-<skill mpCost="15" name="roar of the lion"></skill>
-<skill mpCost="15" name="rotten memories"></skill>
-<skill mpCost="15" name="rouse sapling"></skill>
-<skill mpCost="0" name="rowdy drinker"></skill>
-<skill mpCost="0" name="run away"></skill>
-<skill mpCost="2" name="run like the wind"></skill>
-<skill mpCost="10" name="ruthless efficiency"></skill>
-<skill mpCost="0" name="salacious cocktailcrafting"></skill>
-<skill mpCost="5" name="salamander kata"></skill>
-<skill mpCost="1" name="salsaball"></skill>
-<skill mpCost="1" name="sauce contemplation"></skill>
-<skill mpCost="20" name="sauce monocle"></skill>
-<skill mpCost="12" name="saucecicle"></skill>
-<skill mpCost="24" name="saucegeyser"></skill>
-<skill mpCost="24" name="saucemageddon"></skill>
-<skill mpCost="0" name="saucemaven"></skill>
-<skill mpCost="30" name="sauceshell"></skill>
-<skill mpCost="6" name="saucestorm"></skill>
-<skill mpCost="4" name="saucy salve"></skill>
-<skill mpCost="10" name="scarysauce"></skill>
-<skill mpCost="2" name="scavenge"></skill>
-<skill mpCost="10" name="scowl of the auk"></skill>
-<skill mpCost="1" name="seal clubbing frenzy"></skill>
-<skill mpCost="0" name="seething of the snow leopard"></skill>
-<skill mpCost="0" name="sensitive fingers"></skill>
-<skill mpCost="0" name="seven-finger strike"></skill>
-<skill mpCost="30" name="shadow noodles"></skill>
-<skill mpCost="0" name="shake hands"></skill>
-<skill mpCost="30" name="shake it off"></skill>
-<skill mpCost="0" name="sheet lightning"></skill>
-<skill mpCost="6" name="shell up"></skill>
-<skill mpCost="15" name="shelter of shed"></skill>
-<skill mpCost="20" name="shield of the pastalord"></skill>
-<skill mpCost="10" name="shieldbutt"></skill>
-<skill mpCost="0" name="shoot web"></skill>
-<skill mpCost="0" name="shovel hot coal"></skill>
-<skill mpCost="0" name="shrap"></skill>
-<skill mpCost="0" name="sick pythons"></skill>
-<skill mpCost="5" name="silent slam"></skill>
-<skill mpCost="5" name="silent slice"></skill>
-<skill mpCost="10" name="silent squirt"></skill>
-<skill mpCost="0" name="simmer"></skill>
-<skill mpCost="1" name="sing"></skill>
-<skill mpCost="15" name="singer's faithful ocelot"></skill>
-<skill mpCost="0" name="siphon spirits"></skill>
-<skill mpCost="0" name="skin of the leatherback"></skill>
-<skill mpCost="0" name="skullcracker"></skill>
-<skill mpCost="5" name="sleazy breath"></skill>
-<skill mpCost="20" name="slice"></skill>
-<skill mpCost="0" name="slimy shoulders"></skill>
-<skill mpCost="0" name="slimy sinews"></skill>
-<skill mpCost="0" name="slimy synapses"></skill>
-<skill mpCost="0" name="sloppy secrets"></skill>
-<skill mpCost="0" name="sloth"></skill>
-<skill mpCost="2" name="smash &amp; graaagh"></skill>
-<skill mpCost="10" name="smoke break"></skill>
-<skill mpCost="10" name="smooth movement"></skill>
-<skill mpCost="5" name="snap fingers"></skill>
-<skill mpCost="10" name="snarl of the timberwolf"></skill>
-<skill mpCost="120" name="snowclone"></skill>
-<skill mpCost="10" name="song of accompaniment"></skill>
-<skill mpCost="10" name="song of battle"></skill>
-<skill mpCost="100" name="song of bravado"></skill>
-<skill mpCost="15" name="song of cockiness"></skill>
-<skill mpCost="10" name="song of fortune"></skill>
-<skill mpCost="100" name="song of sauce"></skill>
-<skill mpCost="100" name="song of slowness"></skill>
-<skill mpCost="15" name="song of solitude"></skill>
-<skill mpCost="100" name="song of starch"></skill>
-<skill mpCost="10" name="song of the glorious lunch"></skill>
-<skill mpCost="100" name="song of the north"></skill>
-<skill mpCost="0" name="soul blaze"></skill>
-<skill mpCost="0" name="soul bubble"></skill>
-<skill mpCost="0" name="soul finger"></skill>
-<skill mpCost="0" name="soul food"></skill>
-<skill mpCost="0" name="soul funk"></skill>
-<skill mpCost="0" name="soul rotation"></skill>
-<skill mpCost="0" name="soul saucery"></skill>
-<skill mpCost="30" name="spaghetti breakfast"></skill>
-<skill mpCost="1" name="spaghetti spear"></skill>
-<skill mpCost="20" name="spectral snapper"></skill>
-<skill mpCost="0" name="speluck"></skill>
-<skill mpCost="0" name="spew poison"></skill>
-<skill mpCost="8" name="spiky shell"></skill>
-<skill mpCost="30" name="spirit boon"></skill>
-<skill mpCost="0" name="spirit of bacon grease"></skill>
-<skill mpCost="0" name="spirit of cayenne"></skill>
-<skill mpCost="0" name="spirit of garlic"></skill>
-<skill mpCost="0" name="spirit of nothing"></skill>
-<skill mpCost="0" name="spirit of peppermint"></skill>
-<skill mpCost="0" name="spirit of ravioli"></skill>
-<skill mpCost="0" name="spirit of rigatoni"></skill>
-<skill mpCost="0" name="spirit of wormwood"></skill>
-<skill mpCost="10" name="spirit snap"></skill>
-<skill mpCost="0" name="spirit vacation"></skill>
-<skill mpCost="0" name="spit fireballs"></skill>
-<skill mpCost="30" name="splashdance"></skill>
-<skill mpCost="25" name="splattersmash"></skill>
-<skill mpCost="0" name="spleen of steel"></skill>
-<skill mpCost="0" name="spooky blow"></skill>
-<skill mpCost="5" name="spooky breath"></skill>
-<skill mpCost="0" name="spray hot grease"></skill>
-<skill mpCost="15" name="spray sap"></skill>
-<skill mpCost="0" name="spring raindrop attack"></skill>
-<skill mpCost="10" name="springy fusilli"></skill>
-<skill mpCost="0" name="squeeze stress ball"></skill>
-<skill mpCost="100" name="start trash fire"></skill>
-<skill mpCost="0" name="static shock"></skill>
-<skill mpCost="0" name="static shock"></skill>
-<skill mpCost="0" name="steal accordion"></skill>
-<skill mpCost="5" name="stealth mistletoe"></skill>
-<skill mpCost="30" name="stevedave's shanty of superiority"></skill>
-<skill mpCost="0" name="sticky fingers"></skill>
-<skill mpCost="10" name="stiff upper lip"></skill>
-<skill mpCost="0" name="still another extra spleen"></skill>
-<skill mpCost="0" name="stinkpalm"></skill>
-<skill mpCost="0" name="stinky blow"></skill>
-<skill mpCost="5" name="stinky breath"></skill>
-<skill mpCost="0" name="stomach of steel"></skill>
-<skill mpCost="0" name="stomp ass"></skill>
-<skill mpCost="8" name="storm of the scarab"></skill>
-<skill mpCost="15" name="strangle"></skill>
-<skill mpCost="2" name="stream of sauce"></skill>
-<skill mpCost="16" name="stringozzi serpent"></skill>
-<skill mpCost="8" name="stuffed mortar shell"></skill>
-<skill mpCost="0" name="subtle and quick to anger"></skill>
-<skill mpCost="1" name="suckerpunch"></skill>
-<skill mpCost="10" name="summer siesta"></skill>
-<skill mpCost="200" name="summon &amp;quot;boner battalion&amp;quot;"></skill>
-<skill mpCost="5" name="summon alice's army cards"></skill>
-<skill mpCost="0" name="summon annoyance"></skill>
-<skill mpCost="1" name="summon brickos"></skill>
-<skill mpCost="1" name="summon candy heart"></skill>
-<skill mpCost="11" name="summon carrot"></skill>
-<skill mpCost="2" name="summon clip art"></skill>
-<skill mpCost="5" name="summon confiscated things"></skill>
-<skill mpCost="3" name="summon crimbo candy"></skill>
-<skill mpCost="1" name="summon dice"></skill>
-<skill mpCost="5" name="summon geeky gifts"></skill>
-<skill mpCost="5" name="summon hilarious objects"></skill>
-<skill mpCost="0" name="summon hobo underling"></skill>
-<skill mpCost="11" name="summon holiday fun!"></skill>
-<skill mpCost="0" name="summon horde"></skill>
-<skill mpCost="1" name="summon kokomo resort pass"></skill>
-<skill mpCost="40" name="summon leviatuga"></skill>
-<skill mpCost="0" name="summon love gnats"></skill>
-<skill mpCost="0" name="summon love mosquito"></skill>
-<skill mpCost="0" name="summon love scarabs"></skill>
-<skill mpCost="1" name="summon love song"></skill>
-<skill mpCost="0" name="summon love stinkbug"></skill>
-<skill mpCost="0" name="summon mayfly swarm"></skill>
-<skill mpCost="0" name="summon minion"></skill>
-<skill mpCost="1" name="summon party favor"></skill>
-<skill mpCost="2" name="summon rad libs"></skill>
-<skill mpCost="1" name="summon resolutions"></skill>
-<skill mpCost="2" name="summon smithsness"></skill>
-<skill mpCost="2" name="summon snowcones"></skill>
-<skill mpCost="2" name="summon stickers"></skill>
-<skill mpCost="2" name="summon sugar sheets"></skill>
-<skill mpCost="1" name="summon taffy"></skill>
-<skill mpCost="5" name="summon tasteful items"></skill>
-<skill mpCost="0" name="super-advanced meatsmithing"></skill>
-<skill mpCost="0" name="superhuman cocktailcrafting"></skill>
-<skill mpCost="10" name="surge of icing"></skill>
-<skill mpCost="10" name="suspicious gaze"></skill>
-<skill mpCost="0" name="swirl cloak"></skill>
-<skill mpCost="0" name="talk about politics"></skill>
-<skill mpCost="8" name="tango of terror"></skill>
-<skill mpCost="0" name="tao of the terrapin"></skill>
-<skill mpCost="7" name="tattle"></skill>
-<skill mpCost="0" name="tear wave"></skill>
-<skill mpCost="0" name="tell a skeleton what to do"></skill>
-<skill mpCost="0" name="tell this skeleton what to do"></skill>
-<skill mpCost="0" name="tempuramancy"></skill>
-<skill mpCost="8" name="tenacity of the snapper"></skill>
-<skill mpCost="0" name="testudinal teachings"></skill>
-<skill mpCost="0" name="that's not a knife"></skill>
-<skill mpCost="10" name="the 17 cuts"></skill>
-<skill mpCost="50" name="the ballad of richie thingfinder"></skill>
-<skill mpCost="0" name="the long view"></skill>
-<skill mpCost="3" name="the magical mojomuscular melody"></skill>
-<skill mpCost="0" name="the most important meal"></skill>
-<skill mpCost="2" name="the moxious madrigal"></skill>
-<skill mpCost="50" name="the ode to booze"></skill>
-<skill mpCost="0" name="the old old smile of mr. a."></skill>
-<skill mpCost="7" name="the polka of plenty"></skill>
-<skill mpCost="5" name="the power ballad of the arrowsmith"></skill>
-<skill mpCost="15" name="the psalm of pointiness"></skill>
-<skill mpCost="0" name="the smile of mr. a."></skill>
-<skill mpCost="20" name="the sonata of sneakiness"></skill>
-<skill mpCost="20" name="the statue treatment"></skill>
-<skill mpCost="0" name="the way of sauce"></skill>
-<skill mpCost="0" name="thick-skinned"></skill>
-<skill mpCost="0" name="thief among the honorable"></skill>
-<skill mpCost="0" name="thirst of the weasel"></skill>
-<skill mpCost="0" name="thousand-yard stare"></skill>
-<skill mpCost="0" name="thrall unit tactics"></skill>
-<skill mpCost="0" name="thrift and grift"></skill>
-<skill mpCost="0" name="throw bomb"></skill>
-<skill mpCost="0" name="throw frostball"></skill>
-<skill mpCost="0" name="throw party"></skill>
-<skill mpCost="0" name="throw pot"></skill>
-<skill mpCost="0" name="throw rock"></skill>
-<skill mpCost="0" name="throw shield"></skill>
-<skill mpCost="0" name="throw skull"></skill>
-<skill mpCost="0" name="throw ten bombs"></skill>
-<skill mpCost="0" name="throw torch"></skill>
-<skill mpCost="7" name="throw trusty"></skill>
-<skill mpCost="3" name="thrust-smack"></skill>
-<skill mpCost="0" name="thunder bird"></skill>
-<skill mpCost="0" name="thunder clap"></skill>
-<skill mpCost="0" name="thunder down underwear"></skill>
-<skill mpCost="0" name="thunder thighs"></skill>
-<skill mpCost="0" name="thundercloud"></skill>
-<skill mpCost="0" name="thunderheart"></skill>
-<skill mpCost="0" name="thunderstrike"></skill>
-<skill mpCost="0" name="tighten girdle"></skill>
-<skill mpCost="0" name="tolerance of the kitchen"></skill>
-<skill mpCost="10" name="tongue of the walrus"></skill>
-<skill mpCost="5" name="torment plant"></skill>
-<skill mpCost="0" name="torso awaregness"></skill>
-<skill mpCost="0" name="toss"></skill>
-<skill mpCost="0" name="tougher skin"></skill>
-<skill mpCost="120" name="toynado"></skill>
-<skill mpCost="0" name="transcendent al dente"></skill>
-<skill mpCost="40" name="transcendent olfaction"></skill>
-<skill mpCost="0" name="transcendental noodlecraft"></skill>
-<skill mpCost="100" name="trashquake"></skill>
-<skill mpCost="0" name="tricky knifework"></skill>
-<skill mpCost="0" name="tunnel downwards"></skill>
-<skill mpCost="0" name="tunnel upwards"></skill>
-<skill mpCost="15" name="turtle of seven tails"></skill>
-<skill mpCost="100" name="turtle power"></skill>
-<skill mpCost="35" name="turtleini"></skill>
-<skill mpCost="0" name="unaccompanied miner"></skill>
-<skill mpCost="0" name="undying greed"></skill>
-<skill mpCost="0" name="unleash nanites"></skill>
-<skill mpCost="0" name="unleash the greash"></skill>
-<skill mpCost="0" name="unload tommy gun"></skill>
-<skill mpCost="0" name="unoffendable"></skill>
-<skill mpCost="0" name="unrepentant thief"></skill>
-<skill mpCost="0" name="unyielding flesh"></skill>
-<skill mpCost="0" name="upgraded arms"></skill>
-<skill mpCost="0" name="upgraded legs"></skill>
-<skill mpCost="0" name="upgraded spine"></skill>
-<skill mpCost="30" name="ur-kel's aria of annoyance"></skill>
-<skill mpCost="0" name="use rope"></skill>
-<skill mpCost="1" name="utensil twist"></skill>
-<skill mpCost="0" name="vampiric tendrils"></skill>
-<skill mpCost="15" name="vent rage gland"></skill>
-<skill mpCost="5" name="vicious talon slash"></skill>
-<skill mpCost="0" name="vigor mortis"></skill>
-<skill mpCost="0" name="violent gaze"></skill>
-<skill mpCost="0" name="virulence"></skill>
-<skill mpCost="0" name="voice of she-who-was"></skill>
-<skill mpCost="0" name="volcanometeor showeruption"></skill>
-<skill mpCost="5" name="walberg's dim bulb"></skill>
-<skill mpCost="30" name="walk away from explosion"></skill>
-<skill mpCost="30" name="wassail"></skill>
-<skill mpCost="10" name="wave of sauce"></skill>
-<skill mpCost="32" name="weapon of the pastalord"></skill>
-<skill mpCost="0" name="will of the storm tortoise"></skill>
-<skill mpCost="0" name="wink at"></skill>
-<skill mpCost="10" name="winter's bite technique"></skill>
-<skill mpCost="0" name="wisdom of the elder tortoises"></skill>
-<skill mpCost="5" name="wisdom of thoth"></skill>
-<skill mpCost="10" name="wizard squint"></skill>
-<skill mpCost="0" name="working lunch"></skill>
-<skill mpCost="11" name="worldpunch"></skill>
-<skill mpCost="0" name="wrath"></skill>
-<skill mpCost="40" name="wrath of ra"></skill>
-<skill mpCost="0" name="wrath of the lightning god"></skill>
-<skill mpCost="0" name="wrath of the trickster god"></skill>
-<skill mpCost="0" name="wrath of the volcano god"></skill>
-<skill mpCost="0" name="wrath of the wolverine"></skill>
-<skill mpCost="10" name="wry smile"></skill>
-<skill mpCost="0" name="yet another extra spleen"></skill>
-<skill mpCost="0" name="zap"></skill>
-<skill mpCost="0" name="zendo kobushi kancho"></skill>
-<skill mpCost="1" name="zombie chow"></skill>
-<skill mpCost="9" name="zombie maestro"></skill>
-<skill mpCost="100" name="zombo's visage"></skill>
+	<skill mpCost="0" name="&amp;quot;blow&amp;quot;" />
+	<skill mpCost="0" name="abs of tin" />
+	<skill mpCost="0" name="accordion appreciation" />
+	<skill mpCost="5" name="accordion bash" />
+	<skill mpCost="0" name="activate butt" />
+	<skill mpCost="10" name="advanced cocktailcrafting" />
+	<skill mpCost="10" name="advanced saucecrafting" />
+	<skill mpCost="0" name="adventurer of leisure" />
+	<skill mpCost="3" name="ag-grave-ation" />
+	<skill mpCost="0" name="air blast" />
+	<skill mpCost="0" name="air dirty laundry" />
+	<skill mpCost="0" name="alien source code" />
+	<skill mpCost="10" name="all-you-can-beat wing buffet" />
+	<skill mpCost="40" name="aloysius' antiphon of aptitude" />
+	<skill mpCost="0" name="ambidextrous funkslinging" />
+	<skill mpCost="0" name="amphibian sympathy" />
+	<skill mpCost="0" name="ancestral recall" />
+	<skill mpCost="0" name="animal magnetism" />
+	<skill mpCost="0" name="another extra spleen" />
+	<skill mpCost="20" name="antarctic flap" />
+	<skill mpCost="15" name="antibiotic saucesphere" />
+	<skill mpCost="3" name="apprivoisez la tortue" />
+	<skill mpCost="10" name="arched eyebrow of the archmage" />
+	<skill mpCost="0" name="arm blade" />
+	<skill mpCost="0" name="armor plating" />
+	<skill mpCost="0" name="armorcraftiness" />
+	<skill mpCost="5" name="arse shoot" />
+	<skill mpCost="0" name="asbestos heart" />
+	<skill mpCost="0" name="ask richard for a bandage" />
+	<skill mpCost="0" name="ask richard for a grenade" />
+	<skill mpCost="0" name="ask richard to rough the hobo up a bit" />
+	<skill mpCost="0" name="ask the hobo for a drink" />
+	<skill mpCost="0" name="ask the hobo for some violence" />
+	<skill mpCost="0" name="ask the hobo for something to eat" />
+	<skill mpCost="0" name="ask the hobo to dance for you" />
+	<skill mpCost="0" name="ask the hobo to tell you a joke" />
+	<skill mpCost="10" name="astral shell" />
+	<skill mpCost="0" name="audacity of the otter" />
+	<skill mpCost="120" name="awesome balls of fire" />
+	<skill mpCost="5" name="bake" />
+	<skill mpCost="0" name="ball bust" />
+	<skill mpCost="0" name="ball lightning" />
+	<skill mpCost="0" name="ball sack" />
+	<skill mpCost="0" name="ball sweat" />
+	<skill mpCost="0" name="bang! bang! bang! bang!" />
+	<skill mpCost="50" name="banishing shout" />
+	<skill mpCost="0" name="barrel chested" />
+	<skill mpCost="15" name="bashing slam smash" />
+	<skill mpCost="0" name="batter up!" />
+	<skill mpCost="11" name="bawdy refrain" />
+	<skill mpCost="0" name="bear essence" />
+	<skill mpCost="0" name="bear hug" />
+	<skill mpCost="0" name="bear-backrub" />
+	<skill mpCost="0" name="bear-ly legal" />
+	<skill mpCost="15" name="beardfreeze" />
+	<skill mpCost="5" name="belch the rainbow" />
+	<skill mpCost="50" name="benetton's medley of diversity" />
+	<skill mpCost="0" name="best dressed" />
+	<skill mpCost="0" name="best served cold" />
+	<skill mpCost="10" name="bifurcating blow" />
+	<skill mpCost="0" name="big boned" />
+	<skill mpCost="0" name="big lungs" />
+	<skill mpCost="30" name="biker swagger" />
+	<skill mpCost="5" name="bilious burst" />
+	<skill mpCost="60" name="bind angel hair wisp" />
+	<skill mpCost="200" name="bind lasagmbie" />
+	<skill mpCost="150" name="bind penne dreadful" />
+	<skill mpCost="150" name="bind spaghetti elemental" />
+	<skill mpCost="250" name="bind spice ghost" />
+	<skill mpCost="100" name="bind undead elbow macaroni" />
+	<skill mpCost="12" name="bind vampieroghi" />
+	<skill mpCost="30" name="bind vermincelli" />
+	<skill mpCost="1" name="bite minion" />
+	<skill mpCost="0" name="blade roller" />
+	<skill mpCost="0" name="blade runner" />
+	<skill mpCost="0" name="blade sling" />
+	<skill mpCost="7" name="blend" />
+	<skill mpCost="15" name="blessing of serqet" />
+	<skill mpCost="30" name="blessing of she-who-was" />
+	<skill mpCost="50" name="blessing of the storm tortoise" />
+	<skill mpCost="15" name="blessing of the war snapper" />
+	<skill mpCost="0" name="blinding flash" />
+	<skill mpCost="0" name="blood sugar sauce magic" />
+	<skill mpCost="0" name="blow house down" />
+	<skill mpCost="0" name="blow wolf whistle" />
+	<skill mpCost="7" name="blubber up" />
+	<skill mpCost="5" name="boil" />
+	<skill mpCost="0" name="bone spikes" />
+	<skill mpCost="0" name="born showman" />
+	<skill mpCost="20" name="bounty of renenutet" />
+	<skill mpCost="0" name="brand" />
+	<skill mpCost="13" name="brawnee's anthem of absorption" />
+	<skill mpCost="2" name="break it on down" />
+	<skill mpCost="0" name="bringing up the rear" />
+	<skill mpCost="10" name="broadside" />
+	<skill mpCost="20" name="brood" />
+	<skill mpCost="0" name="brutal strike" />
+	<skill mpCost="0" name="buoyancy of the beluga" />
+	<skill mpCost="0" name="burn" />
+	<skill mpCost="0" name="butts of steel" />
+	<skill mpCost="0" name="cadenza" />
+	<skill mpCost="1" name="calculate the universe" />
+	<skill mpCost="8" name="candyblast" />
+	<skill mpCost="8" name="cannelloni cannon" />
+	<skill mpCost="20" name="cannelloni cocoon" />
+	<skill mpCost="10" name="canticle of carboloading" />
+	<skill mpCost="30" name="carbohydrate cudgel" />
+	<skill mpCost="20" name="carlweather's cantata of confrontation" />
+	<skill mpCost="4" name="catchphrase" />
+	<skill mpCost="15" name="cavalcade of fury" />
+	<skill mpCost="30" name="check hair" />
+	<skill mpCost="0" name="check mirror" />
+	<skill mpCost="0" name="chillblain" />
+	<skill mpCost="0" name="chilled monkey brain technique" />
+	<skill mpCost="0" name="chilling grip" />
+	<skill mpCost="0" name="chip on your shoulder" />
+	<skill mpCost="10" name="chocolatesphere" />
+	<skill mpCost="5" name="chop" />
+	<skill mpCost="50" name="chorale of companionship" />
+	<skill mpCost="5" name="chronic indigestion" />
+	<skill mpCost="0" name="claws of the walrus" />
+	<skill mpCost="0" name="clean-hair lightning" />
+	<skill mpCost="5" name="cleave" />
+	<skill mpCost="10" name="cleesh" />
+	<skill mpCost="4" name="cletus's canticle of celerity" />
+	<skill mpCost="1" name="clobber" />
+	<skill mpCost="50" name="club earth" />
+	<skill mpCost="8" name="club foot" />
+	<skill mpCost="0" name="cocktail magic" />
+	<skill mpCost="10" name="coffeesphere" />
+	<skill mpCost="0" name="cold blow" />
+	<skill mpCost="5" name="cold breath" />
+	<skill mpCost="0" name="cold shoulder" />
+	<skill mpCost="0" name="cold-blooded fearlessness" />
+	<skill mpCost="0" name="communism!" />
+	<skill mpCost="8" name="concerto de los muertos" />
+	<skill mpCost="15" name="cone of zydeco" />
+	<skill mpCost="30" name="conjure cheese" />
+	<skill mpCost="30" name="conjure cream" />
+	<skill mpCost="30" name="conjure dough" />
+	<skill mpCost="10" name="conjure eggs" />
+	<skill mpCost="10" name="conjure fruit" />
+	<skill mpCost="30" name="conjure meat product" />
+	<skill mpCost="10" name="conjure potato" />
+	<skill mpCost="30" name="conjure relaxing campfire" />
+	<skill mpCost="10" name="conjure vegetables" />
+	<skill mpCost="25" name="conspiratorial whispers" />
+	<skill mpCost="0" name="consult the helix fossil" />
+	<skill mpCost="0" name="consume burrowgrub" />
+	<skill mpCost="3" name="corpse pile" />
+	<skill mpCost="0" name="cosmic ugnderstanding" />
+	<skill mpCost="0" name="crab claw technique" />
+	<skill mpCost="15" name="cream puff" />
+	<skill mpCost="30" name="creepy grin" />
+	<skill mpCost="30" name="creepy lullaby" />
+	<skill mpCost="5" name="cringle's curative carol" />
+	<skill mpCost="0" name="curdle" />
+	<skill mpCost="10" name="curiosity of br'er tarrypin" />
+	<skill mpCost="0" name="curse of fortune" />
+	<skill mpCost="10" name="curse of heredity" />
+	<skill mpCost="5" name="curse of indecision" />
+	<skill mpCost="4" name="curse of marinara" />
+	<skill mpCost="35" name="curse of stench" />
+	<skill mpCost="2" name="curse of the marshmallow" />
+	<skill mpCost="6" name="curse of the thousand islands" />
+	<skill mpCost="30" name="curse of vacation" />
+	<skill mpCost="2" name="curse of vichyssoise" />
+	<skill mpCost="8" name="curse of weaksauce" />
+	<skill mpCost="5" name="curse of yuck" />
+	<skill mpCost="0" name="dark ritual" />
+	<skill mpCost="100" name="deep dark visions" />
+	<skill mpCost="0" name="deep saucery" />
+	<skill mpCost="0" name="deft hands" />
+	<skill mpCost="5" name="demand sandwich" />
+	<skill mpCost="4" name="devour minions" />
+	<skill mpCost="0" name="diminished gag reflex" />
+	<skill mpCost="0" name="dinsey operations expert" />
+	<skill mpCost="9" name="dirge of dreadfulness" />
+	<skill mpCost="15" name="disarm" />
+	<skill mpCost="1" name="disco aerobics" />
+	<skill mpCost="0" name="disco bravado" />
+	<skill mpCost="10" name="disco dance 3: back in the habit" />
+	<skill mpCost="4" name="disco dance ii: electric boogaloo" />
+	<skill mpCost="3" name="disco dance of doom" />
+	<skill mpCost="2" name="disco eye-poke" />
+	<skill mpCost="8" name="disco face stab" />
+	<skill mpCost="10" name="disco fever" />
+	<skill mpCost="0" name="disco greed" />
+	<skill mpCost="15" name="disco inferno" />
+	<skill mpCost="10" name="disco leer" />
+	<skill mpCost="8" name="disco nap" />
+	<skill mpCost="13" name="disco shank" />
+	<skill mpCost="10" name="disco smirk" />
+	<skill mpCost="0" name="disco state of mind" />
+	<skill mpCost="0" name="dismiss pasta thrall" />
+	<skill mpCost="5" name="disquiet riot" />
+	<skill mpCost="2" name="dissonant riff" />
+	<skill mpCost="1" name="distracting minion" />
+	<skill mpCost="0" name="dive into a puddle" />
+	<skill mpCost="0" name="dog tired" />
+	<skill mpCost="75" name="donho's bubbly ballad" />
+	<skill mpCost="0" name="double-fisted skull smashing" />
+	<skill mpCost="0" name="doubt shackles" />
+	<skill mpCost="0" name="draw new tiles" />
+	<skill mpCost="40" name="drescher's annoying noise" />
+	<skill mpCost="0" name="drunken baby style" />
+	<skill mpCost="0" name="early riser" />
+	<skill mpCost="0" name="easy riding" />
+	<skill mpCost="15" name="egg man" />
+	<skill mpCost="120" name="eggsplosion" />
+	<skill mpCost="0" name="elemental obliviousness" />
+	<skill mpCost="10" name="elemental saucesphere" />
+	<skill mpCost="0" name="elemental wards" />
+	<skill mpCost="50" name="elron's explosive etude" />
+	<skill mpCost="15" name="empathy of the newt" />
+	<skill mpCost="15" name="entangle" />
+	<skill mpCost="3" name="entangling noodles" />
+	<skill mpCost="0" name="envy" />
+	<skill mpCost="0" name="even more elemental wards" />
+	<skill mpCost="0" name="executive narcolepsy" />
+	<skill mpCost="0" name="expert panhandling" />
+	<skill mpCost="0" name="extra spleen" />
+	<skill mpCost="15" name="extreme high note" />
+	<skill mpCost="10" name="falling leaf whirlwind" />
+	<skill mpCost="0" name="fashionably late" />
+	<skill mpCost="11" name="fat leon's phat loot lyric" />
+	<skill mpCost="0" name="fear vapor" />
+	<skill mpCost="32" name="fearful fettucini" />
+	<skill mpCost="20" name="feast on carrion" />
+	<skill mpCost="0" name="feed" />
+	<skill mpCost="0" name="ferocity" />
+	<skill mpCost="0" name="fire a badly romantic arrow" />
+	<skill mpCost="0" name="fire a boxing-glove arrow" />
+	<skill mpCost="0" name="fire a fingertrap arrow" />
+	<skill mpCost="0" name="fire a poison arrow" />
+	<skill mpCost="5" name="fire black bottle-rocket" />
+	<skill mpCost="5" name="fire blue bottle-rocket" />
+	<skill mpCost="0" name="fire death ray" />
+	<skill mpCost="10" name="fire off a roman candle" />
+	<skill mpCost="5" name="fire orange bottle-rocket" />
+	<skill mpCost="5" name="fire purple bottle-rocket" />
+	<skill mpCost="5" name="fire red bottle-rocket" />
+	<skill mpCost="0" name="fire rocket" />
+	<skill mpCost="0" name="fire sewage pistol" />
+	<skill mpCost="0" name="firebolt" />
+	<skill mpCost="50" name="firegate" />
+	<skill mpCost="0" name="first aid" />
+	<skill mpCost="5" name="fist of the mummy" />
+	<skill mpCost="0" name="five finger discount" />
+	<skill mpCost="25" name="fix jukebox" />
+	<skill mpCost="15" name="flash headlight" />
+	<skill mpCost="0" name="flashy dancer" />
+	<skill mpCost="0" name="flavour of magic" />
+	<skill mpCost="3" name="flesh mob" />
+	<skill mpCost="0" name="flying fire fist" />
+	<skill mpCost="0" name="food coma" />
+	<skill mpCost="0" name="forceblast" />
+	<skill mpCost="0" name="fortitude of the muskox" />
+	<skill mpCost="0" name="frantic gyrations" />
+	<skill mpCost="5" name="freeze" />
+	<skill mpCost="300" name="frigidalmatian" />
+	<skill mpCost="50" name="frost bite" />
+	<skill mpCost="20" name="fry" />
+	<skill mpCost="10" name="funk bluegrass fusion" />
+	<skill mpCost="5" name="furious cleave" />
+	<skill mpCost="0" name="furious wallop" />
+	<skill mpCost="50" name="garbage nova" />
+	<skill mpCost="15" name="gemelli's march of testery" />
+	<skill mpCost="0" name="get a good whiff of this guy" />
+	<skill mpCost="30" name="get a you-eye view" />
+	<skill mpCost="6" name="ghostly shell" />
+	<skill mpCost="0" name="giant growth" />
+	<skill mpCost="0" name="gift of the assassin" />
+	<skill mpCost="0" name="gift of the bodyguard" />
+	<skill mpCost="0" name="gift of the cat" />
+	<skill mpCost="0" name="gift of the dancer" />
+	<skill mpCost="0" name="gift of the maid" />
+	<skill mpCost="0" name="gift of the priest" />
+	<skill mpCost="0" name="gift of the scribe" />
+	<skill mpCost="0" name="give in to your vampiric urges" />
+	<skill mpCost="20"
+		name="give your opponent &amp;quot;the bird&amp;quot;" />
+	<skill mpCost="0" name="give your opponent the stinkeye" />
+	<skill mpCost="0" name="gluttony" />
+	<skill mpCost="0" name="gnefarious pickpocketing" />
+	<skill mpCost="0" name="gnomish hardigness" />
+	<skill mpCost="0" name="goldensh&amp;ouml;wer" />
+	<skill mpCost="0" name="good singing voice" />
+	<skill mpCost="1" name="gothy handwave" />
+	<skill mpCost="0" name="gourmand" />
+	<skill mpCost="30" name="grab a cold one" />
+	<skill mpCost="120" name="grease lightning" />
+	<skill mpCost="15" name="grease up" />
+	<skill mpCost="0" name="great slash" />
+	<skill mpCost="0" name="greed" />
+	<skill mpCost="30" name="grill" />
+	<skill mpCost="10" name="gristlesphere" />
+	<skill mpCost="0" name="grizzly scene" />
+	<skill mpCost="3" name="haggis kick" />
+	<skill mpCost="0" name="hammer ghost" />
+	<skill mpCost="0" name="hard drinker" />
+	<skill mpCost="30" name="harpoon!" />
+	<skill mpCost="0" name="hateful gaze" />
+	<skill mpCost="3" name="headbutt" />
+	<skill mpCost="0" name="healing salve" />
+	<skill mpCost="0" name="healing scarabs" />
+	<skill mpCost="0" name="heart of polyester" />
+	<skill mpCost="0" name="heat space" />
+	<skill mpCost="0" name="hero of the half-shell" />
+	<skill mpCost="5" name="heroic belch" />
+	<skill mpCost="0" name="hibernate" />
+	<skill mpCost="0" name="hide behind a tree" />
+	<skill mpCost="10" name="hide of sobek" />
+	<skill mpCost="0" name="hide of the walrus" />
+	<skill mpCost="0" name="hide under a rock" />
+	<skill mpCost="15" name="hippotatomous" />
+	<skill mpCost="0" name="his master's voice" />
+	<skill mpCost="10" name="holiday weight gain" />
+	<skill mpCost="0" name="hollow leg" />
+	<skill mpCost="0" name="hot blow" />
+	<skill mpCost="5" name="hot breath" />
+	<skill mpCost="9" name="howl of the alpha" />
+	<skill mpCost="10" name="howl of the jackal" />
+	<skill mpCost="0" name="huff" />
+	<skill mpCost="0" name="hungry eyes" />
+	<skill mpCost="0" name="hunter's sprint" />
+	<skill mpCost="0" name="hypersane" />
+	<skill mpCost="100" name="hypnotize hobo" />
+	<skill mpCost="0" name="i can bearly hear you over the applause" />
+	<skill mpCost="10" name="icy glare" />
+	<skill mpCost="0" name="impetuous sauciness" />
+	<skill mpCost="30" name="inappropriate backrub" />
+	<skill mpCost="0" name="incite riot" />
+	<skill mpCost="0" name="indefatigable" />
+	<skill mpCost="0" name="infectious bite" />
+	<skill mpCost="100" name="inigo's incantation of inspiration" />
+	<skill mpCost="0" name="inner sauce" />
+	<skill mpCost="0" name="insatiable hunger" />
+	<skill mpCost="4" name="insult" />
+	<skill mpCost="3" name="intimidating bellow" />
+	<skill mpCost="15" name="intimidating mien" />
+	<skill mpCost="0" name="intrinsic spiciness" />
+	<skill mpCost="0" name="ire of the orca" />
+	<skill mpCost="0" name="iron palm technique" />
+	<skill mpCost="0" name="irrepressible spunk" />
+	<skill mpCost="0" name="itchy curse finger" />
+	<skill mpCost="9" name="jackasses' symphony of destruction" />
+	<skill mpCost="5" name="jalape&amp;ntilde;o saucesphere" />
+	<skill mpCost="5" name="jingle bells" />
+	<skill mpCost="25" name="jump shark" />
+	<skill mpCost="0" name="just one more extra spleen" />
+	<skill mpCost="10" name="k&amp;auml;seso&amp;szlig;esturm" />
+	<skill mpCost="4" name="kneebutt" />
+	<skill mpCost="10" name="knife in the dark" />
+	<skill mpCost="10" name="knowing smile" />
+	<skill mpCost="0" name="knuckle sandwich" />
+	<skill mpCost="0" name="kodiak moment" />
+	<skill mpCost="0" name="kung fu hustler" />
+	<skill mpCost="6" name="lasagna bandages" />
+	<skill mpCost="12" name="lash of the cobra" />
+	<skill mpCost="1" name="laugh it off" />
+	<skill mpCost="12" name="leash of linguini" />
+	<skill mpCost="0" name="legendary appetite" />
+	<skill mpCost="0" name="legendary bravado" />
+	<skill mpCost="0" name="legendary girth" />
+	<skill mpCost="0" name="legendary impatience" />
+	<skill mpCost="0" name="legendary luck" />
+	<skill mpCost="0" name="light" />
+	<skill mpCost="0" name="lightning bolt" />
+	<skill mpCost="0" name="lightning bolt" />
+	<skill mpCost="0" name="lightning rod" />
+	<skill mpCost="0" name="lightning strike" />
+	<skill mpCost="5" name="live fast" />
+	<skill mpCost="0" name="liver of steel" />
+	<skill mpCost="0" name="louder bellows" />
+	<skill mpCost="10" name="lunch break" />
+	<skill mpCost="0" name="lunch like a king" />
+	<skill mpCost="1" name="lunge smack" />
+	<skill mpCost="8" name="lunging thrust-smack" />
+	<skill mpCost="0" name="lure minions" />
+	<skill mpCost="0" name="lust" />
+	<skill mpCost="0" name="mad looting skillz" />
+	<skill mpCost="6" name="magic missile" />
+	<skill mpCost="30" name="make friends" />
+	<skill mpCost="0" name="make it rain" />
+	<skill mpCost="5" name="managerial manipulation" />
+	<skill mpCost="1" name="manicotti meditation" />
+	<skill mpCost="0" name="marginally insane" />
+	<skill mpCost="0" name="mariachi memory" />
+	<skill mpCost="0" name="master accordion master thief" />
+	<skill mpCost="0" name="master of the surprising fist" />
+	<skill mpCost="0" name="master saucier" />
+	<skill mpCost="10" name="mathematical precision" />
+	<skill mpCost="30" name="maximum chill" />
+	<skill mpCost="1" name="meat shields" />
+	<skill mpCost="0" name="mighty axing" />
+	<skill mpCost="0" name="mighty shout" />
+	<skill mpCost="1" name="mild curse" />
+	<skill mpCost="0" name="mixologist" />
+	<skill mpCost="5" name="miyagi massage" />
+	<skill mpCost="0" name="more elemental wards" />
+	<skill mpCost="0" name="more legs" />
+	<skill mpCost="0" name="more to love" />
+	<skill mpCost="0" name="mosh" />
+	<skill mpCost="1" name="moxie of the mariachi" />
+	<skill mpCost="30" name="mudbath" />
+	<skill mpCost="0" name="mug for the audience" />
+	<skill mpCost="10" name="musk of the moose" />
+	<skill mpCost="0" name="natural born scrabbler" />
+	<skill mpCost="0" name="natural born skeleton killer" />
+	<skill mpCost="0" name="natural dancer" />
+	<skill mpCost="0" name="net gain" />
+	<skill mpCost="0" name="net loss" />
+	<skill mpCost="0" name="net neutrality" />
+	<skill mpCost="0" name="neurogourmet" />
+	<skill mpCost="0" name="never late for dinner" />
+	<skill mpCost="0" name="nightcap" />
+	<skill mpCost="0" name="nimble fingers" />
+	<skill mpCost="15" name="noodles of fire" />
+	<skill mpCost="16" name="northern explosion" />
+	<skill mpCost="0" name="northern exposure" />
+	<skill mpCost="10" name="nuclear breath" />
+	<skill mpCost="15" name="offensive joke" />
+	<skill mpCost="10" name="oilsphere" />
+	<skill mpCost="0" name="okay seriously, this is the last spleen" />
+	<skill mpCost="0" name="olfactory burnout" />
+	<skill mpCost="0" name="open a big red present" />
+	<skill mpCost="0" name="open a big yellow present" />
+	<skill mpCost="0" name="open the bag o' tricks" />
+	<skill mpCost="0" name="overdeveloped sense of self preservation" />
+	<skill mpCost="100" name="overload discarded refrigerator" />
+	<skill mpCost="0" name="overload teddy bear" />
+	<skill mpCost="10" name="pastamastery" />
+	<skill mpCost="1" name="patience of the tortoise" />
+	<skill mpCost="10" name="patient smile" />
+	<skill mpCost="10" name="peel out" />
+	<skill mpCost="1" name="pep talk" />
+	<skill mpCost="5" name="perfect freeze" />
+	<skill mpCost="5" name="pinch ghost" />
+	<skill mpCost="11" name="pirate bellow" />
+	<skill mpCost="0" name="pizza lover" />
+	<skill mpCost="0" name="plague claws" />
+	<skill mpCost="10" name="play a drum solo" />
+	<skill mpCost="10" name="play a flute solo" />
+	<skill mpCost="10" name="play a guitar solo" />
+	<skill mpCost="10" name="play an accordion solo" />
+	<skill mpCost="0" name="play hog fiddle" />
+	<skill mpCost="0" name="ply reality" />
+	<skill mpCost="0" name="pocket crumbs" />
+	<skill mpCost="0" name="point at your opponent" />
+	<skill mpCost="2" name="pop and lock it" />
+	<skill mpCost="10" name="pop wheelie" />
+	<skill mpCost="0" name="pow" />
+	<skill mpCost="10" name="power of heka" />
+	<skill mpCost="0" name="powers of observatiogn" />
+	<skill mpCost="5" name="prayer of seshat" />
+	<skill mpCost="0" name="precision of the penguin" />
+	<skill mpCost="50" name="prelude of precision" />
+	<skill mpCost="0" name="pride" />
+	<skill mpCost="30" name="pride of the puffin" />
+	<skill mpCost="0" name="propose to your opponent" />
+	<skill mpCost="0" name="psychokinetic hug" />
+	<skill mpCost="0" name="puff" />
+	<skill mpCost="0" name="pull voice box string" />
+	<skill mpCost="0" name="pulverize" />
+	<skill mpCost="10" name="purr of the feline" />
+	<skill mpCost="15" name="put down roots" />
+	<skill mpCost="15" name="pyromania" />
+	<skill mpCost="0" name="quick attack" />
+	<skill mpCost="15" name="radish horse" />
+	<skill mpCost="0" name="rage flame" />
+	<skill mpCost="10" name="rage of the reindeer" />
+	<skill mpCost="0" name="rage of the war snapper" />
+	<skill mpCost="0" name="rain coat" />
+	<skill mpCost="0" name="rain dance" />
+	<skill mpCost="0" name="rain delay" />
+	<skill mpCost="0" name="rain man" />
+	<skill mpCost="0" name="rainbow" />
+	<skill mpCost="0" name="rainbow gravitation" />
+	<skill mpCost="0" name="rainy day" />
+	<skill mpCost="120" name="raise backup dancer" />
+	<skill mpCost="0" name="rapid prototyping" />
+	<skill mpCost="2" name="ravenous pounce" />
+	<skill mpCost="4" name="ravioli shurikens" />
+	<skill mpCost="0" name="really expensive jewelrycrafting" />
+	<skill mpCost="0" name="recite 'the spirit of crimbo'" />
+	<skill mpCost="0" name="recruit zombie" />
+	<skill mpCost="0" name="refusal to freeze" />
+	<skill mpCost="0" name="release the boots" />
+	<skill mpCost="0" name="replacement liver" />
+	<skill mpCost="0" name="replacement stomach" />
+	<skill mpCost="10" name="reptilian fortitude" />
+	<skill mpCost="5" name="request sandwich" />
+	<skill mpCost="5" name="rev engine" />
+	<skill mpCost="0" name="riding tall" />
+	<skill mpCost="0" name="riding the lightning" />
+	<skill mpCost="20" name="rise from your ashes" />
+	<skill mpCost="0" name="rive armor" />
+	<skill mpCost="15" name="roar of the lion" />
+	<skill mpCost="15" name="rotten memories" />
+	<skill mpCost="15" name="rouse sapling" />
+	<skill mpCost="0" name="rowdy drinker" />
+	<skill mpCost="0" name="run away" />
+	<skill mpCost="2" name="run like the wind" />
+	<skill mpCost="10" name="ruthless efficiency" />
+	<skill mpCost="0" name="salacious cocktailcrafting" />
+	<skill mpCost="5" name="salamander kata" />
+	<skill mpCost="1" name="salsaball" />
+	<skill mpCost="1" name="sauce contemplation" />
+	<skill mpCost="20" name="sauce monocle" />
+	<skill mpCost="12" name="saucecicle" />
+	<skill mpCost="24" name="saucegeyser" />
+	<skill mpCost="24" name="saucemageddon" />
+	<skill mpCost="0" name="saucemaven" />
+	<skill mpCost="30" name="sauceshell" />
+	<skill mpCost="6" name="saucestorm" />
+	<skill mpCost="4" name="saucy salve" />
+	<skill mpCost="10" name="scarysauce" />
+	<skill mpCost="2" name="scavenge" />
+	<skill mpCost="10" name="scowl of the auk" />
+	<skill mpCost="1" name="seal clubbing frenzy" />
+	<skill mpCost="0" name="seething of the snow leopard" />
+	<skill mpCost="0" name="sensitive fingers" />
+	<skill mpCost="0" name="seven-finger strike" />
+	<skill mpCost="30" name="shadow noodles" />
+	<skill mpCost="0" name="shake hands" />
+	<skill mpCost="30" name="shake it off" />
+	<skill mpCost="0" name="sheet lightning" />
+	<skill mpCost="6" name="shell up" />
+	<skill mpCost="15" name="shelter of shed" />
+	<skill mpCost="20" name="shield of the pastalord" />
+	<skill mpCost="10" name="shieldbutt" />
+	<skill mpCost="0" name="shoot web" />
+	<skill mpCost="0" name="shovel hot coal" />
+	<skill mpCost="0" name="shrap" />
+	<skill mpCost="0" name="sick pythons" />
+	<skill mpCost="5" name="silent slam" />
+	<skill mpCost="5" name="silent slice" />
+	<skill mpCost="10" name="silent squirt" />
+	<skill mpCost="0" name="simmer" />
+	<skill mpCost="1" name="sing" />
+	<skill mpCost="15" name="singer's faithful ocelot" />
+	<skill mpCost="0" name="siphon spirits" />
+	<skill mpCost="0" name="skin of the leatherback" />
+	<skill mpCost="0" name="skullcracker" />
+	<skill mpCost="5" name="sleazy breath" />
+	<skill mpCost="20" name="slice" />
+	<skill mpCost="0" name="slimy shoulders" />
+	<skill mpCost="0" name="slimy sinews" />
+	<skill mpCost="0" name="slimy synapses" />
+	<skill mpCost="0" name="sloppy secrets" />
+	<skill mpCost="0" name="sloth" />
+	<skill mpCost="2" name="smash &amp; graaagh" />
+	<skill mpCost="10" name="smoke break" />
+	<skill mpCost="10" name="smooth movement" />
+	<skill mpCost="5" name="snap fingers" />
+	<skill mpCost="10" name="snarl of the timberwolf" />
+	<skill mpCost="120" name="snowclone" />
+	<skill mpCost="10" name="song of accompaniment" />
+	<skill mpCost="10" name="song of battle" />
+	<skill mpCost="100" name="song of bravado" />
+	<skill mpCost="15" name="song of cockiness" />
+	<skill mpCost="10" name="song of fortune" />
+	<skill mpCost="100" name="song of sauce" />
+	<skill mpCost="100" name="song of slowness" />
+	<skill mpCost="15" name="song of solitude" />
+	<skill mpCost="100" name="song of starch" />
+	<skill mpCost="10" name="song of the glorious lunch" />
+	<skill mpCost="100" name="song of the north" />
+	<skill mpCost="0" name="soul blaze" />
+	<skill mpCost="0" name="soul bubble" />
+	<skill mpCost="0" name="soul finger" />
+	<skill mpCost="0" name="soul food" />
+	<skill mpCost="0" name="soul funk" />
+	<skill mpCost="0" name="soul rotation" />
+	<skill mpCost="0" name="soul saucery" />
+	<skill mpCost="30" name="spaghetti breakfast" />
+	<skill mpCost="1" name="spaghetti spear" />
+	<skill mpCost="20" name="spectral snapper" />
+	<skill mpCost="0" name="speluck" />
+	<skill mpCost="0" name="spew poison" />
+	<skill mpCost="8" name="spiky shell" />
+	<skill mpCost="30" name="spirit boon" />
+	<skill mpCost="0" name="spirit of bacon grease" />
+	<skill mpCost="0" name="spirit of cayenne" />
+	<skill mpCost="0" name="spirit of garlic" />
+	<skill mpCost="0" name="spirit of nothing" />
+	<skill mpCost="0" name="spirit of peppermint" />
+	<skill mpCost="0" name="spirit of ravioli" />
+	<skill mpCost="0" name="spirit of rigatoni" />
+	<skill mpCost="0" name="spirit of wormwood" />
+	<skill mpCost="10" name="spirit snap" />
+	<skill mpCost="0" name="spirit vacation" />
+	<skill mpCost="0" name="spit fireballs" />
+	<skill mpCost="30" name="splashdance" />
+	<skill mpCost="25" name="splattersmash" />
+	<skill mpCost="0" name="spleen of steel" />
+	<skill mpCost="0" name="spooky blow" />
+	<skill mpCost="5" name="spooky breath" />
+	<skill mpCost="0" name="spray hot grease" />
+	<skill mpCost="15" name="spray sap" />
+	<skill mpCost="0" name="spring raindrop attack" />
+	<skill mpCost="10" name="springy fusilli" />
+	<skill mpCost="0" name="squeeze stress ball" />
+	<skill mpCost="100" name="start trash fire" />
+	<skill mpCost="0" name="static shock" />
+	<skill mpCost="0" name="static shock" />
+	<skill mpCost="0" name="steal accordion" />
+	<skill mpCost="5" name="stealth mistletoe" />
+	<skill mpCost="30" name="stevedave's shanty of superiority" />
+	<skill mpCost="0" name="sticky fingers" />
+	<skill mpCost="10" name="stiff upper lip" />
+	<skill mpCost="0" name="still another extra spleen" />
+	<skill mpCost="0" name="stinkpalm" />
+	<skill mpCost="0" name="stinky blow" />
+	<skill mpCost="5" name="stinky breath" />
+	<skill mpCost="0" name="stomach of steel" />
+	<skill mpCost="0" name="stomp ass" />
+	<skill mpCost="8" name="storm of the scarab" />
+	<skill mpCost="15" name="strangle" />
+	<skill mpCost="2" name="stream of sauce" />
+	<skill mpCost="16" name="stringozzi serpent" />
+	<skill mpCost="8" name="stuffed mortar shell" />
+	<skill mpCost="0" name="subtle and quick to anger" />
+	<skill mpCost="1" name="suckerpunch" />
+	<skill mpCost="10" name="summer siesta" />
+	<skill mpCost="200"
+		name="summon &amp;quot;boner battalion&amp;quot;" />
+	<skill mpCost="5" name="summon alice's army cards" />
+	<skill mpCost="0" name="summon annoyance" />
+	<skill mpCost="1" name="summon brickos" />
+	<skill mpCost="1" name="summon candy heart" />
+	<skill mpCost="11" name="summon carrot" />
+	<skill mpCost="2" name="summon clip art" />
+	<skill mpCost="5" name="summon confiscated things" />
+	<skill mpCost="3" name="summon crimbo candy" />
+	<skill mpCost="1" name="summon dice" />
+	<skill mpCost="5" name="summon geeky gifts" />
+	<skill mpCost="5" name="summon hilarious objects" />
+	<skill mpCost="0" name="summon hobo underling" />
+	<skill mpCost="11" name="summon holiday fun!" />
+	<skill mpCost="0" name="summon horde" />
+	<skill mpCost="1" name="summon kokomo resort pass" />
+	<skill mpCost="40" name="summon leviatuga" />
+	<skill mpCost="0" name="summon love gnats" />
+	<skill mpCost="0" name="summon love mosquito" />
+	<skill mpCost="0" name="summon love scarabs" />
+	<skill mpCost="1" name="summon love song" />
+	<skill mpCost="0" name="summon love stinkbug" />
+	<skill mpCost="0" name="summon mayfly swarm" />
+	<skill mpCost="0" name="summon minion" />
+	<skill mpCost="1" name="summon party favor" />
+	<skill mpCost="2" name="summon rad libs" />
+	<skill mpCost="1" name="summon resolutions" />
+	<skill mpCost="2" name="summon smithsness" />
+	<skill mpCost="2" name="summon snowcones" />
+	<skill mpCost="2" name="summon stickers" />
+	<skill mpCost="2" name="summon sugar sheets" />
+	<skill mpCost="1" name="summon taffy" />
+	<skill mpCost="5" name="summon tasteful items" />
+	<skill mpCost="0" name="super-advanced meatsmithing" />
+	<skill mpCost="0" name="superhuman cocktailcrafting" />
+	<skill mpCost="10" name="surge of icing" />
+	<skill mpCost="10" name="suspicious gaze" />
+	<skill mpCost="0" name="swirl cloak" />
+	<skill mpCost="0" name="talk about politics" />
+	<skill mpCost="8" name="tango of terror" />
+	<skill mpCost="0" name="tao of the terrapin" />
+	<skill mpCost="7" name="tattle" />
+	<skill mpCost="0" name="tear wave" />
+	<skill mpCost="0" name="tell a skeleton what to do" />
+	<skill mpCost="0" name="tell this skeleton what to do" />
+	<skill mpCost="0" name="tempuramancy" />
+	<skill mpCost="8" name="tenacity of the snapper" />
+	<skill mpCost="0" name="testudinal teachings" />
+	<skill mpCost="0" name="that's not a knife" />
+	<skill mpCost="10" name="the 17 cuts" />
+	<skill mpCost="50" name="the ballad of richie thingfinder" />
+	<skill mpCost="0" name="the long view" />
+	<skill mpCost="3" name="the magical mojomuscular melody" />
+	<skill mpCost="0" name="the most important meal" />
+	<skill mpCost="2" name="the moxious madrigal" />
+	<skill mpCost="50" name="the ode to booze" />
+	<skill mpCost="0" name="the old old smile of mr. a." />
+	<skill mpCost="7" name="the polka of plenty" />
+	<skill mpCost="5" name="the power ballad of the arrowsmith" />
+	<skill mpCost="15" name="the psalm of pointiness" />
+	<skill mpCost="0" name="the smile of mr. a." />
+	<skill mpCost="20" name="the sonata of sneakiness" />
+	<skill mpCost="20" name="the statue treatment" />
+	<skill mpCost="0" name="the way of sauce" />
+	<skill mpCost="0" name="thick-skinned" />
+	<skill mpCost="0" name="thief among the honorable" />
+	<skill mpCost="0" name="thirst of the weasel" />
+	<skill mpCost="0" name="thousand-yard stare" />
+	<skill mpCost="0" name="thrall unit tactics" />
+	<skill mpCost="0" name="thrift and grift" />
+	<skill mpCost="0" name="throw bomb" />
+	<skill mpCost="0" name="throw frostball" />
+	<skill mpCost="0" name="throw party" />
+	<skill mpCost="0" name="throw pot" />
+	<skill mpCost="0" name="throw rock" />
+	<skill mpCost="0" name="throw shield" />
+	<skill mpCost="0" name="throw skull" />
+	<skill mpCost="0" name="throw ten bombs" />
+	<skill mpCost="0" name="throw torch" />
+	<skill mpCost="7" name="throw trusty" />
+	<skill mpCost="3" name="thrust-smack" />
+	<skill mpCost="0" name="thunder bird" />
+	<skill mpCost="0" name="thunder clap" />
+	<skill mpCost="0" name="thunder down underwear" />
+	<skill mpCost="0" name="thunder thighs" />
+	<skill mpCost="0" name="thundercloud" />
+	<skill mpCost="0" name="thunderheart" />
+	<skill mpCost="0" name="thunderstrike" />
+	<skill mpCost="0" name="tighten girdle" />
+	<skill mpCost="0" name="tolerance of the kitchen" />
+	<skill mpCost="10" name="tongue of the walrus" />
+	<skill mpCost="5" name="torment plant" />
+	<skill mpCost="0" name="torso awaregness" />
+	<skill mpCost="0" name="toss" />
+	<skill mpCost="0" name="tougher skin" />
+	<skill mpCost="120" name="toynado" />
+	<skill mpCost="0" name="transcendent al dente" />
+	<skill mpCost="40" name="transcendent olfaction" />
+	<skill mpCost="0" name="transcendental noodlecraft" />
+	<skill mpCost="100" name="trashquake" />
+	<skill mpCost="0" name="tricky knifework" />
+	<skill mpCost="0" name="tunnel downwards" />
+	<skill mpCost="0" name="tunnel upwards" />
+	<skill mpCost="15" name="turtle of seven tails" />
+	<skill mpCost="100" name="turtle power" />
+	<skill mpCost="35" name="turtleini" />
+	<skill mpCost="0" name="unaccompanied miner" />
+	<skill mpCost="0" name="undying greed" />
+	<skill mpCost="0" name="unleash nanites" />
+	<skill mpCost="0" name="unleash the greash" />
+	<skill mpCost="0" name="unload tommy gun" />
+	<skill mpCost="0" name="unoffendable" />
+	<skill mpCost="0" name="unrepentant thief" />
+	<skill mpCost="0" name="unyielding flesh" />
+	<skill mpCost="0" name="upgraded arms" />
+	<skill mpCost="0" name="upgraded legs" />
+	<skill mpCost="0" name="upgraded spine" />
+	<skill mpCost="30" name="ur-kel's aria of annoyance" />
+	<skill mpCost="0" name="use rope" />
+	<skill mpCost="1" name="utensil twist" />
+	<skill mpCost="0" name="vampiric tendrils" />
+	<skill mpCost="15" name="vent rage gland" />
+	<skill mpCost="5" name="vicious talon slash" />
+	<skill mpCost="0" name="vigor mortis" />
+	<skill mpCost="0" name="violent gaze" />
+	<skill mpCost="0" name="virulence" />
+	<skill mpCost="0" name="voice of she-who-was" />
+	<skill mpCost="0" name="volcanometeor showeruption" />
+	<skill mpCost="5" name="walberg's dim bulb" />
+	<skill mpCost="30" name="walk away from explosion" />
+	<skill mpCost="30" name="wassail" />
+	<skill mpCost="10" name="wave of sauce" />
+	<skill mpCost="32" name="weapon of the pastalord" />
+	<skill mpCost="0" name="will of the storm tortoise" />
+	<skill mpCost="0" name="wink at" />
+	<skill mpCost="10" name="winter's bite technique" />
+	<skill mpCost="0" name="wisdom of the elder tortoises" />
+	<skill mpCost="5" name="wisdom of thoth" />
+	<skill mpCost="10" name="wizard squint" />
+	<skill mpCost="0" name="working lunch" />
+	<skill mpCost="11" name="worldpunch" />
+	<skill mpCost="0" name="wrath" />
+	<skill mpCost="40" name="wrath of ra" />
+	<skill mpCost="0" name="wrath of the lightning god" />
+	<skill mpCost="0" name="wrath of the trickster god" />
+	<skill mpCost="0" name="wrath of the volcano god" />
+	<skill mpCost="0" name="wrath of the wolverine" />
+	<skill mpCost="10" name="wry smile" />
+	<skill mpCost="0" name="yet another extra spleen" />
+	<skill mpCost="0" name="zap" />
+	<skill mpCost="0" name="zendo kobushi kancho" />
+	<skill mpCost="1" name="zombie chow" />
+	<skill mpCost="9" name="zombie maestro" />
+	<skill mpCost="100" name="zombo's visage" />
 </skillCosts>

@@ -1,2 +1,42 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<wanderingAdventures><adventure name="ambulatory pirate"></adventure><adventure name="argarggagarg the dire hellseal"></adventure><adventure name="b&amp;eacute;arnaise zombie"></adventure><adventure name="bee swarm"></adventure><adventure name="bee thoven"></adventure><adventure name="beebee gunners"></adventure><adventure name="beebee king"></adventure><adventure name="beebee queue"></adventure><adventure name="buzzerker"></adventure><adventure name="béarnaise zombie"></adventure><adventure name="candied yam golem"></adventure><adventure name="el novio cad&amp;aacute;ver"></adventure><adventure name="el novio cadáver"></adventure><adventure name="el padre cad&amp;aacute;ver"></adventure><adventure name="el padre cadáver"></adventure><adventure name="evil spaghetti cult assassin"></adventure><adventure name="flock of seagulls"></adventure><adventure name="heimandatz, nacho golem"></adventure><adventure name="hunting seal"></adventure><adventure name="jocko homo"></adventure><adventure name="la novia cad&amp;aacute;ver"></adventure><adventure name="la novia cadáver"></adventure><adventure name="la persona inocente cad&amp;aacute;ver"></adventure><adventure name="la persona inocente cadáver"></adventure><adventure name="malevolent tofurkey"></adventure><adventure name="mariachi bandolero"></adventure><adventure name="menacing thug"></adventure><adventure name="migratory pirate"></adventure><adventure name="mob penguin hitman"></adventure><adventure name="moneybee"></adventure><adventure name="mumblebee"></adventure><adventure name="peripatetic pirate"></adventure><adventure name="possessed can of cranberry sauce"></adventure><adventure name="queen bee"></adventure><adventure name="safari jack, small-game hunter"></adventure><adventure name="stuffing golem"></adventure><adventure name="the mariachi with no name"></adventure><adventure name="turtle trapper"></adventure><adventure name="yakisoba the executioner"></adventure></wanderingAdventures>
+<wanderingAdventures>
+	<adventure name="ambulatory pirate" />
+	<adventure name="argarggagarg the dire hellseal" />
+	<adventure name="b&amp;eacute;arnaise zombie" />
+	<adventure name="bee swarm" />
+	<adventure name="bee thoven" />
+	<adventure name="beebee gunners" />
+	<adventure name="beebee king" />
+	<adventure name="beebee queue" />
+	<adventure name="buzzerker" />
+	<adventure name="béarnaise zombie" />
+	<adventure name="candied yam golem" />
+	<adventure name="el novio cad&amp;aacute;ver" />
+	<adventure name="el novio cadáver" />
+	<adventure name="el padre cad&amp;aacute;ver" />
+	<adventure name="el padre cadáver" />
+	<adventure name="evil spaghetti cult assassin" />
+	<adventure name="flock of seagulls" />
+	<adventure name="heimandatz, nacho golem" />
+	<adventure name="hunting seal" />
+	<adventure name="jocko homo" />
+	<adventure name="la novia cad&amp;aacute;ver" />
+	<adventure name="la novia cadáver" />
+	<adventure name="la persona inocente cad&amp;aacute;ver" />
+	<adventure name="la persona inocente cadáver" />
+	<adventure name="malevolent tofurkey" />
+	<adventure name="mariachi bandolero" />
+	<adventure name="menacing thug" />
+	<adventure name="migratory pirate" />
+	<adventure name="mob penguin hitman" />
+	<adventure name="moneybee" />
+	<adventure name="mumblebee" />
+	<adventure name="peripatetic pirate" />
+	<adventure name="possessed can of cranberry sauce" />
+	<adventure name="queen bee" />
+	<adventure name="safari jack, small-game hunter" />
+	<adventure name="stuffing golem" />
+	<adventure name="the mariachi with no name" />
+	<adventure name="turtle trapper" />
+	<adventure name="yakisoba the executioner" />
+</wanderingAdventures>
