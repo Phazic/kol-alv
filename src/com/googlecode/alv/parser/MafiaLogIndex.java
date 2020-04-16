@@ -389,6 +389,7 @@ public class MafiaLogIndex {
      * 
      * @param asc Integer identifying the ascension to process
      * @param playerName Player whose ascension logs are to be gathered
+     * @param count Number of ascensions whose files are to be collected
      * @return Array of File objects representing the Mafia logs covering that ascension
      */
     public File[] getAscensionsN(int asc, String playerName, int count)
@@ -417,6 +418,7 @@ public class MafiaLogIndex {
      * 
      * @param date String of the form yyyymmdd denoting the date
      * @param playerName Player whose ascension logs are to be gathered
+     * @param count Number of ascensions whose files are to be collected
      * @return Array of File objects representing the Mafia logs covering that ascension
      */
     public File[] getAscensionsForDate(String date, String playerName, int count)

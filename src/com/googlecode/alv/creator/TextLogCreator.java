@@ -87,10 +87,10 @@ import net.java.dev.spellcast.utilities.DataUtilities;
 import net.java.dev.spellcast.utilities.UtilityConstants;
 
 /**
- * This utility class creates a parsed ascension log from a
+ * This utility class creates a parsed plaintext ascension log from a
  * {@link LogDataHolder}. The format of the parsed log is similar to the one
  * which the AFH parser uses.  It is now designed to be subclassed so that its
- * code can be used to write other formats.
+ * code can be used to write other formats, just by overriding certain methods.
  * <p>
  * Note that this class only works with detailed LogDataHolders (see
  * {@link LogDataHolder#isDetailedLog()}), because non-detailed LogDataHolders
@@ -194,7 +194,7 @@ public class TextLogCreator {
     protected static final String KA_EARNED_DAILY = "Ka earned today: ";
 
     /**
-     * Sets up a TextLogCreator instance for further use.
+     * Creates a TextLogCreator instance for further use.
      *
      * @param logData
      *            The ascension log data from which the parsed ascension log
@@ -227,11 +227,6 @@ public class TextLogCreator {
         setAugmentationsMap();
     }
 
-    protected void setAugmentationsMap()
-    {
-        logAdditionsMap = Collections.unmodifiableMap(readAugmentationsList("textAugmentations.txt"));
-    }
-    
     /**
      * Helper method to parse out the augmentation values for the textual log
      * outputs and return them in a map.
@@ -480,6 +475,15 @@ public class TextLogCreator {
         writer.close();
     }
 
+    /**
+     * Reads in the augmentations for this parsed log format.  This should be
+     * overridden by subclasses.
+     */
+    protected void setAugmentationsMap()
+    {
+        logAdditionsMap = Collections.unmodifiableMap(readAugmentationsList("textAugmentations.txt"));
+    }
+    
     /**
      * Creates a parsed ascension log in a style similar to the format used by
      * the AFH parser.
@@ -808,6 +812,12 @@ public class TextLogCreator {
         return log.toString();
     }
 
+    /**
+     * Print the daily report of Ka earned.
+     * 
+     * @param logData LogDataHolder containing the data.
+     * @param day Number of the day.
+     */
     protected void printDailyKa(final LogDataHolder logData, int day)
     {
         // Print out Ka acquisition for the day
@@ -834,6 +844,12 @@ public class TextLogCreator {
         // Do nothing for plain text
     }
     
+    /**
+     * Print the title of the parsed log.
+     * 
+     * @param logData LogDataHolder containing the data.
+     * @param ascensionStartDate Number in yyyymmdd format representing the start date.
+     */
     protected void printTitle(final LogDataHolder logData, final int ascensionStartDate)
     {
         // Add the log file header.
@@ -843,11 +859,22 @@ public class TextLogCreator {
         writeln();
     }
     
+    /**
+     * Print the table of contents for this log output format.
+     * 
+     * @param logData  LogDataHolder containing the data.
+     */
     protected void printTableOfContents(LogDataHolder logData)
     {
         // Not used by plain text format
     }
     
+    /**
+     * Print the log format's section header.
+     * 
+     * @param title Title of the section.
+     * @param anchor Name of the anchor to be reference by a table of contents.
+     */
     protected void printSectionHeader(String title, String anchor)
     {
         // anchor parameter not used by plain text format
@@ -855,6 +882,11 @@ public class TextLogCreator {
         writeln("----------");
     }
     
+    /**
+     * Print the change of the day.
+     * 
+     * @param nextDay DayChange representing the next day.
+     */
     protected void printDayChange(DayChange nextDay) 
     {
         write(logAdditionsMap.get("dayChangeLineStart"));
@@ -862,26 +894,47 @@ public class TextLogCreator {
         writeln(logAdditionsMap.get("dayChangeLineEnd"));
     }
     
+    /**
+     * Print the log output format's end-of-paragraph character sequence.
+     * For example, for HTML it would be <code>&lt;p&gt;</code>.
+     */
     protected void printParagraphStart()
     {
         // Does nothing for text files
     }
     
+    /**
+     * Print the log output format's end-of-paragraph character sequence.
+     * For example, for HTML it would be <code>&lt;/p&gt;</code>.
+     */
     protected void printParagraphEnd()
     {
         // Does nothing for text files
     }
     
+    /**
+     * Print the log output format's line break character sequence.  For example,
+     * for HTML it would be <code>&lt;br&gt;</code>.
+     */
     protected void printLineBreak()
     {
         // Does nothing for text files
     }
     
+    /**
+     * Print the beginning of a table.
+     */
     protected void printTableStart()
     {
         // Does nothing for text files
     }
     
+    /**
+     * Print the given strings as elements of a row of a table.
+     * 
+     * @param strings Strings to add to the table.  Each string is a
+     *      separate table data entry.
+     */
     protected void printTableRow(String ...strings)
     {
         // For plain text, this just writes the given strings in one line
@@ -890,6 +943,9 @@ public class TextLogCreator {
         writeln();
     }
     
+    /**
+     * Print the end of a table.
+     */
     protected void printTableEnd()
     {
         // Does nothing for text files
@@ -1045,6 +1101,11 @@ public class TextLogCreator {
         }
     }
 
+    /**
+     * Print the items acquired in a given turn.
+     * 
+     * @param turnNumber Number of the turn
+     */
     protected void printItemAcquisitionStartString(final int turnNumber) 
     {
         printLineBreak();
@@ -1056,6 +1117,8 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the details for adventures that happened in the given day number.
+     * 
      * @param ti
      *      The turn interval whose contents should be printed.
      * @param currentDayNumber
@@ -1383,6 +1446,7 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the log aummary sections.
      * 
      * @param logData LogDataHolder holding all the log data
      */
@@ -1414,8 +1478,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the adventure summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printAdventuresSection(LogDataHolder logData) 
     {
@@ -1434,8 +1499,9 @@ public class TextLogCreator {
     }
     
     /**
+     * Print the quests summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printQuestsSection(LogDataHolder logData) 
     {
@@ -1472,8 +1538,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the pull summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printPullsSection(LogDataHolder logData) 
     {
@@ -1504,8 +1571,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the level summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printLevelsSection(LogDataHolder logData) 
     {
@@ -1560,8 +1628,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the stat gain summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printStatsSection(LogDataHolder logData) 
     {
@@ -1617,8 +1686,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the stat breakdown summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printStatBreakdownSection(LogDataHolder logData) 
     {
@@ -1696,8 +1766,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the skills learned summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printSkillsLearnedSection(LogDataHolder logData) 
     {
@@ -1715,8 +1786,9 @@ public class TextLogCreator {
     }
     
     /**
+     * Print the familiar usage summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printFamiliarSection(LogDataHolder logData) 
     {
@@ -1737,8 +1809,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the semirare adventure summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printSemirareSection(LogDataHolder logData)
     {
@@ -1755,8 +1828,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the tracked item summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printTrackedItemSection(LogDataHolder logData)
     {
@@ -1774,8 +1848,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the DNA Lab summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printHybridSection(LogDataHolder logData)
     {
@@ -1794,8 +1869,9 @@ public class TextLogCreator {
     }
     
     /**
+     * Print the olfaction-affected combat summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printHuntedCombatsSection(LogDataHolder logData)
     {
@@ -1812,8 +1888,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the banishment summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printBanishedCombatsSection(LogDataHolder logData)
     {
@@ -1830,8 +1907,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the disintegration summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printDisintegratedCombatsSection(LogDataHolder logData)
     {
@@ -1848,8 +1926,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the copied combat summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printCopiedCombatsSection(LogDataHolder logData)
     {
@@ -1877,8 +1956,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the free runaway summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printFreeRunawaySection(LogDataHolder logData)
     {
@@ -1903,8 +1983,9 @@ public class TextLogCreator {
     }
 
     /**
+     * Print the wandering encounter summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printWanderingEncountersSection(LogDataHolder logData)
     {
@@ -1921,8 +2002,9 @@ public class TextLogCreator {
     }
     
     /**
+     * Print the combat item use section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printCombatItemsSection(LogDataHolder logData)
     {
@@ -1940,8 +2022,9 @@ public class TextLogCreator {
     }
     
     /**
+     * Print the skill casting summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printCastsSection(LogDataHolder logData)
     {
@@ -1966,8 +2049,9 @@ public class TextLogCreator {
     }
     
     /**
+     * Print the MP gain summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printMPSection(LogDataHolder logData)
     {
@@ -2000,8 +2084,9 @@ public class TextLogCreator {
     }
     
     /**
+     * Print the consumption summary section.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printConsumablesSection(LogDataHolder logData)
     {
@@ -2035,8 +2120,9 @@ public class TextLogCreator {
     }
     
     /**
+     * Print the meat gain summary.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printMeatSection(LogDataHolder logData)
     {
@@ -2060,8 +2146,9 @@ public class TextLogCreator {
     }
     
     /**
+     * Print the bottleneck section summary.
      * 
-     * @param logData LogDataHolder
+     * @param logData LogDataHolder holding all the log data
      */
     protected void printBottlenecksSection(LogDataHolder logData)
     {
@@ -2116,40 +2203,69 @@ public class TextLogCreator {
     }
     
     
+    /**
+     * Write a string to the log output.
+     * 
+     * @param s String to write.  If null, does nothing.
+     */
     protected void write(final String s) 
     {
         if (s != null)
             log.append(s);
-        else
-            log.append(UsefulPatterns.EMPTY_STRING);
     }
 
+    /**
+     * Write an integer to the log output.
+     * 
+     * @param i Integer to write.
+     */
     protected void write(final int i) {
         log.append(i);
     }
     
+    /**
+     * Write the end of a format's line to the log output.  
+     */
     protected void writeEndLine()
     {
         log.append(NEW_LINE);
     }
     
+    /**
+     * Write the OS's newline string to the log output, followed by the
+     * parsed log format's line break.
+     */
     protected void writelnWithBreak()
     {
         writeln();
         printLineBreak();
     }
     
+    /**
+     * Write the OS's newline string to the log output.
+     */
     protected void writeln() 
     {
         log.append(NEW_LINE);
     }
     
+    /**
+     * Write the given string to the log output, followed by the OS's newline string, 
+     * followed by the parsed log format's line break.
+     * 
+     * @param s String to write.
+     */
     protected void writelnWithBreak(final String s)
     {
         writeln(s);
         printLineBreak();
     }
     
+    /**
+     * Write the given string to the log output, followed by the OS's newline string.
+     * 
+     * @param s String to write.
+     */
     protected void writeln(final String s)
     {
         if (s != null)
@@ -2157,6 +2273,11 @@ public class TextLogCreator {
         log.append(NEW_LINE);
     }
     
+    /**
+     * Write the given integer to the log output, followed by the OS's newline string.
+     * 
+     * @param i Integer to write.
+     */
     protected void writeln(final int i)
     {
         log.append(i).append(NEW_LINE);
