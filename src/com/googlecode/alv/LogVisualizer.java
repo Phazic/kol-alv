@@ -324,6 +324,10 @@ public final class LogVisualizer
                 case "--xml":
                     format = LogOutputFormat.XML_LOG;
                     break;
+                case "-text":
+                case "--text":
+                    format = LogOutputFormat.TEXT_LOG;
+                    break;
                 case "-c":
                 case "-count":
                 case "--count":
