@@ -74,7 +74,7 @@ import net.java.dev.spellcast.utilities.UtilityConstants;
 public final class Settings 
 {
     public static final String VERSION_PROPERTY_NAME = "Version";
-    public static final String ALV_VERSION = "3.8.0.0a";
+    public static final String ALV_VERSION = "3.8.0.0b";
     
     public static final String XML_VERSION_PROPERTY_NAME = "XML format version";
     public static final String XML_VERSION = "1.4";
