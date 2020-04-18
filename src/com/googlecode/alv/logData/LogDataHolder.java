@@ -1582,7 +1582,7 @@ public final class LogDataHolder {
         AVATAR_OF_JARLSBERG("Avatar of Jarlsberg", StatClass.MYSTICALITY),
         AVATAR_OF_SNEAKY_PETE("Avatar of Sneaky Pete", StatClass.MOXIE),
         ED("Ed", StatClass.MYSTICALITY),
-        VAMPYRE("Vampyre", StatClass.MUSCLE),
+        VAMPYRE("Vampyre", StatClass.MYSTICALITY),
         PLUMBER("Plumber", StatClass.MOXIE),    // TODO: His level is whatever his highest stat is
         NOT_DEFINED("not defined", StatClass.MUSCLE);
 
