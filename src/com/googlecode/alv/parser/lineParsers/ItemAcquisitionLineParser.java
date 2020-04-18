@@ -49,7 +49,8 @@ import com.googlecode.alv.parser.UsefulPatterns;
  * <p>
  * {@code You acquire _item name_ (_number of items_)}
  */
-public final class ItemAcquisitionLineParser extends AbstractLineParser {
+public final class ItemAcquisitionLineParser extends AbstractLineParser 
+{
     private static final Pattern MULTIPLE_ITEMS_OLD = Pattern.compile("You acquire \\d+ [\\s\\w\\p{Punct}]+");
 
     private static final Pattern MULTIPLE_ITEMS_NEW = Pattern.compile("You acquire [\\s\\w\\p{Punct}]+ \\(\\d+\\)");
@@ -72,8 +73,8 @@ public final class ItemAcquisitionLineParser extends AbstractLineParser {
      * {@inheritDoc}
      */
     @Override
-    protected void doParsing(
-                             final String line, final LogDataHolder logData) {
+    protected void doParsing(final String line, final LogDataHolder logData) 
+    {
         final String itemName;
         int amount = 1;
 
@@ -109,22 +110,25 @@ public final class ItemAcquisitionLineParser extends AbstractLineParser {
             scanner.close();
         }
 
-        final Turn currentTurn = logData.getLastTurnSpent();
-        currentTurn.addDroppedItem(new Item(itemName, amount, currentTurn.getTurnNumber()));
+        // It is possible to get 0 dimes or quarters when cashing in War spoils. 
+        // If the amount isn't at least 1, do nothing.
+        if (amount > 0) {
+            final Turn currentTurn = logData.getLastTurnSpent();
+            currentTurn.addDroppedItem(new Item(itemName, amount, currentTurn.getTurnNumber()));
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected boolean isCompatibleLine(
-                                       final String line) {
-
+    protected boolean isCompatibleLine(final String line) 
+    {
         // Filter out you acquire an effect from items
         return !line.startsWith(ACQUIRE_EFFECT) &&
                 line.startsWith(ACQUIRE_STRING)
                && (line.startsWith(SINGLE_ITEM_STRING)
-                   || multipleItemsOldMatcher.reset(line).matches() || multipleItemsNewMatcher.reset(line)
-                                                                                              .matches());
+                   || multipleItemsOldMatcher.reset(line).matches() 
+                   || multipleItemsNewMatcher.reset(line).matches());
     }
 }
