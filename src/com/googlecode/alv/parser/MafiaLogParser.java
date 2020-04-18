@@ -28,6 +28,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.googlecode.alv.Settings;
 import com.googlecode.alv.logData.HeaderFooterComment;
@@ -81,6 +83,12 @@ public final class MafiaLogParser implements LogParser
     private static final String NAUGHTY_SORCERESS_FIGHT_STRING_2015 = "The Naughty Sorceress' Chamber";
     
     private static final String DONATE_BODY = "Took choice 1089/30";
+    
+    private static final Matcher ROUND0 
+        = Pattern.compile("Round 0: (.*) +(wins|loses) initiative!").matcher("");
+    
+    private static final Matcher ENCOUNTER 
+        = Pattern.compile("Encounter: (.*) *$").matcher("");
 
     private final LogDataHolder logData = new LogDataHolder(true);
 
@@ -157,7 +165,7 @@ public final class MafiaLogParser implements LogParser
             // In case old ascension turn counting is turned off and the current
             // block is an encounter block, we need to check whether the Naughty
             // Sorceress was beaten in it.
-            if (!isOldAscensionCounting) {
+            if (! isOldAscensionCounting) {
                 if (block.getBlockType() == LogBlockType.ENCOUNTER_BLOCK) {
                     // Get the encounter name and the location
                     List<String> lines = block.getBlockLines();
@@ -172,16 +180,22 @@ public final class MafiaLogParser implements LogParser
                         nsFightWon = isFightWon(block);
                     else if (tmp.endsWith(AVATAR_OF_JARLSBERG))
                         nsFightWon = isFightWon(block);
-                    // Path of the Plumber - final boss varies, but always the same place
-                    else if (tmp.contains("Encounter: Wa") && tmp0.contains(NAUGHTY_SORCERESS_FIGHT_STRING_2015))
-                        nsFightWon = isFightWon(block);
+                    else if (tmp0.contains(NAUGHTY_SORCERESS_FIGHT_STRING_2015)) {
+                        // Dark Gyffte - final boss's name is the player's backwards
+                        if (isFinalDarkGyffteBattle(tmp, lines))
+                            nsFightWon = isFightWon(block);
+                        // Path of the Plumber - final boss varies, but always the same place
+                        else if (tmp.contains("Encounter: Wa"))
+                            nsFightWon = isFightWon(block);
+                    }
                 } else if (block.getBlockType() == LogBlockType.SERVICE_BLOCK) {
                     // Community Service - last block is donating your body
                     if (block.getBlockLines().get(0).startsWith(DONATE_BODY))
                         nsFightWon = true;
                 } else if (block.getBlockType() == LogBlockType.OTHER_BLOCK) {
                     // Actually Ed
-                    if (block.getBlockLines().size() > 2 && block.getBlockLines().get( 1 ).contains( "Encounter: Returning the MacGuffin" )) {
+                    if (block.getBlockLines().size() > 2 
+                            && block.getBlockLines().get(1).contains("Encounter: Returning the MacGuffin")) {
                         for (String line : block.getBlockLines()) {
                             if (line.equals( "choice.php?pwd&whichchoice=1054&option=1" ))
                                 nsFightWon = true;
@@ -275,6 +289,31 @@ public final class MafiaLogParser implements LogParser
         getLogData().createLogSummary();
     }
 
+    /**
+     * Return true if and only if the given lines, which must represent an encounter block,
+     * represents the final Dark Gyffte battle.  This is recognized by the final boss
+     * having the name of the player, but backwards.
+     * 
+     * @param encounter The Encounter: line of the encounter block
+     * @param lines The sequence of lines for the encounter, which must be an encounter block
+     * @return true if and only if this is the Dark Gyffte final encounter
+     */
+    private boolean isFinalDarkGyffteBattle(String encounter, List<String> lines)
+    {
+        if (lines.size() < 3)
+            return false;
+        if (! ROUND0.reset(lines.get(2)).find())
+            return false;
+        if (! ENCOUNTER.reset(encounter).find())
+            return false;
+        String lcPlayerName = ROUND0.group(1).toLowerCase();
+        String lcBossName = ENCOUNTER.group(1).toLowerCase();
+        StringBuilder reverser = new StringBuilder(lcPlayerName);
+        reverser.reverse();
+        String revPlayerName = reverser.toString();
+        return lcBossName.equals(revPlayerName);
+    }
+    
     /*
      * This method checks whether the Naughty Sorceress has been beaten.
      *
