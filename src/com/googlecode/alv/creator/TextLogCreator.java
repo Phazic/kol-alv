@@ -1520,6 +1520,8 @@ public class TextLogCreator {
         writelnWithBreak("Airship: " + questTurncounts.airshipQuestTurns);
         writelnWithBreak("Giant's Castle: " + questTurncounts.castleQuestTurns);
         writelnWithBreak("Pirate quest: " + questTurncounts.pirateQuestTurns);
+        writelnWithBreak("Copperhead Club: " + questTurncounts.copperheadClubTurns);
+        writelnWithBreak("Red Zeppelin: " + questTurncounts.redZeppelinTurns);
         writelnWithBreak("Black Forest quest: " + questTurncounts.blackForrestQuestTurns);
         writelnWithBreak("Desert Oasis quest: " + questTurncounts.desertOasisQuestTurns);
         writelnWithBreak("Spookyraven First Floor: " + questTurncounts.spookyravenFirstFloor);
